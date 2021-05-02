@@ -30,7 +30,8 @@ I have a wide range of interests, including typesetting and document creation ($
  - [Truth table generator](https://github.com/benrosenberg/truth-table-generator), with algorithmic input parsing and support for $\LaTeX$ output
  - Gun Violence Analysis
    - [Exploratory analysis](https://benrosenberg.info/Gun-Violence-Analysis) (final project coming soon)
- - [Discord bots and typesetting tools](https://github.com/benrosenberg)
+ - [GitHub](https://github.com/benrosenberg)
+ - [Discord bots](https://bots.benrosenberg.info)
 
 ### Miscellaneous
 
