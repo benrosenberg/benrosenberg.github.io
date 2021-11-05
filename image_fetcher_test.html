@@ -28,6 +28,10 @@ window.addEventListener('DOMContentLoaded', (event) => {
   margin: auto;
   outline: dashed 1px black;
 }
+.center {
+  margin-left: auto;
+  margin-right: auto;
+}
 </style>
 
 </head>
@@ -36,20 +40,10 @@ window.addEventListener('DOMContentLoaded', (event) => {
 <p style="text-align:center;">Type in your ID and hit "show image" to be shown your results.</p> <br>
 <p style="text-align:center;">You can select up to 3 different IDs at the same time to compare.</p> <br>
 
-<table>
-<tr>
-	<td>
+<table class="center">
 		<input type="text" id="url1"/><input type="button" id="btn1" value="Submit" />
-	</td>
-	
-	<td>
 		<input type="text" id="url2"/><input type="button" id="btn2" value="Submit" />
-	</td>
-	
-	<td>
 		<input type="text" id="url3"/><input type="button" id="btn3" value="Submit" />
-	</td>
-</tr>
 </table>
 
 <br><br>
