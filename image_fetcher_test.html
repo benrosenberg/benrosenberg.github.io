@@ -3,23 +3,49 @@
 <head>
 <script>
 window.addEventListener('DOMContentLoaded', (event) => {
-    document.getElementById("btn").addEventListener("click", (e) => {
-      const src = "https://benrosenberg.info/img/" + document.getElementById("url").value + ".png";
-      document.getElementById("img").setAttribute("src", src);
+    document.getElementById("btn1").addEventListener("click", (e) => {
+      const src = "https://benrosenberg.info/img/" + document.getElementById("url1").value + ".png";
+      document.getElementById("img1").setAttribute("src", src);
+    });
+});
+window.addEventListener('DOMContentLoaded', (event) => {
+    document.getElementById("btn2").addEventListener("click", (e) => {
+      const src = "https://benrosenberg.info/img/" + document.getElementById("url2").value + ".png";
+      document.getElementById("img2").setAttribute("src", src);
+    });
+});
+window.addEventListener('DOMContentLoaded', (event) => {
+    document.getElementById("btn3").addEventListener("click", (e) => {
+      const src = "https://benrosenberg.info/img/" + document.getElementById("url3").value + ".png";
+      document.getElementById("img3").setAttribute("src", src);
     });
 });
 </script>
+<style>
+.container {
+  font-family: arial;
+  font-size: 24px;
+  margin: auto;
+  outline: dashed 1px black;
+}
+</style>
 
 </head>
 <body>
+<div class="container">
+<p style="text-align:center;">Type in your ID and hit "show image" to be shown your results.</p> <br>
+<p style="text-align:center;">You can select up to 3 different IDs at the same time to compare.</p> <br>
 
-Type in a URL to an image below :<br><br>
-
-<input type="text" id="url"/><input type="button" id="btn" value="show image" />
+<input type="text" id="url1"/><input type="button" id="btn1" value="show image 1" />
+<input type="text" id="url2"/><input type="button" id="btn2" value="show image 2" />
+<input type="text" id="url3"/><input type="button" id="btn3" value="show image 3" />
 
 <br><br>
 
-<img src="" id="img">
+<img src="" id="img1">
+<img src="" id="img2">
+<img src="" id="img3">
 
+</div>
 </body>
 </html>
