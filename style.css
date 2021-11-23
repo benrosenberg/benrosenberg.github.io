@@ -29,3 +29,30 @@ a:active {
   color: #83a598;
 }
 
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+  background: #ebdbb2; 
+}
+
+::-webkit-scrollbar-corner {
+  background: #ebdbb2;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #282828; 
+  box: inset 0 0 5px #ebdbb2;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #ebdbb2; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #d5c4a1; 
+}
+
