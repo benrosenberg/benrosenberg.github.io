@@ -18,3 +18,8 @@ a:active { color: #83a598; }
 ::-webkit-scrollbar-track { background: #282828; box: inset 0 0 5px #ebdbb2; }
 ::-webkit-scrollbar-thumb { background: #ebdbb2; }
 ::-webkit-scrollbar-thumb:hover { background: #d5c4a1; }
+
+@media (min-width:1281px) {
+	.leftdiv { width: 600px; float: left; }
+	.rightdiv { margin-left: 800px; }
+}
