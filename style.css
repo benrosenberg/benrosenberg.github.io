@@ -1,11 +1,25 @@
 body {
-  text-align: justify;
-  font-size: large;
-  margin: 4% 8% 4% 8%;
-  font-family: monospace;
-  background-color: #282828;
-  color: #ebdbb2;
-  font-size: 14pt
+	text-align: justify;
+	font-size: large;
+	margin: 4% 8% 4% 8%;
+	font-family: monospace;
+	background-color: #282828;
+	color: #ebdbb2;
+	font-size: 14pt
+}
+
+.greenteam { 
+	background-color: #8ec07c35; 
+	border: 4px solid #8ec07c; 
+	text-decoration: none; 
+	color: #ebdbb2;
+}
+
+hr { 
+	display: block; 
+	border-top: 4px solid #ebdbb2; 
+	margin: 1em 0; 
+	padding: 0; 
 }
 
 a:link { color: #8ec07c; }
