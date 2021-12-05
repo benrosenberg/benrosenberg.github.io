@@ -15,11 +15,16 @@ body {
 	color: #ebdbb2;
 }
 
+h1, h2, h3 {
+	filter: drop-shadow(4px 3px 0px #7c6f64);
+}
+
 hr { 
 	display: block; 
-	border-top: 4px solid #ebdbb2; 
+	border-top: 5px solid #ebdbb2; 
 	margin: 1em 0; 
 	padding: 0; 
+	filter: drop-shadow(4px 3px 0px #7c6f64);
 }
 
 a:link { color: #8ec07c; }
