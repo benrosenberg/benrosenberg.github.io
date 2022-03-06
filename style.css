@@ -9,6 +9,10 @@
 		font-size: 14pt
 	}
 
+	.dark-mode-reminder {
+		display: none;
+	}
+
 	.greenteam { 
 		background-color: #1e6703;
 		color: #ebdbb2;
