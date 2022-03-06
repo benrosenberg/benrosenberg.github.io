@@ -1,44 +1,62 @@
-body {
-	text-align: justify;
-	font-size: large;
-	margin: 4% 8% 4% 8%;
-	font-family: monospace;
-	background-color: #282828;
-	color: #ebdbb2;
-	font-size: 14pt
+@media screen and (prefers-color-scheme: dark) {
+	body {
+		text-align: justify;
+		font-size: large;
+		margin: 4% 8% 4% 8%;
+		font-family: monospace;
+		background-color: #282828;
+		color: #ebdbb2;
+		font-size: 14pt
+	}
+
+	.greenteam { 
+		background-color: #8ec07c35; 
+		border: 4px solid #8ec07c; 
+		text-decoration: none; 
+		color: #ebdbb2;
+	}
+
+	h1, h2, h3 {
+		filter: drop-shadow(4px 3px 0px #7c6f64);
+	}
+
+	hr { 
+		display: block; 
+		border-top: 5px solid #ebdbb2; 
+		margin: 1em 0; 
+		padding: 0; 
+		filter: drop-shadow(4px 3px 0px #7c6f64);
+	}
+
+	a:link { color: #8ec07c; }
+	a:visited { color: #d3869b; }
+	a:hover { color: #fe8019; }
+	a:active { color: #83a598; }
+
+	::-webkit-scrollbar { width: 10px; height: 10px; background: #ebdbb2; }
+	::-webkit-scrollbar-corner { background: #ebdbb2; }
+	::-webkit-scrollbar-track { background: #282828; box: inset 0 0 5px #ebdbb2; }
+	::-webkit-scrollbar-thumb { background: #ebdbb2; }
+	::-webkit-scrollbar-thumb:hover { background: #d5c4a1; }
+
 }
-
-.greenteam { 
-	background-color: #8ec07c35; 
-	border: 4px solid #8ec07c; 
-	text-decoration: none; 
-	color: #ebdbb2;
-}
-
-h1, h2, h3 {
-	filter: drop-shadow(4px 3px 0px #7c6f64);
-}
-
-hr { 
-	display: block; 
-	border-top: 5px solid #ebdbb2; 
-	margin: 1em 0; 
-	padding: 0; 
-	filter: drop-shadow(4px 3px 0px #7c6f64);
-}
-
-a:link { color: #8ec07c; }
-a:visited { color: #d3869b; }
-a:hover { color: #fe8019; }
-a:active { color: #83a598; }
-
-::-webkit-scrollbar { width: 10px; height: 10px; background: #ebdbb2; }
-::-webkit-scrollbar-corner { background: #ebdbb2; }
-::-webkit-scrollbar-track { background: #282828; box: inset 0 0 5px #ebdbb2; }
-::-webkit-scrollbar-thumb { background: #ebdbb2; }
-::-webkit-scrollbar-thumb:hover { background: #d5c4a1; }
 
 @media (min-width:1281px) {
 	.leftdiv { width: 600px; float: left; }
 	.rightdiv { margin-left: 800px; }
+}
+
+@media screen and (prefers-color-scheme: light) {
+
+	body {
+		text-align: justify;
+		font-size: large;
+		margin: 4% 12% 8% 12%;
+		font-family: Monserrat, Product Sans, sans-serif;
+	}
+
+	table, tbody, tr, thead, th, td {
+		border: 1px solid black;
+	}
+
 }
