@@ -1,6 +1,6 @@
 @media screen and (prefers-color-scheme: dark) {
 	body {
-		text-align: justify;
+		text-align: left;
 		font-size: large;
 		margin: 4% 8% 4% 8%;
 		font-family: monospace;
@@ -51,7 +51,7 @@
 @media screen and (prefers-color-scheme: light) {
 
 	body {
-		text-align: justify;
+		text-align: left;
 		font-size: large;
 		margin: 4% 12% 8% 12%;
 		font-family: Monserrat, Product Sans, sans-serif;
