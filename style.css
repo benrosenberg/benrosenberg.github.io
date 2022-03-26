@@ -24,7 +24,7 @@
 
 	hr { 
 		display: block; 
-		border-top: 5px solid #282828; 
+		border-top: 3px solid #282828; 
 		margin: 1em 0; 
 		padding: 0; 
 	}
@@ -51,7 +51,7 @@
 
 	  hr { 
 		display: block; 
-		border-top: 5px solid #ebdbb2; 
+		border-top: 3px solid #d5c4a1; 
 		margin: 1em 0; 
 		padding: 0; 
 	}
