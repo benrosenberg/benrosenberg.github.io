@@ -9,8 +9,13 @@
 	margin: 4% 12% 8% 12%;
 	font-family: Monserrat, Product Sans, sans-serif;
   }
+
+
   
   @media screen and (prefers-color-scheme: light) {
+
+	div.tooltip { display:inline; display: none; }
+
 	body {
 	  background-color: #fbf1c7;
 	  color: #282828;
@@ -28,6 +33,7 @@
 		margin: 1em 0; 
 		padding: 0; 
 	}
+
   }
   
   @media (min-width:1281px) {
@@ -40,6 +46,33 @@
 	input[type=checkbox][disabled]{
 	  filter: invert(100%) hue-rotate(18deg) brightness(4);
 	}
+
+	div.tooltip { display:inline; font-size: 10; color: #ff7b29; }
+
+	[data-tooltip]:before {
+		/* needed - do not touch */
+		content: attr(data-tooltip);
+		position: absolute;
+		opacity: 0;
+		
+		/* customizable */
+		transition: all 0.15s ease;
+		padding: 6px;
+		color: rgb(40, 40, 40);
+		border-radius: 10px;   
+	}
+	
+	[data-tooltip]:hover:before {
+		/* needed - do not touch */
+		opacity: 1;
+		
+		/* customizable */
+		color: rgb(40, 40, 40);
+		background: #fbf1c7;
+		margin-top:  -7px;
+		margin-left: 0px;    
+	}
+
 	  body {
 		  text-align: left;
 		  font-size: large;
