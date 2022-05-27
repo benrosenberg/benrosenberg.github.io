@@ -20,9 +20,13 @@ font-family: Montserrat, Product Sans, sans-serif;
 		filter: invert(95%) brightness(3.5);
 	}
 
-	table, tr {
-		border: 1px solid black;
+	table, tr, td, th {
+		border: 1px solid #b3a688;
 		border-collapse: collapse;
+		padding-left: 15px;
+		padding-right: 15px;
+		padding-bottom: 5px;
+		padding-top: 5px;
 	}
 
 	th { text-align: center; }
@@ -101,9 +105,13 @@ font-family: Montserrat, Product Sans, sans-serif;
 	::-webkit-scrollbar-thumb { background: #ebdbb2; }
 	::-webkit-scrollbar-thumb:hover { background: #d5c4a1; }
 
-	table, tr {
-		border: 1px solid #b3a688;
-		border-collapse: collapse;
+	table, tr, td, th {
+	  border: 1px solid #b3a688;
+	  border-collapse: collapse;
+	  padding-left: 15px;
+	  padding-right: 15px;
+	  padding-bottom: 5px;
+	  padding-top: 5px;
 	}
 
 	th { text-align: center; }
