@@ -1,11 +1,15 @@
 
 body {
-text-align: left;
-font-size: large;
-margin: 4% 12% 8% 12%;
-font-family: Montserrat, Product Sans, sans-serif;
+    text-align: left;
+    font-size: large;
+    margin: 4% 12% 8% 12%;
+	/* courtesy of https://systemfontstack.com/ */
+    font-family: -apple-system, BlinkMacSystemFont, 
+				avenir next, avenir, segoe ui, 
+				helvetica neue, helvetica, Cantarell, 
+				Ubuntu, roboto, noto, arial, sans-serif;
 }
-
+    
 /*** LIGHT MODE ***/
 /* @media screen and (prefers-color-scheme: light) {
 
@@ -39,86 +43,94 @@ font-family: Montserrat, Product Sans, sans-serif;
 	}
 
 } */
-
+    
 /*** MOBILE ***/
 @media (min-width:1281px) {
 	.leftdiv { width: 600px; float: left; }
 	.rightdiv { margin-left: 800px; }
 }
-
+    
 /*** DARK MODE ***/
-/* @media screen and (prefers-color-scheme: dark) { */
-	input[type=checkbox][disabled]{
-		filter: invert(100%) hue-rotate(18deg) brightness(4);
-	}
+/* @media screen and (prefers-color-scheme: dark) { ... } */
 
-	div.tooltip { display:inline; font-size: 10; color: #ff7b29; }
+/**--- begin "light mode" warnings---**/
+input[type=checkbox][disabled]{
+	filter: invert(100%) hue-rotate(18deg) brightness(4);
+}
 
-	[data-tooltip]:before {
-		/* needed - do not touch */
-		content: attr(data-tooltip);
-		position: absolute;
-		opacity: 0;
-		
-		/* customizable */
-		transition: all 0.15s ease;
-		padding: 6px;
-		color: rgb(40, 40, 40);
-		border-radius: 10px;   
-	}
+div.tooltip { display:inline; font-size: 10; color: #ff7b29; }
 
-	[data-tooltip]:hover:before {
-		/* needed - do not touch */
-		opacity: 1;
-		
-		/* customizable */
-		color: rgb(40, 40, 40);
-		background: #fbf1c7;
-		margin-top:  -7px;
-		margin-left: 0px;    
-	}
+[data-tooltip]:before {
+	/* needed - do not touch */
+	content: attr(data-tooltip);
+	position: absolute;
+	opacity: 0;
+	
+	/* customizable */
+	transition: all 0.15s ease;
+	padding: 6px;
+	color: rgb(40, 40, 40);
+	border-radius: 10px;   
+}
 
-	body {
-		text-align: left;
-		font-size: large;
-		margin: 4% 8% 4% 8%;
-		background-color: #282828;
-		color: #ebdbb2;
-		font-size: 14pt
-	}
+[data-tooltip]:hover:before {
+	/* needed - do not touch */
+	opacity: 1;
+	
+	/* customizable */
+	color: rgb(40, 40, 40);
+	background: #fbf1c7;
+	margin-top:  -7px;
+	margin-left: 0px;    
+}
+/**--- end "light mode" warnings---**/
 
-	hr { 
-		display: block; 
-		border-top: 3px solid #d5c4a1; 
-		margin: 1em 0; 
-		padding: 0; 
-	}
+body {
+	text-align: left;
+	font-size: large;
+	margin: 4% 8% 4% 8%;
+	background-color: #282828;
+	color: #ebdbb2;
+	font-size: 14pt
+}
 
-	a:link { color: #8ec07c; }
-	a:visited { color: #d3869b; }
-	a:hover { color: #fe8019; }
-	a:active { color: #83a598; }
+/* horizontal rule */
+hr { 
+	display: block; 
+	border-top: 3px solid #d5c4a1; 
+	margin: 1em 0; 
+	padding: 0; 
+}
 
-	::-webkit-scrollbar { width: 10px; height: 10px; background: #ebdbb2; }
-	::-webkit-scrollbar-corner { background: #ebdbb2; }
-	::-webkit-scrollbar-track { background: #282828; box: inset 0 0 5px #ebdbb2; }
-	::-webkit-scrollbar-thumb { background: #ebdbb2; }
-	::-webkit-scrollbar-thumb:hover { background: #d5c4a1; }
+a:link { color: #8ec07c; }
+a:visited { color: #d3869b; }
+a:hover { color: #fe8019; }
+a:active { color: #83a598; }
 
-	table, tr, td, th {
-	  border: 1px solid #b3a688;
-	  border-collapse: collapse;
-	  padding-left: 15px;
-	  padding-right: 15px;
-	  padding-bottom: 5px;
-	  padding-top: 5px;
-	}
+::-webkit-scrollbar { width: 10px; height: 10px; background: #ebdbb2; }
+::-webkit-scrollbar-corner { background: #ebdbb2; }
+::-webkit-scrollbar-track { background: #282828; box: inset 0 0 5px #ebdbb2; }
+::-webkit-scrollbar-thumb { background: #ebdbb2; }
+::-webkit-scrollbar-thumb:hover { background: #d5c4a1; }
 
-	th { text-align: center; }
+table, tr, td, th {
+	border: 1px solid #b3a688;
+	border-collapse: collapse;
+	padding-left: 15px;
+	padding-right: 15px;
+	padding-bottom: 5px;
+	padding-top: 5px;
+}
 
-	blockquote {
-		border-left: 5px solid #ebdbb2;
-		margin: 1.5em 10px;
-		padding-left: 10px;
-	}
-/* } */
+th { text-align: center; }
+
+blockquote {
+	border-left: 5px solid #ebdbb2;
+	margin: 1.5em 10px;
+	padding-left: 10px;
+}	
+
+/* Source code block formatting: left borders; hiding line numbering from the reader */
+pre.sourceCode.bad { border-left: 5px solid  #fb4934; margin-left: 0px; }
+pre.sourceCode.neutral { border-left: 5px solid #ebdbb2; margin-left: 0px; }
+pre.sourceCode.good { border-left: 5px solid #b8bb26; margin-left: 0px; }
