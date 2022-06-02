@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Ben Rosenberg" />
+  <title>The Volume of an Open-Top Cone</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <link rel="stylesheet" href="https://benrosenberg.info/style.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+   var mathElements = document.getElementsByClassName("math");
+   var macros = [];
+   for (var i = 0; i < mathElements.length; i++) {
+    var texText = mathElements[i].firstChild;
+    if (mathElements[i].tagName == "SPAN") {
+     katex.render(texText.data, mathElements[i], {
+      displayMode: mathElements[i].classList.contains('display'),
+      throwOnError: false,
+      macros: macros,
+      fleqn: false
+     });
+  }}});
+  </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">The Volume of an Open-Top Cone</h1>
+<p class="author"><a href="https://benrosenberg.info">Ben Rosenberg</a></p>
+</header>
+<p>Say we have an open-top cone, such as the one seen below:</p>
+<div style="text-align:center;">
+<figure>
+<img src="2022-06-02-13-28-52.png" width="400" alt="Getty Images, via NYPost" /><figcaption aria-hidden="true">Getty Images, via <a href="https://nypost.com/2019/10/24/man-dodges-jail-time-for-trying-to-have-sex-with-traffic-cone-at-train-station/">NYPost</a></figcaption>
+</figure>
+</div>
+<p>Say we’re given the height of this cone, its bottom radius (the radius of the circle of its base), and the top radius (the radius of the smaller circle at the top).</p>
+<p>Let the height of the open-top cone be <span class="math inline">h</span>, its bottom radius be <span class="math inline">R</span>, and its top radius be <span class="math inline">r</span>. It’s obvious that we can find the volume of the open-top cone by following these steps:</p>
+<ul>
+<li>Find the volume of the corresponding closed-top cone</li>
+<li>Find the volume of the cone which was “removed” from the closed-top cone to get the open-top cone</li>
+<li>Subtract these two volumes to obtain the volume to the closed-top cone</li>
+</ul>
+<p>In order to find the volume of the corresponding closed-top cone, we need to first find the height of the closed-top cone. Let’s call this height <span class="math inline">H</span>.</p>
+<p>Note that <span class="math inline">H</span> is the rightmost side of the set of similar triangles in the figure below.</p>
+<div style="text-align:center;">
+<figure>
+<img src="similar_triangles_diagram.png" width="350" alt="Figure 1: Similar triangles (image made with Matcha.io)" /><figcaption aria-hidden="true">Figure 1: Similar triangles (image made with <a href="https://www.mathcha.io/">Matcha.io</a>)</figcaption>
+</figure>
+</div>
+<p>Since the smaller and larger triangles are <em>similar</em> triangles, their sides are related by some ratio. The ratio in this case is <span class="math inline">R-r : R</span>. So, if we multiply the smaller height by <span class="math inline">\frac{R}{R-r}</span>, we will get the larger height: <span class="math display">H = \frac{Rh}{R-r}</span></p>
+<p>Now that we have our closed-top height, we can find the volume of the closed-top cone.</p>
+<p>Recalling the formula for the volume of a cone, we get <span class="math inline">V_\text{closed-top} = \frac{1}{3} \pi R^2 H</span>. Plugging in our value for <span class="math inline">H</span> gives <span class="math display">V_\text{closed-top} = \frac{1}{3} \pi R^2 \frac{Rh}{R-r} = \frac{\pi R^3 h}{3(R-r)}.</span></p>
+<p>Now that we have the volume of the closed-top cone, let’s find the volume of the “removed” cone – the “missing” top of our open-top cone. This is another simple application of the formula for the volume of a cone: <span class="math display">V_\text{removed} = \frac{1}{3} \pi r^2 (H-h) = \frac{1}{3} \pi r^2 \left(\frac{Rh}{R-r}-h\right)</span></p>
+<p>We can now subtract the removed volume from the closed-top volume to obtain the volume of the open-top cone: <span class="math display">\begin{aligned}
+    V_{\text{open-top}} &amp;= V_\text{closed-top} - V_\text{removed} \\
+                        &amp;= \frac{\pi R^3 h}{3(R-r)} - \frac{1}{3} \pi r^2 \left(\frac{Rh}{R-r}-h\right) \\
+                        &amp;= \frac{\pi h}{3}\left[\frac{R^3}{R-r} - r^2 \left( \frac{R}{R-r} - 1 \right)\right] \\
+                        &amp;= \frac{\pi h}{3}\left[\frac{R^3}{R-r} - r^2 \frac{R - (R-r)}{R-r}\right] \\
+                        &amp;= \frac{\pi h}{3}\cdot\frac{R^3 - r^3}{R-r} 
+\end{aligned}</span></p>
+<p>We could leave our answer like this, or simplify further using the formula for the difference of two perfect cubes: <span class="math display">x^3 - y^3 = (x-y)(x^2 + xy + y^2)</span></p>
+<p><span class="math display">\begin{aligned}
+    V_{\text{open-top}} &amp;= \frac{\pi h}{3}\cdot\frac{R^3 - r^3}{R-r} \\
+                        &amp;= \frac{\pi h}{3}\cdot\frac{(R-r)(R^2+Rr+r^2))}{R-r} \\
+                        &amp;= \frac{\pi h}{3}\cdot (R^2 + Rr + r^2)
+\end{aligned}</span></p>
+<p>This isn’t that much more simplified though.</p>
+</body>
+</html>
