@@ -115,4 +115,10 @@ font-family: Montserrat, Product Sans, sans-serif;
 	}
 
 	th { text-align: center; }
+
+	blockquote {
+		border-left: 5px solid #ebdbb2;
+		margin: 1.5em 10px;
+		padding-left: 10px;
+	}
 /* } */
