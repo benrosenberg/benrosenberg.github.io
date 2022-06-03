@@ -8,7 +8,11 @@ perl -0777 -pe 's/Directory Tree/Posts/gs' tmp.html > index.html
 
 pandoc README.md -o README.html
 
-cat index.html README.html > tmp.html
+echo "<hr>" > hr.html
+
+cat index.html hr.html README.html > tmp.html
+
+rm hr.html
 
 mv tmp.html index.html
 

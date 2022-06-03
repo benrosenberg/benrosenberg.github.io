@@ -21,6 +21,7 @@
 	<br><br>
 	</p>
 </html>
+<hr>
 <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -110,12 +111,21 @@
 <div class="sourceCode" id="cb3"><pre class="sourceCode bash neutral"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="ex">pandoc</span> README.md -o README.html</span></code></pre></div>
 <p>This command turns the README file you are reading into an HTML fragment.</p>
 <ol start="4" type="1">
-<li>Run the following <code>cat</code> and <code>mv</code> commands:<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></li>
+<li>Run the following <code>echo</code>, <code>cat</code>, <code>rm</code>, and <code>mv</code> commands:<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></li>
 </ol>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash neutral"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="fu">cat</span> index.html README.html <span class="op">&gt;</span> tmp.html</span>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash neutral"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="bu">echo</span> <span class="st">&quot;&lt;hr&gt;&quot;</span> <span class="op">&gt;</span> hr.html</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a><span class="fu">mv</span> tmp.html index.html</span></code></pre></div>
-<p>These command concatenate the two HTML files that have been generated and store them back in <code>index.html</code>.</p>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a><span class="fu">cat</span> index.html hr.html README.html <span class="op">&gt;</span> tmp.html</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a><span class="fu">rm</span> hr.html</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true"></a><span class="fu">mv</span> tmp.html index.html</span></code></pre></div>
+<p>These commands:</p>
+<ul>
+<li>create a new HTML file containing only <code>&lt;hr&gt;</code>, the horizontal rule</li>
+<li>concatenate the three HTML files that have been generated and store them back in <code>index.html</code></li>
+<li>remove the now-useless <code>hr.html</code> file<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></li>
+</ul>
 <ol start="5" type="1">
 <li>Run the following <code>rm</code> command:</li>
 </ol>
@@ -128,15 +138,19 @@
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true"></a></span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true"></a><span class="fu">perl</span> -0777 -pe <span class="st">&#39;s/&lt;style.*?&lt;\/style&gt;/&lt;link rel=&quot;stylesheet&quot; href=&quot;https:\/\/benrosenberg.info\/style.css&quot;&gt;/gs&#39;</span> index.html <span class="op">&gt;</span> tmp.html</span>
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true"></a></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true"></a><span class="fu">mv</span> tmp.html index.html</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true"></a><span class="fu">perl</span> -0777 -pe <span class="st">&#39;s/Directory Tree/Posts/gs&#39;</span> tmp.html <span class="op">&gt;</span> index.html</span>
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true"></a></span>
 <span id="cb6-9"><a href="#cb6-9" aria-hidden="true"></a><span class="ex">pandoc</span> README.md -o README.html</span>
 <span id="cb6-10"><a href="#cb6-10" aria-hidden="true"></a></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true"></a><span class="fu">cat</span> index.html README.html <span class="op">&gt;</span> tmp.html</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true"></a><span class="bu">echo</span> <span class="st">&quot;&lt;hr&gt;&quot;</span> <span class="op">&gt;</span> hr.html</span>
 <span id="cb6-12"><a href="#cb6-12" aria-hidden="true"></a></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true"></a><span class="fu">mv</span> tmp.html index.html</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true"></a><span class="fu">cat</span> index.html hr.html README.html <span class="op">&gt;</span> tmp.html</span>
 <span id="cb6-14"><a href="#cb6-14" aria-hidden="true"></a></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true"></a><span class="fu">rm</span> README.html</span></code></pre></div>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true"></a><span class="fu">rm</span> hr.html</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true"></a></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true"></a><span class="fu">mv</span> tmp.html index.html</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true"></a></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true"></a><span class="fu">rm</span> README.html</span></code></pre></div>
 <p>Run this script (also present in this directory, as you can see above) with the following command:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode bash good"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a><span class="ex">./update.sh</span></span></code></pre></div>
 <h3 id="tree-license"><code>tree</code> license</h3>
@@ -149,5 +163,6 @@ Charsets / OS/2 support © 2001 by Kyosuke Tokoro</code></pre>
 <ol>
 <li id="fn1" role="doc-endnote"><p>For some reason, trying to throw <code>stdin</code> into one of the files being used within the <code>perl</code> command causes the file to become empty. Not completely sure why. Since I was doing two replacements, I decided to just bounce <code>index.html</code> back and forth and avoid a call to <code>mv</code>, but it doesn’t really matter.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2" role="doc-endnote"><p>Same thing here, but I used <code>mv</code> since there’s only one call to <code>cat</code>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3" role="doc-endnote"><p>It would be nice if <code>cat</code> syntax allowed for <code>cat index.html "&lt;hr&gt;" README.html &gt; tmp.html</code>.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>

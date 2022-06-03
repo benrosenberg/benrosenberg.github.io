@@ -97,15 +97,23 @@ pandoc README.md -o README.html
 
 This command turns the README file you are reading into an HTML fragment.
 
-4. Run the following `cat` and `mv` commands:[^2]
+4. Run the following `echo`, `cat`, `rm`, and `mv` commands:[^2]
 
 ```{.bash .neutral}
-cat index.html README.html > tmp.html
+echo "<hr>" > hr.html
+
+cat index.html hr.html README.html > tmp.html
+
+rm hr.html
 
 mv tmp.html index.html
 ```
 
-These command concatenate the two HTML files that have been generated and store them back in `index.html`.
+These commands:
+
+ - create a new HTML file containing only `<hr>`, the horizontal rule
+ - concatenate the three HTML files that have been generated and store them back in `index.html`
+ - remove the now-useless `hr.html` file[^3]
 
 5. Run the following `rm` command:
 
@@ -124,11 +132,15 @@ tree -H '.' -L 1 --noreport --charset utf-8 | sed -e '/<hr>/,+7d' > index.html
 
 perl -0777 -pe 's/<style.*?<\/style>/<link rel="stylesheet" href="https:\/\/benrosenberg.info\/style.css">/gs' index.html > tmp.html
 
-mv tmp.html index.html
+perl -0777 -pe 's/Directory Tree/Posts/gs' tmp.html > index.html
 
 pandoc README.md -o README.html
 
-cat index.html README.html > tmp.html
+echo "<hr>" > hr.html
+
+cat index.html hr.html README.html > tmp.html
+
+rm hr.html
 
 mv tmp.html index.html
 
@@ -143,6 +155,7 @@ Run this script (also present in this directory, as you can see above) with the 
 
 [^1]: For some reason, trying to throw `stdin` into one of the files being used within the `perl` command causes the file to become empty. Not completely sure why. Since I was doing two replacements, I decided to just bounce `index.html` back and forth and avoid a call to `mv`, but it doesn't really matter.
 [^2]: Same thing here, but I used `mv` since there's only one call to `cat`.
+[^3]: It would be nice if `cat` syntax allowed for `cat index.html "<hr>" README.html > tmp.html`.
 
 ### `tree` license
 
