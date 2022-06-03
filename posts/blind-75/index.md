@@ -16,7 +16,7 @@ Each of the code blocks found in the problem discussions has on its left edge a 
 
 Some of the code blocks were adapted from other sources. The links to these sources are in a comment at the beginning of the code block.
 
-If you use any of the code or text from this page, please either cite the source given in the code and this page, or just cite this page ([https://benrosenberg.info/blind-75/](https://benrosenberg.info/blind-75/)).
+If you use any of the code or text from this page, please either cite the source given in the code and this page, or just cite this page ([https://benrosenberg.info/posts/blind-75/](https://benrosenberg.info/posts/blind-75/)).
 
 # Array
 
