@@ -6,6 +6,10 @@ perl -0777 -pe 's/<style.*?<\/style>/<link rel="stylesheet" href="https:\/\/benr
 
 perl -0777 -pe 's/Directory Tree/Posts/gs' tmp.html > index.html
 
+perl -0777 -pe 's/\/"/\/index.html"/gs' index.html > tmp.html
+
+mv tmp.html index.html
+
 pandoc README.md -o README.html
 
 echo "<hr>" > hr.html

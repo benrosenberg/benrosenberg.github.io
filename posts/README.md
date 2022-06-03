@@ -79,15 +79,23 @@ tree -H '.' -L 1 --noreport --charset utf-8 | sed -e '/<hr>/,+7d' > index.html
 
 This command turns the directory `.` (which is `posts/`) into a HTML file `index.html`, while removing the `tree` [author's acknowledgement](#tree-license) (which itself is rather distracting).
 
-2. Run the following `perl` commands:[^1]
+2. Run the following `perl` and `mv` commands:[^1]
 
 ```{.bash .neutral}
 perl -0777 -pe 's/<style.*?<\/style>/<link rel="stylesheet" href="https:\/\/benrosenberg.info\/style.css">/gs' index.html > tmp.html
 
 perl -0777 -pe 's/Directory Tree/Posts/gs' tmp.html > index.html
+
+perl -0777 -pe 's/\/"/\/index.html"/gs' index.html > tmp.html
+
+mv tmp.html index.html
 ```
 
-These commands replace all styling with a custom stylesheet and store the result back in `index.html`.
+These commands:
+
+ - replace all styling with a custom stylesheet and store the result back in `index.html`
+ - change the title used from `Directory Tree` to `Posts`
+ - make it so that all links to directories go to their `index.html` files
 
 3. Run the following `pandoc` command:
 
@@ -134,6 +142,10 @@ perl -0777 -pe 's/<style.*?<\/style>/<link rel="stylesheet" href="https:\/\/benr
 
 perl -0777 -pe 's/Directory Tree/Posts/gs' tmp.html > index.html
 
+perl -0777 -pe 's/\/"/\/index.html"/gs' index.html > tmp.html
+
+mv tmp.html index.html
+
 pandoc README.md -o README.html
 
 echo "<hr>" > hr.html
@@ -153,8 +165,8 @@ Run this script (also present in this directory, as you can see above) with the 
 ./update.sh
 ```
 
-[^1]: For some reason, trying to throw `stdin` into one of the files being used within the `perl` command causes the file to become empty. Not completely sure why. Since I was doing two replacements, I decided to just bounce `index.html` back and forth and avoid a call to `mv`, but it doesn't really matter.
-[^2]: Same thing here, but I used `mv` since there's only one call to `cat`.
+[^1]: For some reason, trying to throw `stdin` into one of the files being used within the `perl` command causes the file to become empty. Not completely sure why..
+[^2]: Same thing here.
 [^3]: It would be nice if `cat` syntax allowed for `cat index.html "<hr>" README.html > tmp.html`.
 
 ### `tree` license
