@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Game Theory Notes (Prelim 1)</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="https://benrosenberg.info/style.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+   var mathElements = document.getElementsByClassName("math");
+   var macros = [];
+   for (var i = 0; i < mathElements.length; i++) {
+    var texText = mathElements[i].firstChild;
+    if (mathElements[i].tagName == "SPAN") {
+     katex.render(texText.data, mathElements[i], {
+      displayMode: mathElements[i].classList.contains('display'),
+      throwOnError: false,
+      macros: macros,
+      fleqn: false
+     });
+  }}});
+  </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+  
+</head>
+<body>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#i.-assumptions-rationality-risk-aversion-and-types-of-games">I. Assumptions, rationality, risk-aversion, and types of games</a>
+<ul>
+<li><a href="#cournot-duopoly-games-as-functions">1. Cournot Duopoly: Games as functions</a></li>
+<li><a href="#rd-problem-games-as-decision-trees">2. R&amp;D Problem: Games as decision trees</a></li>
+<li><a href="#the-prisoners-dilemma-games-as-matrices">3. The Prisoner’s Dilemma: Games as matrices</a></li>
+</ul></li>
+<li><a href="#ii.-strategies-for-pure-games-iesds-rationalizability-and-nash-equilibrium">II. Strategies for pure games: IESDS, Rationalizability, and Nash Equilibrium</a>
+<ul>
+<li><a href="#strategy-1-iesds">Strategy 1: IESDS</a>
+<ul>
+<li><a href="#example-a-3times-3-matrix">Example (A): <span class="math inline">3\times 3</span> matrix</a></li>
+<li><a href="#example-b-cournot-duopoly">Example (B): Cournot Duopoly</a></li>
+<li><a href="#example-c-second-price-auction">Example (C): Second-price auction</a></li>
+</ul></li>
+<li><a href="#strategy-2-best-responses-and-rationalizability">Strategy 2: Best responses and rationalizability</a>
+<ul>
+<li><a href="#example-iesds-equilibria-vs.-rationalizable-equilibria">Example: IESDS equilibria vs. rationalizable equilibria</a></li>
+</ul></li>
+<li><a href="#strategy-3-nash-equilibria">Strategy 3: Nash equilibria</a></li>
+</ul></li>
+<li><a href="#iii.-mixed-strategies">III. Mixed strategies</a>
+<ul>
+<li><a href="#definitions-regarding-mixed-strategies">Definitions regarding mixed strategies</a></li>
+<li><a href="#example-a-rock-paper-scissors">Example (A): Rock-Paper-Scissors</a></li>
+<li><a href="#example-b-nickel-dime-game">Example (B): Nickel-Dime game</a></li>
+<li><a href="#example-c-2times-2-matrix">Example (C): <span class="math inline">2\times 2</span> matrix</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="i.-assumptions-rationality-risk-aversion-and-types-of-games">I. Assumptions, rationality, risk-aversion, and types of games</h1>
+<p>A <strong>decision</strong> has three features:</p>
+<ul>
+<li><strong>Actions</strong> an agent can choose,</li>
+<li>Possible consequences of these actions (<strong>outcomes</strong>), and</li>
+<li><strong>preference relations</strong> between these outcomes, e.g. <span class="math inline">x_1 \succ x_2</span> for strong preference and <span class="math inline">x_1 \succeq x_2</span> for weak preference.</li>
+</ul>
+<p>A <strong>payoff function</strong> quantifies the utility from an outcome (so if <span class="math inline">v(x_1) \geq v(x_2)</span>, then <span class="math inline">x_1</span> has <span class="math inline">\geq</span> payoff function value, and <span class="math inline">x_1 \succ x_2</span>)</p>
+<p>By assumptions of <strong>transitivity</strong> (if <span class="math inline">v(x_1) &gt; v(x_2)</span> and <span class="math inline">v(x_2) &gt; v(x_3)</span>, then <span class="math inline">v(x_1) &gt; v(x_3)</span> – see <em>Condorcet paradox</em>) and <strong>completeness</strong> (for any outcome <span class="math inline">x_n</span> in <span class="math inline">x</span>, either <span class="math inline">x_1 \succ x_2</span>, <span class="math inline">x_2 \succeq x_1</span>, or both)</p>
+<blockquote>
+<p><span class="math inline">\rightarrow</span> <strong>Proposition 1.1</strong>: If a set of outcomes <span class="math inline">x</span> is finite, then any rational preference relation over <span class="math inline">x</span> can be represented by a payoff function.</p>
+</blockquote>
+<blockquote>
+<p><span class="math inline">\rightarrow</span> <strong>Definition 1.2</strong>: An agent faced with a decision problem is <strong>rational</strong> if the agent chooses <span class="math inline">a^*</span> such that <span class="math inline">v(x(a^*)) \geq v(x(a))</span> for all possible choices of <span class="math inline">a</span>; or, in other words, if this agent <em>maximizes the payoff function</em>.</p>
+</blockquote>
+<p>Games can be displayed in such forms as functions, matrices, and decision trees:</p>
+<h2 id="cournot-duopoly-games-as-functions">1. Cournot Duopoly: Games as functions</h2>
+<p>The Cournot Duopoly is defined as follows, in <strong>normal form</strong>:</p>
+<ul>
+<li><span class="math inline">N = \{1,2\}</span> (2 players)</li>
+<li><span class="math inline">S_i = [0, \infty)</span> (possible strategies give <span class="math inline">0</span> to <span class="math inline">\infty</span>)</li>
+<li><span class="math inline">v_i(s_i, s_j) = (100 - s_i - s_j) \cdot s_i - s_i^2</span> (payoff function given strategies <span class="math inline">s_i</span> and <span class="math inline">s_j</span>)</li>
+</ul>
+<p>To maximize <span class="math inline">v_i</span>, we can first rewrite it as <span class="math inline">100 s_i - 2s_i^2 - s_i\cdot s_j</span>. Then, taking the derivative and setting it equal to <span class="math inline">0</span>: <span class="math display">\frac{\partial v_i}{\partial s_i} = 100 - 4s_i - s_j = 0</span></p>
+<p>Rearranging to get <span class="math inline">s_i</span>, we have <span class="math display">s_i = \frac{100 - s_j}{4}.</span> If we plug in the minimum value for <span class="math inline">s_j</span>, we can get an upper bound on the value of <span class="math inline">s_i</span>: <span class="math display">\frac{100 - 0}{4} = 25</span> Since <span class="math inline">s_i</span> is bounded above at <span class="math inline">25</span>, we can repeat this from the angle of <span class="math inline">s_j</span> as follows: <span class="math display">\frac{100 - 25}{4} = 18.75</span> …giving us a lower bound on the value of <span class="math inline">s_j</span>. We can make a simple program to do this in Python, stopping when we either iterate more than 1000 times or we are within <span class="math inline">\frac{1}{10000}</span> of the value we had at the previous iteration:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> prev_x <span class="op">=</span> <span class="op">-</span><span class="bu">float</span>(<span class="st">&#39;inf&#39;</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>iters <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="bu">abs</span>(x <span class="op">-</span> prev_x) <span class="op">&gt;</span> <span class="fl">1e-4</span> <span class="kw">and</span> iters <span class="op">&lt;</span> <span class="dv">1000</span>:</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    prev_x <span class="op">=</span> x</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> (<span class="dv">100</span> <span class="op">-</span> x)<span class="op">/</span><span class="dv">4</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    iters <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">round</span>(x,<span class="dv">2</span>))</span></code></pre></div>
+<pre><code>=&gt; 20.0</code></pre>
+<p>Alternatively, this problem happens to be solvable using the second derivative (as the interval does indeed converge to a single value) as follows: <span class="math display">\frac{\partial v_i}{\partial s_i^2} = - 4</span></p>
+<p>Since <span class="math inline">-4 &lt; 0</span>, we know that <span class="math inline">v_i</span> is concave down. Therefore, there must be one point which maximizes the function, which we can solve for using a system of equations, along with the use of symmetry and first-derivative optimization: <span class="math display">\begin{aligned}
+    100 - 4s_i -s_j &amp;= 0 \\
+    100 - 4s_i &amp;= s_j \\
+    100 - 4(100 - 4s_j) &amp;= s_j \\
+    100 - 400 + 16s_j &amp;= s_j \\
+    -300 &amp;= -15s_j\\
+    s_i = s_j &amp;= 20
+\end{aligned}</span></p>
+<p>Note that taking the second derivative and solving a system of equations is not guaranteed to yield the correct answer, as it does not work for ranges of answers. It is, however, a useful tool to check one’s work.</p>
+<h2 id="rd-problem-games-as-decision-trees">2. R&amp;D Problem: Games as decision trees</h2>
+<p>Example decision tree game:</p>
+<ul>
+<li><span class="math inline">N = \{1\}</span> (this is more of a decision than a game)</li>
+<li><span class="math inline">S_i = \{\text{go}, \text{don&#39;t go}\}</span></li>
+<li><span class="math inline">v_i</span> depends on successes and failures, and is defined using the following tree:</li>
+</ul>
+<figure>
+<img src="decision_tree.dot.png" alt="Decision tree" /><figcaption aria-hidden="true">Decision tree</figcaption>
+</figure>
+<p>We use <em>expected values</em> and <strong>backwards induction</strong> to find the optimal choice of <span class="math inline">[A, G]</span>: <span class="math display">\begin{aligned}
+    F &amp;= 18(.9) + 8(.1) = 17 \\
+    G &amp;= 19(.5) + 9(.5) = 14 \\
+    D &amp;= \max(F,G) = \max(17,14) = 17 \quad \text{by rationality} \\
+    E &amp;= 9(.5) + -1(.5) = 4 \\
+    B &amp;= D(.9) + E(.1) = 17(.9) + 4(.1) = 15.7 \\
+    C &amp;= 10(.5) = 5 \\
+    \text{(expected payoff)}\quad A &amp;= 15.7, \quad \text{found by \textit{going}}
+\end{aligned}</span></p>
+<p>Note that if going increased <span class="math inline">P(\text{success})</span> to <span class="math inline">.6</span> instead of <span class="math inline">.9</span>, it would probably be best <em>not</em> to go.</p>
+<p><strong>Risk-neutral</strong> implies that <span class="math inline">v(x) = x</span>; this may not be the case in real life, where a downside generally hurts more than an upside helps.</p>
+<p>To show that most people are <strong>risk-averse</strong> rather than risk-neutral, consider the following scenario: A person can accept $1000, or they can flip some number of coins given by sequence <span class="math inline">c</span> with the following rewards: <span class="math display">\text{reward}(c) = \begin{cases} \$1 &amp; c = [t] \\
+                                \$2 &amp; c = [h;t] \\
+                                \$4 &amp; c = [h;h;t] \\
+                                \vdots &amp; \vdots \\
+                                \$\infty &amp; c = [\underbrace{h; \dots}_{\infty \text{ times}};t]
+\end{cases}</span></p>
+<p>The expected value of the above reward is, where <span class="math inline">h_c</span> is the number of <span class="math inline">h</span> flips in sequence <span class="math inline">c</span>: <span class="math display">\sum_{h_c=0}^\infty 2^{h_c} \left(\frac{1}{2}\right)^{h_c} = \$\infty</span></p>
+<p>However, few people would take the coin flips: people are risk-averse.</p>
+<h2 id="the-prisoners-dilemma-games-as-matrices">3. The Prisoner’s Dilemma: Games as matrices</h2>
+<p>The Prisoner’s Dilemma problem is defined as follows:</p>
+<ul>
+<li><span class="math inline">N = \{1,2\}</span></li>
+<li><span class="math inline">S_i = \{C := \text{confess}, S := \text{stay silent}\}</span></li>
+<li><span class="math inline">v_i(s_i, s_j)</span> is symmetric with the following payoffs:
+<ul>
+<li><span class="math inline">v_i(C,C) = -4</span></li>
+<li><span class="math inline">v_i(C,S) = -1</span></li>
+<li><span class="math inline">v_i(S,C) = -5</span></li>
+<li><span class="math inline">v_i(S,S) = -2</span></li>
+</ul></li>
+</ul>
+<p>This can be written as a matrix like so: <span class="math display">\begin{array}{r||c|c}
+    P1 \backslash P2&amp; C &amp; S \\
+    \hline \hline
+    C &amp; (-4,-4) &amp; (-1,-5) \\
+    \hline
+    S &amp; (-5,-1) &amp; (-2,-2)
+\end{array}</span></p>
+<p>What should a player do in this scenario? <em>Strategies</em> will tell us.</p>
+<h1 id="ii.-strategies-for-pure-games-iesds-rationalizability-and-nash-equilibrium">II. Strategies for pure games: IESDS, Rationalizability, and Nash Equilibrium</h1>
+<p>A <strong>static game with complete information</strong> is a game, like above, where every player chooses an action simultaenously and independently, and all players know all possible actions of all players, all possible outcomes, the outcomes that result from the given actions, and the payoffs of all players. <strong>Pure strategies</strong> are deterministic plans of actions a player takes in every “situation of the game”.</p>
+<p>We say that strategy <span class="math inline">A</span> is <strong>strictly dominated</strong> by strategy <span class="math inline">B</span> if the payoff of strategy <span class="math inline">B</span> beats the payoff of strategy <span class="math inline">A</span> in all situations. For example, in the Prisoner’s Dilemma example above, since <span class="math inline">-4 &gt; -5</span> and <span class="math inline">-1 &gt; -2</span>, <span class="math inline">P2</span>’s action <span class="math inline">C</span> strictly dominates <span class="math inline">S</span>. The same is true for <span class="math inline">P1</span> by symmetry, so the <strong>strictly dominant</strong> strategy that remains is <span class="math inline">[C,C]</span>.</p>
+<blockquote>
+<p><span class="math inline">\rightarrow</span> By <strong>Claim 4.1</strong>, a player that is rational will never play a strictly dominated strategy.</p>
+</blockquote>
+<blockquote>
+<p>Thus, the only rational choice for each player is to choose <span class="math inline">C</span>.</p>
+</blockquote>
+<h2 id="strategy-1-iesds">Strategy 1: IESDS</h2>
+<p>The self-explaining <strong>IESDS</strong> (Iterated Elimination of Strictly Dominated Strategies) method eliminates strictly dominated strategies.</p>
+<h3 id="example-a-3times-3-matrix">Example (A): <span class="math inline">3\times 3</span> matrix</h3>
+<p>Consider the following game, given in normal form with payoff matrix below:</p>
+<ul>
+<li><span class="math inline">N = \{1,2\}</span></li>
+<li><span class="math inline">S_1 = \{U,M,D\}</span></li>
+<li><span class="math inline">S_2 = \{L,C,R\}</span></li>
+</ul>
+<p><span class="math display">\begin{array}{r||c|c|c}
+    P1 \backslash P2&amp; L &amp; C &amp; R \\
+    \hline \hline
+    U &amp; (4,3) &amp; (5,1) &amp; (6,2) \\
+    \hline
+    M &amp; (2,1) &amp; (8,4) &amp; (3,6) \\
+    \hline
+    D &amp; (3,0) &amp; (9,6) &amp; (2,8)
+\end{array}</span></p>
+<p>We use IESDS as follows:</p>
+<ul>
+<li><strong>For <span class="math inline">P2</span></strong>: <span class="math inline">2 &gt; 1</span>, <span class="math inline">6 &gt; 4</span>, and <span class="math inline">8 &gt; 6</span>, so <span class="math inline">C</span> is strictly dominated by <span class="math inline">R</span></li>
+<li><strong>For <span class="math inline">P1</span></strong>: <span class="math inline">4 &gt; 2</span> and <span class="math inline">4 &gt; 3</span>, and <span class="math inline">6 &gt; 3</span> and <span class="math inline">6 &gt; 2</span>; therefore, <span class="math inline">M</span> and <span class="math inline">D</span> are strictly dominated by <span class="math inline">U</span></li>
+<li><strong>For <span class="math inline">P2</span></strong>: <span class="math inline">3 &gt; 2</span>, so <span class="math inline">R</span> is strictly dominated by <span class="math inline">L</span>.</li>
+</ul>
+<p>Therefore, <span class="math inline">[U,L]</span> is the solution by IESDS.</p>
+<h3 id="example-b-cournot-duopoly">Example (B): Cournot Duopoly</h3>
+<p>See above: I <span class="math inline">\rightarrow</span> 1. Cournot Duopoly. The convergence method is really an example of IESDS.</p>
+<h3 id="example-c-second-price-auction">Example (C): Second-price auction</h3>
+<p>Strong dominance is not the only means of selecting a strategy. Consider a <strong>second-price auction</strong>, wherein players bid and the player with the highest bid only pays the amount of the second-highest bid. A small example, with only 2 players, could be defined as follows:</p>
+<ul>
+<li>Player <span class="math inline">P1</span>, who values the item at price <span class="math inline">v_1</span>, bids <span class="math inline">b_1</span></li>
+<li>Player <span class="math inline">P2</span>, who values the item at price <span class="math inline">v_2</span>, bids <span class="math inline">b_2</span></li>
+<li>The profit for player <span class="math inline">i</span> is <span class="math inline">v_i - b_{i+1\text{ mod } 2}</span> if player <span class="math inline">i</span> wins, and <span class="math inline">0</span> otherwise.</li>
+</ul>
+<p>We then have the following cases for <span class="math inline">P1</span>: <span class="math display">\text{profit} = \begin{cases} 
+    \begin{cases}
+        0 &amp; v_1 = b_2 \\
+        - &amp; v_1 &lt; b_2 \\
+        + &amp; v_1 &gt; b_2 
+    \end{cases} &amp; b_1 &gt; b_2 \\
+    0 &amp; b_1 &lt; b_2
+\end{cases}</span></p>
+<p>So, <span class="math inline">P1</span> only loses when <span class="math inline">v_1 &lt; b_2 &lt; b_1</span>, which cannot happen if <span class="math inline">b1 = v1</span>. Therefore, <span class="math inline">b_1 = v_1</span> is <strong>weakly dominant</strong>: that is, there is at least one scenario in which it is equal to other strategies, but there is also at least one scenario in which it dominates other strategies. Since the strategy is weakly dominant, it is also a <strong>best response</strong>.</p>
+<h2 id="strategy-2-best-responses-and-rationalizability">Strategy 2: Best responses and rationalizability</h2>
+<p>A <strong>best response</strong> is, given all opponent strategies, the best strategy a player can play. In other words: <span class="math display">BR_i = s_i^* \iff v_i (s_i^*, s_{-i}) \geq v_i(s_i, s_{-i}) \quad \forall s_i \in S_i.</span></p>
+<p>If we look at the <span class="math inline">3\times 3</span> matrix example from the previous part, we see that:</p>
+<ul>
+<li><span class="math inline">BR_1(L) = U</span>, <span class="math inline">BR_1(C) = D</span>, and <span class="math inline">BR_1(R) = U</span>
+<ul>
+<li>Therefore, it is never in the best interest of player <span class="math inline">P1</span> to play <span class="math inline">M</span></li>
+</ul></li>
+<li><span class="math inline">BR_2(U) = L</span>, <span class="math inline">BR_2(M) = R</span>, and <span class="math inline">BR_2(D) = R</span>
+<ul>
+<li>Therefore, it is never in the best interest of player <span class="math inline">P2</span> to play <span class="math inline">C</span></li>
+</ul></li>
+</ul>
+<p>Repeating with those choices taken out gives:</p>
+<ul>
+<li><span class="math inline">BR_1(L) = U</span> and <span class="math inline">BR_1(R) = U</span>
+<ul>
+<li>Therefore, it is never in the best interest of player <span class="math inline">P1</span> to play <span class="math inline">D</span></li>
+</ul></li>
+<li><span class="math inline">BR_2(U) = L</span> and <span class="math inline">BR_2(D) = R</span></li>
+</ul>
+<p>So, since <span class="math inline">BR_1(L) = U</span> and <span class="math inline">BR_2(U) = L</span>, we know that <span class="math inline">[U,L]</span> is the <strong>rationalizable equilibrium</strong>.</p>
+<blockquote>
+<p><strong>Proposition 4.3</strong>: A strictly dominated strategy <em>cannot</em> be a best response, beacuse if <span class="math inline">v_i(s_i^*, s_{-i}) &lt; v_i(s_i, s_{-i})</span> for some <span class="math inline">s_i</span>, then <span class="math inline">v_i(s_i^*, s_{-i}) \not\geq v_i(s_i, s_{-i})</span> for that <span class="math inline">s_i</span>.</p>
+</blockquote>
+<h3 id="example-iesds-equilibria-vs.-rationalizable-equilibria">Example: IESDS equilibria vs. rationalizable equilibria</h3>
+<p>However, the set of rationalizable equilibria is a <em>subset</em> of IESDS equilibria. Consider the following game:</p>
+<p><span class="math display">\begin{array}{r||c|c}
+    P1 \backslash P2&amp; L &amp; R \\
+    \hline \hline
+    U &amp; (3,0) &amp; (0,0) \\
+    \hline
+    M &amp; (0,0) &amp; (3,0) \\
+    \hline
+    D &amp; (1,0) &amp; (1,0)
+\end{array}</span></p>
+<p>According to IESDS, there are no strongly dominated strategies. Therefore, all 6 of the possible strategies survive IESDS: <span class="math display">\text{IESDS} \implies \{[L,U], [R,U], [L,M], [R,M], [L,D], [R,D]\}</span></p>
+<p>We can, however, pare down the strategies using best responses as follows:</p>
+<ul>
+<li><span class="math inline">BR_1(L) = U</span> and <span class="math inline">BR_1(R) = M</span>, so <span class="math inline">P1</span> will never play <span class="math inline">D</span></li>
+<li><span class="math inline">BR_2(U) = BR_2(M) = BR_2(D) = \{L, R\}</span>. We can’t really say anything about <span class="math inline">P2</span>.</li>
+</ul>
+<p>With this alone we reduce the size of our outcome set by <span class="math inline">\frac{1}{3}</span>: <span class="math display">\text{BR} \implies \{[L, U], [R, U], [L,M], [R,M]\}</span></p>
+<h2 id="strategy-3-nash-equilibria">Strategy 3: Nash equilibria</h2>
+<p>A <strong>Nash equilibrium</strong> of <span class="math inline">[A, B]</span> between players <span class="math inline">i</span> and <span class="math inline">j</span> holds when <span class="math inline">BR_i(A) = B</span> and <span class="math inline">BR_j(B) = A</span>, or more formally: <span class="math display">s_i^* \in BR_i (s_{-i}^*) \quad \forall i.</span></p>
+<p>In the above example, <span class="math inline">BR_1(L) = U</span>, <span class="math inline">BR_2(U) = L</span>, <span class="math inline">BR_1(R) = M</span>, and <span class="math inline">BR_2(M) = R</span>, so the set of Nash equilibria is <span class="math inline">\{[L,U], [R,M]\}</span>.</p>
+<blockquote>
+<p><strong>Proposition 5.1</strong>: If a strategy profile is a strictly dominant strategy equilibrium, a unique IESDS survivor, or a unique rationalizable strategy profile, it is a Nash equilibrium.</p>
+</blockquote>
+<p>Unfortunately, rational actors’ collective selfishness ends up detracting from the greater good. This is called the <strong>Tragedy of the Commons</strong>.</p>
+<p>For example, if there are <span class="math inline">K</span> units of clean air, each firm <span class="math inline">i</span> uses <span class="math inline">k_i</span> units, and payoffs <span class="math inline">v_i(k_i, k_{-i})</span> are <span class="math display">v_i(k_i, k_{-i}) = \ln(k_i) + \ln\left(K - \sum_{j} k_j\right),</span></p>
+<p>then we have the following: <span class="math display">BR_i(k_i) = \text{argmax}_{k_i} \left[\ln\left(K - \sum_{j} k_j\right)\right]</span> <span class="math display">\begin{aligned}
+    \frac{\partial v_i(k_i, k_{-i})}{\partial k_i} &amp;= \frac{1}{k_i} + \frac{1}{K - \sum_{j} k_j}(-1) = 0 \\
+    \frac{1}{k_i} &amp;= \frac{1}{K - \sum_{j} k_j} \\
+    k_i &amp;= K - \sum_{j} k_j \\
+    &amp;= K - \left[\left(\sum_{j\neq i} k_j\right) + k_i\right] \\
+    2k_i &amp;= K - \sum_{j\neq i} k_j \\
+    k_i &amp;= \frac{1}{2} \left(\sum_{j\neq i} k_j\right)
+\end{aligned}</span></p>
+<p>If there are <span class="math inline">2</span> firms, then <span class="math inline">k_1 = k_2 = \frac{1}{3} K</span> at the Nash equilibrium.</p>
+<p>A government, on the other hand, would maximize total welfare: <span class="math display">w := \ln(k_1) + \ln(K - k_1 - k_2) + \ln(k_2) + \ln(K - k_2 - k_1)</span> <span class="math display">\frac{\partial w}{\partial k_1} = \frac{1}{k_1} - \frac{2}{K - k_1 - k_2}</span></p>
+<p>By symmetry, setting <span class="math inline">\frac{\partial w}{\partial k_1} = 0</span> reveals <span class="math inline">k_1 = k_2 = \frac{1}{4}K</span> at the government optimum. Thus, the Nash equilibrium of a game is not necessarily the best for total welfare.</p>
+<h1 id="iii.-mixed-strategies">III. Mixed strategies</h1>
+<p>Some games have no pure strategy Nash equilibrium. In Rock-Paper-Scissors, for instance:</p>
+<ul>
+<li><span class="math inline">BR(\text{Rock}) = \text{Paper}</span>$</li>
+<li><span class="math inline">BR(\text{Paper}) = \text{Scissors}</span>$</li>
+<li><span class="math inline">BR(\text{Scissors}) = \text{Rock}</span>$</li>
+</ul>
+<p>(Note that the above relationships and the symmetry of the above game imply that the game is not transitive.)</p>
+<p>If <span class="math inline">S_i = \{s_1, \dots, s_n\}</span> is the <strong>pure strategy</strong> set for player <span class="math inline">i</span>, we define <strong>mixed strategies</strong> to be of the form “<span class="math inline">s_{ik}</span> played with probability <span class="math inline">\sigma_i(s_{ik})</span>”, or in the case of Rock-Paper-Scissors: <span class="math display">\sigma_1(R) = \frac{1}{3} \quad \sigma_1(P) = \frac{1}{3} \quad \sigma_1(S) = \frac{1}{3}</span></p>
+<p>Note that <span class="math inline">\sum_k s_{ik} = 1</span>. In pure strategies, <span class="math inline">\sigma_i(s_i) = 1</span> for any <span class="math inline">s</span>.</p>
+<h2 id="definitions-regarding-mixed-strategies">Definitions regarding mixed strategies</h2>
+<blockquote>
+<p><span class="math inline">\rightarrow</span> <strong>Definition 6.3</strong>: Over interval <span class="math inline">S_i</span>, a <strong>mixed strategy</strong> for player <span class="math inline">i</span> is a CDF (cumulative distribution function) <span class="math inline">F_i : S_i \rightarrow [0,1]</span> where a player plays <span class="math inline">s_i \leq x</span> with probability <span class="math inline">\Pr(s_i\leq x) = F_i(x)</span>. If <span class="math inline">F_i(\cdot)</span> is differentiable with density <span class="math inline">f_i(\cdot)</span>, then we say that <span class="math inline">s_i\in S_i</span> is <strong>in the support</strong> of <span class="math inline">F_i(\cdot)</span> if <span class="math inline">f_i(s_i) &gt; 0</span>; or in other words, <span class="math inline">s_i</span>’s rationality as a strategy is vouched for by <span class="math inline">F_i</span> if <span class="math inline">f_i(s_i) &gt; 0</span>.</p>
+</blockquote>
+<blockquote>
+<p><span class="math inline">\rightarrow</span> <strong>Definition 6.4</strong>: A <strong>belief</strong> of player <span class="math inline">i</span> is a probability distribution <span class="math inline">\pi_i\in \Delta S_{-i}</span> over the strategies of his opponents. We denote the probability player <span class="math inline">i</span> assigns to his opponents playing <span class="math inline">s_{-i} \in S_{-i}</span> as <span class="math inline">\pi_i(s_{-i})</span>.</p>
+</blockquote>
+<blockquote>
+<p><span class="math inline">\rightarrow</span> <strong>Definition 6.5</strong>: The <strong>expected payoff</strong> of player <span class="math inline">i</span> when he chooses <em>pure strategy</em> <span class="math inline">s_i\in S_i</span> and all other players play mixed strategies <span class="math inline">\sigma_{-i}\in \Delta S_{-i}</span> is as follows: <span class="math display">v_i(s_i, \sigma_{-i}) = \sum_{s_{-i}\in S_{-i}} \sigma_{-i} (s_{-i}) v_i (s_i, s_{-i}).</span></p>
+</blockquote>
+<blockquote>
+<p>Similarly, the expected payoff of player <span class="math inline">i</span> when he chooses <em>mixed strategy</em> <span class="math inline">\sigma_i\in \Delta S_i</span> and all other players play mixed strategies <span class="math inline">\sigma_{-i}\in \Delta S_{-i}</span> is as follows: <span class="math display">\begin{aligned} 
+v_i(\sigma_i, \sigma_{-i}) &amp;= \sum_{s_{i}\in S_{i}} \sigma_{i} (s_{i}) v_i (s_i, \sigma_{-i}) \\
+&amp;= \sum_{s_i\in S_i} \left(\sum_{s_{-i}\in S_{-i}} \sigma_{-i} (s_{-i}) v_i (s_i, s_{-i})\right)
+\end{aligned}</span></p>
+</blockquote>
+<h2 id="example-a-rock-paper-scissors">Example (A): Rock-Paper-Scissors</h2>
+<p>For example, in Rock-Paper-Scissors, if player <span class="math inline">2</span> plays the following <span class="math inline">\sigma_2</span>… <span class="math display">\sigma_2(R) = \sigma_2(P) = \frac{1}{2}, \sigma_2(S) = 0</span></p>
+<p>…then we get the following payoffs for player <span class="math inline">1</span>:</p>
+<ul>
+<li><span class="math inline">v_1(R, \sigma_2) = \frac{1}{2} (-1) + \frac{1}{2} (0) = -\frac{1}{2}</span></li>
+<li><span class="math inline">v_1(P, \sigma_2) = \frac{1}{2} (0) + \frac{1}{2} (1) = \frac{1}{2}</span></li>
+<li><span class="math inline">v_1(S, \sigma_2) = \frac{1}{2} (1) + \frac{1}{2} (-1) = 0</span></li>
+</ul>
+<p>Thus, the best response is <span class="math inline">\{P\}</span>. This makes intuitive sense given that no matter what, <span class="math inline">P</span> can never be beaten by player <span class="math inline">2</span> because they never play <span class="math inline">S</span>.</p>
+<h2 id="example-b-nickel-dime-game">Example (B): Nickel-Dime game</h2>
+<p>We define the Nickel-Dime game as follows:</p>
+<p><span class="math display">\begin{array}{r||c|c}
+    P1 \backslash P2&amp; N &amp; D \\
+    \hline \hline
+    N &amp; (5,-5) &amp; (-5,10) \\
+    \hline
+    D &amp; (-10,5) &amp; (10,-10) 
+\end{array}</span></p>
+<p>In calculating the Nash equilibrium for the above game, assume that <span class="math inline">P2</span> plays <span class="math inline">\sigma_2</span>, and that <span class="math inline">p = \Pr(\text{Nickel})</span> and that <span class="math inline">1-p = \Pr(\text{dime})</span>.</p>
+<p>We calculate the Nash equilibria using best-responses as follows:</p>
+<ul>
+<li><span class="math inline">BR_1(N, \sigma_2) = 5p + -10(1-p) = 15p-10</span></li>
+<li><span class="math inline">BR_1(D,\sigma_2) = -5p + 10(1-p) = -15p+10</span></li>
+</ul>
+<p>The best choice for <span class="math inline">P1</span> depends on <span class="math inline">p</span>, and can be calculated as follows: <span class="math display">\begin{aligned}
+    15p - 10 &amp;&gt; -15p + 10 \\
+    -20 &amp;&gt; -30p \\
+    2 &amp;&lt; 3p \\
+    \frac{2}{3} &amp;&lt; p
+\end{aligned}</span></p>
+<p>Thus, if <span class="math inline">p &gt; \frac{2}{3}</span>, then <span class="math inline">BR_1</span> is <span class="math inline">N</span>.</p>
+<p>And assuming the opposite for player <span class="math inline">P1</span>:</p>
+<ul>
+<li><span class="math inline">BR_2(N,\sigma_1) = -5q + 10(1-q) = -15q+10</span></li>
+<li><span class="math inline">BR_2(D, \sigma_1) = 5q + -10(1-q) = 15q-10</span></li>
+</ul>
+<p>And with similar calculations: <span class="math display">\begin{aligned}
+    -15p - 10 &amp;&gt; 15p + 10 \\
+    -30q &amp;&gt; -20 \\
+    3q &amp;&lt; 2 \\
+    q &amp;&lt; \frac{2}{3}
+\end{aligned}</span></p>
+<p>So if <span class="math inline">q &lt; \frac{2}{3}</span>, then <span class="math inline">BR_2</span> is <span class="math inline">N</span> as well.</p>
+<p>It turns out that if <span class="math inline">p = q = \frac{2}{3}</span>, then the players are indifferent about their choice between <span class="math inline">N</span> and <span class="math inline">D</span>.</p>
+<p>For either player: <span class="math display">P1: BR_1((p, 1-p)) = \begin{cases} N &amp; p &gt; \frac{2}{3} \\ D &amp; p &lt; \frac{2}{3} \\ \{N,D\} &amp; p = \frac{2}{3} \end{cases}</span> <span class="math display">P2: BR_2((q, 1-q)) = \begin{cases} N &amp; q &lt; \frac{2}{3} \\ D &amp; q &gt; \frac{2}{3} \\ \{N,D\} &amp; q = \frac{2}{3} \end{cases}</span></p>
+<p>In the last of the three cases for each of these, any mixed combination of <span class="math inline">N</span> or <span class="math inline">D</span> has equal expectation.</p>
+<p>Note that the Nash equilibrium here is (in the form <span class="math inline">(N,D)</span>): <span class="math display">\left[\left(\frac{2}{3}, \frac{1}{3}\right), \left(\frac{1}{3}, \frac{2}{3}\right)\right]</span></p>
+<p>By <strong>Proposition 6.1</strong>, if <span class="math inline">\sigma^* = (\sigma_1^*, \sigma_2^*, \dots, \sigma_n^*)</span> is a Nash equilibrium, and player <span class="math inline">P1</span> has pure strategies <span class="math inline">s_i</span> and <span class="math inline">s_i&#39;</span> as well as mixed strategy <span class="math inline">\sigma_i^*</span> which is a combination of <span class="math inline">s_i</span> and <span class="math inline">s_i&#39;</span>, then <span class="math inline">v_i</span> is as follows: <span class="math display">v_i(s_i, \sigma_{-i}^*) = v_i(s_i^*, \sigma_{-i}^*) = v_i(\sigma_i, \sigma_{-i}).</span></p>
+<p>If this were <em>not</em> the case – say, <span class="math inline">v_i(s_i, \sigma_{-i}^*) &lt; v_i(s_i&#39;, \sigma_{-i}^*)</span> – then it would <em>never</em> be better to play <span class="math inline">s_i&#39;</span> over <span class="math inline">s_i</span>. If a player is randomizing between two strategies, <em>the player must be indifferent between them</em>. The reason for playing a mixed strategy is so that another player cannot intuit the original player’s strategy.</p>
+<h2 id="example-c-2times-2-matrix">Example (C): <span class="math inline">2\times 2</span> matrix</h2>
+<p>Consider the following example: <span class="math display">\begin{array}{r||c|c}
+    P1 \backslash P2&amp; C &amp; R \\
+    \hline \hline
+    M &amp; (0,0) &amp; (3,5) \\
+    \hline
+    D &amp; (4,4) &amp; (0,3) 
+\end{array}</span></p>
+<p>By <em>pure strategy</em>:</p>
+<ul>
+<li><span class="math inline">BR_1(C) = D</span>, <span class="math inline">BR_1(R) = M</span></li>
+<li><span class="math inline">BR_2(M) = R</span>, <span class="math inline">BR_2(D) = C</span></li>
+</ul>
+<p>So <span class="math inline">[C,D]</span> and <span class="math inline">[M,R]</span> are <em>pure</em> equilibria.</p>
+<p>For a <em>mixed</em> strategy:</p>
+<ul>
+<li><p><span class="math inline">v_1(M, \sigma_2^*) = \sigma_2^*(C) v_1(M,C) + \sigma_2^*(R) v_1(M,R)</span></p></li>
+<li><p><span class="math inline">v_1(D, \sigma_2^*) = \sigma_2^*(C) v_1(D,C) + \sigma_2^*(R) v_1(D,R)</span></p></li>
+<li><p><span class="math inline">v_1(M,\sigma_2^*) = 3\sigma_2^*(R) = 2(1-\sigma_2^*(C)) = 3 - 3\sigma_2^*(C)</span></p></li>
+<li><p><span class="math inline">v_1(M,\sigma_2^*) = 4\sigma_2^*</span></p></li>
+</ul>
+<p>So: <span class="math display">\begin{aligned}
+    3 - 3\sigma_2^*(C) &amp;&gt; 4\sigma_2^* \\
+    3 &amp;&gt; 7\sigma_2^* \\
+    \frac{3}{7} &amp;&gt; \sigma_2^* 
+\end{aligned}</span></p>
+<p>Thus, <span class="math inline">\sigma_2^* = (\Pr(C), \Pr(R)) = \left(\frac{3}{7}, \frac{4}{7}\right)</span>.</p>
+</body>
+</html>

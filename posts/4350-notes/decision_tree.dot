@@ -1,0 +1,20 @@
+digraph G {
+  rankdir=LR;
+  A, B, C, D, E, F, G [shape=box];
+  "18", "8", "19", "9", "9 ", "-1", "10", "0" [shape=box];
+
+  A -> B [label="go"];
+  A -> C [label="not go"];
+  B -> D [label=".9"];
+  B -> E [label=".1"];
+  C -> "10" [label=".5"];
+  C -> "0" [label=".5"];
+  D -> F [label="go"];
+  D -> G [label="not go"];
+  E -> "9 " [label=".5"];
+  E -> "-1" [label=".5"];
+  F -> "18" [label=".9"];
+  F -> "8" [label=".1"];
+  G -> "19" [label=".5"];
+  G -> "9" [label=".5"];
+}
