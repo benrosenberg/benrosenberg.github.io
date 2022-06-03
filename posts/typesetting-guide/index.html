@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Ben Rosenberg" />
+  <title>The Right Way to Typeset: Getting started with Pandoc Markdown</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #ebab34; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #c092fc; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="https://benrosenberg.info/style.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+   var mathElements = document.getElementsByClassName("math");
+   var macros = [];
+   for (var i = 0; i < mathElements.length; i++) {
+    var texText = mathElements[i].firstChild;
+    if (mathElements[i].tagName == "SPAN") {
+     katex.render(texText.data, mathElements[i], {
+      displayMode: mathElements[i].classList.contains('display'),
+      throwOnError: false,
+      macros: macros,
+      fleqn: false
+     });
+  }}});
+  </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">The Right Way to Typeset: Getting started with Pandoc Markdown</h1>
+<p class="author"><a href="https://benrosenberg.info">Ben Rosenberg</a></p>
+<p class="date">3/2/2022</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#prerequisites">Prerequisites</a></li>
+<li><a href="#markdown-basics">Markdown basics</a></li>
+<li><a href="#setting-up-your-environment">Setting up your environment</a>
+<ul>
+<li><a href="#choosing-your-editor">Choosing your editor</a></li>
+<li><a href="#getting-comfortable">Getting comfortable</a>
+<ul>
+<li><a href="#vscode-extensions">VSCode Extensions</a></li>
+</ul></li>
+<li><a href="#vim-plugins">Vim plugins</a></li>
+</ul></li>
+<li><a href="#where-to-go-from-here">Where to go from here</a>
+<ul>
+<li><a href="#html-custom-css">HTML: Custom CSS</a></li>
+<li><a href="#pdf-using-more-latex-in-your-markdown-using-specific-latex-packages">PDF: Using more <span class="math inline">\LaTeX</span> in your Markdown; using specific <span class="math inline">\LaTeX</span> packages</a></li>
+</ul></li>
+</ul>
+</nav>
+<h2 id="introduction">Introduction</h2>
+<p>This guide is meant for people who have little to no experience with non-WYSIWYG (What You See Is What You Get) editing. I hope that it sheds some light on how easy it can be to use non-WYSIWYG formats and that it helps people create a setup that works for them insofar as efficient typesetting is concerned.</p>
+<p>Rather than Microsoft Word or Pages or Google Docs or what have you, this tutorial will teach you how to use Markdown, which is a versatile form of plaintext that can be compiled into other formats (like PDFs or HTML) or used as is (as in a default GitHub README.md file). I’m not going to try to justify the use of plaintext over something like MS Word or its ilk, as there are many other opinion pieces that do as good a job as I could or better. My hope is that after reading through this guide and following along, you’ll come to that realization yourself.</p>
+<p>We’ll begin with some basics of Markdown, and then go into setting up a nice editing environment to make your life easier. After that we’ll look at some more complex things that you may want to look into after you’re comfortable with everything else.</p>
+<h1 id="prerequisites">Prerequisites</h1>
+<p>In order for everything to work as intended on your machine, you’ll need to install some packages. The first thing is <a href="https://pandoc.org/installing.html"><code>pandoc</code></a>.</p>
+<p>If you don’t plan on compiling to PDF, and only want to compile to HTML, then you don’t need to install <span class="math inline">\LaTeX</span>. But if you do want to compile to PDF (and by extension, use <span class="math inline">\LaTeX</span> in compilation) you should install <a href="https://tug.org/texlive/acquire-netinstall.html">TeX Live</a>, which is a bundle of <span class="math inline">\LaTeX</span> packages that work for 99% of use cases. If you aren’t running Windows please see <a href="https://tug.org/texlive/quickinstall.html">this page</a> instead.</p>
+<h1 id="markdown-basics">Markdown basics</h1>
+<p>All flavors of Markdown have the same basic syntax (for the most part). The specific type of Markdown we’ll be looking at in this tutorial is Pandoc Markdown, described <a href="https://pandoc.org/MANUAL.html#pandocs-markdown">here</a> in more depth. Here is the most relevant subset of the syntax for Pandoc Markdown:</p>
+<ul>
+<li>If you want to make <strong>bold text</strong>, use double asterisks or double underscores like so: <code>**bold text**</code>, <code>__bold text__</code></li>
+<li>If you want to make <em>italicized text</em>, use single asterisks or single underscores like so: <code>*italicized text*</code>, <code>_italicized text_</code></li>
+<li>If you want to make text that is both <strong><em>bold and italicized</em></strong>, use triple asterisks (<em>not</em> underscores) like so: <code>***bold and italicized***</code></li>
+<li>If you want to make text that is <code>monospace</code>, use backticks like so: <code>`monospace`</code>
+<ul>
+<li>If you want to make a full code block then you’ll want to use triple backticks in an unindented portion of your document (i.e., not in a list). You can also specify a certain language to use syntax highlighting for; in the example below, Python is chosen.</li>
+</ul></li>
+</ul>
+<pre><code>```python
+from functools import cache
+
+@cache
+def fib(n):
+    if n &lt;= 1: return 1
+    return fib(n-1) + fib(n-2)
+```</code></pre>
+<p>This produces the following:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> functools <span class="im">import</span> cache</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="at">@cache</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fib(n):</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> n <span class="op">&lt;=</span> <span class="dv">1</span>: <span class="cf">return</span> <span class="dv">1</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> fib(n<span class="op">-</span><span class="dv">1</span>) <span class="op">+</span> fib(n<span class="op">-</span><span class="dv">2</span>)</span></code></pre></div>
+<ul>
+<li>To use various headers, use hashtags (<code>#</code>). One hashtag will give you the largest header, two will give you the second largest, etc.:</li>
+</ul>
+<div class="sourceCode" id="cb3"><pre class="sourceCode md"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Section</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">## Subsection</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">### Subsubsection</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Subsubsubsection</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="fu">##### Subsubsubsection</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="fu">###### Subsubsubsubsection</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>...</span></code></pre></div>
+<ul>
+<li>To create a list, either use hyphens for an unordered list or numbers for a numbered list:</li>
+</ul>
+<div class="sourceCode" id="cb4"><pre class="sourceCode md"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ss"> - </span>This is an element of an unordered list</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ss"> - </span>So is this</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>Indent to make sublists</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>This is also an element of the same sublist</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="ss"> - </span>Back to the original list</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>This is the first element of an ordered list</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>This is the second</span></code></pre></div>
+<ul>
+<li>To create <a href="https://en.wikipedia.org/wiki/Hyperlink">hyperlinks</a>, use square brackets and parentheses like so: <code>[link to Google](https://www.google.com)</code>
+<ul>
+<li>To insert an image, you can use similar syntax. Just include an exclamation point like so: <code>![image caption](https://image-location.tld)</code></li>
+</ul></li>
+<li>To add document metadata, use YAML at the top of your document:</li>
+</ul>
+<div class="sourceCode" id="cb5"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> My Document</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span><span class="at"> Ben Rosenberg</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">date</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;3/2/2022&quot;</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div>
+<p>Alternatively, if compiling to PDF, you can specify the date to be today’s day using:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">date</span><span class="kw">:</span><span class="at"> \today</span></span></code></pre></div>
+<p>The <code>\today</code> command is a <span class="math inline">\LaTeX</span> command that returns the current date. More information about how <span class="math inline">\LaTeX</span> and Pandoc Markdown interact will be covered in the last section.</p>
+<ul>
+<li>Speaking of <span class="math inline">\LaTeX</span>, the last important thing to be familiar with is how to typeset math. Pandoc recognizes dollar signs as delimiters for mathematical expressions (so make sure you escape them with backslashes if you don’t want to start typing in <span class="math inline">\LaTeX</span> math!). I’m not going to go over <span class="math inline">\LaTeX</span> in this guide, but you can read up on how to typeset mathematical expressions with <span class="math inline">\LaTeX</span> syntax here: <a href="http://tug.ctan.org/info/short-math-guide/short-math-guide.pdf">PDF</a></li>
+</ul>
+<h1 id="setting-up-your-environment">Setting up your environment</h1>
+<p>Now that you know all the relevant syntax, you’re ready to start writing Markdown on your own. But in order to do so, you’ll need a decent editor. For programmers reading this, your general code editor should be fine – after all, Markdown is basically just another programming language (although it may not be Turing complete). But I do have two recommendations either way:</p>
+<h2 id="choosing-your-editor">Choosing your editor</h2>
+<p>My first recommendation is <a href="https://code.visualstudio.com/">Visual Studio Code</a> (VSCode). VSCode is a reliable code editor (as the name would imply) and is great for all sorts of things, but is also really good for typesetting in Markdown. The real benefit of VSCode is the ability to use extensions to get additional features and improve your user experience. There are many extensions which make editing Markdown painless (and maybe even fun!). I offer my recommendations for some of said extensions in the next section.</p>
+<p>The second recommendation I have is <a href="https://www.vim.org/">Vim</a>. Vim is a command-line editor with a notoriously <a href="editor_learning_curves.png">high learning curve</a> that can be very powerful once you learn to use it. There’s a handy utility that gets installed with it that helps you learn how to use the editor: type <code>vimtutor</code> in your terminal to open it.</p>
+<p>In my opinion it’s good to learn Vim to have the ability to edit in it, as it’s probably the fastest CLI editor to use (maybe Emacs is close) and its progenitor <code>vi</code> comes installed by default on basically every UNIX-like OS. If you’re <code>ssh</code>-ing into a headless machine, you probably won’t be able to edit using VSCode, so it’s good to know your way around Vim.</p>
+<p>If you’re not a programmer and don’t plan on using the terminal at all, Vim is likely not for you. I’d stick with VSCode. Also, importantly, I do <em>not</em> recommend using Vim if you are running Windows. UNIX-like environments are where Vim shines, not within the cursed GUI Vim that is provided for Windows users.</p>
+<h2 id="getting-comfortable">Getting comfortable</h2>
+<p>To make yourself comfortable in the editor of your choice, it’s always a good idea to choose a color scheme and some add-ons. How this works will vary depending on what editor you chose.</p>
+<h3 id="vscode-extensions">VSCode Extensions</h3>
+<p>In VSCode, there’s an extension panel that you can get to by hitting <code>Ctrl+Shift+X</code> on your keyboard (unless you’ve bound that to something else, in which case you probably already know what to hit instead). In the search bar at the top, try looking up “themes” and choosing one that you like. If you’re going to spend hours staring at the same application, at the very least it should look good, right? (I personally use the <a href="https://marketplace.visualstudio.com/items?itemName=sainnhe.gruvbox-material">Gruvbox Material</a> extension, which I find to be easy on the eyes.)</p>
+<p>Next, there are some extensions that I specifically recommend for Markdown editing:</p>
+<ul>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=DougFinke.vscode-pandoc">vscode-pandoc</a>: <strong>this is the most important one!</strong> After installing this extension, when working on a file, you can compile directly to PDF (or HTML) with a couple keystrokes. Save your file with <code>Ctrl+S</code>, and then hit <code>Ctrl+K</code> and then <code>P</code>. This will bring up a list of options to compile to, from which you can choose either PDF, DOCX (not recommended), or HTML.</li>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=sleistner.vscode-fileutils">File Utils</a>: makes certain things that should be easy but are difficult by default in VSCode, easy again. If you want to rename a file while working on it, this extension will let you do that without having to “Save As”.</li>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one">Markdown All In One</a>: this is also really useful. Hitting <code>Ctrl+K+V</code> from within a Markdown file you’re editing once you’ve installed this extension will pop up a preview of your file to the side. Very useful for making sure it looks good before compiling! (Note that some of the <span class="math inline">\LaTeX</span> may not render as this is an HTML preview and not a PDF preview.)</li>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=mushan.vscode-paste-image">Paste Image</a>: this extension will allow you to paste images from your clipboard (e.g., after screenshotting with <code>Win+Shift+S</code>) into your Markdown file (with the correct syntax) using <code>Ctrl+Alt+V</code>. The extension saves the image to the current working directory so it’s accessible from the file, but you can also change that setting in the Settings menu (<code>Ctrl+,</code>).</li>
+</ul>
+<h2 id="vim-plugins">Vim plugins</h2>
+<p>Much like the <code>vscode-pandoc</code> extension above, you need a way to actually compile your Markdown when working with Vim as well. There are ways to do it from within Vim itself, but I personally just made two different Python scripts that I call depending on whether I want to compile to HTML or PDF, and added aliases for both of them within my <code>.zshrc</code> (it would be <code>.bashrc</code> for people using Bash instead of Zsh). If you want to see the general syntax for calling <code>pandoc</code> from the command line, just run <code>man pandoc</code> or read the manual <a href="https://pandoc.org/MANUAL.html">here</a>.</p>
+<p>Besides that, I’m not really a whiz at Vim, but I do use the following general setup:</p>
+<ul>
+<li><a href="https://neovim.io/">Neovim</a></li>
+<li><code>syntax enable</code> in the editor config to enable syntax highlighting (if you use Neovim this is enabled by default)</li>
+<li><code>set number</code> in the editor config to enable line numbering (if you use Neovim this is also enabled by default)</li>
+</ul>
+<p>I also recommend that, similarly to VSCode, you make the colors of your terminal look nice. You can generally do this in your terminal settings. If you use <a href="https://st.suckless.org/"><code>st</code></a> like me, it’s a little more complicated as you need to edit a config makefile manually and then recompile.</p>
+<h1 id="where-to-go-from-here">Where to go from here</h1>
+<p>Now you should have a decent setup. All that’s left is to go over some more intricate details of Pandoc Markdown.</p>
+<h2 id="html-custom-css">HTML: Custom CSS</h2>
+<p>If you’re planning on compiling mainly to HTML, you’ll likely want to add some custom CSS to go with your files. You can choose a custom CSS file to use in VSCode when compiling by going to the Settings menu (<code>Ctrl+,</code>) and changing the setting under Extensions <span class="math inline">\rightarrow</span> Pandoc Option Configuration <span class="math inline">\rightarrow</span> Pandoc: HTML Opt String. I personally have the following:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode m"><code class="sourceCode matlab"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="op">-</span><span class="va">s</span> <span class="op">-</span><span class="va">c</span> <span class="va">C</span><span class="op">:\</span><span class="va">path</span><span class="op">\</span><span class="va">to</span><span class="op">\</span><span class="va">my</span><span class="op">\</span><span class="va">css</span><span class="op">\</span><span class="va">file</span><span class="op">\</span><span class="va">my_css</span>.<span class="va">css</span> <span class="op">-</span><span class="va">t</span> <span class="va">html5</span> <span class="op">--</span><span class="va">toc</span> <span class="op">--</span><span class="va">katex</span></span></code></pre></div>
+<p>You can do the same kind of thing on the command line (i.e., if using Vim) by prepending <code>pandoc &lt;my_file_name&gt;</code> to the above.</p>
+<h2 id="pdf-using-more-latex-in-your-markdown-using-specific-latex-packages">PDF: Using more <span class="math inline">\LaTeX</span> in your Markdown; using specific <span class="math inline">\LaTeX</span> packages</h2>
+<p>Once you really get the hang of things, you may want to get more functionality out of your files and may want to use some more <span class="math inline">\LaTeX</span> packages. The first thing to note is that Pandoc Markdown gets turned into <span class="math inline">\LaTeX</span> on the backend when you compile to PDF! This means that you can insert all sorts of <span class="math inline">\LaTeX</span> stuff in the file and it’ll work as intended. For example:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode latex"><code class="sourceCode latex"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ss">$$</span><span class="kw">\begin</span>{<span class="ex">aligned</span>}</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ss">    </span><span class="sc">\sum</span><span class="ss">_{i=1}^n </span><span class="sc">\frac</span><span class="ss">{1}{2} &amp;= </span><span class="sc">\frac</span><span class="ss">{1}{2} + </span><span class="sc">\sum</span><span class="ss">_{i=2}^n </span><span class="sc">\frac</span><span class="ss">{1}{2} </span><span class="sc">\\</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="ss">    &amp;= </span><span class="sc">\frac</span><span class="ss">{1}{2} + </span><span class="sc">\frac</span><span class="ss">{1}{2} + </span><span class="sc">\sum</span><span class="ss">_{i=3}^n </span><span class="sc">\frac</span><span class="ss">{1}{2} </span><span class="sc">\\</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="ss">    &amp;= </span><span class="sc">\underbrace</span><span class="ss">{</span><span class="sc">\frac</span><span class="ss">{1}{2} + </span><span class="sc">\cdots</span><span class="ss"> + </span><span class="sc">\frac</span><span class="ss">{1}{2}}_{</span><span class="sc">\text</span>{<span class="ss">$n$</span> times}<span class="ss">} </span><span class="sc">\\</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="ss">    &amp;= </span><span class="sc">\frac</span><span class="ss">{n}{2}</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="kw">\end</span>{<span class="ex">aligned</span>}<span class="ss">$$</span></span></code></pre></div>
+<p>…will turn into the following when inserted directly into Pandoc Markdown:</p>
+<p><span class="math display">\begin{aligned}
+    \sum_{i=1}^n \frac{1}{2} &amp;= \frac{1}{2} + \sum_{i=2}^n \frac{1}{2} \\
+    &amp;= \frac{1}{2} + \frac{1}{2} + \sum_{i=3}^n \frac{1}{2} \\
+    &amp;= \frac{1}{2} + \frac{1}{2} + \frac{1}{2} + \sum_{i=4}^n \frac{1}{2} \\
+    &amp;= \underbrace{\frac{1}{2} + \cdots + \frac{1}{2}}_{\text{$n$ times}} \\
+    &amp;= \frac{n}{2}
+\end{aligned}</span></p>
+<p>Note that while all environments that would usually work in <span class="math inline">\LaTeX</span> are functional when you compile to PDF, the same cannot be said for <span class="math inline">\KaTeX</span>. For instance, while the <code>aligned</code> environment works for <span class="math inline">\KaTeX</span>, the <code>align*</code> environment does not.</p>
+<p>If you want to use packages in your document like you would in normal <span class="math inline">\LaTeX</span>, the <code>\usepackage{...}</code> syntax is the same. The only difference is that you declare all the stuff you want to use in the YAML header like so:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">header-includes</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    \usepackage{A}</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    \usepackage{B}</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    ...</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    \usepackage{C}</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div>
+<p>This way, you lose basically no functionality when going from <span class="math inline">\LaTeX</span> to Markdown. Markdown is just easier syntax with all the same features of <span class="math inline">\LaTeX</span>!</p>
+<hr />
+<p>And that’s the end. I hope you enjoyed reading this guide (and maybe following along as well). I wish you the best of luck in your typesetting endeavors!</p>
+</body>
+</html>

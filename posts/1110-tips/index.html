@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Ben Rosenberg (bar94)" />
+  <title>Tips for CS 1110 students</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #c236b8; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="https://benrosenberg.info/style.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+  
+</head>
+<body>
+<header id="title-block-header">
+  <h1 class="title">Tips for CS 1110 students <a href="1110_tips.pdf">(PDF)</a></h1>
+<p class="author">Ben Rosenberg (bar94)</p>
+<p class="date">8/29/2021</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#python-tips-and-conventions">Python tips and conventions</a>
+<ul>
+<li><a href="#true"><code>== True</code></a></li>
+<li><a href="#oversimplification">Oversimplification</a></li>
+<li><a href="#operator-spacing">Operator spacing</a></li>
+<li><a href="#long-strings">Long strings</a></li>
+<li><a href="#when-and-when-not-to-use-range">When (and when not) to use <code>range()</code></a></li>
+<li><a href="#format-strings-f-strings">Format strings (f-strings)</a></li>
+</ul></li>
+<li><a href="#tips-for-using-atom-editor-and-other-code-editors-and-the-terminal">Tips for using Atom Editor (and other code editors), and the terminal</a>
+<ul>
+<li><a href="#spaces-and-tabs">Spaces (and tabs)</a></li>
+<li><a href="#comments">Comments</a></li>
+<li><a href="#autocomplete-and-shell-history">Autocomplete and Shell History</a></li>
+<li><a href="#useful-commands">Useful commands</a></li>
+<li><a href="#the-python-repl-read-evaluate-print-loop">The Python REPL (read-evaluate-print loop)</a></li>
+</ul></li>
+<li><a href="#parting-tips">Parting Tips</a></li>
+</ul>
+</nav>
+<p>The following is a compendium of small tips for students taking CS 1110: Intro to Computing Using Python at Cornell. In the past year I’ve picked up on some very common mistakes that students who are new to computing and Python tend to make, and tricks that can help students speed up their workflows considerably. To help students earlier rather than later, I’ve compiled them here.</p>
+<h2 id="python-tips-and-conventions">Python tips and conventions</h2>
+<h3 id="true"><code>== True</code></h3>
+<p>This is an extremely common thing to find in beginner Python code. The general structure tends to be something like this:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># x is a boolean variable (either True or False)</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> x <span class="op">==</span> <span class="va">True</span>:</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    ... <span class="co"># do something</span></span></code></pre></div>
+<p>It can be hidden in a larger structure, like this:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>contains_zero <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> list_of_integers:</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> i <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>        contains_zero <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> contains_zero <span class="op">==</span> <span class="va">True</span>:</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;There&#39;s a zero!&quot;</span>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;No zeros here.&quot;</span>)</span></code></pre></div>
+<p>Both of these contain the evil <code>== True</code> syntax which is a telltale sign of poorly written code. We can rewrite the second of these to not use <code>== True</code> as follows:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>contains_zero <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> list_of_integers:</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> i <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>        contains_zero <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> contains_zero: <span class="co"># &lt;-- no more `== True`!</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;There&#39;s a zero!&quot;</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;No zeros here.&quot;</span>)</span></code></pre></div>
+<p>See the difference? So much cleaner. Please never use <code>== True</code>: you can always just delete it and count on Python to use the boolean variable’s value as it was intended.</p>
+<h3 id="oversimplification">Oversimplification</h3>
+<p>Speaking of cleaner, we can rewrite this (largely useless) code even more:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="dv">0</span> <span class="kw">in</span> list_of_integers: <span class="co"># Python has a convenient `in` function</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;There&#39;s a zero!&quot;</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;No zeros here.&quot;</span>)</span></code></pre></div>
+<p>This is good – we cut down on the code by 4 lines by using the built-in function <code>in</code>.</p>
+<p>We could cut down on the size more, but that’s not necessarily a good thing:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;There&#39;s a zero!&quot;</span> <span class="op">*</span> (<span class="dv">0</span> <span class="kw">in</span> list_of_integers) <span class="op">+</span> <span class="st">&quot;No zeros here.&quot;</span> <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> (<span class="dv">0</span> <span class="kw">in</span> list_of_integers)))</span></code></pre></div>
+<p>The first issue here is that it’s over 80 characters on a single line, which goes against convention. The second (more important) issue is that it’s hard to read, requiring the user to understand the idea of boolean-integer casting, and Pythonic string multiplication. Code which does something on such a simple level as this should be readable by someone whose coding knowledge is only at the level of conditionals.</p>
+<p>Not all assignments are code golf!</p>
+<h3 id="operator-spacing">Operator spacing</h3>
+<p>A good convention to pick up when writing Python is operator spacing. In this course by convention we put a space on either side of operators:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Good!</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> <span class="dv">1</span> <span class="op">+</span> <span class="dv">2</span> <span class="op">+</span> <span class="dv">3</span> <span class="op">+</span> n</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Bad.</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>a<span class="op">=</span><span class="dv">1</span><span class="op">+</span><span class="dv">2</span><span class="op">+</span><span class="dv">3</span><span class="op">+</span>n</span></code></pre></div>
+<p>Clearly, the first is more readable.</p>
+<blockquote>
+<p><em>Aside</em>: In CS 2110, the convention is that “assignment is an asymmetric operator”, meaning that we would write <code>a= 1 + 2 + 3 + n</code> instead of what we have here. In 1110 we still prefer symmetric spaces around each operator.</p>
+</blockquote>
+<h3 id="long-strings">Long strings</h3>
+<p>Another course convention is (as previously mentioned) that we try to limit the length of lines of code to 80 characters. This can make writing long strings difficult, as they can sometimes be over 80 characters by themselves.</p>
+<p>To deal with this, there are several ways of splitting up strings to go over multiple lines. As an example, consider the following code that has a line over 80 characters:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> letter <span class="op">==</span> <span class="st">&#39;a&#39;</span>:</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    out <span class="op">=</span> <span class="st">&#39;This letter is an &quot;a&quot;. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean sed nunc ante. Integer tincidunt, urna eget tristique mattis, ipsum velit vulputate lorem, sit amet porta ex sem vitae nunc. Nullam quis metus id ante maximus euismod. Phasellus vehicula risus sed posuere suscipit.&#39;</span></span></code></pre></div>
+<p>We demonstrate three ways to deal with long strings. Remember to include the spaces when splitting up strings!</p>
+<h4 id="backslashes">Backslashes</h4>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> letter <span class="op">==</span> <span class="st">&#39;a&#39;</span>:</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    out <span class="op">=</span> <span class="st">&#39;This letter is an &quot;a&quot;. Lorem ipsum dolor sit amet, consectetur&#39;</span> \</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>          <span class="st">&#39; adipiscing elit. Aenean sed nunc ante. Integer tincidunt, urna &#39;</span>\</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>          <span class="st">&#39;eget tristique mattis, ipsum velit vulputate lorem, sit amet porta&#39;</span>\</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>          <span class="st">&#39; ex sem vitae nunc. Nullam quis metus id ante maximus euismod.&#39;</span>\</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>          <span class="st">&#39; Phasellus vehicula risus sed posuere suscipit.&#39;</span></span></code></pre></div>
+<h4 id="parentheses">Parentheses</h4>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> letter <span class="op">==</span> <span class="st">&#39;a&#39;</span>:</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    out <span class="op">=</span> (<span class="st">&#39;This letter is an &quot;a&quot;. Lorem ipsum dolor sit amet, consectetur&#39;</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>           <span class="st">&#39; adipiscing elit. Aenean sed nunc ante. Integer tincidunt, urna &#39;</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>           <span class="st">&#39;eget tristique mattis, ipsum velit vulputate lorem, sit amet porta&#39;</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>           <span class="st">&#39; ex sem vitae nunc. Nullam quis metus id ante maximus euismod.&#39;</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>           <span class="st">&#39; Phasellus vehicula risus sed posuere suscipit.&#39;</span>)</span></code></pre></div>
+<h4 id="multi-line-triple-quote-strings">Multi-line (triple-quote) strings</h4>
+<p><em>Warning</em>: This method will include the spacing used over the lines; that is, line breaks will appear in the same way as they are entered in the string. Multi-line strings are best used as code comments.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> letter <span class="op">==</span> <span class="st">&#39;a&#39;</span>:</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    out <span class="op">=</span> <span class="st">&#39;&#39;&#39;This letter is an &quot;a&quot;. Lorem ipsum dolor sit amet, </span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="st">             consectetur adipiscing elit. Aenean sed nunc ante. </span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="st">             Integer tincidunt, urna eget tristique mattis, ipsum </span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="st">             velit vulputate lorem, sit amet porta ex sem vitae </span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="st">             nunc. Nullam quis metus id ante maximus euismod. </span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="st">             Phasellus vehicula risus sed posuere suscipit.&#39;&#39;&#39;</span></span></code></pre></div>
+<p>As a final tip: notice that the strings are lined up with each other when they go onto multiple lines. This makes reading the code easier on the eyes.</p>
+<h3 id="when-and-when-not-to-use-range">When (and when not) to use <code>range()</code></h3>
+<p>There are two kinds of for-loops that we talk about in 1110: for-loops that use <code>range()</code>, and for-loops that don’t.</p>
+<p>Here’s an example of a <code>range</code>-based for-loop:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">6</span>):</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(i)</span></code></pre></div>
+<p>Here’s the same loop without using <code>range()</code>:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> [<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>]:</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(i)</span></code></pre></div>
+<p>Obviously, in this case, it’s better to use <code>range()</code>. We want direct access to the numbers, and enumerating them by hand in a list is a pain.</p>
+<p>But consider this example:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>letters <span class="op">=</span> [<span class="st">&#39;a&#39;</span>, <span class="st">&#39;b&#39;</span>, <span class="st">&#39;c&#39;</span>, <span class="st">&#39;d&#39;</span>, <span class="st">&#39;e&#39;</span>]</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># using range()</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(letters)):</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(letters[i])</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co"># not using range()</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> letters:</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(i)</span></code></pre></div>
+<p>Clearly, <code>range()</code> isn’t as good here. We don’t need to access the numbers, and referring to the elements of <code>letters</code> using their indices is just extra work.</p>
+<p>Of course, you could have cases where you want to access the indices while looping through a list too:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>letters <span class="op">=</span> [<span class="st">&#39;a&#39;</span>, <span class="st">&#39;b&#39;</span>, <span class="st">&#39;c&#39;</span>, <span class="st">&#39;d&#39;</span>, <span class="st">&#39;e&#39;</span>]</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co"># using range()</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(letters)):</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(letters[i] <span class="op">+</span> <span class="st">&#39; is the &#39;</span> <span class="op">+</span> <span class="bu">str</span>(i) <span class="op">+</span> <span class="st">&#39;th letter in the list&#39;</span>)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co"># not using range()</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>index <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> letters:</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(i <span class="op">+</span> <span class="st">&#39; is the &#39;</span> <span class="op">+</span> <span class="bu">str</span>(index) <span class="op">+</span> <span class="st">&#39;th letter in the list&#39;</span>)</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    index <span class="op">=</span> index <span class="op">+</span> <span class="dv">1</span></span></code></pre></div>
+<p>In order to not use <code>range()</code> in the above example, we need to use the variable <code>index</code> as an accumulator to keep track of the current index, which is unwieldy. So, we prefer to use <code>range()</code>.</p>
+<blockquote>
+<p><em>Aside</em>: Since we can’t use <code>range()</code> in a while-loop, accumulators are the primary way that we iterate and keep track of indices.</p>
+</blockquote>
+<h3 id="format-strings-f-strings">Format strings (f-strings)</h3>
+<p>In the above example, our method of printing the desired string was rather complicated:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>...</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(letters[i] <span class="op">+</span> <span class="st">&#39; is the &#39;</span> <span class="op">+</span> <span class="bu">str</span>(i) <span class="op">+</span> <span class="st">&#39;th letter in the list&#39;</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>...</span></code></pre></div>
+<p>We can remedy this with the use of f-strings:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>...</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&#39;</span><span class="sc">{</span>letters[i]<span class="sc">}</span><span class="ss"> is the </span><span class="sc">{i}</span><span class="ss">th letter in the list&#39;</span>)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>...</span></code></pre></div>
+<p>Simpler and cleaner, and doesn’t require any casting to string.</p>
+<h2 id="tips-for-using-atom-editor-and-other-code-editors-and-the-terminal">Tips for using Atom Editor (and other code editors), and the terminal</h2>
+<h3 id="spaces-and-tabs">Spaces (and tabs)</h3>
+<p>In order to use Atom (or whatever other code editor you’re using) correctly with Python, you need to be indenting with spaces and not tabs. We recommend that you indent with 4 spaces, and not 2 or 8.</p>
+<p>You can set Atom to use spaces instead of tabs by going to Settings (either <code>Ctrl + ,</code> or <code>Command + ,</code>) &gt; Editor &gt; Tab Type and choosing “soft”. The setting for tab length is directly above that (4 recommended).</p>
+<h3 id="comments">Comments</h3>
+<p>Sometimes you’ll need to comment out a large portion of code, when you’re testing to see if it’s causing errors or just don’t want to run it for other reasons. Most code editors (Atom, VSCode, and Eclipse all have it, and I assume others do too) will have some kind of shortcut to comment out selected lines so that you don’t have to painstakingly go through and comment each of them out. Usually this is <code>Ctrl + /</code> (or <code>Command + /</code> on Mac). This command will save you a lot of time.</p>
+<h3 id="autocomplete-and-shell-history">Autocomplete and Shell History</h3>
+<p>When you’re in the terminal it can be a pain to type out the entire file name when you want to run it, or the entire folder name when you want to <code>cd</code> to it. Most terminals have a feature where you can type out the first character of a name, and then hit <code>Tab</code> to autocomplete. If there are multiple items in the current directory with the same first character, usually you can cycle through them by hitting <code>Tab</code> again.</p>
+<p>Another common thing that you’ll want to do in the terminal is rerun your most recently run command (or second or third or fourth most recently run command). To scroll back through your terminal history, hit the up arrow on your keyboard. As with <code>Tab</code>, repeatedly hitting the up arrow will scroll through older and older commands that you have run.</p>
+<h3 id="useful-commands">Useful commands</h3>
+<p>Here’s a (short) list of useful commands:</p>
+<table>
+<thead>
+<tr class="header">
+<th>command</th>
+<th>purpose</th>
+<th>usage</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>cd</code></td>
+<td>change directory</td>
+<td><code>cd directory</code></td>
+</tr>
+<tr class="even">
+<td><code>pwd</code></td>
+<td>print working directory</td>
+<td><code>pwd</code></td>
+</tr>
+<tr class="odd">
+<td><code>ls</code></td>
+<td>print contents of working directory</td>
+<td><code>ls</code>, <code>ls -l</code>, <code>ls -a</code></td>
+</tr>
+<tr class="even">
+<td><code>mv</code></td>
+<td>move files/folders</td>
+<td><code>mv file.ext new_location</code></td>
+</tr>
+<tr class="odd">
+<td><code>rm</code></td>
+<td>delete file/folder</td>
+<td><code>rm file.ext</code>, <code>rm -rf folder</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="the-python-repl-read-evaluate-print-loop">The Python REPL (read-evaluate-print loop)</h3>
+<p>The Python REPL or interactive shell looks like this:</p>
+<pre><code>&gt;&gt;&gt;</code></pre>
+<p>You can type things in here to be instantly evaluated, making it a convenient way to test things in Python (or use Python as a calculator).</p>
+<h4 id="exiting-the-repl">Exiting the REPL</h4>
+<p>Some people have trouble exiting the Python REPL. Here are some ways:</p>
+<ul>
+<li><code>Ctrl + D</code>: may or may not work. Usually works on UNIX-based OSes (Mac and Linux); I don’t think it works in Powershell.</li>
+<li><code>exit()</code>, <code>quit()</code>: type one of these and hit Enter. Works 100% of the time.</li>
+</ul>
+<p>If you want to stay in the REPL but want to quit a currently running command (e.g., if you accidentally made an infinite loop) use <code>Ctrl + C</code> to kill the currently running process while staying in the environment.</p>
+<h4 id="running-code-from-within-the-repl">Running code from within the REPL</h4>
+<p>It’s not recommended to run modules that you write from within the REPL. Instead, do <code>python my_module.py</code> to run your code. That way, you can rerun your code easily (with the up arrow as previously mentioned).</p>
+<p>If you do want to run your code in the REPL for debugging purposes or some other reason, do</p>
+<pre><code>&gt;&gt;&gt; import my_module</code></pre>
+<p>Remember <em>not</em> to include the <code>.py</code> extension.</p>
+<blockquote>
+<p><em>Aside</em>: (Not taught in CS 1110) To make certain parts of your code <em>not</em> run when you import the module, you can make a section as follows:</p>
+</blockquote>
+<div class="sourceCode" id="cb19"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">&quot;__main__&quot;</span>:</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>            ...</span></code></pre></div>
+<blockquote>
+<p>This section will only run when the code is <em>not</em> imported (it will only run when the file is run directly). This can allow you to import things from a module and also run it for different levels of functionality.</p>
+</blockquote>
+<h2 id="parting-tips">Parting Tips</h2>
+<p>Lastly: remember to <strong>run your code</strong>! There is a “crash tax” of 5 points (which, when combined with the errors that made your code crash, leads to a larger deduction) regardless of the assignment’s total number of points, given to students whose code fails to execute without errors. On some assignments, the point total may be as low as 50 or 60, meaning that you could lose around 10% of your total score this way!</p>
+<p>Good luck, and happy coding!</p>
+</body>
+</html>
