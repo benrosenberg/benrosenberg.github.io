@@ -4,10 +4,6 @@ tree -H '.' -L 1 --noreport --charset utf-8 | sed -e '/<hr>/,+7d' > index.html
 
 perl -0777 -pe 's/<style.*?<\/style>/<link rel="stylesheet" href="https:\/\/benrosenberg.info\/style.css">/gs' index.html > tmp.html
 
-perl -0777 -pe 's/Directory Tree/Posts/gs' tmp.html > index.html
-
-perl -0777 -pe 's/\/"/\/index.html"/gs' index.html > tmp.html
-
 mv tmp.html index.html
 
 python3 replace_body.py > tmp.html

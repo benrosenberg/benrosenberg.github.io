@@ -8,4 +8,4 @@ with open('sidebar.html', 'r') as s:
 
 print(index.replace('Directory Tree', 'Posts')
            .replace('<body>', sidebar)
-           .replace('/"', '/index.html'))
+           .replace('/"', '/index.html"'))
