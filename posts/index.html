@@ -125,69 +125,100 @@
 </ol>
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash neutral"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="fu">perl</span> -0777 -pe <span class="st">&#39;s/&lt;style.*?&lt;\/style&gt;/&lt;link rel=&quot;stylesheet&quot; href=&quot;https:\/\/benrosenberg.info\/style.css&quot;&gt;/gs&#39;</span> index.html <span class="op">&gt;</span> tmp.html</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a><span class="fu">perl</span> -0777 -pe <span class="st">&#39;s/Directory Tree/Posts/gs&#39;</span> tmp.html <span class="op">&gt;</span> index.html</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a><span class="fu">perl</span> -0777 -pe <span class="st">&#39;s/\/&quot;/\/index.html&quot;/gs&#39;</span> index.html <span class="op">&gt;</span> tmp.html</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true"></a><span class="fu">mv</span> tmp.html index.html</span></code></pre></div>
-<p>These commands:</p>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a><span class="fu">mv</span> tmp.html index.html</span></code></pre></div>
+<p>These commands replace all styling with a custom stylesheet and store the result back in <code>index.html</code>.</p>
+<ol type="1">
+<li>Run the following line using a <code>python3</code> script, and the relevant <code>mv</code> command again:</li>
+</ol>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash neutral"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="ex">python3</span> replace_body.py <span class="op">&gt;</span> tmp.html</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a><span class="fu">mv</span> tmp.html index.html</span></code></pre></div>
+<p>The script is as follows:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python neutral"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="im">import</span> re</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">&#39;index.html&#39;</span>, <span class="st">&#39;r&#39;</span>) <span class="im">as</span> f:</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a>    index <span class="op">=</span> <span class="st">&#39;&#39;</span>.join(f.readlines())</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">&#39;sidebar.html&#39;</span>, <span class="st">&#39;r&#39;</span>) <span class="im">as</span> s:</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true"></a>    sidebar <span class="op">=</span> <span class="st">&#39;&#39;</span>.join(s.readlines())</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true"></a>viewport_str <span class="op">=</span> <span class="st">&#39;head&gt;</span><span class="ch">\n\t</span><span class="st">&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0, user-scalable=yes&quot;&gt;</span><span class="ch">\n\t</span><span class="st">&lt;&#39;</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true"></a>out <span class="op">=</span>(index.replace(<span class="st">&#39;Directory Tree&#39;</span>, <span class="st">&#39;Posts&#39;</span>)</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true"></a>           .replace(<span class="st">&#39;&lt;body&gt;&#39;</span>, sidebar)</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true"></a>           .replace(<span class="st">&#39;/&quot;&#39;</span>, <span class="st">&#39;/index.html&quot;&#39;</span>))</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true"></a></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true"></a>out <span class="op">=</span> re.sub(<span class="st">&#39;head&gt;[^&lt;]*&lt;&#39;</span>, viewport_str, out, <span class="dv">1</span>)</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true"></a></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true"></a><span class="bu">print</span>(out)</span></code></pre></div>
+<p>It:</p>
 <ul>
-<li>replace all styling with a custom stylesheet and store the result back in <code>index.html</code></li>
-<li>change the title used from <code>Directory Tree</code> to <code>Posts</code></li>
+<li>replaces the title “Directory Tree” with “Posts”</li>
+<li>adds the sidebar</li>
 <li>make it so that all links to directories go to their <code>index.html</code> files</li>
+<li>add the ‘viewport’ tag back into the header so that the page looks good on phones</li>
 </ul>
-<ol start="3" type="1">
+<ol type="1">
 <li>Run the following <code>pandoc</code> command:</li>
 </ol>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash neutral"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="ex">pandoc</span> README.md -o README.html</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash neutral"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a><span class="ex">pandoc</span> README.md -o README.html</span></code></pre></div>
 <p>This command turns the README file you are reading into an HTML fragment.</p>
-<ol start="4" type="1">
-<li>Run the following <code>echo</code>, <code>cat</code>, <code>rm</code>, and <code>mv</code> commands:<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></li>
+<ol type="1">
+<li>Run the following <code>echo</code>, <code>cat</code>, <code>rm</code>, and <code>mv</code> commands:</li>
 </ol>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash neutral"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="bu">echo</span> <span class="st">&quot;&lt;hr&gt;&quot;</span> <span class="op">&gt;</span> hr.html</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a><span class="fu">cat</span> index.html hr.html README.html <span class="op">&gt;</span> tmp.html</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a><span class="fu">rm</span> hr.html</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true"></a><span class="fu">mv</span> tmp.html index.html</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash neutral"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a><span class="bu">echo</span> <span class="st">&quot;&lt;hr&gt;&quot;</span> <span class="op">&gt;</span> hr.html</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a><span class="fu">cat</span> index.html hr.html README.html <span class="op">&gt;</span> tmp.html</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true"></a><span class="fu">rm</span> hr.html</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true"></a><span class="fu">mv</span> tmp.html index.html</span></code></pre></div>
 <p>These commands:</p>
 <ul>
 <li>create a new HTML file containing only <code>&lt;hr&gt;</code>, the horizontal rule</li>
 <li>concatenate the three HTML files that have been generated and store them back in <code>index.html</code></li>
-<li>remove the now-useless <code>hr.html</code> file<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></li>
+<li>remove the now-useless <code>hr.html</code> file<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></li>
 </ul>
 <ol start="5" type="1">
 <li>Run the following <code>rm</code> command:</li>
 </ol>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash neutral"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a><span class="fu">rm</span> README.html</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash neutral"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a><span class="fu">rm</span> README.html</span></code></pre></div>
 <p>This command removes the unneeded <code>README.html</code> file.</p>
+<ol start="6" type="1">
+<li>Run the following <code>echo</code> command:</li>
+</ol>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash neutral"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a><span class="bu">echo</span> <span class="st">&quot;&lt;br&gt;&lt;br&gt;&quot;</span> <span class="op">&gt;&gt;</span> index.html</span></code></pre></div>
+<p>This command adds some extra space at the end of the page.</p>
 <p>All together, these commands form a bash script which can be run instead for convenience:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode bash good"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a><span class="co">#!/bin/bash </span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a><span class="ex">tree</span> -H <span class="st">&#39;.&#39;</span> -L 1 --noreport --charset utf-8 <span class="kw">|</span> <span class="fu">sed</span> -e <span class="st">&#39;/&lt;hr&gt;/,+7d&#39;</span> <span class="op">&gt;</span> index.html</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true"></a></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true"></a><span class="fu">perl</span> -0777 -pe <span class="st">&#39;s/&lt;style.*?&lt;\/style&gt;/&lt;link rel=&quot;stylesheet&quot; href=&quot;https:\/\/benrosenberg.info\/style.css&quot;&gt;/gs&#39;</span> index.html <span class="op">&gt;</span> tmp.html</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true"></a></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true"></a><span class="fu">perl</span> -0777 -pe <span class="st">&#39;s/Directory Tree/Posts/gs&#39;</span> tmp.html <span class="op">&gt;</span> index.html</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true"></a></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true"></a><span class="fu">perl</span> -0777 -pe <span class="st">&#39;s/\/&quot;/\/index.html&quot;/gs&#39;</span> index.html <span class="op">&gt;</span> tmp.html</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true"></a></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true"></a><span class="fu">mv</span> tmp.html index.html</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true"></a></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true"></a><span class="ex">pandoc</span> README.md -o README.html</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true"></a></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true"></a><span class="bu">echo</span> <span class="st">&quot;&lt;hr&gt;&quot;</span> <span class="op">&gt;</span> hr.html</span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true"></a></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true"></a><span class="fu">cat</span> index.html hr.html README.html <span class="op">&gt;</span> tmp.html</span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true"></a></span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true"></a><span class="fu">rm</span> hr.html</span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true"></a></span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true"></a><span class="fu">mv</span> tmp.html index.html</span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true"></a></span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true"></a><span class="fu">rm</span> README.html</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash good"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true"></a><span class="co">#!/bin/bash </span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true"></a><span class="ex">tree</span> -H <span class="st">&#39;.&#39;</span> -L 1 --noreport --charset utf-8 <span class="kw">|</span> <span class="fu">sed</span> -e <span class="st">&#39;/&lt;hr&gt;/,+7d&#39;</span> <span class="op">&gt;</span> index.html</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true"></a><span class="fu">perl</span> -0777 -pe <span class="st">&#39;s/&lt;style.*?&lt;\/style&gt;/&lt;link rel=&quot;stylesheet&quot; href=&quot;https:\/\/benrosenberg.info\/style.css&quot;&gt;/gs&#39;</span> index.html <span class="op">&gt;</span> tmp.html</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true"></a><span class="fu">mv</span> tmp.html index.html</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true"></a><span class="ex">python3</span> replace_body.py <span class="op">&gt;</span> tmp.html</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true"></a></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true"></a><span class="fu">mv</span> tmp.html index.html</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true"></a></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true"></a><span class="ex">pandoc</span> README.md -o README.html</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true"></a></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true"></a><span class="bu">echo</span> <span class="st">&quot;&lt;hr&gt;&quot;</span> <span class="op">&gt;</span> hr.html</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true"></a></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true"></a><span class="fu">cat</span> index.html hr.html README.html <span class="op">&gt;</span> tmp.html</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true"></a></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true"></a><span class="fu">rm</span> hr.html</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true"></a></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true"></a><span class="fu">mv</span> tmp.html index.html</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true"></a></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true"></a><span class="bu">echo</span> <span class="st">&quot;&lt;br&gt;&lt;br&gt;&quot;</span> <span class="op">&gt;&gt;</span> index.html</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true"></a></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true"></a><span class="fu">rm</span> README.html</span></code></pre></div>
 <p>Run this script (also present in this directory, as you can see above) with the following command:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode bash good"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a><span class="ex">./update.sh</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash good"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true"></a><span class="ex">./update.sh</span></span></code></pre></div>
 <h3 id="tree-license"><code>tree</code> license</h3>
 <pre><code>tree v1.8.0 © 1996 - 2018 by Steve Baker and Thomas Moore
 HTML output hacked and copyleft © 1998 by Francesc Rocher
@@ -196,9 +227,8 @@ Charsets / OS/2 support © 2001 by Kyosuke Tokoro</code></pre>
 <section class="footnotes" role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1" role="doc-endnote"><p>For some reason, trying to throw <code>stdin</code> into one of the files being used within the <code>perl</code> command causes the file to become empty. Not completely sure why.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2" role="doc-endnote"><p>Same thing here.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3" role="doc-endnote"><p>It would be nice if <code>cat</code> syntax allowed for <code>cat index.html "&lt;hr&gt;" README.html &gt; tmp.html</code>.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1" role="doc-endnote"><p>For some reason, trying to pipe <code>stdout</code> into one of the files being used within the <code>perl</code> command causes the file to become empty. Not completely sure why.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>It would be nice if <code>cat</code> syntax allowed for <code>cat index.html "&lt;hr&gt;" README.html &gt; tmp.html</code>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 <br><br>

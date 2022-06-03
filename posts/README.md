@@ -86,20 +86,51 @@ This command turns the directory `.` (which is `posts/`) into a HTML file `index
 ```{.bash .neutral}
 perl -0777 -pe 's/<style.*?<\/style>/<link rel="stylesheet" href="https:\/\/benrosenberg.info\/style.css">/gs' index.html > tmp.html
 
-perl -0777 -pe 's/Directory Tree/Posts/gs' tmp.html > index.html
+mv tmp.html index.html
+```
 
-perl -0777 -pe 's/\/"/\/index.html"/gs' index.html > tmp.html
+These commands replace all styling with a custom stylesheet and store the result back in `index.html`.
+
+1. Run the following line using a `python3` script, and the relevant `mv` command again:
+
+```{.bash .neutral}
+python3 replace_body.py > tmp.html
 
 mv tmp.html index.html
 ```
 
-These commands:
+The script is as follows:
 
- - replace all styling with a custom stylesheet and store the result back in `index.html`
- - change the title used from `Directory Tree` to `Posts`
- - make it so that all links to directories go to their `index.html` files
+```{.python .neutral}
+import re
 
-3. Run the following `pandoc` command:
+with open('index.html', 'r') as f:
+
+    index = ''.join(f.readlines())
+
+with open('sidebar.html', 'r') as s:
+
+    sidebar = ''.join(s.readlines())
+
+viewport_str = 'head>\n\t<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">\n\t<'
+
+out =(index.replace('Directory Tree', 'Posts')
+           .replace('<body>', sidebar)
+           .replace('/"', '/index.html"'))
+
+out = re.sub('head>[^<]*<', viewport_str, out, 1)
+
+print(out)
+```
+
+It:
+
+  - replaces the title "Directory Tree" with "Posts" 
+  - adds the sidebar
+  - make it so that all links to directories go to their `index.html` files
+  - add the 'viewport' tag back into the header so that the page looks good on phones
+
+1. Run the following `pandoc` command:
 
 ```{.bash .neutral}
 pandoc README.md -o README.html
@@ -107,7 +138,7 @@ pandoc README.md -o README.html
 
 This command turns the README file you are reading into an HTML fragment.
 
-4. Run the following `echo`, `cat`, `rm`, and `mv` commands:[^2]
+1. Run the following `echo`, `cat`, `rm`, and `mv` commands:
 
 ```{.bash .neutral}
 echo "<hr>" > hr.html
@@ -123,7 +154,7 @@ These commands:
 
  - create a new HTML file containing only `<hr>`, the horizontal rule
  - concatenate the three HTML files that have been generated and store them back in `index.html`
- - remove the now-useless `hr.html` file[^3]
+ - remove the now-useless `hr.html` file[^2]
 
 5. Run the following `rm` command:
 
@@ -132,6 +163,14 @@ rm README.html
 ```
 
 This command removes the unneeded `README.html` file.
+
+6. Run the following `echo` command:
+
+```{.bash .neutral}
+echo "<br><br>" >> index.html
+```
+
+This command adds some extra space at the end of the page.
 
 All together, these commands form a bash script which can be run instead for convenience:
 
@@ -142,9 +181,9 @@ tree -H '.' -L 1 --noreport --charset utf-8 | sed -e '/<hr>/,+7d' > index.html
 
 perl -0777 -pe 's/<style.*?<\/style>/<link rel="stylesheet" href="https:\/\/benrosenberg.info\/style.css">/gs' index.html > tmp.html
 
-perl -0777 -pe 's/Directory Tree/Posts/gs' tmp.html > index.html
+mv tmp.html index.html
 
-perl -0777 -pe 's/\/"/\/index.html"/gs' index.html > tmp.html
+python3 replace_body.py > tmp.html
 
 mv tmp.html index.html
 
@@ -158,6 +197,8 @@ rm hr.html
 
 mv tmp.html index.html
 
+echo "<br><br>" >> index.html
+
 rm README.html
 ```
 
@@ -167,9 +208,8 @@ Run this script (also present in this directory, as you can see above) with the 
 ./update.sh
 ```
 
-[^1]: For some reason, trying to throw `stdin` into one of the files being used within the `perl` command causes the file to become empty. Not completely sure why.
-[^2]: Same thing here.
-[^3]: It would be nice if `cat` syntax allowed for `cat index.html "<hr>" README.html > tmp.html`.
+[^1]: For some reason, trying to pipe `stdout` into one of the files being used within the `perl` command causes the file to become empty. Not completely sure why.
+[^2]: It would be nice if `cat` syntax allowed for `cat index.html "<hr>" README.html > tmp.html`.
 
 ### `tree` license
 
