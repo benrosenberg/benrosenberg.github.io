@@ -69,7 +69,9 @@
     code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
   </style>
 
-## How to generate this page
+## How to generate this page (spoiler alert: just run the `update.sh`)
+
+This information may not be completely accurate. Look at `update.sh` for more details.
 
 1. Run `tree` as follows:
 
@@ -165,7 +167,7 @@ Run this script (also present in this directory, as you can see above) with the 
 ./update.sh
 ```
 
-[^1]: For some reason, trying to throw `stdin` into one of the files being used within the `perl` command causes the file to become empty. Not completely sure why..
+[^1]: For some reason, trying to throw `stdin` into one of the files being used within the `perl` command causes the file to become empty. Not completely sure why.
 [^2]: Same thing here.
 [^3]: It would be nice if `cat` syntax allowed for `cat index.html "<hr>" README.html > tmp.html`.
 
@@ -177,4 +179,3 @@ HTML output hacked and copyleft © 1998 by Francesc Rocher
 JSON output hacked and copyleft © 2014 by Florian Sesser 
 Charsets / OS/2 support © 2001 by Kyosuke Tokoro
 ```
-

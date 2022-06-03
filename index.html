@@ -1,71 +1,51 @@
-<!DOCTYPE html> <html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>Ben Rosenberg</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="nav_style.css" />
   <link rel="icon" type="image/png" href="favicon.png">
   <style></style>
 </head>
-<body style="margin-top: 2%">
-<h1 class="title", style="text-align: left;">ben rosenberg</h1>
-<!-- <p class="dark-mode-reminder">(This site looks better in <a href="https://duckduckgo.com/?q=how+to+get+dark+mode+on+my+device&ia=web">dark mode</a>.)</p> -->
-<h3>student at Cornell University</h3>
-<hr>
-<b>about me:</b>
-<ul><b>majors</b>: Operations Research Engineering, Computer Science</ul>
-<ul><b>interests</b>: typesetting, document creation (LaTeX, Pandoc, <a href="https://www.gnu.org/software/groff/">groff</a><div  class="tooltip" data-tooltip="⚠ light mode"> ⚠</div>) Python, Linux, <a href="http://ch.tetr.io/u/9wm">Tetris</a>, chess</ul>
-<ul><b>professional interests</b>: software engineering, data science, education</ul><br><br>
-<hr>
-<div style="width: 100%; overflow: hidden;"><div class="leftdiv" >
-<h2>projects</h2>
-<ul>
-<li><a href="https://github.com/benrosenberg/truth-table-generator">Truth table generator</a>, with algorithmic input parsing and support for LaTeX output</li>
-<li>Gun violence analysis
-<ul>
-<li><a href="Gun-Violence-Analysis">Exploratory analysis</a> <div  class="tooltip" data-tooltip="⚠ light mode">⚠</div></li>
-<li><a href="Gun-Violence-Analysis/Final.pdf">Final project</a> <div  class="tooltip" data-tooltip="⚠ PDF">⚠</div></li>
-</ul></li>
-<li><a href="https://github.com/benrosenberg">GitHub</a></li>
-</ul>
-</div><div class="rightdiv">
-<h2>miscellaneous</h2>
-<ul>
-<li><a href="https://www.linkedin.com/in/ben-rosenberg-0b5359205/">LinkedIn</a> <div  class="tooltip" data-tooltip="⚠ light mode">⚠</div></li>
-<li><a href="social-media/index.html">social media</a></li>
-</ul>
-<h2>contact</h2>
-<p>You can contact me <a href="mailto:bar94@cornell.edu">here</a>.</p>
-</div></div>
-<hr>
-<h2 style="text-align: left;">sitemap</h1>
-</header>
-<p>list of pages and other items hosted on benrosenberg.info</p>
-<table><colgroup><col style="width: 50%" /><col style="width: 50%" /></colgroup>
-<thead><tr class="header"><th><u>page</u></th><th><u>description</u></th></tr></thead><tbody>
-<tr><td><a href="harmful">harmful</a></td>
-<td>play on <a href="http://harmful.cat-v.org/software/">cat-v.org</a>'s<div  class="tooltip" data-tooltip="⚠ light mode"> ⚠</div> list of "harmful" software</td>
-</tr><tr><td><a href="ari_analysis">ari analysis</a></td>
-<td>an analysis of some ariana grande tracks</td>
-</tr><tr><td><a href="https://bots.benrosenberg.info">discord bots</a></td>
-<td>list of discord bots i've created. one has its own page <a href="https://bots.benrosenberg.info/PDFCreator/">here</a><div  class="tooltip" data-tooltip="⚠ light mode"> ⚠</div></td>
-</tr><tr><td><a href="CSCI-320-notes">CSCI 320 notes</a></td>
-<td>notes taken in CSCI 320: Theory of Computation</td>
-</tr><tr><td><a href="4350-notes">ORIE 4350 notes</a></td>
-<td>transcribed lecture notes courtesy of <a href="https://www.linkedin.com/in/bengoldstein77/">Ben Goldstein</a></td>
-</tr><tr><td><a href="1110-tips">1110 tips</a></td>
-<td>tips for students in CS 1110: Intro to Computing in Python</td>
-<tr><td><a href="typesetting-guide">typesetting guide</a></td>
-<td>short guide on setting up a typesetting environment with Pandoc Markdown and either VSCode or Vim</td>
-</tr>
-</tr><tr><td><a href="files/ideal_4350_syllabus.pdf">ideal ORIE 4350 syllabus</a> <div class="tooltip" data-tooltip="⚠ PDF">⚠</div></td>
-<td>personal project; "ideal" syllabus for ORIE 4350: Intro to Game Theory</td>
-</tr><tr><td><a href="introcs-course">introcs course</a></td>
-<td>personal project; mock-up of a course website for an introductory 7-week course in Python</td>
-</tr><tr><td><a href="name-generator">pretentious name generator</a></td>
-<td>randomly generates pretentious names with js</td>
-</tr><tr><td><a href="recipes">recipes</a></td>
-<td>compilation of simple recipes. WIP</td></tbody></table>
-</body></html>
+
+<body>
+  <ul class="sidenav">
+    <li><a class="active" href="/">Home</a></li>
+    <li><a href="posts">Posts</a></li>
+    <li><a href="https://github.com/benrosenberg">GitHub</a></li>
+    <li><a href="/introcs-course/">CS XXXX</a></li>
+    <li><a href="https://bots.benrosenberg.info">Bots</a></li>
+  </ul>
+
+  <div class="content">
+
+  <h1 class="title" , style="text-align: left;">Ben Rosenberg</h1>
+  <!-- <p class="dark-mode-reminder">(This site looks better in <a href="https://duckduckgo.com/?q=how+to+get+dark+mode+on+my+device&ia=web">dark mode</a>.)</p> -->
+  <h3>student at Cornell University</h3>
+  <hr>
+
+  <div>Hi! I'm a student at Cornell University majoring in Operations Research Engineering and minoring in Computer Science and Math. I'm passionate about typesetting, document creation (think LaTeX, Pandoc, or <a
+    href="https://www.gnu.org/software/groff/">groff</a>
+  <div class="tooltip" style="display:inline-block" data-tooltip="⚠ light mode"> ⚠</div>), Python, Linux, web development (to a minor extent), and <a
+  href="http://ch.tetr.io/u/9wm">Tetris</a>. More professionally, I'm interested in software engineering, data science, and math and computer science education.</div>
+
+  <br>
+
+  <h3>Things to do here</h3>
+
+  <ul>
+    <li>Hit the "Posts" link on the navbar to see what thoughts, guides, etc. I've decided to host here. </li>
+    <li>Check out my GitHub at the link on the navbar to see some smaller projects.</li>
+    <li>Take a look at my <a href="https://www.linkedin.com/in/ben-rosenberg-0b5359205/">LinkedIn</a>, or my other <a href="social-media/index.html">social media</a>.</li>
+    <li>Contact me directly <a href="mailto:bar94@cornell.edu">here</a>. (This is a university email and as such has a strict spam filter.)</li>
+  </ul>
+
+</div>
+
+</body>
+
+</html>
 
 <!-- <p style="text-align:right;">
 <a class="greenteam" href="https://512kb.club/#100" style="font-size: 16pt;">Green Team: &lt 5KB</button>

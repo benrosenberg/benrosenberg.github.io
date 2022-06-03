@@ -10,6 +10,10 @@ perl -0777 -pe 's/\/"/\/index.html"/gs' index.html > tmp.html
 
 mv tmp.html index.html
 
+python3 replace_body.py > tmp.html
+
+mv tmp.html index.html
+
 pandoc README.md -o README.html
 
 echo "<hr>" > hr.html

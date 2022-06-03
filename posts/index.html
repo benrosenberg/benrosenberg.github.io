@@ -8,12 +8,31 @@
  <link rel="stylesheet" href="https://benrosenberg.info/style.css">
 </head>
 <body>
+    <ul class="sidenav">
+      <li><a class="active" href="/index.html>Home</a></li>
+      <li><a href="posts">Posts</a></li>
+      <li><a href="https://github.com/benrosenberg">GitHub</a></li>
+      <li><a href="/introcs-course/index.html>CS XXXX</a></li>
+      <li><a href="https://bots.benrosenberg.info">Bots</a></li>
+    </ul>
+  
+    <div class="content">
 	<h1>Posts</h1><p>
 	<a href=".">.</a><br>
+	├── <a href="./1110-tips/index.html">1110-tips</a><br>
+	├── <a href="./4350-notes/index.html">4350-notes</a><br>
+	├── <a href="./ari_analysis/index.html">ari_analysis</a><br>
 	├── <a href="./blind-75/index.html">blind-75</a><br>
 	├── <a href="./cone_volume/index.html">cone_volume</a><br>
+	├── <a href="./CSCI-320-notes/index.html">CSCI-320-notes</a><br>
+	├── <a href="./harmful/index.html">harmful</a><br>
 	├── <a href="./index.html">index.html</a><br>
+	├── <a href="./name-generator/index.html">name-generator</a><br>
 	├── <a href="./README.md">README.md</a><br>
+	├── <a href="./recipes/index.html">recipes</a><br>
+	├── <a href="./replace_body.py">replace_body.py</a><br>
+	├── <a href="./sidebar.html">sidebar.html</a><br>
+	├── <a href="./typesetting-guide/index.html">typesetting-guide</a><br>
 	└── <a href="./update.sh">update.sh</a><br>
 	<br><br>
 	</p>
@@ -21,6 +40,7 @@
 	<br><br>
 	</p>
 </html>
+
 <hr>
 <style>
     code{white-space: pre-wrap;}
@@ -92,7 +112,8 @@
     code span.vs { color: #cc9393; } /* VerbatimString */
     code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
   </style>
-<h2 id="how-to-generate-this-page">How to generate this page</h2>
+<h2 id="how-to-generate-this-page-spoiler-alert-just-run-the-update.sh">How to generate this page (spoiler alert: just run the <code>update.sh</code>)</h2>
+<p>This information may not be completely accurate. Look at <code>update.sh</code> for more details.</p>
 <ol type="1">
 <li>Run <code>tree</code> as follows:</li>
 </ol>
@@ -174,7 +195,7 @@ Charsets / OS/2 support © 2001 by Kyosuke Tokoro</code></pre>
 <section class="footnotes" role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1" role="doc-endnote"><p>For some reason, trying to throw <code>stdin</code> into one of the files being used within the <code>perl</code> command causes the file to become empty. Not completely sure why..<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1" role="doc-endnote"><p>For some reason, trying to throw <code>stdin</code> into one of the files being used within the <code>perl</code> command causes the file to become empty. Not completely sure why.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2" role="doc-endnote"><p>Same thing here.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3" role="doc-endnote"><p>It would be nice if <code>cat</code> syntax allowed for <code>cat index.html "&lt;hr&gt;" README.html &gt; tmp.html</code>.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
