@@ -4,10 +4,7 @@ body {
     font-size: large;
     margin: 4% 12% 8% 12%;
 	/* courtesy of https://systemfontstack.com/ */
-    font-family: -apple-system, BlinkMacSystemFont, 
-				avenir next, avenir, segoe ui, 
-				helvetica neue, helvetica, Cantarell, 
-				Ubuntu, roboto, noto, arial, sans-serif;
+    font-family: sans-serif;
 }
     
 /*** LIGHT MODE ***/
