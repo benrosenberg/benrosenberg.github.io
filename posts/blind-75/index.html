@@ -16,7 +16,6 @@
     pre > code.sourceCode { white-space: pre; position: relative; }
     pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
-    .sourceCode { overflow: visible; }
     code.sourceCode > span { color: inherit; text-decoration: inherit; }
     div.sourceCode { margin: 1em 0; }
     pre.sourceCode { margin: 0; }
@@ -77,36 +76,22 @@
     code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
   </style>
   <link rel="stylesheet" href="https://benrosenberg.info/style.css" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
+  <script src="/usr/lib/nodejs/katex/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
    var mathElements = document.getElementsByClassName("math");
-   var macros = [];
    for (var i = 0; i < mathElements.length; i++) {
     var texText = mathElements[i].firstChild;
     if (mathElements[i].tagName == "SPAN") {
      katex.render(texText.data, mathElements[i], {
       displayMode: mathElements[i].classList.contains('display'),
       throwOnError: false,
-      macros: macros,
       fleqn: false
      });
   }}});
   </script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css" />
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
+  <link rel="stylesheet" href="/usr/lib/nodejs/katex/dist/katex.min.css" />
 </head>
 <body>
-    <ul class="sidenav">
-      <li><a href="https://benrosenberg.info">Home</a></li>
-      <li><a class="active" href="https://benrosenberg.info/posts/index.html">Posts</a></li>
-      <li><a href="https://github.com/benrosenberg">GitHub</a></li>
-      <li><a href="https://benrosenberg.info/introcs-course/index.html">CS XXXX</a></li>
-      <li><a href="https://bots.benrosenberg.info">Bots</a></li>
-    </ul>
-  
-    <div class="content">
     <ul class="sidenav">
       <li><a href="https://benrosenberg.info">Home</a></li>
       <li><a class="active" href="https://benrosenberg.info/posts/index.html">Posts</a></li>
@@ -678,16 +663,16 @@ The specific recurrence relation here is as follows:
 </tbody>
 </table>
 <p>Using these operators, we get the following solution:</p>
-<div class="sourceCode" id="cb14" data-startFrom="1"><pre class="sourceCode numberSource java numberLines good"><code class="sourceCode java"><span id="cb14-1"><a href="#cb14-1"></a><span class="kw">class</span> Solution <span class="op">{</span></span>
-<span id="cb14-2"><a href="#cb14-2"></a>    <span class="kw">public</span> <span class="dt">int</span> <span class="fu">getSum</span><span class="op">(</span><span class="dt">int</span> a<span class="op">,</span> <span class="dt">int</span> b<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb14-3"><a href="#cb14-3"></a>        <span class="cf">while</span> <span class="op">(</span>b <span class="op">!=</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
-<span id="cb14-4"><a href="#cb14-4"></a>            <span class="dt">int</span> tmp <span class="op">=</span> <span class="op">(</span>a <span class="op">&amp;</span> b<span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="dv">1</span><span class="op">;</span></span>
-<span id="cb14-5"><a href="#cb14-5"></a>            a <span class="op">=</span> a <span class="op">^</span> b<span class="op">;</span></span>
-<span id="cb14-6"><a href="#cb14-6"></a>            b <span class="op">=</span> tmp<span class="op">;</span></span>
-<span id="cb14-7"><a href="#cb14-7"></a>        <span class="op">}</span></span>
-<span id="cb14-8"><a href="#cb14-8"></a>        <span class="cf">return</span> a<span class="op">;</span></span>
-<span id="cb14-9"><a href="#cb14-9"></a>    <span class="op">}</span></span>
-<span id="cb14-10"><a href="#cb14-10"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb14" data-startFrom="1"><pre class="sourceCode numberSource java numberLines good"><code class="sourceCode java"><span id="cb14-1"><a href="#cb14-1"></a><span class="kw">class</span> Solution {</span>
+<span id="cb14-2"><a href="#cb14-2"></a>    <span class="kw">public</span> <span class="dt">int</span> <span class="fu">getSum</span>(<span class="dt">int</span> a, <span class="dt">int</span> b) {</span>
+<span id="cb14-3"><a href="#cb14-3"></a>        <span class="kw">while</span> (b != <span class="dv">0</span>) {</span>
+<span id="cb14-4"><a href="#cb14-4"></a>            <span class="dt">int</span> tmp = (a &amp; b) &lt;&lt; <span class="dv">1</span>;</span>
+<span id="cb14-5"><a href="#cb14-5"></a>            a = a ^ b;</span>
+<span id="cb14-6"><a href="#cb14-6"></a>            b = tmp;</span>
+<span id="cb14-7"><a href="#cb14-7"></a>        }</span>
+<span id="cb14-8"><a href="#cb14-8"></a>        <span class="kw">return</span> a;</span>
+<span id="cb14-9"><a href="#cb14-9"></a>    }</span>
+<span id="cb14-10"><a href="#cb14-10"></a>}</span></code></pre></div>
 <p>Note that this solution is in <strong>Java</strong> and <em>not</em> in Python. This is because integers are weird in Python. In general, it’s probably best to stick with Java for anything that requires the use of bitwise operations.</p>
 <p>What’s going on in this solution? Let’s look at each line and see what it does.</p>
 <ul>
@@ -945,6 +930,5 @@ function topFunction() {
 </script>
 </body>
 </html>
-
 
 <br><br>
