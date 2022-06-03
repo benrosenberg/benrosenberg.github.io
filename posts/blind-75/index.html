@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Ben Rosenberg" />
+  <title>Blind 75 Solutions and Methods</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+      }
+    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+    div.sourceCode
+      { color: #cccccc; background-color: #303030; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ffcfaf; } /* Alert */
+    code span.an { color: #7f9f7f; font-weight: bold; } /* Annotation */
+    code span.at { } /* Attribute */
+    code span.bn { color: #dca3a3; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #f0dfaf; } /* ControlFlow */
+    code span.ch { color: #dca3a3; } /* Char */
+    code span.cn { color: #dca3a3; font-weight: bold; } /* Constant */
+    code span.co { color: #7f9f7f; } /* Comment */
+    code span.cv { color: #7f9f7f; font-weight: bold; } /* CommentVar */
+    code span.do { color: #7f9f7f; } /* Documentation */
+    code span.dt { color: #dfdfbf; } /* DataType */
+    code span.dv { color: #dcdccc; } /* DecVal */
+    code span.er { color: #c3bf9f; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #c0bed1; } /* Float */
+    code span.fu { color: #efef8f; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #7f9f7f; font-weight: bold; } /* Information */
+    code span.kw { color: #f0dfaf; } /* Keyword */
+    code span.op { color: #f0efd0; } /* Operator */
+    code span.ot { color: #efef8f; } /* Other */
+    code span.pp { color: #ffcfaf; font-weight: bold; } /* Preprocessor */
+    code span.sc { color: #dca3a3; } /* SpecialChar */
+    code span.ss { color: #cc9393; } /* SpecialString */
+    code span.st { color: #cc9393; } /* String */
+    code span.va { } /* Variable */
+    code span.vs { color: #cc9393; } /* VerbatimString */
+    code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="https://benrosenberg.info/style.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+   var mathElements = document.getElementsByClassName("math");
+   var macros = [];
+   for (var i = 0; i < mathElements.length; i++) {
+    var texText = mathElements[i].firstChild;
+    if (mathElements[i].tagName == "SPAN") {
+     katex.render(texText.data, mathElements[i], {
+      displayMode: mathElements[i].classList.contains('display'),
+      throwOnError: false,
+      macros: macros,
+      fleqn: false
+     });
+  }}});
+  </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Blind 75 Solutions and Methods</h1>
+<p class="author"><a href="https://benrosenberg.info">Ben Rosenberg</a></p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#how-to-use-this-list">How to use this list</a></li>
+<li><a href="#array">Array</a>
+<ul>
+<li><a href="#two-sum">Two Sum</a></li>
+<li><a href="#best-time-to-buy-and-sell-stock">Best Time to Buy and Sell Stock</a></li>
+<li><a href="#contains-duplicate">Contains Duplicate</a></li>
+<li><a href="#product-of-array-except-self">Product of Array Except Self</a></li>
+<li><a href="#maximum-subarray">Maximum Subarray</a></li>
+<li><a href="#maximum-product-subarray">Maximum Product Subarray</a></li>
+<li><a href="#find-minimum-in-rotated-sorted-array">Find Minimum in Rotated Sorted Array</a></li>
+<li><a href="#search-in-rotated-sorted-array">Search in Rotated Sorted Array</a></li>
+<li><a href="#sum">3 Sum</a></li>
+<li><a href="#container-with-most-water">Container With Most Water</a></li>
+</ul></li>
+<li><a href="#binary">Binary</a>
+<ul>
+<li><a href="#sum-of-two-integers">Sum of Two Integers</a></li>
+<li><a href="#number-of-1-bits">Number of 1 Bits</a></li>
+<li><a href="#counting-bits">Counting Bits</a></li>
+<li><a href="#missing-number">Missing Number</a></li>
+<li><a href="#reverse-bits">Reverse Bits</a></li>
+</ul></li>
+<li><a href="#dynamic-programming">Dynamic Programming</a>
+<ul>
+<li><a href="#climbing-stairs">Climbing Stairs</a></li>
+<li><a href="#coin-change">Coin Change</a></li>
+<li><a href="#longest-increasing-subsequence">Longest Increasing Subsequence</a></li>
+<li><a href="#longest-common-subsequence">Longest Common Subsequence</a></li>
+<li><a href="#word-break-problem">Word Break Problem</a></li>
+<li><a href="#combination-sum">Combination Sum</a></li>
+<li><a href="#house-robber">House Robber</a></li>
+<li><a href="#house-robber-ii">House Robber II</a></li>
+<li><a href="#decode-ways">Decode Ways</a></li>
+<li><a href="#unique-paths">Unique Paths</a></li>
+<li><a href="#jump-game">Jump Game</a></li>
+</ul></li>
+<li><a href="#graph">Graph</a>
+<ul>
+<li><a href="#clone-graph">Clone Graph</a></li>
+<li><a href="#course-schedule">Course Schedule</a></li>
+<li><a href="#pacific-atlantic-water-flow">Pacific Atlantic Water Flow</a></li>
+<li><a href="#number-of-islands">Number of Islands</a></li>
+<li><a href="#longest-consecutive-sequence">Longest Consecutive Sequence</a></li>
+<li><a href="#alien-dictionary-leetcode-premium">Alien Dictionary (Leetcode Premium)</a></li>
+<li><a href="#graph-valid-tree-leetcode-premium">Graph Valid Tree (Leetcode Premium)</a></li>
+<li><a href="#number-of-connected-components-in-an-undirected-graph-leetcode-premium">Number of Connected Components in an Undirected Graph (Leetcode Premium)</a></li>
+</ul></li>
+<li><a href="#interval">Interval</a>
+<ul>
+<li><a href="#insert-interval">Insert Interval</a></li>
+<li><a href="#merge-intervals">Merge Intervals</a></li>
+<li><a href="#non-overlapping-intervals">Non-overlapping Intervals</a></li>
+<li><a href="#meeting-rooms-leetcode-premium">Meeting Rooms (Leetcode Premium)</a></li>
+<li><a href="#meeting-rooms-ii-leetcode-premium">Meeting Rooms II (Leetcode Premium)</a></li>
+</ul></li>
+<li><a href="#linked-list">Linked List</a>
+<ul>
+<li><a href="#reverse-a-linked-list">Reverse a Linked List</a></li>
+<li><a href="#detect-cycle-in-a-linked-list">Detect Cycle in a Linked List</a></li>
+<li><a href="#merge-two-sorted-lists">Merge Two Sorted Lists</a></li>
+<li><a href="#merge-k-sorted-lists">Merge K Sorted Lists</a></li>
+<li><a href="#remove-nth-node-from-end-of-list">Remove Nth Node From End Of List</a></li>
+<li><a href="#reorder-list">Reorder List</a></li>
+</ul></li>
+<li><a href="#matrix">Matrix</a>
+<ul>
+<li><a href="#set-matrix-zeroes">Set Matrix Zeroes</a></li>
+<li><a href="#spiral-matrix">Spiral Matrix</a></li>
+<li><a href="#rotate-image">Rotate Image</a></li>
+<li><a href="#word-search">Word Search</a></li>
+</ul></li>
+<li><a href="#string">String</a>
+<ul>
+<li><a href="#longest-substring-without-repeating-characters">Longest Substring Without Repeating Characters</a></li>
+<li><a href="#longest-repeating-character-replacement">Longest Repeating Character Replacement</a></li>
+<li><a href="#minimum-window-substring">Minimum Window Substring</a></li>
+<li><a href="#valid-anagram">Valid Anagram</a></li>
+<li><a href="#group-anagrams">Group Anagrams</a></li>
+<li><a href="#valid-parentheses">Valid Parentheses</a></li>
+<li><a href="#valid-palindrome">Valid Palindrome</a></li>
+<li><a href="#longest-palindromic-substring">Longest Palindromic Substring</a></li>
+<li><a href="#palindromic-substrings">Palindromic Substrings</a></li>
+<li><a href="#encode-and-decode-strings-leetcode-premium">Encode and Decode Strings (Leetcode Premium)</a></li>
+</ul></li>
+<li><a href="#tree">Tree</a>
+<ul>
+<li><a href="#maximum-depth-of-binary-tree">Maximum Depth of Binary Tree</a></li>
+<li><a href="#same-tree">Same Tree</a></li>
+<li><a href="#invertflip-binary-tree">Invert/Flip Binary Tree</a></li>
+<li><a href="#binary-tree-maximum-path-sum">Binary Tree Maximum Path Sum</a></li>
+<li><a href="#binary-tree-level-order-traversal">Binary Tree Level Order Traversal</a></li>
+<li><a href="#serialize-and-deserialize-binary-tree">Serialize and Deserialize Binary Tree</a></li>
+<li><a href="#subtree-of-another-tree">Subtree of Another Tree</a></li>
+<li><a href="#construct-binary-tree-from-preorder-and-inorder-traversal">Construct Binary Tree from Preorder and Inorder Traversal</a></li>
+<li><a href="#validate-binary-search-tree">Validate Binary Search Tree</a></li>
+<li><a href="#kth-smallest-element-in-a-bst">Kth Smallest Element in a BST</a></li>
+<li><a href="#lowest-common-ancestor-of-bst">Lowest Common Ancestor of BST</a></li>
+<li><a href="#implement-trie-prefix-tree">Implement Trie (Prefix Tree)</a></li>
+<li><a href="#add-and-search-word">Add and Search Word</a></li>
+<li><a href="#word-search-ii">Word Search II</a></li>
+</ul></li>
+<li><a href="#heap">Heap</a>
+<ul>
+<li><a href="#merge-k-sorted-lists-1">Merge K Sorted Lists</a></li>
+<li><a href="#top-k-frequent-elements">Top K Frequent Elements</a></li>
+<li><a href="#find-median-from-data-stream">Find Median from Data Stream</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="how-to-use-this-list">How to use this list</h1>
+<p>This is a collection of thoughts on and solutions to the <strong>Blind 75</strong>, a well-known list of Leetcode problems that are commonly seen on coding interviews for positions in software engineering and related fields. Above, there is a table of contents with links to each question, arranged by the type of problem.</p>
+<p>Each of the code blocks found in the problem discussions has on its left edge a colored sidebar, which has the following meaning:</p>
+<ul>
+<li><div style="display:inline; color:#fb4934">
+Red
+</div>
+: not a recommended method of solving the problem, or doesn’t work, or excessively complex, etc.</li>
+<li><div style="display:inline; color:#CCCCCC">
+Grey
+</div>
+: neutral. Not a solution, or not a great solution but a good solution, etc.</li>
+<li><div style="display:inline; color:#599F4B">
+Green
+</div>
+: recommended solution (or only solution that I have found).</li>
+</ul>
+<p>Some of the code blocks were adapted from other sources. The links to these sources are in a comment at the beginning of the code block.</p>
+<p>If you use any of the code or text from this page, please either cite the source given in the code and this page, or just cite this page (<a href="https://benrosenberg.info/blind-75/">https://benrosenberg.info/blind-75/</a>).</p>
+<h1 id="array">Array</h1>
+<h2 id="two-sum">Two Sum</h2>
+<blockquote>
+<p>Given an array of integers <code>nums</code> and an integer <code>target</code>, return indices of the two numbers such that they add up to <code>target</code>. You may assume that each input would have exactly one solution, and you may not use the same element twice. You can return the answer in any order.</p>
+</blockquote>
+<p>This problem has an easy solution (brute force) and a slightly less intuitive solution.</p>
+<p>The easy brute force solution is to just look at all the pairs of indices:</p>
+<div class="sourceCode" id="cb1" data-startFrom="1"><pre class="sourceCode numberSource python numberLines neutral"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">class</span> Solution:</span>
+<span id="cb1-2"><a href="#cb1-2"></a>    <span class="kw">def</span> twoSum(<span class="va">self</span>, nums: List[<span class="bu">int</span>], target: <span class="bu">int</span>) <span class="op">-&gt;</span> List[<span class="bu">int</span>]:</span>
+<span id="cb1-3"><a href="#cb1-3"></a>        <span class="co"># brute force</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a>        <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(nums)):</span>
+<span id="cb1-5"><a href="#cb1-5"></a>            <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(i<span class="op">+</span><span class="dv">1</span>, <span class="bu">len</span>(nums)):</span>
+<span id="cb1-6"><a href="#cb1-6"></a>                <span class="cf">if</span> nums[i] <span class="op">+</span> nums[j] <span class="op">==</span> target: </span>
+<span id="cb1-7"><a href="#cb1-7"></a>                    <span class="cf">return</span> [i, j]</span></code></pre></div>
+<p>The less intuitive solution is to iterate through the entire list and create a dictionary storing the differences needed to get to the target number. For the bit of added space complexity we use (<span class="math inline">O(n)</span> over the brute force’s <span class="math inline">O(1)</span>) we get a much faster <span class="math inline">O(n)</span> runtime (over the brute force’s <span class="math inline">O(n^2)</span>).</p>
+<div class="sourceCode" id="cb2" data-startFrom="1"><pre class="sourceCode numberSource python numberLines good"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">class</span> Solution:</span>
+<span id="cb2-2"><a href="#cb2-2"></a>    <span class="kw">def</span> twoSum(<span class="va">self</span>, nums: List[<span class="bu">int</span>], target: <span class="bu">int</span>) <span class="op">-&gt;</span> List[<span class="bu">int</span>]:</span>
+<span id="cb2-3"><a href="#cb2-3"></a>        <span class="co"># this is now O(n)</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a>        diff_dict <span class="op">=</span> {target <span class="op">-</span> nums[i] : i <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(nums))}</span>
+<span id="cb2-5"><a href="#cb2-5"></a>        </span>
+<span id="cb2-6"><a href="#cb2-6"></a>        <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(nums)):</span>
+<span id="cb2-7"><a href="#cb2-7"></a>            <span class="cf">if</span> nums[i] <span class="kw">in</span> diff_dict <span class="kw">and</span> diff_dict[nums[i]] <span class="op">!=</span> i: </span>
+<span id="cb2-8"><a href="#cb2-8"></a>                <span class="cf">return</span> [i, diff_dict[nums[i]]]</span></code></pre></div>
+<h2 id="best-time-to-buy-and-sell-stock">Best Time to Buy and Sell Stock</h2>
+<blockquote>
+<p>You are given an array <code>prices</code> where <code>prices[i]</code> is the price of a given stock on the <span class="math inline">i</span>th day. You want to maximize your profit by choosing a single day to buy one stock and choosing a different day in the future to sell that stock. Return the maximum profit you can achieve from this transaction. If you cannot achieve any profit, return <code>0</code>.</p>
+</blockquote>
+<p>This problem is the first example of the “keeping track of the optimum” idea in the array problems. Rather than iterating through all the possible times for buying and selling stock (which takes <span class="math inline">O(n^2)</span> time), we can instead just iterate once and keep track of the relevant information as we go. (The brute force method is omitted as it generally exceeds the time limit on Leetcode, and is pretty easy to code up [it’s basically a slightly modified version of the brute-force two-sum].)</p>
+<p>The below solution runs in <span class="math inline">O(n)</span> time and <span class="math inline">O(1)</span> space.</p>
+<div class="sourceCode" id="cb3" data-startFrom="1"><pre class="sourceCode numberSource python numberLines good"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">class</span> Solution:</span>
+<span id="cb3-2"><a href="#cb3-2"></a>    <span class="kw">def</span> maxProfit(<span class="va">self</span>, prices: List[<span class="bu">int</span>]) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
+<span id="cb3-3"><a href="#cb3-3"></a>        <span class="co"># keep track of max profit as we go</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a>        max_profit <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a>        </span>
+<span id="cb3-6"><a href="#cb3-6"></a>        min_price <span class="op">=</span> prices[<span class="dv">0</span>]</span>
+<span id="cb3-7"><a href="#cb3-7"></a>        <span class="cf">for</span> i <span class="kw">in</span> prices[<span class="dv">1</span>:]:</span>
+<span id="cb3-8"><a href="#cb3-8"></a>            this_profit <span class="op">=</span> i <span class="op">-</span> min_price</span>
+<span id="cb3-9"><a href="#cb3-9"></a>            <span class="cf">if</span> this_profit <span class="op">&gt;</span> max_profit:</span>
+<span id="cb3-10"><a href="#cb3-10"></a>                max_profit <span class="op">=</span> this_profit</span>
+<span id="cb3-11"><a href="#cb3-11"></a>            </span>
+<span id="cb3-12"><a href="#cb3-12"></a>            <span class="cf">if</span> i <span class="op">&lt;</span> min_price:</span>
+<span id="cb3-13"><a href="#cb3-13"></a>                min_price <span class="op">=</span> i</span>
+<span id="cb3-14"><a href="#cb3-14"></a>        </span>
+<span id="cb3-15"><a href="#cb3-15"></a>        <span class="cf">return</span> max_profit</span></code></pre></div>
+<h2 id="contains-duplicate">Contains Duplicate</h2>
+<blockquote>
+<p>Given an integer array <code>nums</code>, return <code>true</code> if any value appears at least twice in the array, and return <code>false</code> if every element is distinct.</p>
+</blockquote>
+<p>This is, without a doubt, one of the easiest Leetcode problems, if not <em>the</em> easiest (at least in Python). The solution is below:</p>
+<div class="sourceCode" id="cb4" data-startFrom="1"><pre class="sourceCode numberSource python numberLines good"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw">class</span> Solution:</span>
+<span id="cb4-2"><a href="#cb4-2"></a>    <span class="kw">def</span> containsDuplicate(<span class="va">self</span>, nums: List[<span class="bu">int</span>]) <span class="op">-&gt;</span> <span class="bu">bool</span>:</span>
+<span id="cb4-3"><a href="#cb4-3"></a>        <span class="cf">return</span> <span class="bu">len</span>(<span class="bu">set</span>(nums)) <span class="op">!=</span> <span class="bu">len</span>(nums)</span></code></pre></div>
+<p>Recall that a property of a <code>set</code> is that it contains no duplicate elements. By casting <code>nums</code> to a <code>set</code>, we get a version of <code>nums</code> without duplicates. (This cast takes <span class="math inline">O(n)</span> time, as it needs to remove the duplicates.) Then, we take the length of this newly created set, and compare it with the length of <code>nums</code> – if the lengths are the same, then no elements were removed in the casting. Otherwise, some element must have been removed, so there must have been at least one duplicate element.</p>
+<p>A more traditional (and less Pythonic) solution might be as follows:</p>
+<div class="sourceCode" id="cb5" data-startFrom="1"><pre class="sourceCode numberSource python numberLines good"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw">class</span> Solution:</span>
+<span id="cb5-2"><a href="#cb5-2"></a>    <span class="kw">def</span> containsDuplicate(<span class="va">self</span>, nums: List[<span class="bu">int</span>]) <span class="op">-&gt;</span> <span class="bu">bool</span>:</span>
+<span id="cb5-3"><a href="#cb5-3"></a>        no_duplicates <span class="op">=</span> <span class="bu">set</span>()</span>
+<span id="cb5-4"><a href="#cb5-4"></a></span>
+<span id="cb5-5"><a href="#cb5-5"></a>        <span class="cf">for</span> num <span class="kw">in</span> nums:</span>
+<span id="cb5-6"><a href="#cb5-6"></a>            <span class="co"># Set.add() only adds if element not present</span></span>
+<span id="cb5-7"><a href="#cb5-7"></a>            no_duplicates.add(num)</span>
+<span id="cb5-8"><a href="#cb5-8"></a></span>
+<span id="cb5-9"><a href="#cb5-9"></a>        <span class="cf">return</span> <span class="bu">len</span>(no_duplicates) <span class="op">!=</span> <span class="bu">len</span>(nums)</span></code></pre></div>
+<p>The reason we can use <code>.add()</code> inside of the loop is that the <code>set</code> structure is a kind of hashmap, which has <span class="math inline">O(1)</span> amortized lookup time. Thus, the total time complexity remains <span class="math inline">O(n)</span>.</p>
+<h2 id="product-of-array-except-self">Product of Array Except Self</h2>
+<blockquote>
+<p>Given an integer array <code>nums</code>, return an array answer such that <code>answer[i]</code> is equal to the product of all the elements of <code>nums</code> except <code>nums[i]</code>. The product of any prefix or suffix of <code>nums</code> is guaranteed to fit in a 32-bit integer. You must write an algorithm that runs in <span class="math inline">O(n)</span> time and without using the division operation.</p>
+</blockquote>
+<p>To be honest, I broke the rules a little on this one – I used the division operation. But Leetcode didn’t detect it, so whatever I guess?</p>
+<p>The efficient method used below is to get the product of the entire array, and just divide it by whatever value is at the present index when necessary to get the “product besides self”. (Complications re:zero are worked out below.)</p>
+<p>This solution is a little more complicated than it needed to be, but it works. The stuff with <code>reduce</code> and the <code>prod</code> function just makes it easier for me to take a product of an array.</p>
+<p>The below code runs in <span class="math inline">O(n)</span> time and <span class="math inline">O(1)</span> space:</p>
+<div class="sourceCode" id="cb6" data-startFrom="1"><pre class="sourceCode numberSource python numberLines good"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a><span class="im">from</span> functools <span class="im">import</span> <span class="bu">reduce</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a></span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="kw">class</span> Solution:</span>
+<span id="cb6-4"><a href="#cb6-4"></a>    <span class="kw">def</span> productExceptSelf(<span class="va">self</span>, nums: List[<span class="bu">int</span>]) <span class="op">-&gt;</span> List[<span class="bu">int</span>]:</span>
+<span id="cb6-5"><a href="#cb6-5"></a>        <span class="kw">def</span> prod(L):</span>
+<span id="cb6-6"><a href="#cb6-6"></a>            <span class="cf">return</span> <span class="bu">reduce</span>(<span class="kw">lambda</span> x,y:x<span class="op">*</span>y, L)</span>
+<span id="cb6-7"><a href="#cb6-7"></a>        </span>
+<span id="cb6-8"><a href="#cb6-8"></a>        <span class="co"># in this case the entire array will be zeroes</span></span>
+<span id="cb6-9"><a href="#cb6-9"></a>        <span class="cf">if</span> nums.count(<span class="dv">0</span>) <span class="op">&gt;</span> <span class="dv">1</span>:</span>
+<span id="cb6-10"><a href="#cb6-10"></a>            <span class="cf">return</span> [<span class="dv">0</span>]<span class="op">*</span><span class="bu">len</span>(nums)</span>
+<span id="cb6-11"><a href="#cb6-11"></a>        </span>
+<span id="cb6-12"><a href="#cb6-12"></a>        <span class="co"># in this case we need to account for the fact that</span></span>
+<span id="cb6-13"><a href="#cb6-13"></a>        <span class="co"># zero breaks division</span></span>
+<span id="cb6-14"><a href="#cb6-14"></a>        <span class="cf">if</span> nums.count(<span class="dv">0</span>) <span class="op">==</span> <span class="dv">1</span>:</span>
+<span id="cb6-15"><a href="#cb6-15"></a>            no_zero <span class="op">=</span> nums[:nums.index(<span class="dv">0</span>)] <span class="op">+</span> nums[nums.index(<span class="dv">0</span>)<span class="op">+</span><span class="dv">1</span>:]</span>
+<span id="cb6-16"><a href="#cb6-16"></a>            no_zero_prod <span class="op">=</span> prod(no_zero)</span>
+<span id="cb6-17"><a href="#cb6-17"></a></span>
+<span id="cb6-18"><a href="#cb6-18"></a>        total_prod <span class="op">=</span> prod(nums)</span>
+<span id="cb6-19"><a href="#cb6-19"></a>        </span>
+<span id="cb6-20"><a href="#cb6-20"></a>        <span class="co"># divide total product by relevant entry if possible, otherwise return nonzero product</span></span>
+<span id="cb6-21"><a href="#cb6-21"></a>        <span class="cf">return</span> [total_prod <span class="op">//</span> i <span class="cf">if</span> i <span class="op">!=</span> <span class="dv">0</span> <span class="cf">else</span> no_zero_prod <span class="cf">for</span> i <span class="kw">in</span> nums]</span></code></pre></div>
+<p>If there is more than one zero, the entire array will just be zeroes (because there will always be another zero, regardless of what index you’re in). This check, as well as the one below it (to ensure that zeroes are successfully dealt with), enables us to use the “illegal” division shortcut on <a href="#cb6-21">line 21</a>.</p>
+<h2 id="maximum-subarray">Maximum Subarray</h2>
+<blockquote>
+<p>Given an integer array <code>nums</code>, find the contiguous subarray (containing at least one number) which has the largest sum and return its sum.</p>
+<p><strong>Note</strong>: A <em>subarray</em> is a contiguous part of an array.</p>
+</blockquote>
+<p>The following code is a solution from Wikipedia.</p>
+<div class="sourceCode" id="cb7" data-startFrom="1"><pre class="sourceCode numberSource python numberLines good"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a><span class="co"># source: wikipedia</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="kw">class</span> Solution:</span>
+<span id="cb7-3"><a href="#cb7-3"></a>    <span class="kw">def</span> maxSubArray(<span class="va">self</span>, nums: List[<span class="bu">int</span>]) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
+<span id="cb7-4"><a href="#cb7-4"></a>        <span class="cf">if</span> <span class="bu">min</span>(nums) <span class="op">&gt;</span> <span class="dv">0</span>:</span>
+<span id="cb7-5"><a href="#cb7-5"></a>            <span class="cf">return</span> <span class="bu">sum</span>(nums)</span>
+<span id="cb7-6"><a href="#cb7-6"></a>        </span>
+<span id="cb7-7"><a href="#cb7-7"></a>        <span class="cf">if</span> <span class="bu">max</span>(nums) <span class="op">&lt;</span> <span class="dv">0</span>:</span>
+<span id="cb7-8"><a href="#cb7-8"></a>            <span class="cf">return</span> <span class="bu">max</span>(nums)</span>
+<span id="cb7-9"><a href="#cb7-9"></a>        </span>
+<span id="cb7-10"><a href="#cb7-10"></a>        best_sum <span class="op">=</span> <span class="bu">float</span>(<span class="st">&#39;-inf&#39;</span>)</span>
+<span id="cb7-11"><a href="#cb7-11"></a>        current_sum <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb7-12"><a href="#cb7-12"></a>        <span class="cf">for</span> x <span class="kw">in</span> nums:</span>
+<span id="cb7-13"><a href="#cb7-13"></a>            current_sum <span class="op">=</span> <span class="bu">max</span>(x, current_sum <span class="op">+</span> x)</span>
+<span id="cb7-14"><a href="#cb7-14"></a>            best_sum <span class="op">=</span> <span class="bu">max</span>(best_sum, current_sum)</span>
+<span id="cb7-15"><a href="#cb7-15"></a>        <span class="cf">return</span> best_sum</span></code></pre></div>
+<p>This is kind of a DP (Dynamic Programming)-like solution. The first two checks are for simple edge cases that can be done in one simple pass and serve as starting points for the intuition behind the problem. The rest is <strong>Kadane’s Algorithm</strong> for finding the maximum contiguous subarray:</p>
+<ul>
+<li>Initialize variables for <span class="math inline">\texttt{best\_sum}</span> and <span class="math inline">\texttt{current\_sum}</span></li>
+<li>Iterate through <code>nums</code> with variable <span class="math inline">x</span>
+<ul>
+<li>At each value of <span class="math inline">x</span>, check whether <span class="math inline">\texttt{current\_sum} + x &gt; x</span>; that is, whether it is better to continue the streak of adding numbers together, or to scrap that and just take the current <span class="math inline">x</span> as the better local max
+<ul>
+<li>If <span class="math inline">\texttt{current\_sum} + x &gt; x</span>, set <span class="math inline">\texttt{current\_sum} := \texttt{current\_sum} + x</span></li>
+<li>Otherwise, continue (leave <span class="math inline">\texttt{current\_sum}</span> as is)</li>
+</ul></li>
+<li>Perform a similar check for <span class="math inline">\texttt{best\_sum}</span>:
+<ul>
+<li>If <span class="math inline">\texttt{best\_sum} &gt; \texttt{current\_sum}</span>, set <span class="math inline">\texttt{best\_sum} := \texttt{current\_sum}</span></li>
+<li>Otherwise, continue (leave <span class="math inline">\texttt{best\_sum}</span> as is)</li>
+</ul></li>
+</ul></li>
+<li>Return <span class="math inline">\texttt{best\_sum}</span></li>
+</ul>
+<p>This algorithm takes advantage of the fact that <u>for each local max subarray ending at index <span class="math inline">i</span>, that max subarray will either be a singleton containing just element <span class="math inline">i</span>, or will contain within it the local max subarray ending at index <span class="math inline">i-1</span>.</u> This means that we can use previous results to find future results, and so there are overlapping subproblems; thus, this is a dynamic programming problem.</p>
+The specific recurrence relation here is as follows:
+<div style="text-align:center;">
+<code>local_max[i]</code> = max(<code>local_max[i-1]</code> + <code>nums[i]</code>, <code>nums[i]</code>)
+</div>
+<p>You can see this on <a href="#cb7-13">line 13</a>.</p>
+<h2 id="maximum-product-subarray">Maximum Product Subarray</h2>
+<blockquote>
+<p>Given an integer array <code>nums</code>, find a contiguous non-empty subarray within the array that has the largest product, and return the product. The test cases are generated so that the answer will fit in a 32-bit integer.</p>
+</blockquote>
+<p>The idea behind this solution is similar to that of the previous question, with a couple extra caveats:</p>
+<ul>
+<li>There may be an odd number of negative elements, so we check both forwards and backwards to ensure elements aren’t excluded from the product because of the fact that they lie on the right side of an odd number of negatives (causing the product when they are included to remain negative)
+<ul>
+<li>Example of case that doesn’t work without backwards check: <code>[3, -1, 4]</code> (answer is <code>3</code> if only checked forwards)</li>
+</ul></li>
+<li>Zeroes delineate groups of elements, as multiplying by zero annihilates our running product</li>
+</ul>
+<div class="sourceCode" id="cb8" data-startFrom="1"><pre class="sourceCode numberSource python numberLines good"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a><span class="co"># source: https://github.com/mccornet/dynamic-programming-examples/wiki/09-The-maximum-product-subarray</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="kw">class</span> Solution:</span>
+<span id="cb8-3"><a href="#cb8-3"></a>    <span class="kw">def</span> maxProduct(<span class="va">self</span>, nums: List[<span class="bu">int</span>]) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
+<span id="cb8-4"><a href="#cb8-4"></a>        <span class="kw">def</span> product_pass(nums):</span>
+<span id="cb8-5"><a href="#cb8-5"></a>            best_prod <span class="op">=</span> nums[<span class="dv">0</span>]</span>
+<span id="cb8-6"><a href="#cb8-6"></a>            current_prod <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb8-7"><a href="#cb8-7"></a>            <span class="cf">for</span> num <span class="kw">in</span> nums:  </span>
+<span id="cb8-8"><a href="#cb8-8"></a>                <span class="co"># extend running product  </span></span>
+<span id="cb8-9"><a href="#cb8-9"></a>                current_prod <span class="op">=</span> current_prod <span class="op">*</span> num</span>
+<span id="cb8-10"><a href="#cb8-10"></a>                </span>
+<span id="cb8-11"><a href="#cb8-11"></a>                <span class="co"># reset total if zero encountered</span></span>
+<span id="cb8-12"><a href="#cb8-12"></a>                <span class="cf">if</span> current_prod <span class="op">==</span> <span class="dv">0</span>: </span>
+<span id="cb8-13"><a href="#cb8-13"></a>                    current_prod <span class="op">=</span> num</span>
+<span id="cb8-14"><a href="#cb8-14"></a></span>
+<span id="cb8-15"><a href="#cb8-15"></a>                best_prod <span class="op">=</span> <span class="bu">max</span>(best_prod, current_prod)</span>
+<span id="cb8-16"><a href="#cb8-16"></a></span>
+<span id="cb8-17"><a href="#cb8-17"></a>            <span class="cf">return</span> best_prod</span>
+<span id="cb8-18"><a href="#cb8-18"></a></span>
+<span id="cb8-19"><a href="#cb8-19"></a>        <span class="co"># take max over both forward and backward passes</span></span>
+<span id="cb8-20"><a href="#cb8-20"></a>        <span class="cf">return</span>(<span class="bu">max</span>(product_pass(nums), product_pass(nums[::<span class="op">-</span><span class="dv">1</span>])))</span></code></pre></div>
+<h2 id="find-minimum-in-rotated-sorted-array">Find Minimum in Rotated Sorted Array</h2>
+<blockquote>
+<p>Suppose an array of length <span class="math inline">n</span> sorted in ascending order is rotated between <span class="math inline">1</span> and <span class="math inline">n</span> times. For example, the array <code>nums = [0,1,2,4,5,6,7]</code> might become <code>[4,5,6,7,0,1,2]</code> if it was rotated <span class="math inline">4</span> times, or <code>[0,1,2,4,5,6,7]</code> if it was rotated <span class="math inline">7</span> times.</p>
+<p>Notice that rotating an array <code>[a[0], a[1], a[2], ..., a[n-1]]</code> <span class="math inline">1</span> time results in the array <code>[a[n-1], a[0], a[1], a[2], ..., a[n-2]]</code>.</p>
+<p>Given the sorted rotated array nums of unique elements, return the minimum element of this array. You must write an algorithm that runs in <span class="math inline">O(\log(n))</span> time.</p>
+</blockquote>
+<p>The fact that we are told we need to do this in “<span class="math inline">O(\log(n))</span> time”, combined with the fact that we are <em>searching</em> for something, should set off alarms that we need to use <strong>binary search</strong>:</p>
+<div class="sourceCode" id="cb9" data-startFrom="1"><pre class="sourceCode numberSource python numberLines good"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw">class</span> Solution:</span>
+<span id="cb9-2"><a href="#cb9-2"></a>    <span class="kw">def</span> findMin(<span class="va">self</span>, nums: List[<span class="bu">int</span>]) <span class="op">-&gt;</span> <span class="bu">int</span>:  </span>
+<span id="cb9-3"><a href="#cb9-3"></a>        <span class="co"># small data</span></span>
+<span id="cb9-4"><a href="#cb9-4"></a>        <span class="cf">if</span> <span class="bu">len</span>(nums) <span class="op">&lt;</span> <span class="dv">3</span>:</span>
+<span id="cb9-5"><a href="#cb9-5"></a>            <span class="cf">return</span> <span class="bu">min</span>(nums)</span>
+<span id="cb9-6"><a href="#cb9-6"></a>        </span>
+<span id="cb9-7"><a href="#cb9-7"></a>        <span class="co"># binary search</span></span>
+<span id="cb9-8"><a href="#cb9-8"></a>        mid <span class="op">=</span> <span class="bu">len</span>(nums) <span class="op">//</span> <span class="dv">2</span></span>
+<span id="cb9-9"><a href="#cb9-9"></a>        left <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb9-10"><a href="#cb9-10"></a>        right <span class="op">=</span> <span class="bu">len</span>(nums)<span class="op">-</span><span class="dv">1</span></span>
+<span id="cb9-11"><a href="#cb9-11"></a>        </span>
+<span id="cb9-12"><a href="#cb9-12"></a>        <span class="cf">if</span> nums[left] <span class="op">&gt;</span> nums[mid]: <span class="co"># left is unsorted</span></span>
+<span id="cb9-13"><a href="#cb9-13"></a>            <span class="co"># try left</span></span>
+<span id="cb9-14"><a href="#cb9-14"></a>            <span class="cf">return</span> <span class="va">self</span>.findMin(nums[left:mid<span class="op">+</span><span class="dv">1</span>])</span>
+<span id="cb9-15"><a href="#cb9-15"></a>            </span>
+<span id="cb9-16"><a href="#cb9-16"></a>        <span class="cf">elif</span> nums[mid] <span class="op">&gt;</span> nums[right]: <span class="co"># right is unsorted</span></span>
+<span id="cb9-17"><a href="#cb9-17"></a>            <span class="co"># try right</span></span>
+<span id="cb9-18"><a href="#cb9-18"></a>            <span class="cf">return</span> <span class="va">self</span>.findMin(nums[mid:right<span class="op">+</span><span class="dv">1</span>])</span>
+<span id="cb9-19"><a href="#cb9-19"></a>        </span>
+<span id="cb9-20"><a href="#cb9-20"></a>        <span class="cf">else</span>: <span class="co"># array must be sorted</span></span>
+<span id="cb9-21"><a href="#cb9-21"></a>            <span class="cf">return</span> nums[<span class="dv">0</span>] </span></code></pre></div>
+<p>The solution to this is slightly complicated by the fact that the array is also rotated by some amount. So, rather than looking for a target value, we’re instead looking for the place where the array goes from its minimum to its maximum; e.g., for <code>[4,5,6,7,0,1,2]</code>, it would be the <code>[... 7, 0, ...]</code> part. We’ll call this place the “pivot” of the array.</p>
+<p>We can do this by changing the conditions for searching the left and right sides of the array. Usually in binary search, we search the left side if the target value is less than the <code>mid</code> value we’ve chosen; this time, we want to search the left side if the left side contains the pivot. The same logic holds for the right side.</p>
+<p>It’s easy to tell whether a part of the array contains the pivot: just check whether the first and last elements of that part are sorted correctly. Any rotation would disrupt the ordering of these elements; and in order for them to be out of order, the pivot must be in there somewhere! (This is actually similar logic to the Intermediate Value Theorem, which should have been taught in your calculus class.)</p>
+<h2 id="search-in-rotated-sorted-array">Search in Rotated Sorted Array</h2>
+<blockquote>
+<p>There is an integer array <code>nums</code> sorted in ascending order (with distinct values).</p>
+<p>Prior to being passed to your function, <code>nums</code> is possibly rotated at an unknown pivot index <span class="math inline">k</span> (<span class="math inline">1 \leq k &lt; \texttt{nums.length}</span>) such that the resulting array is <code>[nums[k], nums[k+1], ..., nums[n-1], nums[0], nums[1], ..., nums[k-1]]</code> (<span class="math inline">0</span>-indexed). For example, <code>[0,1,2,4,5,6,7]</code> might be rotated at pivot index <span class="math inline">3</span> and become <code>[4,5,6,7,0,1,2]</code>.</p>
+<p>Given the array <code>nums</code> after the possible rotation and an integer <code>target</code>, return the index of <code>target</code> if it is in <code>nums</code>, or <span class="math inline">-1</span> if it is not in <code>nums</code>.</p>
+<p>You must write an algorithm with <span class="math inline">O(\log(n))</span> runtime complexity.</p>
+</blockquote>
+<p>The solution that I wrote for this problem leans on the solution to the previous problem (“Find Minimum in Rotated Sorted Array”), reconstructs the array based on the results of that solution, and then uses a simple binary search to find the target:</p>
+<div class="sourceCode" id="cb10" data-startFrom="1"><pre class="sourceCode numberSource python numberLines good"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a><span class="kw">class</span> Solution:</span>
+<span id="cb10-2"><a href="#cb10-2"></a>    <span class="kw">def</span> search(<span class="va">self</span>, nums: List[<span class="bu">int</span>], target: <span class="bu">int</span>) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
+<span id="cb10-3"><a href="#cb10-3"></a>        <span class="co"># add indices to array as metadata </span></span>
+<span id="cb10-4"><a href="#cb10-4"></a>        nums_with_indices <span class="op">=</span> <span class="bu">list</span>(<span class="bu">zip</span>(nums, <span class="bu">range</span>(<span class="bu">len</span>(nums))))</span>
+<span id="cb10-5"><a href="#cb10-5"></a>        </span>
+<span id="cb10-6"><a href="#cb10-6"></a>        <span class="co"># same binary search as &quot;Find Minimum in Rotated Sorted Array&quot;, but with index metadata</span></span>
+<span id="cb10-7"><a href="#cb10-7"></a>        <span class="kw">def</span> min_search(nums_with_indices):  </span>
+<span id="cb10-8"><a href="#cb10-8"></a>        </span>
+<span id="cb10-9"><a href="#cb10-9"></a>            <span class="cf">if</span> <span class="bu">len</span>(nums_with_indices) <span class="op">&lt;</span> <span class="dv">3</span>:</span>
+<span id="cb10-10"><a href="#cb10-10"></a>                <span class="cf">return</span> <span class="bu">min</span>(nums_with_indices, key<span class="op">=</span><span class="kw">lambda</span> x : x[<span class="dv">0</span>])</span>
+<span id="cb10-11"><a href="#cb10-11"></a></span>
+<span id="cb10-12"><a href="#cb10-12"></a>            mid <span class="op">=</span> <span class="bu">len</span>(nums_with_indices) <span class="op">//</span> <span class="dv">2</span></span>
+<span id="cb10-13"><a href="#cb10-13"></a>            left <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb10-14"><a href="#cb10-14"></a>            right <span class="op">=</span> <span class="bu">len</span>(nums_with_indices)<span class="op">-</span><span class="dv">1</span></span>
+<span id="cb10-15"><a href="#cb10-15"></a></span>
+<span id="cb10-16"><a href="#cb10-16"></a>            <span class="cf">if</span> nums_with_indices[left][<span class="dv">0</span>] <span class="op">&gt;</span> nums_with_indices[mid][<span class="dv">0</span>]: <span class="co"># left is unsorted</span></span>
+<span id="cb10-17"><a href="#cb10-17"></a>                <span class="co"># try left</span></span>
+<span id="cb10-18"><a href="#cb10-18"></a>                <span class="cf">return</span> min_search(nums_with_indices[left:mid<span class="op">+</span><span class="dv">1</span>])</span>
+<span id="cb10-19"><a href="#cb10-19"></a></span>
+<span id="cb10-20"><a href="#cb10-20"></a>            <span class="cf">elif</span> nums_with_indices[mid][<span class="dv">0</span>] <span class="op">&gt;</span> nums_with_indices[right][<span class="dv">0</span>]: <span class="co"># right is unsorted</span></span>
+<span id="cb10-21"><a href="#cb10-21"></a>                <span class="co"># try right</span></span>
+<span id="cb10-22"><a href="#cb10-22"></a>                <span class="cf">return</span> min_search(nums_with_indices[mid:right<span class="op">+</span><span class="dv">1</span>])</span>
+<span id="cb10-23"><a href="#cb10-23"></a></span>
+<span id="cb10-24"><a href="#cb10-24"></a>            <span class="cf">else</span>: <span class="co"># array must be sorted</span></span>
+<span id="cb10-25"><a href="#cb10-25"></a>                <span class="cf">return</span> nums_with_indices[<span class="dv">0</span>]</span>
+<span id="cb10-26"><a href="#cb10-26"></a>        </span>
+<span id="cb10-27"><a href="#cb10-27"></a>        <span class="co"># get the index of the min element</span></span>
+<span id="cb10-28"><a href="#cb10-28"></a>        x, min_index <span class="op">=</span> min_search(nums_with_indices)</span>
+<span id="cb10-29"><a href="#cb10-29"></a>        </span>
+<span id="cb10-30"><a href="#cb10-30"></a>        <span class="co"># now we can construct a sorted version of the array</span></span>
+<span id="cb10-31"><a href="#cb10-31"></a>        sorted_nums <span class="op">=</span> nums_with_indices[min_index:] <span class="op">+</span> nums_with_indices[:min_index] <span class="co"># swap position of subarrays</span></span>
+<span id="cb10-32"><a href="#cb10-32"></a>        </span>
+<span id="cb10-33"><a href="#cb10-33"></a>        <span class="co"># regular binary search </span></span>
+<span id="cb10-34"><a href="#cb10-34"></a>        <span class="kw">def</span> bin_search(sorted_nums, target):</span>
+<span id="cb10-35"><a href="#cb10-35"></a>            <span class="cf">if</span> <span class="bu">len</span>(sorted_nums) <span class="op">==</span> <span class="dv">1</span>:</span>
+<span id="cb10-36"><a href="#cb10-36"></a>                <span class="cf">if</span> sorted_nums[<span class="dv">0</span>][<span class="dv">0</span>] <span class="op">==</span> target:</span>
+<span id="cb10-37"><a href="#cb10-37"></a>                    <span class="cf">return</span> sorted_nums[<span class="dv">0</span>][<span class="dv">1</span>]</span>
+<span id="cb10-38"><a href="#cb10-38"></a>                <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span></span>
+<span id="cb10-39"><a href="#cb10-39"></a>    </span>
+<span id="cb10-40"><a href="#cb10-40"></a>            mid <span class="op">=</span> <span class="bu">len</span>(sorted_nums) <span class="op">//</span> <span class="dv">2</span></span>
+<span id="cb10-41"><a href="#cb10-41"></a>        </span>
+<span id="cb10-42"><a href="#cb10-42"></a>            <span class="cf">if</span> sorted_nums[mid][<span class="dv">0</span>] <span class="op">&gt;</span> target:</span>
+<span id="cb10-43"><a href="#cb10-43"></a>                <span class="cf">return</span> bin_search(sorted_nums[:mid], target) <span class="co"># search left for target</span></span>
+<span id="cb10-44"><a href="#cb10-44"></a>            <span class="cf">elif</span> sorted_nums[mid][<span class="dv">0</span>] <span class="op">&lt;</span> target:</span>
+<span id="cb10-45"><a href="#cb10-45"></a>                <span class="cf">return</span> bin_search(sorted_nums[mid:], target) <span class="co"># search right for target</span></span>
+<span id="cb10-46"><a href="#cb10-46"></a>            <span class="cf">else</span>:</span>
+<span id="cb10-47"><a href="#cb10-47"></a>                <span class="cf">if</span> sorted_nums[mid][<span class="dv">0</span>] <span class="op">==</span> target:</span>
+<span id="cb10-48"><a href="#cb10-48"></a>                    <span class="cf">return</span> sorted_nums[mid][<span class="dv">1</span>]</span>
+<span id="cb10-49"><a href="#cb10-49"></a>                <span class="cf">else</span>:</span>
+<span id="cb10-50"><a href="#cb10-50"></a>                    <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span></span>
+<span id="cb10-51"><a href="#cb10-51"></a>            </span>
+<span id="cb10-52"><a href="#cb10-52"></a>        <span class="co"># now use regular binary search on sorted array</span></span>
+<span id="cb10-53"><a href="#cb10-53"></a>        <span class="cf">return</span> bin_search(sorted_nums, target)</span></code></pre></div>
+<p>The main complication in this translation is that instead of returning just a value, we need to return the <em>index</em> of the target, so we need to pass the indices around everywhere as metadata. (The fact that we add metadata to every element kind of makes the algorithm <span class="math inline">O(n)</span>, but Leetcode accepts it, so whatever.)</p>
+<h2 id="sum">3 Sum</h2>
+<blockquote>
+<p>Given an integer array <code>nums</code>, return all the triplets <code>[nums[i], nums[j], nums[k]]</code> such that <span class="math inline">i \neq j</span>, <span class="math inline">i \neq k</span>, and <span class="math inline">j \neq k</span>, and <code>nums[i] + nums[j] + nums[k] == 0</code>.</p>
+<p><strong>Note</strong>: The solution set must not contain duplicate triplets.</p>
+</blockquote>
+<p>This problem can be solved similarly to the next one (“Container With Most Water”); both use the idea of left and right pointers closing in on a solution.</p>
+<p>Since we’re looking for 3 different numbers in the array, the best by which we can really reduce our time is a factor of <span class="math inline">n</span>, so we’ll be looking at <span class="math inline">O(n^2)</span> time here. To that end, we need to essentially solve another version of two-sum, which we know we can solve in <span class="math inline">O(n)</span> time.</p>
+<p>Since we’re already at <span class="math inline">O(n^2)</span>, we might as well sort the array to make things easier for us. Sorting is <span class="math inline">O(n\log(n))</span>, so it has no effect on our total time complexity.</p>
+<p>Then, we iterate through the array, skipping duplicates (which is easily done since the array is sorted), and employ a two-pointer technique to close in on a desirable two-sum. Since the array is sorted, we can use a method in which we initialize a left pointer to the first index of the remainder of the array, and a right pointer to the rightmost index of the array.</p>
+<p>Then, at each step (while the left pointer hasn’t touched the right pointer [that is, while <span class="math inline">l &lt; r</span>]) we can check the value of the sum of <code>nums[l]</code> and <code>nums[r]</code>, and compare it to the desired value. Note that since we’re trying to sum to <span class="math inline">0</span>, we are looking for indices <span class="math inline">l</span> and <span class="math inline">r</span> such that <span class="math inline">\texttt{nums}[l] + \texttt{nums}[r] = -\texttt{nums}[i]</span>, where <span class="math inline">i</span> is the iteration variable for our outer loop. (You can rearrange this expression to get <span class="math inline">\texttt{nums}[l] + \texttt{nums}[r] + \texttt{nums}[i] = 0</span>.)</p>
+<p>If our two-sum using <span class="math inline">l</span> and <span class="math inline">r</span> is too high, we can decrement the right pointer to decrease it; and if the two-sum is too low, we can increment the left pointer to increase it. That way, we find all relevant solutions.</p>
+<div class="sourceCode" id="cb11" data-startFrom="1"><pre class="sourceCode numberSource python numberLines good"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a><span class="co"># source: [Neetcode](https://www.youtube.com/watch?v=jzZsG8n2R9A)</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="kw">class</span> Solution:</span>
+<span id="cb11-3"><a href="#cb11-3"></a>    <span class="kw">def</span> threeSum(<span class="va">self</span>, nums: List[<span class="bu">int</span>]) <span class="op">-&gt;</span> List[List[<span class="bu">int</span>]]:</span>
+<span id="cb11-4"><a href="#cb11-4"></a>        <span class="cf">if</span> <span class="bu">len</span>(nums) <span class="op">&lt;</span> <span class="dv">3</span>:</span>
+<span id="cb11-5"><a href="#cb11-5"></a>            <span class="cf">return</span> []</span>
+<span id="cb11-6"><a href="#cb11-6"></a>        </span>
+<span id="cb11-7"><a href="#cb11-7"></a>        nums.sort() <span class="co"># O(n log n)</span></span>
+<span id="cb11-8"><a href="#cb11-8"></a>        </span>
+<span id="cb11-9"><a href="#cb11-9"></a>        out <span class="op">=</span> []</span>
+<span id="cb11-10"><a href="#cb11-10"></a>        </span>
+<span id="cb11-11"><a href="#cb11-11"></a>        <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(nums)<span class="op">-</span><span class="dv">1</span>):</span>
+<span id="cb11-12"><a href="#cb11-12"></a>            <span class="co"># skip if already seen</span></span>
+<span id="cb11-13"><a href="#cb11-13"></a>            <span class="cf">if</span> i <span class="op">&gt;</span> <span class="dv">0</span> <span class="kw">and</span> nums[i] <span class="op">==</span> nums[i<span class="op">-</span><span class="dv">1</span>]:</span>
+<span id="cb11-14"><a href="#cb11-14"></a>                <span class="cf">continue</span></span>
+<span id="cb11-15"><a href="#cb11-15"></a>                </span>
+<span id="cb11-16"><a href="#cb11-16"></a>            <span class="co"># left and right pointers close in on solution</span></span>
+<span id="cb11-17"><a href="#cb11-17"></a>            l, r <span class="op">=</span> i<span class="op">+</span><span class="dv">1</span>, <span class="bu">len</span>(nums)<span class="op">-</span><span class="dv">1</span></span>
+<span id="cb11-18"><a href="#cb11-18"></a>            <span class="cf">while</span> l <span class="op">&lt;</span> r:</span>
+<span id="cb11-19"><a href="#cb11-19"></a>                <span class="co"># skip if already seen</span></span>
+<span id="cb11-20"><a href="#cb11-20"></a>                <span class="cf">if</span> nums[l] <span class="op">==</span> nums[l<span class="op">-</span><span class="dv">1</span>] <span class="kw">and</span> l <span class="op">&gt;</span> i<span class="op">+</span><span class="dv">1</span>:</span>
+<span id="cb11-21"><a href="#cb11-21"></a>                    l <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb11-22"><a href="#cb11-22"></a>                    <span class="cf">continue</span></span>
+<span id="cb11-23"><a href="#cb11-23"></a>                <span class="cf">if</span> r <span class="op">&lt;</span> <span class="bu">len</span>(nums)<span class="op">-</span><span class="dv">1</span> <span class="kw">and</span> nums[r] <span class="op">==</span> nums[r<span class="op">+</span><span class="dv">1</span>]:</span>
+<span id="cb11-24"><a href="#cb11-24"></a>                    r <span class="op">-=</span> <span class="dv">1</span></span>
+<span id="cb11-25"><a href="#cb11-25"></a>                    <span class="cf">continue</span></span>
+<span id="cb11-26"><a href="#cb11-26"></a>                </span>
+<span id="cb11-27"><a href="#cb11-27"></a>                this_sum <span class="op">=</span> nums[l] <span class="op">+</span> nums[r]</span>
+<span id="cb11-28"><a href="#cb11-28"></a>                <span class="cf">if</span> this_sum <span class="op">&gt;</span> <span class="op">-</span>nums[i]:</span>
+<span id="cb11-29"><a href="#cb11-29"></a>                    r <span class="op">-=</span> <span class="dv">1</span></span>
+<span id="cb11-30"><a href="#cb11-30"></a>                <span class="cf">elif</span> this_sum <span class="op">&lt;</span> <span class="op">-</span>nums[i]:</span>
+<span id="cb11-31"><a href="#cb11-31"></a>                    l <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb11-32"><a href="#cb11-32"></a>                <span class="cf">else</span>:</span>
+<span id="cb11-33"><a href="#cb11-33"></a>                    <span class="co"># found triplet [nums[i], nums[l], nums[r]]</span></span>
+<span id="cb11-34"><a href="#cb11-34"></a>                    out.append([nums[i], nums[l], nums[r]])</span>
+<span id="cb11-35"><a href="#cb11-35"></a>                    l <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb11-36"><a href="#cb11-36"></a>            </span>
+<span id="cb11-37"><a href="#cb11-37"></a>        <span class="cf">return</span> out</span></code></pre></div>
+<p>We also skip duplicates when incrementing and decrementing the left and right pointers. The fact that we skip duplicates in all instances of pointer manipulation means that we output no duplicate triples (as required). In the case that we found a good set of pointers, we append our new triplet to the running list, and continue by incrementing the left pointer (it doesn’t really matter which pointer we increment or decrement, as long as we make a change – Leetcode accepts both solutions).</p>
+<h2 id="container-with-most-water">Container With Most Water</h2>
+<blockquote>
+<p>You are given an integer array <code>height</code> of length <span class="math inline">n</span>. There are <span class="math inline">n</span> vertical lines drawn such that the two endpoints of the <span class="math inline">i</span>th line are <span class="math inline">(i, 0)</span> and <span class="math inline">(i, \texttt{height}[i])</span>.</p>
+<p>Find two lines that together with the <span class="math inline">x</span>-axis form a container, such that the container contains the most water. Return the maximum amount of water a container can store.</p>
+<p><strong>Note</strong>: You may not slant the container.</p>
+</blockquote>
+<p>This problem can actually be solved in a “greedy” way, by starting at either end of the array and closing in on the center.</p>
+<p>The below solution starts with two pointers, <code>l</code> and <code>r</code>, and moves them closer to the center according to which choice increases the storage capacity more. It stops looking when the two pointers meet (when <code>l &gt;= r</code>).</p>
+<div class="sourceCode" id="cb12" data-startFrom="1"><pre class="sourceCode numberSource python numberLines good"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1"></a><span class="co"># source: [Neetcode](https://www.youtube.com/watch?v=UuiTKBwPgAo)</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a><span class="kw">class</span> Solution:</span>
+<span id="cb12-3"><a href="#cb12-3"></a>    <span class="kw">def</span> maxArea(<span class="va">self</span>, height: List[<span class="bu">int</span>]) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
+<span id="cb12-4"><a href="#cb12-4"></a>        <span class="co"># idea: start at endpoints and close in on center</span></span>
+<span id="cb12-5"><a href="#cb12-5"></a>        l, r <span class="op">=</span> <span class="dv">0</span>, <span class="bu">len</span>(height) <span class="op">-</span> <span class="dv">1</span></span>
+<span id="cb12-6"><a href="#cb12-6"></a>        max_fill <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb12-7"><a href="#cb12-7"></a>        </span>
+<span id="cb12-8"><a href="#cb12-8"></a>        <span class="cf">while</span> l <span class="op">&lt;</span> r:</span>
+<span id="cb12-9"><a href="#cb12-9"></a>            <span class="co"># the amount filled will be the base (r-l) times the min side height</span></span>
+<span id="cb12-10"><a href="#cb12-10"></a>            this_fill <span class="op">=</span> (r <span class="op">-</span> l) <span class="op">*</span> <span class="bu">min</span>(height[l], height[r])</span>
+<span id="cb12-11"><a href="#cb12-11"></a></span>
+<span id="cb12-12"><a href="#cb12-12"></a>            max_fill <span class="op">=</span> <span class="bu">max</span>(this_fill, max_fill)</span>
+<span id="cb12-13"><a href="#cb12-13"></a></span>
+<span id="cb12-14"><a href="#cb12-14"></a>            <span class="cf">if</span> height[l] <span class="op">&lt;</span> height[r]: <span class="co"># move L </span></span>
+<span id="cb12-15"><a href="#cb12-15"></a>                l <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb12-16"><a href="#cb12-16"></a>            <span class="cf">else</span>: <span class="co"># move R</span></span>
+<span id="cb12-17"><a href="#cb12-17"></a>                r <span class="op">-=</span> <span class="dv">1</span></span>
+<span id="cb12-18"><a href="#cb12-18"></a>                </span>
+<span id="cb12-19"><a href="#cb12-19"></a>        <span class="cf">return</span> max_fill</span></code></pre></div>
+<h1 id="binary">Binary</h1>
+<h2 id="sum-of-two-integers">Sum of Two Integers</h2>
+<blockquote>
+<p>Given two integers <span class="math inline">a</span> and <span class="math inline">b</span>, return the sum of the two integers without using the operators <span class="math inline">+</span> and <span class="math inline">-</span>.</p>
+</blockquote>
+<p>This problem is phrased (and constructed) rather poorly. Leetcode actually accepts the following solution (!):</p>
+<div class="sourceCode" id="cb13" data-startFrom="1"><pre class="sourceCode numberSource python numberLines bad"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a><span class="kw">class</span> Solution:</span>
+<span id="cb13-2"><a href="#cb13-2"></a>    <span class="kw">def</span> getSum(<span class="va">self</span>, a: <span class="bu">int</span>, b: <span class="bu">int</span>) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
+<span id="cb13-3"><a href="#cb13-3"></a>        <span class="co"># this is literally illegal but works</span></span>
+<span id="cb13-4"><a href="#cb13-4"></a>        <span class="cf">return</span> a <span class="op">+</span> b</span></code></pre></div>
+<p>As you can guess from the section, we’re supposed to use the numbers’ representation in binary in order to do this. The best way to do this is with <em>bitwise operations</em>, which are described in the following table:</p>
+<table>
+<thead>
+<tr class="header">
+<th>operation</th>
+<th>name</th>
+<th>meaning</th>
+<th>examples</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>^</code></td>
+<td>XOR</td>
+<td>bitwise exclusive or</td>
+<td><code>(0,0), (1,1) =&gt; 0; (0,1), (1,0) =&gt; 1</code></td>
+</tr>
+<tr class="even">
+<td><code>|</code></td>
+<td>OR</td>
+<td>bitwise or</td>
+<td><code>(0,1), (1,0), (1,1) =&gt; 1; (0,0) =&gt; 0</code></td>
+</tr>
+<tr class="odd">
+<td><code>&amp;</code></td>
+<td>AND</td>
+<td>bitwise and</td>
+<td><code>(0,0), (0,1), (1,0) =&gt; 0; (1,1) =&gt; 1</code></td>
+</tr>
+<tr class="even">
+<td><code>&lt;&lt;</code></td>
+<td>LSHIFT</td>
+<td>bit shift left</td>
+<td><code>(b0010, 1) =&gt; b0100; (6,1) =&gt; 12</code></td>
+</tr>
+<tr class="odd">
+<td><code>&gt;&gt;</code></td>
+<td>RSHIFT</td>
+<td>bit shift right</td>
+<td><code>(b0010, 1) =&gt; b0001; (6,1) =&gt; 3</code></td>
+</tr>
+<tr class="even">
+<td><code>~</code></td>
+<td>INVERT</td>
+<td>bitwise complement</td>
+<td><code>b0010 =&gt; b1101; 6 =&gt; -7; -7 =&gt; 6</code></td>
+</tr>
+</tbody>
+</table>
+<p>Using these operators, we get the following solution:</p>
+<div class="sourceCode" id="cb14" data-startFrom="1"><pre class="sourceCode numberSource java numberLines good"><code class="sourceCode java"><span id="cb14-1"><a href="#cb14-1"></a><span class="kw">class</span> Solution <span class="op">{</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a>    <span class="kw">public</span> <span class="dt">int</span> <span class="fu">getSum</span><span class="op">(</span><span class="dt">int</span> a<span class="op">,</span> <span class="dt">int</span> b<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb14-3"><a href="#cb14-3"></a>        <span class="cf">while</span> <span class="op">(</span>b <span class="op">!=</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb14-4"><a href="#cb14-4"></a>            <span class="dt">int</span> tmp <span class="op">=</span> <span class="op">(</span>a <span class="op">&amp;</span> b<span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb14-5"><a href="#cb14-5"></a>            a <span class="op">=</span> a <span class="op">^</span> b<span class="op">;</span></span>
+<span id="cb14-6"><a href="#cb14-6"></a>            b <span class="op">=</span> tmp<span class="op">;</span></span>
+<span id="cb14-7"><a href="#cb14-7"></a>        <span class="op">}</span></span>
+<span id="cb14-8"><a href="#cb14-8"></a>        <span class="cf">return</span> a<span class="op">;</span></span>
+<span id="cb14-9"><a href="#cb14-9"></a>    <span class="op">}</span></span>
+<span id="cb14-10"><a href="#cb14-10"></a><span class="op">}</span></span></code></pre></div>
+<p>Note that this solution is in <strong>Java</strong> and <em>not</em> in Python. This is because integers are weird in Python. In general, it’s probably best to stick with Java for anything that requires the use of bitwise operations.</p>
+<p>What’s going on in this solution? Let’s look at each line and see what it does.</p>
+<ul>
+<li>On <a href="#cb14-4">line 4</a>, we assign <code>tmp</code> the value <code>(a &amp; b) &lt;&lt; 1</code>.
+<ul>
+<li>Let’s unpack the value we get here. First, we’re taking the <em>bitwise and</em> of <code>a</code> and <code>b</code>. This gives us only the locations where we have two <code>1</code>’s. Then, we’re shifting them all to the left by one place, using the <em>bitwise left shift</em> operator.</li>
+<li>This is the <strong>carry</strong> part of addition. When we have two <code>1</code>’s, we get 0, but we need to carry the <code>1</code> to the next place over.</li>
+</ul></li>
+<li>On <a href="#cb14-5">line 5</a>, we reassign <code>a</code> to the value <code>a ^ b</code>.
+<ul>
+<li>This is the result of taking the <em>bitwise xor</em> of <code>a</code> and <code>b</code>, and represents the immediate result from summing the two elements together (without the carrying). For example, <code>0 ^ 0 = 0</code>, and <code>0 + 0 = 0</code>; similarly, <code>0 ^ 1 = 1 ^ 0 = 1</code>, and <code>0 + 1 = 1</code>; the only difference is regarding the carrying done in the <code>1 + 1</code> case (which is <code>0</code> for <code>1 ^ 1</code> but requires a carry in regular addition). We don’t worry about the carry part because it’s taken care of by the value calculated and assigned to <code>tmp</code>.</li>
+</ul></li>
+<li>We then assign <code>b</code> to <code>tmp</code> on <a href="#cb14-6">line 6</a>. (We needed to delay this assignment in order to use the value of <code>b</code> in the assignment to <code>a</code>. This is an inconvenient part of Java; in Python, we would have been able to update the variables with simple multiple assignment, as <code>a, b = a ^ b, (a &amp; b) &lt;&lt; 1</code>.)</li>
+<li>The while loop on <a href="#cb14-3">line 3</a> ensures that we keep iterating through our value pairs until we get to <code>b == 0</code>, which indicates that there are no more digits left to carry and our result is final (and stored in <code>a</code>).</li>
+</ul>
+<h2 id="number-of-1-bits">Number of 1 Bits</h2>
+<blockquote>
+<p>Write a function that takes an unsigned integer and returns the number of ‘1’ bits it has (also known as the Hamming weight).</p>
+</blockquote>
+<p>This one is trivial with the following implementation:</p>
+<div class="sourceCode" id="cb15" data-startFrom="1"><pre class="sourceCode numberSource python numberLines good"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1"></a><span class="kw">class</span> Solution:</span>
+<span id="cb15-2"><a href="#cb15-2"></a>    <span class="kw">def</span> hammingWeight(<span class="va">self</span>, n: <span class="bu">int</span>) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
+<span id="cb15-3"><a href="#cb15-3"></a>        <span class="cf">return</span> <span class="bu">bin</span>(n).count(<span class="st">&#39;1&#39;</span>)</span></code></pre></div>
+<p>There’s probably a more “efficient” or “traditional” way to do it, which may or may not involve using bitwise operators, but the above works fine and is accepted by Leetcode.</p>
+<h2 id="counting-bits">Counting Bits</h2>
+<blockquote>
+<p>Given an integer <span class="math inline">n</span>, return an array <code>ans</code> of length <span class="math inline">n + 1</span> such that for each <span class="math inline">i</span> (<span class="math inline">0 \leq i \leq n</span>), <code>ans[</code><span class="math inline">i</span><code>]</code> is the number of <code>1</code>’s in the binary representation of <span class="math inline">i</span>.</p>
+</blockquote>
+<p>This problem is kind of like two-sum: there’s an easy way to do it, and an efficient way to do it.</p>
+<p>Here’s the easy way, using our solution to “Number of 1 Bits”:</p>
+<div class="sourceCode" id="cb16" data-startFrom="1"><pre class="sourceCode numberSource python numberLines bad"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1"></a><span class="kw">class</span> Solution:</span>
+<span id="cb16-2"><a href="#cb16-2"></a>    <span class="kw">def</span> countBits(<span class="va">self</span>, n: <span class="bu">int</span>) <span class="op">-&gt;</span> List[<span class="bu">int</span>]:</span>
+<span id="cb16-3"><a href="#cb16-3"></a>        <span class="kw">def</span> ones(b):</span>
+<span id="cb16-4"><a href="#cb16-4"></a>            <span class="cf">return</span> <span class="bu">bin</span>(b).count(<span class="st">&#39;1&#39;</span>)</span>
+<span id="cb16-5"><a href="#cb16-5"></a>        </span>
+<span id="cb16-6"><a href="#cb16-6"></a>        <span class="cf">return</span> [ones(i) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n<span class="op">+</span><span class="dv">1</span>)]</span></code></pre></div>
+<p>This solution comes out to <span class="math inline">O(n\log(n))</span> time, as each call of <code>ones(b)</code> takes <span class="math inline">\log(n)</span> time (as there are <span class="math inline">\log(n)</span> digits in the binary representation of a number).</p>
+<p>Here’s the efficient solution, using the dictionary <code>memo</code> to save the results from previous calculations.</p>
+<div class="sourceCode" id="cb17" data-startFrom="1"><pre class="sourceCode numberSource python numberLines good"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1"></a><span class="kw">class</span> Solution:</span>
+<span id="cb17-2"><a href="#cb17-2"></a>    <span class="kw">def</span> countBits(<span class="va">self</span>, n: <span class="bu">int</span>) <span class="op">-&gt;</span> List[<span class="bu">int</span>]:</span>
+<span id="cb17-3"><a href="#cb17-3"></a></span>
+<span id="cb17-4"><a href="#cb17-4"></a>        memo <span class="op">=</span> {<span class="dv">0</span>: <span class="dv">0</span>, <span class="dv">1</span>: <span class="dv">1</span>}</span>
+<span id="cb17-5"><a href="#cb17-5"></a></span>
+<span id="cb17-6"><a href="#cb17-6"></a>        <span class="kw">def</span> ones(b):</span>
+<span id="cb17-7"><a href="#cb17-7"></a>            <span class="cf">if</span> b <span class="kw">in</span> memo:</span>
+<span id="cb17-8"><a href="#cb17-8"></a>                <span class="cf">return</span> memo[b]</span>
+<span id="cb17-9"><a href="#cb17-9"></a></span>
+<span id="cb17-10"><a href="#cb17-10"></a>            <span class="co"># if b ends in 1, subtract the one and return 1 + rest</span></span>
+<span id="cb17-11"><a href="#cb17-11"></a>            <span class="cf">if</span> b <span class="op">%</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">1</span>:</span>
+<span id="cb17-12"><a href="#cb17-12"></a>                memo[b] <span class="op">=</span> <span class="dv">1</span> <span class="op">+</span> ones(b<span class="op">-</span><span class="dv">1</span>)</span>
+<span id="cb17-13"><a href="#cb17-13"></a>                <span class="cf">return</span> memo[b]</span>
+<span id="cb17-14"><a href="#cb17-14"></a></span>
+<span id="cb17-15"><a href="#cb17-15"></a>            <span class="co"># if b ends in 0, divide by 2 and return result</span></span>
+<span id="cb17-16"><a href="#cb17-16"></a>            memo[b] <span class="op">=</span> ones(b <span class="op">/</span> <span class="dv">2</span>)</span>
+<span id="cb17-17"><a href="#cb17-17"></a>            <span class="cf">return</span> memo[b]</span>
+<span id="cb17-18"><a href="#cb17-18"></a>        </span>
+<span id="cb17-19"><a href="#cb17-19"></a>        <span class="cf">return</span> [ones(i) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n<span class="op">+</span><span class="dv">1</span>)]</span></code></pre></div>
+<p>This solution takes <span class="math inline">O(n)</span> time, as we only need to calculate each value once and can use previous values in the calculation of future values. The dictionary <code>memo</code> provides <span class="math inline">O(1)</span> lookup time.</p>
+<p>Note that in order to get the “overlapping subproblems” idea necessary to take advantage of dynamic programming (of which this is indeed an example – memoization is a hallmark of certain DP problems), we need to use an “overlapping subproblems” method to calculate the number of <code>1</code>-bits in a number. For this we use case analysis:</p>
+<ul>
+<li>If a number is divisible by 2, then it ends in zero. That means we can shift the entire number over by 1 by dividing by 2. We don’t add anything to our running total; this step just shrinks the number so we progress towards termination.</li>
+<li>Alternatively, if a binary number ends in 1, then it is not divisible by 2; we can subtract that one and operate as though the number was divisible by 2.</li>
+</ul>
+<p>We can also use bitwise operators and a simple parity check:</p>
+<div class="sourceCode" id="cb18" data-startFrom="1"><pre class="sourceCode numberSource python numberLines neutral"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1"></a><span class="kw">class</span> Solution:</span>
+<span id="cb18-2"><a href="#cb18-2"></a>    <span class="kw">def</span> countBits(<span class="va">self</span>, n: <span class="bu">int</span>) <span class="op">-&gt;</span> List[<span class="bu">int</span>]:</span>
+<span id="cb18-3"><a href="#cb18-3"></a></span>
+<span id="cb18-4"><a href="#cb18-4"></a>        memo <span class="op">=</span> {<span class="dv">0</span>: <span class="dv">0</span>, <span class="dv">1</span>: <span class="dv">1</span>}</span>
+<span id="cb18-5"><a href="#cb18-5"></a></span>
+<span id="cb18-6"><a href="#cb18-6"></a>        <span class="kw">def</span> ones(b):</span>
+<span id="cb18-7"><a href="#cb18-7"></a>            <span class="cf">if</span> b <span class="kw">in</span> memo: <span class="cf">return</span> memo[b]</span>
+<span id="cb18-8"><a href="#cb18-8"></a>            add <span class="op">=</span> <span class="bu">int</span>(b <span class="op">%</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">1</span>)</span>
+<span id="cb18-9"><a href="#cb18-9"></a>            memo[b] <span class="op">=</span> add <span class="op">+</span> ones(b <span class="op">&gt;&gt;</span> <span class="dv">1</span>)</span>
+<span id="cb18-10"><a href="#cb18-10"></a>            <span class="cf">return</span> (memo[b])</span>
+<span id="cb18-11"><a href="#cb18-11"></a>        </span>
+<span id="cb18-12"><a href="#cb18-12"></a>        <span class="cf">return</span> [ones(i) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n<span class="op">+</span><span class="dv">1</span>)]</span></code></pre></div>
+<p>But this solution is a little more terse and probably not that much faster than the previous solution.</p>
+<h2 id="missing-number">Missing Number</h2>
+<blockquote>
+<p>Given an array <code>nums</code> containing <span class="math inline">n</span> distinct numbers in the range <span class="math inline">[0, n]</span>, return the only number in the range that is missing from the array.</p>
+</blockquote>
+<p>This is a simple <span class="math inline">O(n \log(n))</span> solution:</p>
+<div class="sourceCode" id="cb19" data-startFrom="1"><pre class="sourceCode numberSource python numberLines bad"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1"></a><span class="kw">class</span> Solution:</span>
+<span id="cb19-2"><a href="#cb19-2"></a>    <span class="kw">def</span> missingNumber(<span class="va">self</span>, nums: List[<span class="bu">int</span>]) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
+<span id="cb19-3"><a href="#cb19-3"></a>        nums.sort()</span>
+<span id="cb19-4"><a href="#cb19-4"></a>        </span>
+<span id="cb19-5"><a href="#cb19-5"></a>        <span class="cf">for</span> i,e <span class="kw">in</span> <span class="bu">enumerate</span>(nums):</span>
+<span id="cb19-6"><a href="#cb19-6"></a>            <span class="cf">if</span> e <span class="op">!=</span> i:</span>
+<span id="cb19-7"><a href="#cb19-7"></a>                <span class="cf">return</span> i</span>
+<span id="cb19-8"><a href="#cb19-8"></a>            </span>
+<span id="cb19-9"><a href="#cb19-9"></a>        <span class="cf">return</span> <span class="bu">len</span>(nums)</span></code></pre></div>
+<p>If we sort the array, then the numbers should all be present at their respective indices. If any one of them is incorrect, we can return the index – that’s what element is missing. If none of the indices are returned in the loop, the missing element must have been greater than the maximum element in <code>nums</code>: it must be <code>len(nums)</code>, which is the length of the complete array minus 1.</p>
+<p>Here’s another solution, using a <code>set</code> structure for <span class="math inline">O(n)</span> time complexity (but <span class="math inline">O(n)</span> space complexity as well):</p>
+<div class="sourceCode" id="cb20" data-startFrom="1"><pre class="sourceCode numberSource python numberLines neutral"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1"></a><span class="kw">class</span> Solution:</span>
+<span id="cb20-2"><a href="#cb20-2"></a>    <span class="kw">def</span> missingNumber(<span class="va">self</span>, nums: List[<span class="bu">int</span>]) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
+<span id="cb20-3"><a href="#cb20-3"></a>        seen <span class="op">=</span> <span class="bu">set</span>(nums)</span>
+<span id="cb20-4"><a href="#cb20-4"></a>        </span>
+<span id="cb20-5"><a href="#cb20-5"></a>        <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(nums<span class="op">+</span><span class="dv">1</span>)):</span>
+<span id="cb20-6"><a href="#cb20-6"></a>            <span class="cf">if</span> i <span class="kw">not</span> <span class="kw">in</span> seen:</span>
+<span id="cb20-7"><a href="#cb20-7"></a>                <span class="cf">return</span> i</span></code></pre></div>
+<p>There are two other solutions to this problem, each of which has <span class="math inline">O(n)</span> time complexity and only <span class="math inline">O(1)</span> space complexity. The first one relies on a mathematical fact.</p>
+<p>Recall that: <span class="math display">\sum_{i=1}^n i = \frac{n(n+1)}{2}</span></p>
+<p>Here’s a more efficient version, using that fact:</p>
+<div class="sourceCode" id="cb21" data-startFrom="1"><pre class="sourceCode numberSource python numberLines good"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1"></a><span class="kw">class</span> Solution:</span>
+<span id="cb21-2"><a href="#cb21-2"></a>    <span class="kw">def</span> missingNumber(<span class="va">self</span>, nums: List[<span class="bu">int</span>]) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
+<span id="cb21-3"><a href="#cb21-3"></a>        n <span class="op">=</span> <span class="bu">len</span>(nums) <span class="co"># this works with the zero-indexing</span></span>
+<span id="cb21-4"><a href="#cb21-4"></a>        </span>
+<span id="cb21-5"><a href="#cb21-5"></a>        should_be <span class="op">=</span> n<span class="op">*</span>(n<span class="op">+</span><span class="dv">1</span>)<span class="op">//</span><span class="dv">2</span></span>
+<span id="cb21-6"><a href="#cb21-6"></a>        </span>
+<span id="cb21-7"><a href="#cb21-7"></a>        but_is <span class="op">=</span> <span class="bu">sum</span>(nums) </span>
+<span id="cb21-8"><a href="#cb21-8"></a>        </span>
+<span id="cb21-9"><a href="#cb21-9"></a>        <span class="cf">return</span> should_be <span class="op">-</span> but_is </span></code></pre></div>
+<p>The last version is the only one which uses bitwise operators; specifically, XOR:</p>
+<div class="sourceCode" id="cb22" data-startFrom="1"><pre class="sourceCode numberSource python numberLines good"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1"></a><span class="kw">class</span> Solution:</span>
+<span id="cb22-2"><a href="#cb22-2"></a>    <span class="kw">def</span> missingNumber(<span class="va">self</span>, nums: List[<span class="bu">int</span>]) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
+<span id="cb22-3"><a href="#cb22-3"></a>        out <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb22-4"><a href="#cb22-4"></a>        <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(nums)):</span>
+<span id="cb22-5"><a href="#cb22-5"></a>            out <span class="op">=</span> out <span class="op">^</span> i <span class="op">^</span> nums[i]</span>
+<span id="cb22-6"><a href="#cb22-6"></a>        <span class="cf">return</span> out <span class="op">^</span> <span class="bu">len</span>(nums)</span></code></pre></div>
+<p>Here, we take advantage of the fact that XOR’ing identical elements will cancel them out. Thus, we are left with only the unique elements.</p>
+<p>We could also do this using <code>fold_left</code> (aka <code>reduce</code> in Python), concatenating the relevant lists to combine all the elements:</p>
+<div class="sourceCode" id="cb23" data-startFrom="1"><pre class="sourceCode numberSource python numberLines good"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1"></a><span class="im">from</span> functools <span class="im">import</span> <span class="bu">reduce</span></span>
+<span id="cb23-2"><a href="#cb23-2"></a><span class="kw">class</span> Solution:</span>
+<span id="cb23-3"><a href="#cb23-3"></a>    <span class="kw">def</span> missingNumber(<span class="va">self</span>, nums: List[<span class="bu">int</span>]) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
+<span id="cb23-4"><a href="#cb23-4"></a>        <span class="kw">def</span> xor_fold(L): </span>
+<span id="cb23-5"><a href="#cb23-5"></a>            <span class="cf">return</span> <span class="bu">reduce</span>(<span class="kw">lambda</span> x,y:x<span class="op">^</span>y, L)</span>
+<span id="cb23-6"><a href="#cb23-6"></a>        <span class="cf">return</span> xor_fold(<span class="bu">list</span>(<span class="bu">range</span>(<span class="bu">len</span>(nums)<span class="op">+</span><span class="dv">1</span>)) <span class="op">+</span> nums)</span></code></pre></div>
+<h2 id="reverse-bits">Reverse Bits</h2>
+<blockquote>
+<p>Reverse the bits of a given 32-bit unsigned integer.</p>
+</blockquote>
+<p>Here is a simple solution:</p>
+<div class="sourceCode" id="cb24" data-startFrom="1"><pre class="sourceCode numberSource python numberLines bad"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1"></a><span class="kw">class</span> Solution:</span>
+<span id="cb24-2"><a href="#cb24-2"></a>    <span class="kw">def</span> reverseBits(<span class="va">self</span>, n: <span class="bu">int</span>) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
+<span id="cb24-3"><a href="#cb24-3"></a>        <span class="cf">return</span> <span class="bu">int</span>((<span class="bu">bin</span>(n).replace(<span class="st">&#39;0b&#39;</span>,<span class="st">&#39;&#39;</span>)[::<span class="op">-</span><span class="dv">1</span>] <span class="op">+</span> <span class="st">&#39;0&#39;</span> <span class="op">*</span> (<span class="dv">34</span><span class="op">-</span><span class="bu">len</span>(<span class="bu">bin</span>(n)))), <span class="dv">2</span>)</span></code></pre></div>
+<p>This solution looks scary but is rather straightforward once you know what’s going on. A better way to describe the process here is to use “functional pseudocode” and pipes:</p>
+<div class="sourceCode" id="cb25" data-startFrom="1"><pre class="sourceCode numberSource python numberLines neutral"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1"></a>n   <span class="op">|&gt;</span> <span class="bu">bin</span>                  <span class="co"># get the binary rep of n</span></span>
+<span id="cb25-2"><a href="#cb25-2"></a>    <span class="op">|&gt;</span> .replace(<span class="st">&#39;0b&#39;</span>, <span class="st">&#39;&#39;</span>)   <span class="co"># remove the leading &#39;0b&#39; </span></span>
+<span id="cb25-3"><a href="#cb25-3"></a>    <span class="op">|&gt;</span> [::<span class="op">-</span><span class="dv">1</span>]               <span class="co"># reverse the string</span></span>
+<span id="cb25-4"><a href="#cb25-4"></a>    <span class="op">|&gt;</span> <span class="op">+</span> <span class="st">&#39;0&#39;</span> <span class="op">*</span> (<span class="dv">34</span> <span class="op">-</span> <span class="bu">len</span>(<span class="bu">bin</span>(n)))   <span class="co"># add necessary zeroes to get to 32 bits</span></span>
+<span id="cb25-5"><a href="#cb25-5"></a>    <span class="op">|&gt;</span> <span class="bu">int</span>(..., <span class="dv">2</span>)          <span class="co"># convert the string back into decimal</span></span></code></pre></div>
+<p>The <code>34</code> comes from the fact that we want 32 bits, but the length of <code>bin(n)</code> contains the extra two characters <code>0b</code>.</p>
+<p>Here’s an <span class="math inline">O(1)</span> solution using bitwise operators:</p>
+<div class="sourceCode" id="cb26" data-startFrom="1"><pre class="sourceCode numberSource python numberLines good"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1"></a><span class="co"># source: [Neetcode](https://www.youtube.com/watch?v=UcoN6UjAI64)</span></span>
+<span id="cb26-2"><a href="#cb26-2"></a><span class="kw">class</span> Solution:</span>
+<span id="cb26-3"><a href="#cb26-3"></a>    <span class="kw">def</span> reverseBits(<span class="va">self</span>, n: <span class="bu">int</span>) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
+<span id="cb26-4"><a href="#cb26-4"></a>        res <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb26-5"><a href="#cb26-5"></a>        <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">32</span>):</span>
+<span id="cb26-6"><a href="#cb26-6"></a>            bit <span class="op">=</span> (n <span class="op">&gt;&gt;</span> i) <span class="op">&amp;</span> <span class="dv">1</span></span>
+<span id="cb26-7"><a href="#cb26-7"></a>            res <span class="op">|=</span> bit <span class="op">&lt;&lt;</span> (<span class="dv">31</span> <span class="op">-</span> i)</span>
+<span id="cb26-8"><a href="#cb26-8"></a>            </span>
+<span id="cb26-9"><a href="#cb26-9"></a>        <span class="cf">return</span> res</span></code></pre></div>
+<p>In this solution, <code>res</code> is our result. It’s the binary reversal of <code>n</code>.</p>
+<p>This code does the following:</p>
+<ul>
+<li><a href="#cb26-3">Line 3</a>: Initialize result to <code>0</code> (this is, in 32-bit binary, 32 zeroes)</li>
+<li><a href="#cb26-4">Line 4</a>: Iterate through all 32 bits of <code>n</code> with iteration variable <code>i</code>
+<ul>
+<li>On each iteration:
+<ul>
+<li><a href="#cb26-5">Line 5</a>: Initialize <code>bit</code> to the value of the <code>i</code>th bit of <code>n</code></li>
+<li><a href="#cb26-6">Line 6</a>: Set the <code>31 - i</code>th bit of <code>res</code> equal to <code>bit</code> (the <code>31 - i</code> part means that the order is reversed when copying <code>n</code> into <code>res</code>). Since <code>res</code> is initially all zeroes, bitwise OR’ing with <code>bit</code> will yield exactly <code>bit</code> in the desired position.</li>
+</ul></li>
+</ul></li>
+</ul>
+<h1 id="dynamic-programming">Dynamic Programming</h1>
+<h2 id="climbing-stairs">Climbing Stairs</h2>
+<h2 id="coin-change">Coin Change</h2>
+<h2 id="longest-increasing-subsequence">Longest Increasing Subsequence</h2>
+<h2 id="longest-common-subsequence">Longest Common Subsequence</h2>
+<h2 id="word-break-problem">Word Break Problem</h2>
+<h2 id="combination-sum">Combination Sum</h2>
+<h2 id="house-robber">House Robber</h2>
+<h2 id="house-robber-ii">House Robber II</h2>
+<h2 id="decode-ways">Decode Ways</h2>
+<h2 id="unique-paths">Unique Paths</h2>
+<h2 id="jump-game">Jump Game</h2>
+<h1 id="graph">Graph</h1>
+<h2 id="clone-graph">Clone Graph</h2>
+<h2 id="course-schedule">Course Schedule</h2>
+<h2 id="pacific-atlantic-water-flow">Pacific Atlantic Water Flow</h2>
+<h2 id="number-of-islands">Number of Islands</h2>
+<h2 id="longest-consecutive-sequence">Longest Consecutive Sequence</h2>
+<h2 id="alien-dictionary-leetcode-premium">Alien Dictionary (Leetcode Premium)</h2>
+<h2 id="graph-valid-tree-leetcode-premium">Graph Valid Tree (Leetcode Premium)</h2>
+<h2 id="number-of-connected-components-in-an-undirected-graph-leetcode-premium">Number of Connected Components in an Undirected Graph (Leetcode Premium)</h2>
+<h1 id="interval">Interval</h1>
+<h2 id="insert-interval">Insert Interval</h2>
+<h2 id="merge-intervals">Merge Intervals</h2>
+<h2 id="non-overlapping-intervals">Non-overlapping Intervals</h2>
+<h2 id="meeting-rooms-leetcode-premium">Meeting Rooms (Leetcode Premium)</h2>
+<h2 id="meeting-rooms-ii-leetcode-premium">Meeting Rooms II (Leetcode Premium)</h2>
+<h1 id="linked-list">Linked List</h1>
+<h2 id="reverse-a-linked-list">Reverse a Linked List</h2>
+<h2 id="detect-cycle-in-a-linked-list">Detect Cycle in a Linked List</h2>
+<h2 id="merge-two-sorted-lists">Merge Two Sorted Lists</h2>
+<h2 id="merge-k-sorted-lists">Merge K Sorted Lists</h2>
+<h2 id="remove-nth-node-from-end-of-list">Remove Nth Node From End Of List</h2>
+<h2 id="reorder-list">Reorder List</h2>
+<h1 id="matrix">Matrix</h1>
+<h2 id="set-matrix-zeroes">Set Matrix Zeroes</h2>
+<h2 id="spiral-matrix">Spiral Matrix</h2>
+<h2 id="rotate-image">Rotate Image</h2>
+<h2 id="word-search">Word Search</h2>
+<h1 id="string">String</h1>
+<h2 id="longest-substring-without-repeating-characters">Longest Substring Without Repeating Characters</h2>
+<h2 id="longest-repeating-character-replacement">Longest Repeating Character Replacement</h2>
+<h2 id="minimum-window-substring">Minimum Window Substring</h2>
+<h2 id="valid-anagram">Valid Anagram</h2>
+<h2 id="group-anagrams">Group Anagrams</h2>
+<h2 id="valid-parentheses">Valid Parentheses</h2>
+<h2 id="valid-palindrome">Valid Palindrome</h2>
+<h2 id="longest-palindromic-substring">Longest Palindromic Substring</h2>
+<h2 id="palindromic-substrings">Palindromic Substrings</h2>
+<h2 id="encode-and-decode-strings-leetcode-premium">Encode and Decode Strings (Leetcode Premium)</h2>
+<h1 id="tree">Tree</h1>
+<h2 id="maximum-depth-of-binary-tree">Maximum Depth of Binary Tree</h2>
+<h2 id="same-tree">Same Tree</h2>
+<h2 id="invertflip-binary-tree">Invert/Flip Binary Tree</h2>
+<h2 id="binary-tree-maximum-path-sum">Binary Tree Maximum Path Sum</h2>
+<h2 id="binary-tree-level-order-traversal">Binary Tree Level Order Traversal</h2>
+<h2 id="serialize-and-deserialize-binary-tree">Serialize and Deserialize Binary Tree</h2>
+<h2 id="subtree-of-another-tree">Subtree of Another Tree</h2>
+<h2 id="construct-binary-tree-from-preorder-and-inorder-traversal">Construct Binary Tree from Preorder and Inorder Traversal</h2>
+<h2 id="validate-binary-search-tree">Validate Binary Search Tree</h2>
+<h2 id="kth-smallest-element-in-a-bst">Kth Smallest Element in a BST</h2>
+<h2 id="lowest-common-ancestor-of-bst">Lowest Common Ancestor of BST</h2>
+<h2 id="implement-trie-prefix-tree">Implement Trie (Prefix Tree)</h2>
+<h2 id="add-and-search-word">Add and Search Word</h2>
+<h2 id="word-search-ii">Word Search II</h2>
+<h1 id="heap">Heap</h1>
+<h2 id="merge-k-sorted-lists-1">Merge K Sorted Lists</h2>
+<h2 id="top-k-frequent-elements">Top K Frequent Elements</h2>
+<h2 id="find-median-from-data-stream">Find Median from Data Stream</h2>
+</body>
+</html>
