@@ -1,6 +1,6 @@
 #!/bin/bash 
 
-tree -H '.' -L 1 --noreport --charset utf-8 | sed -e '/<hr>/,+7d' > index.html
+tree -H '.' --dirsfirst -L 1 --noreport --charset utf-8 | sed -e '/<hr>/,+7d' > index.html
 
 perl -0777 -pe 's/<style.*?<\/style>/<link rel="stylesheet" href="https:\/\/benrosenberg.info\/style.css">/gs' index.html > tmp.html
 

@@ -76,7 +76,7 @@ This information may not be completely accurate. Look at `update.sh` for more de
 1. Run `tree` as follows:
 
 ```{.bash .neutral}
-tree -H '.' -L 1 --noreport --charset utf-8 | sed -e '/<hr>/,+7d' > index.html
+tree -H '.' --dirsfirst -L 1 --noreport --charset utf-8 | sed -e '/<hr>/,+7d' > index.html
 ```
 
 This command turns the directory `.` (which is `posts/`) into a HTML file `index.html`, while removing the `tree` [author's acknowledgement](#tree-license) (which itself is rather distracting).
@@ -177,7 +177,7 @@ All together, these commands form a bash script which can be run instead for con
 ```{.bash .good}
 #!/bin/bash 
 
-tree -H '.' -L 1 --noreport --charset utf-8 | sed -e '/<hr>/,+7d' > index.html
+tree -H '.' --dirsfirst -L 1 --noreport --charset utf-8 | sed -e '/<hr>/,+7d' > index.html
 
 perl -0777 -pe 's/<style.*?<\/style>/<link rel="stylesheet" href="https:\/\/benrosenberg.info\/style.css">/gs' index.html > tmp.html
 
