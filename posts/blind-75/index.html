@@ -76,7 +76,7 @@
     code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
   </style>
   <link rel="stylesheet" href="https://benrosenberg.info/style.css" />
-  <script src="/usr/lib/nodejs/katex/dist/katex.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
    var mathElements = document.getElementsByClassName("math");
    for (var i = 0; i < mathElements.length; i++) {
@@ -89,7 +89,7 @@
      });
   }}});
   </script>
-  <link rel="stylesheet" href="/usr/lib/nodejs/katex/dist/katex.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css" />
 </head>
 <body>
     <ul class="sidenav">
@@ -840,16 +840,435 @@ The specific recurrence relation here is as follows:
 </ul>
 <h1 id="dynamic-programming">Dynamic Programming</h1>
 <h2 id="climbing-stairs">Climbing Stairs</h2>
+<blockquote>
+<p>You are climbing a staircase. It takes <code>n</code> steps to reach the top.</p>
+<p>Each time you can either climb <code>1</code> or <code>2</code> steps. In how many distinct ways can you climb to the top?</p>
+</blockquote>
+<p>This is a simple dynamic programming problem, and as such can be solved with memoization:</p>
+<div class="sourceCode" id="cb27" data-startFrom="1"><pre class="sourceCode numberSource python numberLines good"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1"></a><span class="kw">class</span> Solution:</span>
+<span id="cb27-2"><a href="#cb27-2"></a>    <span class="kw">def</span> climbStairs(<span class="va">self</span>, n: <span class="bu">int</span>) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
+<span id="cb27-3"><a href="#cb27-3"></a>        ways_to <span class="op">=</span> {<span class="dv">0</span> : <span class="dv">1</span>, <span class="dv">1</span> : <span class="dv">1</span>}</span>
+<span id="cb27-4"><a href="#cb27-4"></a>        </span>
+<span id="cb27-5"><a href="#cb27-5"></a>        <span class="kw">def</span> possibilities(n):</span>
+<span id="cb27-6"><a href="#cb27-6"></a>            <span class="cf">if</span> n <span class="kw">in</span> ways_to:</span>
+<span id="cb27-7"><a href="#cb27-7"></a>                <span class="cf">return</span> ways_to[n]</span>
+<span id="cb27-8"><a href="#cb27-8"></a>            </span>
+<span id="cb27-9"><a href="#cb27-9"></a>            one_step <span class="op">=</span> possibilities(n<span class="op">-</span><span class="dv">1</span>)</span>
+<span id="cb27-10"><a href="#cb27-10"></a>            two_steps <span class="op">=</span> possibilities(n<span class="op">-</span><span class="dv">2</span>)</span>
+<span id="cb27-11"><a href="#cb27-11"></a>            </span>
+<span id="cb27-12"><a href="#cb27-12"></a>            ways_to[n] <span class="op">=</span> one_step <span class="op">+</span> two_steps</span>
+<span id="cb27-13"><a href="#cb27-13"></a>            </span>
+<span id="cb27-14"><a href="#cb27-14"></a>            <span class="cf">return</span> ways_to[n]</span>
+<span id="cb27-15"><a href="#cb27-15"></a>        </span>
+<span id="cb27-16"><a href="#cb27-16"></a>        <span class="cf">return</span> possibilities(n)</span></code></pre></div>
+<p>This solution has time complexity <span class="math inline">O(n)</span>.</p>
 <h2 id="coin-change">Coin Change</h2>
+<blockquote>
+<p>You are given an integer array <code>coins</code> representing coins of different denominations and an integer <code>amount</code> representing a total amount of money.</p>
+<p>Return the fewest number of coins that you need to make up that amount. If that amount of money cannot be made up by any combination of the coins, return <code>-1</code>.</p>
+<p>You may assume that you have an infinite number of each kind of coin.</p>
+</blockquote>
+<p>This is another rather simple dynamic programming problem. The values we can memoize here are the amounts of coins that it takes to make each amount. Note that in this problem, as with the previous one and all dynamic programming problems, we store the best solution that we’ve found to a subproblem, because the problems overlap and the fact that the solution for the subproblem is optimal means that it is contained in the optimal solution to the entire problem.</p>
+<div class="sourceCode" id="cb28" data-startFrom="1"><pre class="sourceCode numberSource python numberLines neutral"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1"></a><span class="kw">class</span> Solution:</span>
+<span id="cb28-2"><a href="#cb28-2"></a>    <span class="kw">def</span> coinChange(<span class="va">self</span>, coins: List[<span class="bu">int</span>], amount: <span class="bu">int</span>) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
+<span id="cb28-3"><a href="#cb28-3"></a>        fewest_to_make <span class="op">=</span> {<span class="dv">0</span> : <span class="dv">0</span>}</span>
+<span id="cb28-4"><a href="#cb28-4"></a>        </span>
+<span id="cb28-5"><a href="#cb28-5"></a>        <span class="kw">def</span> make_change(n):</span>
+<span id="cb28-6"><a href="#cb28-6"></a>            <span class="cf">if</span> n <span class="kw">in</span> fewest_to_make:</span>
+<span id="cb28-7"><a href="#cb28-7"></a>                <span class="cf">return</span> fewest_to_make[n]</span>
+<span id="cb28-8"><a href="#cb28-8"></a>            </span>
+<span id="cb28-9"><a href="#cb28-9"></a>            fewest_list <span class="op">=</span> [<span class="dv">1</span> <span class="op">+</span> make_change(n<span class="op">-</span>c) <span class="cf">for</span> c <span class="kw">in</span> coins <span class="cf">if</span> n<span class="op">-</span>c <span class="op">&gt;=</span> <span class="dv">0</span> <span class="kw">and</span> make_change(n<span class="op">-</span>c) <span class="op">&gt;=</span> <span class="dv">0</span>]</span>
+<span id="cb28-10"><a href="#cb28-10"></a>            </span>
+<span id="cb28-11"><a href="#cb28-11"></a>            <span class="cf">if</span> <span class="bu">len</span>(fewest_list) <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb28-12"><a href="#cb28-12"></a>                fewest <span class="op">=</span> <span class="op">-</span><span class="dv">1</span></span>
+<span id="cb28-13"><a href="#cb28-13"></a>            <span class="cf">else</span>:</span>
+<span id="cb28-14"><a href="#cb28-14"></a>                fewest <span class="op">=</span> <span class="bu">min</span>(fewest_list)</span>
+<span id="cb28-15"><a href="#cb28-15"></a>            </span>
+<span id="cb28-16"><a href="#cb28-16"></a>            fewest_to_make[n] <span class="op">=</span> fewest</span>
+<span id="cb28-17"><a href="#cb28-17"></a>            </span>
+<span id="cb28-18"><a href="#cb28-18"></a>            <span class="cf">return</span> fewest_to_make[n]</span>
+<span id="cb28-19"><a href="#cb28-19"></a>        </span>
+<span id="cb28-20"><a href="#cb28-20"></a>        <span class="cf">return</span> make_change(amount)</span></code></pre></div>
+<p>This solution is a little more readable, as it doesn’t use a complicated list comprehension (and is better commented):</p>
+<div class="sourceCode" id="cb29" data-startFrom="1"><pre class="sourceCode numberSource python numberLines good"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1"></a><span class="kw">class</span> Solution:</span>
+<span id="cb29-2"><a href="#cb29-2"></a>    <span class="kw">def</span> coinChange(<span class="va">self</span>, coins: List[<span class="bu">int</span>], amount: <span class="bu">int</span>) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
+<span id="cb29-3"><a href="#cb29-3"></a>        fewest_to_make <span class="op">=</span> {<span class="dv">0</span> : <span class="dv">0</span>}</span>
+<span id="cb29-4"><a href="#cb29-4"></a>        </span>
+<span id="cb29-5"><a href="#cb29-5"></a>        <span class="kw">def</span> make_change(n):</span>
+<span id="cb29-6"><a href="#cb29-6"></a>            <span class="cf">if</span> n <span class="kw">in</span> fewest_to_make:</span>
+<span id="cb29-7"><a href="#cb29-7"></a>                <span class="cf">return</span> fewest_to_make[n]</span>
+<span id="cb29-8"><a href="#cb29-8"></a>            </span>
+<span id="cb29-9"><a href="#cb29-9"></a>            <span class="co"># get a list of ways to make n, taking the </span></span>
+<span id="cb29-10"><a href="#cb29-10"></a>            <span class="co"># min of each possibilty for decreasing n</span></span>
+<span id="cb29-11"><a href="#cb29-11"></a>            <span class="co"># by some coin c</span></span>
+<span id="cb29-12"><a href="#cb29-12"></a>            fewest_list <span class="op">=</span> []</span>
+<span id="cb29-13"><a href="#cb29-13"></a>            <span class="cf">for</span> c <span class="kw">in</span> coins:</span>
+<span id="cb29-14"><a href="#cb29-14"></a>                <span class="co"># can&#39;t subtract coin c from n</span></span>
+<span id="cb29-15"><a href="#cb29-15"></a>                <span class="cf">if</span> n<span class="op">-</span>c <span class="op">&lt;</span> <span class="dv">0</span>:</span>
+<span id="cb29-16"><a href="#cb29-16"></a>                    <span class="cf">continue</span></span>
+<span id="cb29-17"><a href="#cb29-17"></a>                </span>
+<span id="cb29-18"><a href="#cb29-18"></a>                m <span class="op">=</span> make_change(n<span class="op">-</span>c)</span>
+<span id="cb29-19"><a href="#cb29-19"></a>                <span class="co"># aren&#39;t any ways to make n - c</span></span>
+<span id="cb29-20"><a href="#cb29-20"></a>                <span class="cf">if</span> m <span class="op">==</span> <span class="op">-</span><span class="dv">1</span>:</span>
+<span id="cb29-21"><a href="#cb29-21"></a>                    <span class="cf">continue</span></span>
+<span id="cb29-22"><a href="#cb29-22"></a>                    </span>
+<span id="cb29-23"><a href="#cb29-23"></a>                <span class="co"># we&#39;ve found a way to make n</span></span>
+<span id="cb29-24"><a href="#cb29-24"></a>                <span class="co"># add 1 because we used a coin (c) to do so</span></span>
+<span id="cb29-25"><a href="#cb29-25"></a>                fewest_list.append(<span class="dv">1</span> <span class="op">+</span> m)</span>
+<span id="cb29-26"><a href="#cb29-26"></a>            </span>
+<span id="cb29-27"><a href="#cb29-27"></a>            <span class="cf">if</span> <span class="bu">len</span>(fewest_list) <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb29-28"><a href="#cb29-28"></a>                <span class="co"># there weren&#39;t any ways to make n</span></span>
+<span id="cb29-29"><a href="#cb29-29"></a>                fewest <span class="op">=</span> <span class="op">-</span><span class="dv">1</span></span>
+<span id="cb29-30"><a href="#cb29-30"></a>            <span class="cf">else</span>:</span>
+<span id="cb29-31"><a href="#cb29-31"></a>                <span class="co"># fewest coins possible to make n</span></span>
+<span id="cb29-32"><a href="#cb29-32"></a>                fewest <span class="op">=</span> <span class="bu">min</span>(fewest_list)</span>
+<span id="cb29-33"><a href="#cb29-33"></a>            </span>
+<span id="cb29-34"><a href="#cb29-34"></a>            <span class="co"># update storage dictionary</span></span>
+<span id="cb29-35"><a href="#cb29-35"></a>            fewest_to_make[n] <span class="op">=</span> fewest</span>
+<span id="cb29-36"><a href="#cb29-36"></a>            </span>
+<span id="cb29-37"><a href="#cb29-37"></a>            <span class="cf">return</span> fewest_to_make[n]</span>
+<span id="cb29-38"><a href="#cb29-38"></a>        </span>
+<span id="cb29-39"><a href="#cb29-39"></a>        <span class="cf">return</span> make_change(amount)</span></code></pre></div>
+<p>This solution has time complexity <span class="math inline">O(n)</span>, where <span class="math inline">n</span> is the size of <code>amount</code>.</p>
 <h2 id="longest-increasing-subsequence">Longest Increasing Subsequence</h2>
+<blockquote>
+<p>Given an integer array <code>nums</code>, return the length of the longest strictly increasing subsequence.</p>
+<p><strong>Note</strong>: A subsequence is a sequence that can be derived from an array by deleting some or no elements without changing the order of the remaining elements. For example, <code>[3,6,2,7]</code> is a subsequence of the array <code>[0,3,1,6,2,2,7]</code>.</p>
+</blockquote>
+<p>This is a more difficult DP problem (in my opinion). Maybe I only had difficulty with it because I was assuming we had to do this in <span class="math inline">O(n)</span> time, but it was actually allowable to do it in <span class="math inline">O(n^2)</span> time.</p>
+<p>The difficult part is in that <span class="math inline">O(n) \to O(n^2)</span> translation. The added time complexity comes because of the fact that we need to remember more than just one piece of state information from the entire rest of the array; instead, we need to remember two pieces of state information from <em>each place in the array that we have seen so far</em>.</p>
+<p>Specifically, this is a combination of the length of the LIS (longest increasing subsequence) starting at that index, and the minimum element in that LIS. If the element we’re currently examining is of a value greater than or equal to the minimum of some LIS, then our current element <strong>cannot be added</strong> to that subsequence (as it is no longer increasing).</p>
+<p>This solution uses list comp and tuples within a list to make things more compact, but is not the most readable:</p>
+<div class="sourceCode" id="cb30" data-startFrom="1"><pre class="sourceCode numberSource python numberLines bad"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1"></a><span class="kw">class</span> Solution:</span>
+<span id="cb30-2"><a href="#cb30-2"></a>    <span class="kw">def</span> lengthOfLIS(<span class="va">self</span>, nums: List[<span class="bu">int</span>]) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
+<span id="cb30-3"><a href="#cb30-3"></a>        <span class="co"># go from LIS(n) -&gt; LIS(n-1) by taking </span></span>
+<span id="cb30-4"><a href="#cb30-4"></a>        <span class="co"># max(1, [1 + len(LIS(x)) where LIS(x) starts &gt; nums[n-1]])</span></span>
+<span id="cb30-5"><a href="#cb30-5"></a></span>
+<span id="cb30-6"><a href="#cb30-6"></a>        longest_starting_here <span class="op">=</span> [(<span class="dv">0</span>,<span class="dv">0</span>)]<span class="op">*</span><span class="bu">len</span>(nums)</span>
+<span id="cb30-7"><a href="#cb30-7"></a>        </span>
+<span id="cb30-8"><a href="#cb30-8"></a>        <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(nums)<span class="op">-</span><span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>):         </span>
+<span id="cb30-9"><a href="#cb30-9"></a>            choices <span class="op">=</span> [<span class="dv">1</span>] <span class="op">+</span> [<span class="dv">1</span> <span class="op">+</span> lsh[<span class="dv">0</span>] <span class="cf">for</span> lsh <span class="kw">in</span> longest_starting_here[i:] <span class="cf">if</span> lsh[<span class="dv">1</span>] <span class="op">&gt;</span> nums[i]]</span>
+<span id="cb30-10"><a href="#cb30-10"></a>            </span>
+<span id="cb30-11"><a href="#cb30-11"></a>            longest_starting_here[i] <span class="op">=</span> <span class="bu">max</span>(choices), nums[i]</span>
+<span id="cb30-12"><a href="#cb30-12"></a>        </span>
+<span id="cb30-13"><a href="#cb30-13"></a>        <span class="cf">return</span> <span class="bu">max</span>(longest_starting_here, key<span class="op">=</span><span class="kw">lambda</span> x : x[<span class="dv">0</span>])[<span class="dv">0</span>]</span></code></pre></div>
+<p>It also for some reason stores <code>nums[i]</code> as part of the tuple, which is completely unnecessary. Don’t use that solution.</p>
+<p>This is a much cleaner (and better-commented) solution (which does the same thing):</p>
+<div class="sourceCode" id="cb31" data-startFrom="1"><pre class="sourceCode numberSource python numberLines good"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1"></a><span class="kw">class</span> Solution:</span>
+<span id="cb31-2"><a href="#cb31-2"></a>    <span class="kw">def</span> lengthOfLIS(<span class="va">self</span>, nums: List[<span class="bu">int</span>]) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
+<span id="cb31-3"><a href="#cb31-3"></a>        <span class="co"># initialize data storage</span></span>
+<span id="cb31-4"><a href="#cb31-4"></a>        LIS <span class="op">=</span> [<span class="dv">0</span>] <span class="op">*</span> <span class="bu">len</span>(nums)</span>
+<span id="cb31-5"><a href="#cb31-5"></a>        </span>
+<span id="cb31-6"><a href="#cb31-6"></a>        <span class="co"># iterate backwards through the indices of nums</span></span>
+<span id="cb31-7"><a href="#cb31-7"></a>        <span class="co"># this range construct gives us [len(nums)-1, ..., 0]</span></span>
+<span id="cb31-8"><a href="#cb31-8"></a>        <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(nums)<span class="op">-</span><span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>):         </span>
+<span id="cb31-9"><a href="#cb31-9"></a>            choices <span class="op">=</span> [<span class="dv">1</span>] </span>
+<span id="cb31-10"><a href="#cb31-10"></a>            </span>
+<span id="cb31-11"><a href="#cb31-11"></a>            <span class="co"># look at LIS already found</span></span>
+<span id="cb31-12"><a href="#cb31-12"></a>            <span class="cf">for</span> j,LIS_length <span class="kw">in</span> <span class="bu">enumerate</span>(LIS[i<span class="op">+</span><span class="dv">1</span>:]):</span>
+<span id="cb31-13"><a href="#cb31-13"></a>                <span class="co"># can only add this to choices if it&#39;s increasing</span></span>
+<span id="cb31-14"><a href="#cb31-14"></a>                <span class="cf">if</span> nums[j<span class="op">+</span>i<span class="op">+</span><span class="dv">1</span>] <span class="op">&gt;</span> nums[i]:</span>
+<span id="cb31-15"><a href="#cb31-15"></a>                    choices.append(<span class="dv">1</span> <span class="op">+</span> LIS_length)</span>
+<span id="cb31-16"><a href="#cb31-16"></a>            </span>
+<span id="cb31-17"><a href="#cb31-17"></a>            LIS[i] <span class="op">=</span> <span class="bu">max</span>(choices)</span>
+<span id="cb31-18"><a href="#cb31-18"></a>        </span>
+<span id="cb31-19"><a href="#cb31-19"></a>        <span class="cf">return</span> <span class="bu">max</span>(LIS)</span></code></pre></div>
+<p>This solution has time complexity <span class="math inline">O(n^2)</span>, where <span class="math inline">n</span> is the size of <code>nums</code>.</p>
 <h2 id="longest-common-subsequence">Longest Common Subsequence</h2>
+<blockquote>
+<p>Given two strings <code>text1</code> and <code>text2</code>, return the length of their longest common subsequence. If there is no common subsequence, return <code>0</code>.</p>
+<p>A subsequence of a string is a new string generated from the original string with some characters (can be none) deleted without changing the relative order of the remaining characters. For example, <code>"ace"</code> is a subsequence of <code>"abcde"</code>.</p>
+<p><strong>Note</strong>: A common subsequence of two strings is a subsequence that is common to both strings.</p>
+</blockquote>
+<p><em>This problem’s solution was inspired by a <a href="https://www.youtube.com/watch?v=Ua0GhsJSlWM">Neetcode video</a>.</em></p>
+<p>This is a more difficult “2-dimensional” DP problem, which is best solved using a <em>matrix</em>.</p>
+<p>Take the example given, <span class="math inline">t_1 = \texttt{&quot;ace&quot;}</span> and <span class="math inline">t_2 = \texttt{&quot;abcde&quot;}</span>. This should of course return 3, but we’ll walk through it now using the matrix representation.</p>
+<p>Consider a matrix with the characters of <span class="math inline">t_1</span> along the columns and the characters of <span class="math inline">t_2</span> along the rows: <span class="math display">\begin{matrix} 
+                &amp; \texttt{a} &amp; \texttt{c} &amp; \texttt{e} \\
+    \texttt{a}  &amp;            &amp;            &amp;            \\
+    \texttt{b}  &amp;            &amp;            &amp;            \\
+    \texttt{c}  &amp;            &amp;            &amp;            \\ 
+    \texttt{d}  &amp;  &amp; \color{red} \bullet \color{black} &amp; \\    
+    \texttt{e}  &amp;            &amp;            &amp;            
+\end{matrix}</span></p>
+<p>The entries of this matrix will represent the size of the longest common subsequence of the substrings beginning at the characters which denote its position. For the position denoted by the red dot, for example, the contents of the entry at the position of the red dot would be the longest common subsequence of <code>ce</code> and <code>de</code> (and would therefore be <code>1</code>).</p>
+<p>We can further say that the value of any entry just outside the matrix (on its bottom or right ends) will be <code>0</code>, as they correspond to the empty string, which only has common subsequences of length zero: <span class="math display">\begin{matrix} 
+                &amp; \texttt{a} &amp; \texttt{c} &amp; \texttt{e} &amp; \\
+    \texttt{a}  &amp;            &amp;            &amp;            &amp; 0 \\
+    \texttt{b}  &amp;            &amp;            &amp;            &amp; 0 \\
+    \texttt{c}  &amp;            &amp;            &amp;            &amp; 0 \\ 
+    \texttt{d}  &amp;            &amp;            &amp;            &amp; 0 \\    
+    \texttt{e}  &amp;            &amp;            &amp;            &amp; 0 \\
+                &amp; 0          &amp; 0          &amp; 0          &amp; 0
+\end{matrix}</span></p>
+<p>Now we can start filling in the matrix. We will use the following recurrence relation, where <span class="math inline">A_{i,j}</span> corresponds to the matrix entry at row <span class="math inline">i</span> and column <span class="math inline">j</span>, and <span class="math inline">t_1^i</span> and <span class="math inline">t_2^j</span> correspond to the <span class="math inline">i</span>th and <span class="math inline">j</span>th characters of <span class="math inline">t_1</span> and <span class="math inline">t_2</span> respectively: <span class="math display">A_{i,j} = \begin{cases}
+    1 + A_{i+1, j+1}     &amp; t_1^i = t_2^j \\
+    \max(A_{i+1, j}, A_{i, j+1}) &amp; \text{otherwise}
+\end{cases}</span></p>
+<p>In the above recurrence relation, if we see identical letters, then we increase the length of the common subsequence and continue along both strings at the same time (by incrementing both <span class="math inline">i</span> and <span class="math inline">j</span>); otherwise, we take the maximum of the problems in which we increment <span class="math inline">i</span> and that in which we increment <span class="math inline">j</span>, being analogues for shortening <span class="math inline">t_1</span> or <span class="math inline">t_2</span> by one character.</p>
+<p>Running the above relation on the matrix, starting from the bottom up, yields the following result: <span class="math display">\begin{matrix} 
+                &amp; \texttt{a} &amp; \texttt{c} &amp; \texttt{e} &amp; \\
+    \texttt{a}  &amp; 3          &amp; 2          &amp; 1          &amp; 0 \\    \texttt{b}  &amp; 2          &amp; 2          &amp; 1          &amp; 0 \\
+    \texttt{c}  &amp; 2          &amp; 2          &amp; 1          &amp; 0 \\ 
+    \texttt{d}  &amp; 1          &amp; 1          &amp; 1          &amp; 0 \\    
+    \texttt{e}  &amp; 1          &amp; 1          &amp; 1          &amp; 0 \\
+                &amp; 0          &amp; 0          &amp; 0          &amp; 0
+\end{matrix}</span></p>
+<p>The following solution is a direct translation of the above algorithm (with the exception that it initializes all matrix entries to <code>0</code> beforehand, and performs some tricks to get the indices and elements exactly correct while iterating):</p>
+<div class="sourceCode" id="cb32" data-startFrom="1"><pre class="sourceCode numberSource python numberLines good"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1"></a><span class="kw">class</span> Solution:</span>
+<span id="cb32-2"><a href="#cb32-2"></a>    <span class="kw">def</span> longestCommonSubsequence(<span class="va">self</span>, text1: <span class="bu">str</span>, text2: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
+<span id="cb32-3"><a href="#cb32-3"></a>        matrix <span class="op">=</span> [[<span class="dv">0</span> <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(text1)<span class="op">+</span><span class="dv">1</span>)] </span>
+<span id="cb32-4"><a href="#cb32-4"></a>                     <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(text2)<span class="op">+</span><span class="dv">1</span>)]</span>
+<span id="cb32-5"><a href="#cb32-5"></a>        </span>
+<span id="cb32-6"><a href="#cb32-6"></a>        <span class="cf">for</span> i,ei <span class="kw">in</span> <span class="bu">enumerate</span>(text2[::<span class="op">-</span><span class="dv">1</span>]):</span>
+<span id="cb32-7"><a href="#cb32-7"></a>            i <span class="op">=</span> <span class="bu">len</span>(text2) <span class="op">-</span> i <span class="op">-</span> <span class="dv">1</span></span>
+<span id="cb32-8"><a href="#cb32-8"></a>            <span class="cf">for</span> j,ej <span class="kw">in</span> <span class="bu">enumerate</span>(text1[::<span class="op">-</span><span class="dv">1</span>]):</span>
+<span id="cb32-9"><a href="#cb32-9"></a>                j <span class="op">=</span> <span class="bu">len</span>(text1) <span class="op">-</span> j <span class="op">-</span> <span class="dv">1</span></span>
+<span id="cb32-10"><a href="#cb32-10"></a>                <span class="cf">if</span> ei <span class="op">==</span> ej: <span class="co"># same letter</span></span>
+<span id="cb32-11"><a href="#cb32-11"></a>                    matrix[i][j] <span class="op">=</span> <span class="dv">1</span> <span class="op">+</span> matrix[i<span class="op">+</span><span class="dv">1</span>][j<span class="op">+</span><span class="dv">1</span>]</span>
+<span id="cb32-12"><a href="#cb32-12"></a>                <span class="cf">else</span>:</span>
+<span id="cb32-13"><a href="#cb32-13"></a>                    matrix[i][j] <span class="op">=</span> <span class="bu">max</span>(matrix[i<span class="op">+</span><span class="dv">1</span>][j], matrix[i][j<span class="op">+</span><span class="dv">1</span>])</span>
+<span id="cb32-14"><a href="#cb32-14"></a>                    </span>
+<span id="cb32-15"><a href="#cb32-15"></a>        <span class="cf">return</span> matrix[<span class="dv">0</span>][<span class="dv">0</span>]</span></code></pre></div>
+<p>This solution has time complexity <span class="math inline">O(n^2)</span>, where <span class="math inline">n</span> is the size of <code>text1</code> times the size of <code>text2</code>.</p>
 <h2 id="word-break-problem">Word Break Problem</h2>
+<blockquote>
+<p>Given a string <code>s</code> and a dictionary of strings <code>wordDict</code>, return <code>true</code> if <code>s</code> can be segmented into a space-separated sequence of one or more dictionary words.</p>
+<p><strong>Note</strong>: The same word in the dictionary may be reused multiple times in the segmentation.</p>
+</blockquote>
+<p>This is another easy DP problem with simple memoization. Here, the subproblem is whether a substring of <code>s</code> beginning <code>len(w)</code> characters after the start of <code>s</code> can be segmented for some word <code>w</code>:</p>
+<div class="sourceCode" id="cb33" data-startFrom="1"><pre class="sourceCode numberSource python numberLines good"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1"></a><span class="kw">class</span> Solution:</span>
+<span id="cb33-2"><a href="#cb33-2"></a>    <span class="kw">def</span> wordBreak(<span class="va">self</span>, s: <span class="bu">str</span>, wordDict: List[<span class="bu">str</span>]) <span class="op">-&gt;</span> <span class="bu">bool</span>:</span>
+<span id="cb33-3"><a href="#cb33-3"></a>        can_be_segmented <span class="op">=</span> {<span class="st">&#39;&#39;</span> : <span class="va">True</span>}</span>
+<span id="cb33-4"><a href="#cb33-4"></a>        </span>
+<span id="cb33-5"><a href="#cb33-5"></a>        <span class="kw">def</span> can_segment(word) <span class="op">-&gt;</span> <span class="bu">bool</span>:</span>
+<span id="cb33-6"><a href="#cb33-6"></a>            <span class="cf">if</span> word <span class="kw">in</span> can_be_segmented:</span>
+<span id="cb33-7"><a href="#cb33-7"></a>                <span class="cf">return</span> can_be_segmented[word]</span>
+<span id="cb33-8"><a href="#cb33-8"></a>            </span>
+<span id="cb33-9"><a href="#cb33-9"></a>            w_removed <span class="op">=</span> []</span>
+<span id="cb33-10"><a href="#cb33-10"></a>            <span class="cf">for</span> w <span class="kw">in</span> wordDict:</span>
+<span id="cb33-11"><a href="#cb33-11"></a>                <span class="cf">if</span> word.startswith(w):</span>
+<span id="cb33-12"><a href="#cb33-12"></a>                    w_removed.append(word[<span class="bu">len</span>(w):])</span>
+<span id="cb33-13"><a href="#cb33-13"></a>                    </span>
+<span id="cb33-14"><a href="#cb33-14"></a>            possible <span class="op">=</span> <span class="bu">any</span>([can_segment(wr) <span class="cf">for</span> wr <span class="kw">in</span> w_removed])</span>
+<span id="cb33-15"><a href="#cb33-15"></a>        </span>
+<span id="cb33-16"><a href="#cb33-16"></a>            can_be_segmented[word] <span class="op">=</span> possible</span>
+<span id="cb33-17"><a href="#cb33-17"></a>            <span class="cf">return</span> possible</span>
+<span id="cb33-18"><a href="#cb33-18"></a>        </span>
+<span id="cb33-19"><a href="#cb33-19"></a>        <span class="cf">return</span> can_segment(s)</span></code></pre></div>
+<p>This solution honestly probably doesn’t require any comments. It’s pretty straightforward.</p>
+<p>This solution has time complexity <span class="math inline">O(n)</span>, where <span class="math inline">n</span> is the size of <code>s</code>.</p>
 <h2 id="combination-sum">Combination Sum</h2>
+<blockquote>
+<p>Given an array of distinct integers <code>nums</code> and a target integer <code>target</code>, return the number of possible combinations that add up to <code>target</code>.</p>
+<p>The test cases are generated so that the answer can fit in a 32-bit integer.</p>
+</blockquote>
+<p>For some reason this one took me forever to get, maybe because I kept messing up on small things and didn’t work out an example beforehand. (<strong>Note</strong>: ALWAYS work out an example beforehand, just to make sure you know what you’re doing.)</p>
+<p>The following solution is actually rather simple, and is similar to previous problems:</p>
+<div class="sourceCode" id="cb34" data-startFrom="1"><pre class="sourceCode numberSource python numberLines good"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1"></a><span class="kw">class</span> Solution:</span>
+<span id="cb34-2"><a href="#cb34-2"></a>    <span class="kw">def</span> combinationSum4(<span class="va">self</span>, nums: List[<span class="bu">int</span>], target: <span class="bu">int</span>) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
+<span id="cb34-3"><a href="#cb34-3"></a>        min_num <span class="op">=</span> <span class="bu">min</span>(nums)</span>
+<span id="cb34-4"><a href="#cb34-4"></a>        numset <span class="op">=</span> <span class="bu">set</span>(nums)</span>
+<span id="cb34-5"><a href="#cb34-5"></a>        ways_to <span class="op">=</span> {min_num : <span class="dv">1</span>}</span>
+<span id="cb34-6"><a href="#cb34-6"></a>        </span>
+<span id="cb34-7"><a href="#cb34-7"></a>        <span class="kw">def</span> ways(n):</span>
+<span id="cb34-8"><a href="#cb34-8"></a>            <span class="cf">if</span> n <span class="kw">in</span> ways_to:</span>
+<span id="cb34-9"><a href="#cb34-9"></a>                <span class="cf">return</span> ways_to[n]</span>
+<span id="cb34-10"><a href="#cb34-10"></a>            </span>
+<span id="cb34-11"><a href="#cb34-11"></a>            <span class="cf">if</span> n <span class="kw">in</span> numset:</span>
+<span id="cb34-12"><a href="#cb34-12"></a>                found_ways <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb34-13"><a href="#cb34-13"></a>            <span class="cf">else</span>:</span>
+<span id="cb34-14"><a href="#cb34-14"></a>                found_ways <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb34-15"><a href="#cb34-15"></a>                </span>
+<span id="cb34-16"><a href="#cb34-16"></a>            <span class="cf">for</span> num <span class="kw">in</span> nums:</span>
+<span id="cb34-17"><a href="#cb34-17"></a>                res <span class="op">=</span> n <span class="op">-</span> num</span>
+<span id="cb34-18"><a href="#cb34-18"></a>                <span class="cf">if</span> res <span class="op">&lt;</span> min_num:</span>
+<span id="cb34-19"><a href="#cb34-19"></a>                    <span class="cf">continue</span></span>
+<span id="cb34-20"><a href="#cb34-20"></a>                found_ways <span class="op">+=</span> ways(res)</span>
+<span id="cb34-21"><a href="#cb34-21"></a>            </span>
+<span id="cb34-22"><a href="#cb34-22"></a>            ways_to[n] <span class="op">=</span> found_ways</span>
+<span id="cb34-23"><a href="#cb34-23"></a>            <span class="cf">return</span> found_ways</span>
+<span id="cb34-24"><a href="#cb34-24"></a>        </span>
+<span id="cb34-25"><a href="#cb34-25"></a>        <span class="cf">return</span> ways(target)</span></code></pre></div>
+<p>The interesting thing here is that we avoid all complications with zero by just saying that it doesn’t exist, and making <code>min_num</code> the minimum number we allow ourselves to deal with. We also avoid zero by checking explicitly whether a number is in <code>nums</code> (to make this faster we cast <code>nums</code> to a <code>set</code>).</p>
+<p>This solution has time complexity <span class="math inline">O(n)</span>, where <span class="math inline">n</span> is the size of <code>target</code>.</p>
 <h2 id="house-robber">House Robber</h2>
+<blockquote>
+<p>You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed, the only constraint stopping you from robbing each of them is that adjacent houses have security systems connected and it will automatically contact the police if two adjacent houses were broken into on the same night.</p>
+<p>Given an integer array <code>nums</code> representing the amount of money of each house, return the maximum amount of money you can rob tonight without alerting the police.</p>
+</blockquote>
+<p>This problem is an interesting application of DP, since the choice here is a bit more complex. You need to choose, at each index <span class="math inline">i</span>, whether you want to take house <span class="math inline">i</span> and everything that is possible to take along with that house (this is <span class="math inline">\texttt{nums}[i+2 \to]</span>), or the house <span class="math inline">i+1</span> next to it and everything that entails (so, <span class="math inline">\texttt{nums}[i+3 \to]</span>).</p>
+<p>The nitpicky part here is checking whether <code>nums</code> is long enough to take the rest if possible. For small data (<span class="math inline">n &lt; 3</span>) we can just be greedy, as the invariant here is that we never make it possible to take two adjacent houses.</p>
+<div class="sourceCode" id="cb35" data-startFrom="1"><pre class="sourceCode numberSource python numberLines good"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1"></a><span class="kw">class</span> Solution:</span>
+<span id="cb35-2"><a href="#cb35-2"></a>    <span class="kw">def</span> rob(<span class="va">self</span>, nums: List[<span class="bu">int</span>]) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
+<span id="cb35-3"><a href="#cb35-3"></a>       </span>
+<span id="cb35-4"><a href="#cb35-4"></a>        best_choices <span class="op">=</span> [<span class="op">-</span><span class="dv">1</span>]<span class="op">*</span>(<span class="bu">len</span>(nums)<span class="op">-</span><span class="dv">2</span>) <span class="op">+</span> [<span class="bu">max</span>(nums[<span class="op">-</span><span class="dv">2</span>:])] <span class="op">+</span> [nums[<span class="op">-</span><span class="dv">1</span>]] </span>
+<span id="cb35-5"><a href="#cb35-5"></a>        </span>
+<span id="cb35-6"><a href="#cb35-6"></a>        <span class="kw">def</span> get_nonadj_choices(i):</span>
+<span id="cb35-7"><a href="#cb35-7"></a>            <span class="cf">if</span> best_choices[i] <span class="op">!=</span> <span class="op">-</span><span class="dv">1</span>:</span>
+<span id="cb35-8"><a href="#cb35-8"></a>                <span class="cf">return</span> best_choices[i]</span>
+<span id="cb35-9"><a href="#cb35-9"></a>            </span>
+<span id="cb35-10"><a href="#cb35-10"></a>            <span class="cf">if</span> <span class="bu">len</span>(nums[i:]) <span class="op">&lt;=</span> <span class="dv">2</span>:</span>
+<span id="cb35-11"><a href="#cb35-11"></a>                <span class="cf">return</span> <span class="bu">max</span>(nums[i:])</span>
+<span id="cb35-12"><a href="#cb35-12"></a>            </span>
+<span id="cb35-13"><a href="#cb35-13"></a>            <span class="cf">if</span> i <span class="op">+</span> <span class="dv">2</span> <span class="op">&gt;=</span> <span class="bu">len</span>(nums):</span>
+<span id="cb35-14"><a href="#cb35-14"></a>                take_first <span class="op">=</span> nums[i]</span>
+<span id="cb35-15"><a href="#cb35-15"></a>            <span class="cf">else</span>:</span>
+<span id="cb35-16"><a href="#cb35-16"></a>                take_first <span class="op">=</span> nums[i] <span class="op">+</span> get_nonadj_choices(i<span class="op">+</span><span class="dv">2</span>)</span>
+<span id="cb35-17"><a href="#cb35-17"></a>            </span>
+<span id="cb35-18"><a href="#cb35-18"></a>            <span class="cf">if</span> i <span class="op">+</span> <span class="dv">3</span> <span class="op">&gt;=</span> <span class="bu">len</span>(nums):</span>
+<span id="cb35-19"><a href="#cb35-19"></a>                take_second <span class="op">=</span> nums[i<span class="op">+</span><span class="dv">1</span>]</span>
+<span id="cb35-20"><a href="#cb35-20"></a>            <span class="cf">else</span>:</span>
+<span id="cb35-21"><a href="#cb35-21"></a>                take_second <span class="op">=</span> nums[i<span class="op">+</span><span class="dv">1</span>] <span class="op">+</span> get_nonadj_choices(i<span class="op">+</span><span class="dv">3</span>)</span>
+<span id="cb35-22"><a href="#cb35-22"></a>            </span>
+<span id="cb35-23"><a href="#cb35-23"></a>            best_choices[i] <span class="op">=</span> <span class="bu">max</span>(take_first, take_second)</span>
+<span id="cb35-24"><a href="#cb35-24"></a>            </span>
+<span id="cb35-25"><a href="#cb35-25"></a>            <span class="cf">return</span> best_choices[i]</span>
+<span id="cb35-26"><a href="#cb35-26"></a>        </span>
+<span id="cb35-27"><a href="#cb35-27"></a>        <span class="cf">return</span> get_nonadj_choices(<span class="dv">0</span>)</span></code></pre></div>
+<p>Note further that this solution works because <span class="math inline">\texttt{nums}[i] \geq 0 \;\; \forall i</span>. If this were not the case, we would have to change this solution (currently, we choose between taking house <span class="math inline">i</span> and house <span class="math inline">i+1</span>; if we were working with negatives, we might not want to choose either).</p>
+<p>This solution has time complexity <span class="math inline">O(n)</span>, where <span class="math inline">n</span> is the size of <code>nums</code>.</p>
 <h2 id="house-robber-ii">House Robber II</h2>
+<blockquote>
+<p>You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed. All houses at this place are arranged in a circle. That means the first house is the neighbor of the last one. Meanwhile, adjacent houses have a security system connected, and it will automatically contact the police if two adjacent houses were broken into on the same night.</p>
+<p>Given an integer array <code>nums</code> representing the amount of money of each house, return the maximum amount of money you can rob tonight without alerting the police.</p>
+</blockquote>
+<p>This problem is trivial if you have the solution to “House Robber I”:</p>
+<div class="sourceCode" id="cb36" data-startFrom="1"><pre class="sourceCode numberSource python numberLines neutral"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1"></a><span class="kw">class</span> Solution:</span>
+<span id="cb36-2"><a href="#cb36-2"></a>    <span class="kw">def</span> rob(<span class="va">self</span>, nums: List[<span class="bu">int</span>]) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
+<span id="cb36-3"><a href="#cb36-3"></a>        </span>
+<span id="cb36-4"><a href="#cb36-4"></a>        <span class="cf">if</span> <span class="bu">len</span>(nums) <span class="op">&lt;</span> <span class="dv">3</span>:</span>
+<span id="cb36-5"><a href="#cb36-5"></a>            <span class="cf">return</span> <span class="bu">max</span>(nums)</span>
+<span id="cb36-6"><a href="#cb36-6"></a>        </span>
+<span id="cb36-7"><a href="#cb36-7"></a>        <span class="kw">def</span> rob1(nums):</span>
+<span id="cb36-8"><a href="#cb36-8"></a></span>
+<span id="cb36-9"><a href="#cb36-9"></a>            best_choices <span class="op">=</span> [<span class="op">-</span><span class="dv">1</span>]<span class="op">*</span>(<span class="bu">len</span>(nums)<span class="op">-</span><span class="dv">2</span>) <span class="op">+</span> [<span class="bu">max</span>(nums[<span class="op">-</span><span class="dv">2</span>:])] <span class="op">+</span> [nums[<span class="op">-</span><span class="dv">1</span>]] </span>
+<span id="cb36-10"><a href="#cb36-10"></a></span>
+<span id="cb36-11"><a href="#cb36-11"></a>            <span class="kw">def</span> get_nonadj_choices(i):</span>
+<span id="cb36-12"><a href="#cb36-12"></a>                <span class="cf">if</span> best_choices[i] <span class="op">!=</span> <span class="op">-</span><span class="dv">1</span>:</span>
+<span id="cb36-13"><a href="#cb36-13"></a>                    <span class="cf">return</span> best_choices[i]</span>
+<span id="cb36-14"><a href="#cb36-14"></a></span>
+<span id="cb36-15"><a href="#cb36-15"></a>                <span class="cf">if</span> <span class="bu">len</span>(nums[i:]) <span class="op">&lt;=</span> <span class="dv">2</span>:</span>
+<span id="cb36-16"><a href="#cb36-16"></a>                    <span class="cf">return</span> <span class="bu">max</span>(nums[i:])</span>
+<span id="cb36-17"><a href="#cb36-17"></a></span>
+<span id="cb36-18"><a href="#cb36-18"></a>                <span class="cf">if</span> i <span class="op">+</span> <span class="dv">2</span> <span class="op">&gt;=</span> <span class="bu">len</span>(nums):</span>
+<span id="cb36-19"><a href="#cb36-19"></a>                    take_first <span class="op">=</span> nums[i]</span>
+<span id="cb36-20"><a href="#cb36-20"></a>                <span class="cf">else</span>:</span>
+<span id="cb36-21"><a href="#cb36-21"></a>                    take_first <span class="op">=</span> nums[i] <span class="op">+</span> get_nonadj_choices(i<span class="op">+</span><span class="dv">2</span>)</span>
+<span id="cb36-22"><a href="#cb36-22"></a></span>
+<span id="cb36-23"><a href="#cb36-23"></a>                <span class="cf">if</span> i <span class="op">+</span> <span class="dv">3</span> <span class="op">&gt;=</span> <span class="bu">len</span>(nums):</span>
+<span id="cb36-24"><a href="#cb36-24"></a>                    take_second <span class="op">=</span> nums[i<span class="op">+</span><span class="dv">1</span>]</span>
+<span id="cb36-25"><a href="#cb36-25"></a>                <span class="cf">else</span>:</span>
+<span id="cb36-26"><a href="#cb36-26"></a>                    take_second <span class="op">=</span> nums[i<span class="op">+</span><span class="dv">1</span>] <span class="op">+</span> get_nonadj_choices(i<span class="op">+</span><span class="dv">3</span>)</span>
+<span id="cb36-27"><a href="#cb36-27"></a></span>
+<span id="cb36-28"><a href="#cb36-28"></a>                best_choices[i] <span class="op">=</span> <span class="bu">max</span>(take_first, take_second)</span>
+<span id="cb36-29"><a href="#cb36-29"></a></span>
+<span id="cb36-30"><a href="#cb36-30"></a>                <span class="cf">return</span> best_choices[i]</span>
+<span id="cb36-31"><a href="#cb36-31"></a></span>
+<span id="cb36-32"><a href="#cb36-32"></a>            <span class="cf">return</span> get_nonadj_choices(<span class="dv">0</span>)</span>
+<span id="cb36-33"><a href="#cb36-33"></a>        </span>
+<span id="cb36-34"><a href="#cb36-34"></a>        <span class="cf">return</span> <span class="bu">max</span>(rob1(nums[<span class="dv">1</span>:]), rob1(nums[:<span class="op">-</span><span class="dv">1</span>]))</span></code></pre></div>
+<p>We literally just check whether it’s best to take the first element or the last element.</p>
+<p>This solution has time complexity <span class="math inline">O(n)</span>, where <span class="math inline">n</span> is the size of <code>nums</code>.</p>
+<p>I’m sure there’s a “better”, more “thoughtful” way to do this, but the above solution works and is easy to reason about. I don’t see why anyone would do anything else.</p>
 <h2 id="decode-ways">Decode Ways</h2>
+<blockquote>
+<p>A message containing letters from A-Z can be encoded into numbers using the following mapping:</p>
+<pre><code>&#39;A&#39; -&gt; &quot;1&quot;
+&#39;B&#39; -&gt; &quot;2&quot;
+...
+&#39;Z&#39; -&gt; &quot;26&quot;</code></pre>
+<p>To decode an encoded message, all the digits must be grouped then mapped back into letters using the reverse of the mapping above (there may be multiple ways). For example, <code>"11106"</code> can be mapped into:</p>
+<ul>
+<li><code>"AAJF"</code> with the grouping <code>(1 1 10 6)</code></li>
+<li><code>"KJF"</code> with the grouping <code>(11 10 6)</code></li>
+</ul>
+<p>Note that the grouping <code>(1 11 06)</code> is invalid because <code>"06"</code> cannot be mapped into <code>'F'</code> since <code>"6"</code> is different from <code>"06"</code>.</p>
+<p>Given a string <code>s</code> containing only digits, return the number of ways to decode it.</p>
+<p>The test cases are generated so that the answer fits in a 32-bit integer.</p>
+</blockquote>
+<p>This problem is similar to “Combination Sum”, but even more similar to “Word Break”. Like “Combination Sum”, we start with a dictionary of “min values”, each of which is initialized to <code>1</code> in our dictionary. Then, as in “Word Break”, we iterate through possible “words” (checked for feasibility with the handy <code>.startswith()</code>), removing them from the string and seeing how many ways there are to make them. (The modification from “Word Break” here is that in “Word Break”, we were only looking for <code>true</code> or <code>false</code> as to whether it was possible to create the string from words in the list provided.)</p>
+<p>The solution is as follows:</p>
+<div class="sourceCode" id="cb38" data-startFrom="1"><pre class="sourceCode numberSource python numberLines good"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1"></a><span class="kw">class</span> Solution:</span>
+<span id="cb38-2"><a href="#cb38-2"></a>    <span class="kw">def</span> numDecodings(<span class="va">self</span>, s: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
+<span id="cb38-3"><a href="#cb38-3"></a>        num_ways <span class="op">=</span> {<span class="bu">str</span>(n):<span class="dv">1</span> <span class="cf">for</span> n <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>,<span class="dv">11</span>)}</span>
+<span id="cb38-4"><a href="#cb38-4"></a>        num_ways[<span class="dv">0</span>] <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb38-5"><a href="#cb38-5"></a>        </span>
+<span id="cb38-6"><a href="#cb38-6"></a>        <span class="kw">def</span> ways(s):</span>
+<span id="cb38-7"><a href="#cb38-7"></a>            <span class="cf">if</span> s <span class="kw">in</span> num_ways:</span>
+<span id="cb38-8"><a href="#cb38-8"></a>                <span class="cf">return</span> num_ways[s]</span>
+<span id="cb38-9"><a href="#cb38-9"></a>            </span>
+<span id="cb38-10"><a href="#cb38-10"></a>            total_ways <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb38-11"><a href="#cb38-11"></a>            <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>,<span class="dv">27</span>):</span>
+<span id="cb38-12"><a href="#cb38-12"></a>                si <span class="op">=</span> <span class="bu">str</span>(i)</span>
+<span id="cb38-13"><a href="#cb38-13"></a>                <span class="cf">if</span> s.startswith(si):</span>
+<span id="cb38-14"><a href="#cb38-14"></a>                    <span class="cf">if</span> si <span class="op">==</span> s:</span>
+<span id="cb38-15"><a href="#cb38-15"></a>                        total_ways <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb38-16"><a href="#cb38-16"></a>                    <span class="cf">else</span>:</span>
+<span id="cb38-17"><a href="#cb38-17"></a>                        res <span class="op">=</span> s[<span class="bu">len</span>(si):]</span>
+<span id="cb38-18"><a href="#cb38-18"></a>                        total_ways <span class="op">+=</span> ways(res)</span>
+<span id="cb38-19"><a href="#cb38-19"></a>                    </span>
+<span id="cb38-20"><a href="#cb38-20"></a>            num_ways[s] <span class="op">=</span> total_ways</span>
+<span id="cb38-21"><a href="#cb38-21"></a>            <span class="cf">return</span> total_ways</span>
+<span id="cb38-22"><a href="#cb38-22"></a>        </span>
+<span id="cb38-23"><a href="#cb38-23"></a>        <span class="cf">return</span> ways(s)</span></code></pre></div>
+<p>This solution has time complexity <span class="math inline">O(n)</span>, where <span class="math inline">n</span> is the size of <code>s</code>.</p>
 <h2 id="unique-paths">Unique Paths</h2>
+<blockquote>
+<p>There is a robot on an <code>m</code> by <code>n</code> grid. The robot is initially located at the top-left corner (i.e., <code>grid[0][0]</code>). The robot tries to move to the bottom-right corner (i.e., <code>grid[m - 1][n - 1]</code>). The robot can only move either down or right at any point in time.</p>
+<p>Given the two integers <code>m</code> and <code>n</code>, return the number of possible unique paths that the robot can take to reach the bottom-right corner.</p>
+<p>The test cases are generated so that the answer will be less than or equal to <span class="math inline">2 \times 10^9</span>.</p>
+</blockquote>
+<p>This one is trivial if you’re familiar with combinatorics. Take the example <code>m = 1</code>, <code>n = 2</code>. The possible paths here are:</p>
+<pre><code>DRR, RDR, RRD</code></pre>
+<p>If you have knowledge of combinatorics your eyes should be lighting up – these are the permutations of <span class="math inline">D^m R^n</span>! (The exclamation point is added for emphasis, not as a factorial.)</p>
+<p>But we will be using a factorial here – or rather, three of them. Note that the formula for permutations which maintain the same number of elements, of arrays with element types <span class="math inline">e_1, \dots, e_n</span> with quantities <span class="math inline">r_1, \dots, r_n</span>, is as follows: <span class="math display">|P| = \frac{\left(\sum_{i=1}^n r_i\right)!}{\prod_{j=1}^n (r_j!)}</span></p>
+<p>In other words, we divide the factorial of the total number of elements by the factorials of each of the repetitions. For example, for permutations of <code>DRR</code> as above, we divide <span class="math inline">3! = 6</span> by <span class="math inline">2! = 2</span> to get <span class="math inline">3</span> (this is what we got above as well).</p>
+<p>The solution is a simple translation of this:</p>
+<div class="sourceCode" id="cb40" data-startFrom="1"><pre class="sourceCode numberSource python numberLines good"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1"></a><span class="im">from</span> math <span class="im">import</span> factorial</span>
+<span id="cb40-2"><a href="#cb40-2"></a><span class="kw">class</span> Solution:</span>
+<span id="cb40-3"><a href="#cb40-3"></a>    <span class="kw">def</span> uniquePaths(<span class="va">self</span>, m: <span class="bu">int</span>, n: <span class="bu">int</span>) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
+<span id="cb40-4"><a href="#cb40-4"></a>        <span class="cf">return</span> factorial(m<span class="op">+</span>n<span class="op">-</span><span class="dv">2</span>)<span class="op">//</span>(factorial(m<span class="op">-</span><span class="dv">1</span>) <span class="op">*</span> factorial(n<span class="op">-</span><span class="dv">1</span>))</span></code></pre></div>
+<p>This solution has whatever time complexity Python’s <code>Math.factorial</code> function is implemented in – probably <span class="math inline">O(n)</span>, if not slightly faster due to optimizations.</p>
+<p>As with “House Robber II”, I actually know for a fact that there’s a more DP-oriented way to do this, but the above solution works and is easy to reason about. I don’t see why anyone would do anything else, especially given how simple it is.</p>
 <h2 id="jump-game">Jump Game</h2>
+<blockquote>
+<p>You are given an integer array <code>nums</code>. You are initially positioned at the array’s first index, and each element in the array represents your maximum jump length at that position.</p>
+<p>Return <code>true</code> if you can reach the last index, or <code>false</code> otherwise.</p>
+</blockquote>
+<p>I went a little crazy on this one and decided to scrap the DP in favor of bit manipulation (my DP solution was failing for a 10,000-length list and I had no idea why it wasn’t fast enough):</p>
+<div class="sourceCode" id="cb41" data-startFrom="1"><pre class="sourceCode numberSource python numberLines bad"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1"></a><span class="kw">class</span> Solution:</span>
+<span id="cb41-2"><a href="#cb41-2"></a>    <span class="kw">def</span> canJump(<span class="va">self</span>, nums: List[<span class="bu">int</span>]) <span class="op">-&gt;</span> <span class="bu">bool</span>:</span>
+<span id="cb41-3"><a href="#cb41-3"></a>        <span class="co"># initialize total to 0b1</span></span>
+<span id="cb41-4"><a href="#cb41-4"></a>        total <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb41-5"><a href="#cb41-5"></a>        index <span class="op">=</span> <span class="bu">len</span>(nums) <span class="op">-</span> <span class="dv">1</span></span>
+<span id="cb41-6"><a href="#cb41-6"></a></span>
+<span id="cb41-7"><a href="#cb41-7"></a>        <span class="co"># go from right to left</span></span>
+<span id="cb41-8"><a href="#cb41-8"></a>        <span class="cf">while</span> index <span class="op">&gt;=</span> <span class="dv">0</span>:       </span>
+<span id="cb41-9"><a href="#cb41-9"></a>            rindex <span class="op">=</span> <span class="bu">len</span>(nums) <span class="op">-</span> index</span>
+<span id="cb41-10"><a href="#cb41-10"></a>            value <span class="op">=</span> nums[index]</span>
+<span id="cb41-11"><a href="#cb41-11"></a>            <span class="cf">if</span> value <span class="op">+</span> index <span class="op">&gt;=</span> <span class="bu">len</span>(nums):</span>
+<span id="cb41-12"><a href="#cb41-12"></a>                <span class="co"># can go to the end -- put a &#39;1&#39; in bit &lt;rindex&gt;</span></span>
+<span id="cb41-13"><a href="#cb41-13"></a>                total <span class="op">|=</span> <span class="dv">1</span> <span class="op">&lt;&lt;</span> (rindex <span class="op">-</span> <span class="dv">1</span>)</span>
+<span id="cb41-14"><a href="#cb41-14"></a>            <span class="cf">else</span>:</span>
+<span id="cb41-15"><a href="#cb41-15"></a>                <span class="co"># need to check whether it&#39;s possible to reach any ones so far</span></span>
+<span id="cb41-16"><a href="#cb41-16"></a>                <span class="co"># create as many ones in a row as there are possible jump locations</span></span>
+<span id="cb41-17"><a href="#cb41-17"></a>                ones <span class="op">=</span> (<span class="dv">1</span> <span class="op">&lt;&lt;</span> (value <span class="op">+</span> <span class="dv">1</span>)) <span class="op">-</span> <span class="dv">1</span></span>
+<span id="cb41-18"><a href="#cb41-18"></a>                <span class="co"># shift these ones over to the desired location</span></span>
+<span id="cb41-19"><a href="#cb41-19"></a>                shifted <span class="op">=</span> ones <span class="op">&lt;&lt;</span> (rindex <span class="op">-</span> value <span class="op">-</span> <span class="dv">1</span>)</span>
+<span id="cb41-20"><a href="#cb41-20"></a>                <span class="co"># check for intersection</span></span>
+<span id="cb41-21"><a href="#cb41-21"></a>                <span class="cf">if</span> total <span class="op">&amp;</span> shifted <span class="op">&gt;</span> <span class="dv">0</span>:</span>
+<span id="cb41-22"><a href="#cb41-22"></a>                    <span class="co"># put a &#39;1&#39; in this bit (if we don&#39;t do this, it stays a &#39;0&#39; as desired)</span></span>
+<span id="cb41-23"><a href="#cb41-23"></a>                    total <span class="op">|=</span> <span class="dv">1</span> <span class="op">&lt;&lt;</span> (rindex <span class="op">-</span> <span class="dv">1</span>)</span>
+<span id="cb41-24"><a href="#cb41-24"></a>            index <span class="op">-=</span> <span class="dv">1</span></span>
+<span id="cb41-25"><a href="#cb41-25"></a></span>
+<span id="cb41-26"><a href="#cb41-26"></a>        <span class="co"># get location of bit that tells us whether the first index can jump to the last index</span></span>
+<span id="cb41-27"><a href="#cb41-27"></a>        zero_index <span class="op">=</span> <span class="dv">1</span> <span class="op">&lt;&lt;</span> (<span class="bu">len</span>(nums) <span class="op">-</span> <span class="dv">1</span>)</span>
+<span id="cb41-28"><a href="#cb41-28"></a></span>
+<span id="cb41-29"><a href="#cb41-29"></a>        <span class="co"># return true if total has a &#39;1&#39; at the zero index</span></span>
+<span id="cb41-30"><a href="#cb41-30"></a>        <span class="cf">return</span> total <span class="op">&amp;</span> zero_index <span class="op">&gt;</span> <span class="dv">0</span></span></code></pre></div>
+<p>I don’t recommend that you use this solution. It really violates the spirit of the problem, especially given that the problem is literally in the DP section.</p>
+<p>This solution has time complexity <span class="math inline">O(n)</span>, where <span class="math inline">n</span> is the size of <code>nums</code>.</p>
 <h1 id="graph">Graph</h1>
 <h2 id="clone-graph">Clone Graph</h2>
 <h2 id="course-schedule">Course Schedule</h2>

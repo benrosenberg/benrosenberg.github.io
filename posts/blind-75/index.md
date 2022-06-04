@@ -728,16 +728,552 @@ This code does the following:
 # Dynamic Programming
 
 ## Climbing Stairs
+
+> You are climbing a staircase. It takes `n` steps to reach the top.
+> 
+> Each time you can either climb `1` or `2` steps. In how many distinct ways can you climb to the top?
+
+This is a simple dynamic programming problem, and as such can be solved with memoization:
+
+```{.python .numberLines startFrom="1" .good}
+class Solution:
+    def climbStairs(self, n: int) -> int:
+        ways_to = {0 : 1, 1 : 1}
+        
+        def possibilities(n):
+            if n in ways_to:
+                return ways_to[n]
+            
+            one_step = possibilities(n-1)
+            two_steps = possibilities(n-2)
+            
+            ways_to[n] = one_step + two_steps
+            
+            return ways_to[n]
+        
+        return possibilities(n)
+```
+
+This solution has time complexity $O(n)$. 
+
 ## Coin Change
+
+> You are given an integer array `coins` representing coins of different denominations and an integer `amount` representing a total amount of money.
+>
+> Return the fewest number of coins that you need to make up that amount. If that amount of money cannot be made up by any combination of the coins, return `-1`.
+>
+> You may assume that you have an infinite number of each kind of coin.
+
+This is another rather simple dynamic programming problem. The values we can memoize here are the amounts of coins that it takes to make each amount. Note that in this problem, as with the previous one and all dynamic programming problems, we store the best solution that we've found to a subproblem, because the problems overlap and the fact that the solution for the subproblem is optimal means that it is contained in the optimal solution to the entire problem.
+
+```{.python .numberLines startFrom="1" .neutral}
+class Solution:
+    def coinChange(self, coins: List[int], amount: int) -> int:
+        fewest_to_make = {0 : 0}
+        
+        def make_change(n):
+            if n in fewest_to_make:
+                return fewest_to_make[n]
+            
+            fewest_list = [1 + make_change(n-c) for c in coins if n-c >= 0 and make_change(n-c) >= 0]
+            
+            if len(fewest_list) == 0:
+                fewest = -1
+            else:
+                fewest = min(fewest_list)
+            
+            fewest_to_make[n] = fewest
+            
+            return fewest_to_make[n]
+        
+        return make_change(amount)
+```
+
+This solution is a little more readable, as it doesn't use a complicated list comprehension (and is better commented):
+
+```{.python .numberLines startFrom="1" .good}
+class Solution:
+    def coinChange(self, coins: List[int], amount: int) -> int:
+        fewest_to_make = {0 : 0}
+        
+        def make_change(n):
+            if n in fewest_to_make:
+                return fewest_to_make[n]
+            
+            # get a list of ways to make n, taking the 
+            # min of each possibilty for decreasing n
+            # by some coin c
+            fewest_list = []
+            for c in coins:
+                # can't subtract coin c from n
+                if n-c < 0:
+                    continue
+                
+                m = make_change(n-c)
+                # aren't any ways to make n - c
+                if m == -1:
+                    continue
+                    
+                # we've found a way to make n
+                # add 1 because we used a coin (c) to do so
+                fewest_list.append(1 + m)
+            
+            if len(fewest_list) == 0:
+                # there weren't any ways to make n
+                fewest = -1
+            else:
+                # fewest coins possible to make n
+                fewest = min(fewest_list)
+            
+            # update storage dictionary
+            fewest_to_make[n] = fewest
+            
+            return fewest_to_make[n]
+        
+        return make_change(amount)
+```
+
+This solution has time complexity $O(n)$, where $n$ is the size of `amount`. 
+
 ## Longest Increasing Subsequence
+
+> Given an integer array `nums`, return the length of the longest strictly increasing subsequence.
+> 
+> **Note**: A subsequence is a sequence that can be derived from an array by deleting some or no elements without changing the order of the remaining elements. For example, `[3,6,2,7]` is a subsequence of the array `[0,3,1,6,2,2,7]`.
+
+This is a more difficult DP problem (in my opinion). Maybe I only had difficulty with it because I was assuming we had to do this in $O(n)$ time, but it was actually allowable to do it in $O(n^2)$ time. 
+
+The difficult part is in that $O(n) \to O(n^2)$ translation. The added time complexity comes because of the fact that we need to remember more than just one piece of state information from the entire rest of the array; instead, we need to remember two pieces of state information from *each place in the array that we have seen so far*. 
+
+Specifically, this is a combination of the length of the LIS (longest increasing subsequence) starting at that index, and the minimum element in that LIS. If the element we're currently examining is of a value greater than or equal to the minimum of some LIS, then our current element **cannot be added** to that subsequence (as it is no longer increasing).
+
+This solution uses list comp and tuples within a list to make things more compact, but is not the most readable:
+
+```{.python .numberLines startFrom="1" .bad}
+class Solution:
+    def lengthOfLIS(self, nums: List[int]) -> int:
+        # go from LIS(n) -> LIS(n-1) by taking 
+        # max(1, [1 + len(LIS(x)) where LIS(x) starts > nums[n-1]])
+
+        longest_starting_here = [(0,0)]*len(nums)
+        
+        for i in range(len(nums)-1, -1, -1):         
+            choices = [1] + [1 + lsh[0] for lsh in longest_starting_here[i:] if lsh[1] > nums[i]]
+            
+            longest_starting_here[i] = max(choices), nums[i]
+        
+        return max(longest_starting_here, key=lambda x : x[0])[0]
+```
+
+It also for some reason stores `nums[i]` as part of the tuple, which is completely unnecessary. Don't use that solution.
+
+This is a much cleaner (and better-commented) solution (which does the same thing):
+
+```{.python .numberLines startFrom="1" .good}
+class Solution:
+    def lengthOfLIS(self, nums: List[int]) -> int:
+        # initialize data storage
+        LIS = [0] * len(nums)
+        
+        # iterate backwards through the indices of nums
+        # this range construct gives us [len(nums)-1, ..., 0]
+        for i in range(len(nums)-1, -1, -1):         
+            choices = [1] 
+            
+            # look at LIS already found
+            for j,LIS_length in enumerate(LIS[i+1:]):
+                # can only add this to choices if it's increasing
+                if nums[j+i+1] > nums[i]:
+                    choices.append(1 + LIS_length)
+            
+            LIS[i] = max(choices)
+        
+        return max(LIS)
+```
+
+This solution has time complexity $O(n^2)$, where $n$ is the size of `nums`. 
+
 ## Longest Common Subsequence
+
+> Given two strings `text1` and `text2`, return the length of their longest common subsequence. If there is no common subsequence, return `0`.
+> 
+> A subsequence of a string is a new string generated from the original string with some characters (can be none) deleted without changing the relative order of the remaining characters.
+> For example, `"ace"` is a subsequence of `"abcde"`.
+> 
+> **Note**: A common subsequence of two strings is a subsequence that is common to both strings.
+
+*This problem's solution was inspired by a [Neetcode video](https://www.youtube.com/watch?v=Ua0GhsJSlWM).*
+
+This is a more difficult "2-dimensional" DP problem, which is best solved using a *matrix*. 
+
+Take the example given, $t_1 = \texttt{"ace"}$ and $t_2 = \texttt{"abcde"}$. This should of course return 3, but we'll walk through it now using the matrix representation. 
+
+Consider a matrix with the characters of $t_1$ along the columns and the characters of $t_2$ along the rows:
+$$\begin{matrix} 
+                & \texttt{a} & \texttt{c} & \texttt{e} \\
+    \texttt{a}  &            &            &            \\
+    \texttt{b}  &            &            &            \\
+    \texttt{c}  &            &            &            \\ 
+    \texttt{d}  &  & \color{red} \bullet \color{black} & \\    
+    \texttt{e}  &            &            &            
+\end{matrix}$$
+
+The entries of this matrix will represent the size of the longest common subsequence of the substrings beginning at the characters which denote its position. For the position denoted by the red dot, for example, the contents of the entry at the position of the red dot would be the longest common subsequence of `ce` and `de` (and would therefore be `1`).
+
+We can further say that the value of any entry just outside the matrix (on its bottom or right ends) will be `0`, as they correspond to the empty string, which only has common subsequences of length zero:
+$$\begin{matrix} 
+                & \texttt{a} & \texttt{c} & \texttt{e} & \\
+    \texttt{a}  &            &            &            & 0 \\
+    \texttt{b}  &            &            &            & 0 \\
+    \texttt{c}  &            &            &            & 0 \\ 
+    \texttt{d}  &            &            &            & 0 \\    
+    \texttt{e}  &            &            &            & 0 \\
+                & 0          & 0          & 0          & 0
+\end{matrix}$$
+
+Now we can start filling in the matrix. We will use the following recurrence relation, where $A_{i,j}$ corresponds to the matrix entry at row $i$ and column $j$, and $t_1^i$ and $t_2^j$ correspond to the $i$th and $j$th characters of $t_1$ and $t_2$ respectively:
+$$A_{i,j} = \begin{cases}
+    1 + A_{i+1, j+1}     & t_1^i = t_2^j \\
+    \max(A_{i+1, j}, A_{i, j+1}) & \text{otherwise}
+\end{cases}$$
+
+In the above recurrence relation, if we see identical letters, then we increase the length of the common subsequence and continue along both strings at the same time (by incrementing both $i$ and $j$); otherwise, we take the maximum of the problems in which we increment $i$ and that in which we increment $j$, being analogues for shortening $t_1$ or $t_2$ by one character.
+
+Running the above relation on the matrix, starting from the bottom up, yields the following result:
+$$\begin{matrix} 
+                & \texttt{a} & \texttt{c} & \texttt{e} & \\
+    \texttt{a}  & 3          & 2          & 1          & 0 \\    \texttt{b}  & 2          & 2          & 1          & 0 \\
+    \texttt{c}  & 2          & 2          & 1          & 0 \\ 
+    \texttt{d}  & 1          & 1          & 1          & 0 \\    
+    \texttt{e}  & 1          & 1          & 1          & 0 \\
+                & 0          & 0          & 0          & 0
+\end{matrix}$$
+
+The following solution is a direct translation of the above algorithm (with the exception that it initializes all matrix entries to `0` beforehand, and performs some tricks to get the indices and elements exactly correct while iterating):
+
+```{.python .numberLines startFrom="1" .good}
+class Solution:
+    def longestCommonSubsequence(self, text1: str, text2: str) -> int:
+        matrix = [[0 for j in range(len(text1)+1)] 
+                     for i in range(len(text2)+1)]
+        
+        for i,ei in enumerate(text2[::-1]):
+            i = len(text2) - i - 1
+            for j,ej in enumerate(text1[::-1]):
+                j = len(text1) - j - 1
+                if ei == ej: # same letter
+                    matrix[i][j] = 1 + matrix[i+1][j+1]
+                else:
+                    matrix[i][j] = max(matrix[i+1][j], matrix[i][j+1])
+                    
+        return matrix[0][0]
+```
+
+This solution has time complexity $O(n^2)$, where $n$ is the size of `text1` times the size of `text2`. 
+
 ## Word Break Problem
+
+> Given a string `s` and a dictionary of strings `wordDict`, return `true` if `s` can be segmented into a space-separated sequence of one or more dictionary words.
+> 
+> **Note**: The same word in the dictionary may be reused multiple times in the segmentation.
+
+This is another easy DP problem with simple memoization. Here, the subproblem is whether a substring of `s` beginning `len(w)` characters after the start of `s` can be segmented for some word `w`:
+
+```{.python .numberLines startFrom="1" .good}
+class Solution:
+    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+        can_be_segmented = {'' : True}
+        
+        def can_segment(word) -> bool:
+            if word in can_be_segmented:
+                return can_be_segmented[word]
+            
+            w_removed = []
+            for w in wordDict:
+                if word.startswith(w):
+                    w_removed.append(word[len(w):])
+                    
+            possible = any([can_segment(wr) for wr in w_removed])
+        
+            can_be_segmented[word] = possible
+            return possible
+        
+        return can_segment(s)
+```
+
+This solution honestly probably doesn't require any comments. It's pretty straightforward.
+
+This solution has time complexity $O(n)$, where $n$ is the size of `s`. 
+
 ## Combination Sum
+
+> Given an array of distinct integers `nums` and a target integer `target`, return the number of possible combinations that add up to `target`.
+> 
+> The test cases are generated so that the answer can fit in a 32-bit integer.
+
+For some reason this one took me forever to get, maybe because I kept messing up on small things and didn't work out an example beforehand. (**Note**: ALWAYS work out an example beforehand, just to make sure you know what you're doing.)
+
+The following solution is actually rather simple, and is similar to previous problems:
+
+```{.python .numberLines startFrom="1" .good}
+class Solution:
+    def combinationSum4(self, nums: List[int], target: int) -> int:
+        min_num = min(nums)
+        numset = set(nums)
+        ways_to = {min_num : 1}
+        
+        def ways(n):
+            if n in ways_to:
+                return ways_to[n]
+            
+            if n in numset:
+                found_ways = 1
+            else:
+                found_ways = 0
+                
+            for num in nums:
+                res = n - num
+                if res < min_num:
+                    continue
+                found_ways += ways(res)
+            
+            ways_to[n] = found_ways
+            return found_ways
+        
+        return ways(target)
+```
+
+The interesting thing here is that we avoid all complications with zero by just saying that it doesn't exist, and making `min_num` the minimum number we allow ourselves to deal with. We also avoid zero by checking explicitly whether a number is in `nums` (to make this faster we cast `nums` to a `set`).
+
+This solution has time complexity $O(n)$, where $n$ is the size of `target`. 
+
 ## House Robber
+
+> You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed, the only constraint stopping you from robbing each of them is that adjacent houses have security systems connected and it will automatically contact the police if two adjacent houses were broken into on the same night.
+> 
+> Given an integer array `nums` representing the amount of money of each house, return the maximum amount of money you can rob tonight without alerting the police.
+
+This problem is an interesting application of DP, since the choice here is a bit more complex. You need to choose, at each index $i$, whether you want to take house $i$ and everything that is possible to take along with that house (this is $\texttt{nums}[i+2 \to]$), or the house $i+1$ next to it and everything that entails (so, $\texttt{nums}[i+3 \to]$). 
+
+The nitpicky part here is checking whether `nums` is long enough to take the rest if possible. For small data ($n < 3$) we can just be greedy, as the invariant here is that we never make it possible to take two adjacent houses.
+
+```{.python .numberLines startFrom="1" .good}
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+       
+        best_choices = [-1]*(len(nums)-2) + [max(nums[-2:])] + [nums[-1]] 
+        
+        def get_nonadj_choices(i):
+            if best_choices[i] != -1:
+                return best_choices[i]
+            
+            if len(nums[i:]) <= 2:
+                return max(nums[i:])
+            
+            if i + 2 >= len(nums):
+                take_first = nums[i]
+            else:
+                take_first = nums[i] + get_nonadj_choices(i+2)
+            
+            if i + 3 >= len(nums):
+                take_second = nums[i+1]
+            else:
+                take_second = nums[i+1] + get_nonadj_choices(i+3)
+            
+            best_choices[i] = max(take_first, take_second)
+            
+            return best_choices[i]
+        
+        return get_nonadj_choices(0)
+```
+
+Note further that this solution works because $\texttt{nums}[i] \geq 0 \;\; \forall i$. If this were not the case, we would have to change this solution (currently, we choose between taking house $i$ and house $i+1$; if we were working with negatives, we might not want to choose either).
+
+This solution has time complexity $O(n)$, where $n$ is the size of `nums`. 
+
 ## House Robber II
+
+> You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed. All houses at this place are arranged in a circle. That means the first house is the neighbor of the last one. Meanwhile, adjacent houses have a security system connected, and it will automatically contact the police if two adjacent houses were broken into on the same night.
+> 
+> Given an integer array `nums` representing the amount of money of each house, return the maximum amount of money you can rob tonight without alerting the police.
+
+This problem is trivial if you have the solution to "House Robber I":
+
+```{.python .numberLines startFrom="1" .neutral}
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+        
+        if len(nums) < 3:
+            return max(nums)
+        
+        def rob1(nums):
+
+            best_choices = [-1]*(len(nums)-2) + [max(nums[-2:])] + [nums[-1]] 
+
+            def get_nonadj_choices(i):
+                if best_choices[i] != -1:
+                    return best_choices[i]
+
+                if len(nums[i:]) <= 2:
+                    return max(nums[i:])
+
+                if i + 2 >= len(nums):
+                    take_first = nums[i]
+                else:
+                    take_first = nums[i] + get_nonadj_choices(i+2)
+
+                if i + 3 >= len(nums):
+                    take_second = nums[i+1]
+                else:
+                    take_second = nums[i+1] + get_nonadj_choices(i+3)
+
+                best_choices[i] = max(take_first, take_second)
+
+                return best_choices[i]
+
+            return get_nonadj_choices(0)
+        
+        return max(rob1(nums[1:]), rob1(nums[:-1]))
+```
+
+We literally just check whether it's best to take the first element or the last element. 
+
+This solution has time complexity $O(n)$, where $n$ is the size of `nums`. 
+
+I'm sure there's a "better", more "thoughtful" way to do this, but the above solution works and is easy to reason about. I don't see why anyone would do anything else.
+
 ## Decode Ways
+
+> A message containing letters from A-Z can be encoded into numbers using the following mapping:
+> 
+> ```
+> 'A' -> "1"
+> 'B' -> "2"
+> ...
+> 'Z' -> "26"
+> ```
+> 
+> To decode an encoded message, all the digits must be grouped then mapped back into letters using the reverse of the mapping above (there may be multiple ways). For example, `"11106"` can be mapped into:
+> 
+>  - `"AAJF"` with the grouping `(1 1 10 6)`
+>  - `"KJF"` with the grouping `(11 10 6)`
+> 
+> Note that the grouping `(1 11 06)` is invalid because `"06"` cannot be mapped into `'F'` since `"6"` is different from `"06"`.
+> 
+> Given a string `s` containing only digits, return the number of ways to decode it.
+> 
+> The test cases are generated so that the answer fits in a 32-bit integer.
+
+This problem is similar to "Combination Sum", but even more similar to "Word Break". Like "Combination Sum", we start with a dictionary of "min values", each of which is initialized to `1` in our dictionary. Then, as in "Word Break", we iterate through possible "words" (checked for feasibility with the handy `.startswith()`), removing them from the string and seeing how many ways there are to make them. (The modification from "Word Break" here is that in "Word Break", we were only looking for `true` or `false` as to whether it was possible to create the string from words in the list provided.)
+
+The solution is as follows:
+
+```{.python .numberLines startFrom="1" .good}
+class Solution:
+    def numDecodings(self, s: str) -> int:
+        num_ways = {str(n):1 for n in range(1,11)}
+        num_ways[0] = 0
+        
+        def ways(s):
+            if s in num_ways:
+                return num_ways[s]
+            
+            total_ways = 0
+            for i in range(1,27):
+                si = str(i)
+                if s.startswith(si):
+                    if si == s:
+                        total_ways += 1
+                    else:
+                        res = s[len(si):]
+                        total_ways += ways(res)
+                    
+            num_ways[s] = total_ways
+            return total_ways
+        
+        return ways(s)
+```
+
+This solution has time complexity $O(n)$, where $n$ is the size of `s`. 
+
 ## Unique Paths
+
+> There is a robot on an `m` by `n` grid. The robot is initially located at the top-left corner (i.e., `grid[0][0]`). The robot tries to move to the bottom-right corner (i.e., `grid[m - 1][n - 1]`). The robot can only move either down or right at any point in time.
+> 
+> Given the two integers `m` and `n`, return the number of possible unique paths that the robot can take to reach the bottom-right corner.
+> 
+> The test cases are generated so that the answer will be less than or equal to $2 \times 10^9$.
+
+This one is trivial if you're familiar with combinatorics. Take the example `m = 1`, `n = 2`. The possible paths here are: 
+
+```
+DRR, RDR, RRD
+```
+
+If you have knowledge of combinatorics your eyes should be lighting up -- these are the permutations of $D^m R^n$! (The exclamation point is added for emphasis, not as a factorial.)
+
+But we will be using a factorial here -- or rather, three of them. Note that the formula for permutations which maintain the same number of elements, of arrays with element types $e_1, \dots, e_n$ with quantities $r_1, \dots, r_n$, is as follows: 
+$$|P| = \frac{\left(\sum_{i=1}^n r_i\right)!}{\prod_{j=1}^n (r_j!)}$$
+
+In other words, we divide the factorial of the total number of elements by the factorials of each of the repetitions. For example, for permutations of `DRR` as above, we divide $3! = 6$ by $2! = 2$ to get $3$ (this is what we got above as well).
+
+The solution is a simple translation of this:
+
+```{.python .numberLines startFrom="1" .good}
+from math import factorial
+class Solution:
+    def uniquePaths(self, m: int, n: int) -> int:
+        return factorial(m+n-2)//(factorial(m-1) * factorial(n-1))
+```
+
+This solution has whatever time complexity Python's `Math.factorial` function is implemented in -- probably $O(n)$, if not slightly faster due to optimizations.
+
+As with "House Robber II", I actually know for a fact that there's a more DP-oriented way to do this, but the above solution works and is easy to reason about. I don't see why anyone would do anything else, especially given how simple it is.
+
 ## Jump Game
+
+> You are given an integer array `nums`. You are initially positioned at the array's first index, and each element in the array represents your maximum jump length at that position.
+> 
+> Return `true` if you can reach the last index, or `false` otherwise.
+
+I went a little crazy on this one and decided to scrap the DP in favor of bit manipulation (my DP solution was failing for a 10,000-length list and I had no idea why it wasn't fast enough):
+
+```{.python .numberLines startFrom="1" .bad}
+class Solution:
+    def canJump(self, nums: List[int]) -> bool:
+        # initialize total to 0b1
+        total = 1
+        index = len(nums) - 1
+
+        # go from right to left
+        while index >= 0:       
+            rindex = len(nums) - index
+            value = nums[index]
+            if value + index >= len(nums):
+                # can go to the end -- put a '1' in bit <rindex>
+                total |= 1 << (rindex - 1)
+            else:
+                # need to check whether it's possible to reach any ones so far
+                # create as many ones in a row as there are possible jump locations
+                ones = (1 << (value + 1)) - 1
+                # shift these ones over to the desired location
+                shifted = ones << (rindex - value - 1)
+                # check for intersection
+                if total & shifted > 0:
+                    # put a '1' in this bit (if we don't do this, it stays a '0' as desired)
+                    total |= 1 << (rindex - 1)
+            index -= 1
+
+        # get location of bit that tells us whether the first index can jump to the last index
+        zero_index = 1 << (len(nums) - 1)
+
+        # return true if total has a '1' at the zero index
+        return total & zero_index > 0
+```
+
+I don't recommend that you use this solution. It really violates the spirit of the problem, especially given that the problem is literally in the DP section.
+
+This solution has time complexity $O(n)$, where $n$ is the size of `nums`. 
 
 # Graph
 
