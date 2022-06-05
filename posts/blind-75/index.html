@@ -1271,7 +1271,108 @@ The specific recurrence relation here is as follows:
 <p>This solution has time complexity <span class="math inline">O(n)</span>, where <span class="math inline">n</span> is the size of <code>nums</code>.</p>
 <h1 id="graph">Graph</h1>
 <h2 id="clone-graph">Clone Graph</h2>
+<blockquote>
+<p>Given a reference of a node in a connected undirected graph.</p>
+<p>Return a deep copy (clone) of the graph.</p>
+<p>Each node in the graph contains a value (int) and a list (List[Node]) of its neighbors:</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true"></a><span class="kw">class</span> <span class="bu">Node</span> {</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true"></a>    <span class="kw">public</span> <span class="dt">int</span> val;</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true"></a>    <span class="kw">public</span> <span class="bu">List</span>&lt;<span class="bu">Node</span>&gt; neighbors;</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true"></a>}</span></code></pre></div>
+</blockquote>
+<p>We use a DFS (depth-first search) and an internediate representation as an adjacency dictionary as follows:</p>
+<div class="sourceCode" id="cb43" data-startFrom="1"><pre class="sourceCode numberSource python numberLines neutral"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1"></a><span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb43-2"><a href="#cb43-2"></a><span class="co"># Definition for a Node.</span></span>
+<span id="cb43-3"><a href="#cb43-3"></a><span class="co">class Node:</span></span>
+<span id="cb43-4"><a href="#cb43-4"></a><span class="co">    def __init__(self, val = 0, neighbors = None):</span></span>
+<span id="cb43-5"><a href="#cb43-5"></a><span class="co">        self.val = val</span></span>
+<span id="cb43-6"><a href="#cb43-6"></a><span class="co">        self.neighbors = neighbors if neighbors is not None else []</span></span>
+<span id="cb43-7"><a href="#cb43-7"></a><span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb43-8"><a href="#cb43-8"></a></span>
+<span id="cb43-9"><a href="#cb43-9"></a><span class="kw">class</span> Solution:</span>
+<span id="cb43-10"><a href="#cb43-10"></a>    <span class="kw">def</span> cloneGraph(<span class="va">self</span>, node: <span class="st">&#39;Node&#39;</span>) <span class="op">-&gt;</span> <span class="st">&#39;Node&#39;</span>:</span>
+<span id="cb43-11"><a href="#cb43-11"></a>        <span class="co"># return empty if given empty</span></span>
+<span id="cb43-12"><a href="#cb43-12"></a>        <span class="cf">if</span> node <span class="op">==</span> <span class="va">None</span>:</span>
+<span id="cb43-13"><a href="#cb43-13"></a>            <span class="cf">return</span> <span class="va">None</span></span>
+<span id="cb43-14"><a href="#cb43-14"></a>        </span>
+<span id="cb43-15"><a href="#cb43-15"></a>        <span class="co"># initialize data storage</span></span>
+<span id="cb43-16"><a href="#cb43-16"></a>        <span class="co"># use dict for adj list because we don&#39;t </span></span>
+<span id="cb43-17"><a href="#cb43-17"></a>        <span class="co"># know the graph size yet</span></span>
+<span id="cb43-18"><a href="#cb43-18"></a>        seen <span class="op">=</span> []</span>
+<span id="cb43-19"><a href="#cb43-19"></a>        adj_dict <span class="op">=</span> {}</span>
+<span id="cb43-20"><a href="#cb43-20"></a>        </span>
+<span id="cb43-21"><a href="#cb43-21"></a>        <span class="kw">def</span> dfs(n):</span>
+<span id="cb43-22"><a href="#cb43-22"></a>            seen.append(n.val)</span>
+<span id="cb43-23"><a href="#cb43-23"></a>            </span>
+<span id="cb43-24"><a href="#cb43-24"></a>            neighbor_vals <span class="op">=</span> []</span>
+<span id="cb43-25"><a href="#cb43-25"></a>            </span>
+<span id="cb43-26"><a href="#cb43-26"></a>            <span class="cf">for</span> neighbor <span class="kw">in</span> n.neighbors:</span>
+<span id="cb43-27"><a href="#cb43-27"></a>                <span class="cf">if</span> neighbor.val <span class="kw">not</span> <span class="kw">in</span> seen:</span>
+<span id="cb43-28"><a href="#cb43-28"></a>                    dfs(neighbor)</span>
+<span id="cb43-29"><a href="#cb43-29"></a>                neighbor_vals.append(neighbor.val)</span>
+<span id="cb43-30"><a href="#cb43-30"></a>                </span>
+<span id="cb43-31"><a href="#cb43-31"></a>            adj_dict[n.val] <span class="op">=</span> neighbor_vals</span>
+<span id="cb43-32"><a href="#cb43-32"></a>        </span>
+<span id="cb43-33"><a href="#cb43-33"></a>        <span class="co"># populate adjacency dict</span></span>
+<span id="cb43-34"><a href="#cb43-34"></a>        dfs(node)</span>
+<span id="cb43-35"><a href="#cb43-35"></a>    </span>
+<span id="cb43-36"><a href="#cb43-36"></a>        <span class="co"># build new graph</span></span>
+<span id="cb43-37"><a href="#cb43-37"></a></span>
+<span id="cb43-38"><a href="#cb43-38"></a>        <span class="co"># create a node for each value found</span></span>
+<span id="cb43-39"><a href="#cb43-39"></a>        nodes <span class="op">=</span> [Node(val<span class="op">=</span>v) <span class="cf">for</span> v <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="bu">len</span>(adj_dict) <span class="op">+</span> <span class="dv">1</span>)]</span>
+<span id="cb43-40"><a href="#cb43-40"></a></span>
+<span id="cb43-41"><a href="#cb43-41"></a>        <span class="co"># update nodes&#39; neighbors according to adj dict</span></span>
+<span id="cb43-42"><a href="#cb43-42"></a>        <span class="cf">for</span> node_index <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(nodes)): </span>
+<span id="cb43-43"><a href="#cb43-43"></a>            node <span class="op">=</span> nodes[node_index]</span>
+<span id="cb43-44"><a href="#cb43-44"></a>            neighbors <span class="op">=</span> []</span>
+<span id="cb43-45"><a href="#cb43-45"></a>            <span class="cf">for</span> neighbor_val <span class="kw">in</span> adj_dict[node.val]:</span>
+<span id="cb43-46"><a href="#cb43-46"></a>                neighbors.append(nodes[neighbor_val <span class="op">-</span> <span class="dv">1</span>])</span>
+<span id="cb43-47"><a href="#cb43-47"></a>            node.neighbors <span class="op">=</span> neighbors</span>
+<span id="cb43-48"><a href="#cb43-48"></a>        </span>
+<span id="cb43-49"><a href="#cb43-49"></a>        <span class="cf">return</span> nodes[<span class="dv">0</span>]</span></code></pre></div>
+<p>There might be a way to do this with a lower space complexity, i.e. by creating the copy <em>during</em> the DFS instead of after it, but this solution is perfectly functional.</p>
+<p>This solution has time complexity <span class="math inline">O(m \cdot n)</span>, where <span class="math inline">n</span> is the size of the graph and <span class="math inline">m</span> is the width of the graph’s representative adjacency list; that is, the maximum number of neighbors that a node has.</p>
 <h2 id="course-schedule">Course Schedule</h2>
+<blockquote>
+<p>There are a total of <code>numCourses</code> courses you have to take, labeled from <code>0</code> to <code>numCourses - 1</code>. You are given an array <code>prerequisites</code> where <code>prerequisites[i] = [</code><span class="math inline">a_i</span><code>,</code><span class="math inline">b_i</span><code>]</code> indicates that you must take course <span class="math inline">b_i</span> first if you want to take course <span class="math inline">a_i</span>.</p>
+<p>For example, the pair <code>[0, 1]</code>, indicates that to take course 0 you have to first take course <code>1</code>.</p>
+<p>Return <code>true</code> if you can finish all courses. Otherwise, return <code>false</code>.</p>
+</blockquote>
+<p>This problem asks us to look for a cycle in the graph. We can do this via topological sort, which is described as follows (in Python-like pseudocode):</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true"></a><span class="cf">while</span> size(graph) <span class="op">&gt;</span> <span class="dv">0</span>:</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true"></a>    removable nodes <span class="op">=</span> []</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true"></a>    <span class="cf">for</span> node <span class="kw">in</span> graph:</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true"></a>        <span class="cf">if</span> number_of(in_edges(node)) <span class="op">=</span> <span class="dv">0</span>:</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true"></a>            add node to removable nodes</span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true"></a>    </span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true"></a>    <span class="cf">if</span> number_of(removable nodes) <span class="op">=</span> <span class="dv">0</span>:</span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true"></a>        <span class="cf">return</span> <span class="va">False</span></span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true"></a>    </span>
+<span id="cb44-10"><a href="#cb44-10" aria-hidden="true"></a>    <span class="cf">for</span> node <span class="kw">in</span> removable nodes:</span>
+<span id="cb44-11"><a href="#cb44-11" aria-hidden="true"></a>        remove node <span class="im">from</span> graph</span>
+<span id="cb44-12"><a href="#cb44-12" aria-hidden="true"></a></span>
+<span id="cb44-13"><a href="#cb44-13" aria-hidden="true"></a><span class="cf">return</span> <span class="va">True</span></span></code></pre></div>
+<p>By going through the courses, iteratively removing any nodes with no prerequisites, we effectively conduct a topological traversal of the graph. Whatever subgraph obstructs the algorithm (at which time the number of removable courses is <code>0</code>) contains a cycle, which means that we can return <code>false</code>.</p>
+<p>Here is a solution:</p>
+<div class="sourceCode" id="cb45" data-startFrom="1"><pre class="sourceCode numberSource python numberLines good"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1"></a><span class="kw">class</span> Solution:</span>
+<span id="cb45-2"><a href="#cb45-2"></a>    <span class="kw">def</span> canFinish(<span class="va">self</span>, numCourses: <span class="bu">int</span>, prerequisites: List[List[<span class="bu">int</span>]]) <span class="op">-&gt;</span> <span class="bu">bool</span>:   </span>
+<span id="cb45-3"><a href="#cb45-3"></a>        <span class="co"># create better version of the graph</span></span>
+<span id="cb45-4"><a href="#cb45-4"></a>        prq <span class="op">=</span> {i : <span class="bu">set</span>() <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(numCourses)}</span>
+<span id="cb45-5"><a href="#cb45-5"></a>        <span class="cf">for</span> p <span class="kw">in</span> prerequisites:</span>
+<span id="cb45-6"><a href="#cb45-6"></a>            prq[p[<span class="dv">1</span>]].add(p[<span class="dv">0</span>])</span>
+<span id="cb45-7"><a href="#cb45-7"></a>        </span>
+<span id="cb45-8"><a href="#cb45-8"></a>        <span class="co"># do topological sort</span></span>
+<span id="cb45-9"><a href="#cb45-9"></a>        <span class="cf">while</span> <span class="bu">len</span>(prq) <span class="op">&gt;</span> <span class="dv">0</span>:</span>
+<span id="cb45-10"><a href="#cb45-10"></a>            pop <span class="op">=</span> {k <span class="cf">for</span> k,v <span class="kw">in</span> prq.items() <span class="cf">if</span> <span class="bu">len</span>(v) <span class="op">==</span> <span class="dv">0</span>}</span>
+<span id="cb45-11"><a href="#cb45-11"></a>            <span class="cf">for</span> k <span class="kw">in</span> pop:</span>
+<span id="cb45-12"><a href="#cb45-12"></a>                prq.pop(k)</span>
+<span id="cb45-13"><a href="#cb45-13"></a>            <span class="cf">for</span> k,v <span class="kw">in</span> prq.items():</span>
+<span id="cb45-14"><a href="#cb45-14"></a>                prq[k] <span class="op">=</span> v <span class="op">-</span> pop</span>
+<span id="cb45-15"><a href="#cb45-15"></a>            <span class="cf">if</span> <span class="bu">len</span>(pop) <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb45-16"><a href="#cb45-16"></a>                <span class="cf">return</span> <span class="va">False</span></span>
+<span id="cb45-17"><a href="#cb45-17"></a>        </span>
+<span id="cb45-18"><a href="#cb45-18"></a>        <span class="cf">return</span> <span class="va">True</span></span></code></pre></div>
+<p>This solution runs in <span class="math inline">O(m+n)</span> time, where <span class="math inline">m</span> is the size of <code>numCourses</code> and <span class="math inline">n</span> is the size of <code>prerequisites</code>.</p>
 <h2 id="pacific-atlantic-water-flow">Pacific Atlantic Water Flow</h2>
 <h2 id="number-of-islands">Number of Islands</h2>
 <h2 id="longest-consecutive-sequence">Longest Consecutive Sequence</h2>

@@ -1278,7 +1278,131 @@ This solution has time complexity $O(n)$, where $n$ is the size of `nums`.
 # Graph
 
 ## Clone Graph
+
+> Given a reference of a node in a connected undirected graph.
+> 
+> Return a deep copy (clone) of the graph.
+> 
+> Each node in the graph contains a value (int) and a list (List[Node]) of its neighbors:
+> 
+> ```java
+> class Node {
+>     public int val;
+>     public List<Node> neighbors;
+> }
+> ```
+
+We use a DFS (depth-first search) and an internediate representation as an adjacency dictionary as follows:
+
+```{.python .numberLines startFrom="1" .neutral}
+"""
+# Definition for a Node.
+class Node:
+    def __init__(self, val = 0, neighbors = None):
+        self.val = val
+        self.neighbors = neighbors if neighbors is not None else []
+"""
+
+class Solution:
+    def cloneGraph(self, node: 'Node') -> 'Node':
+        # return empty if given empty
+        if node == None:
+            return None
+        
+        # initialize data storage
+        # use dict for adj list because we don't 
+        # know the graph size yet
+        seen = []
+        adj_dict = {}
+        
+        def dfs(n):
+            seen.append(n.val)
+            
+            neighbor_vals = []
+            
+            for neighbor in n.neighbors:
+                if neighbor.val not in seen:
+                    dfs(neighbor)
+                neighbor_vals.append(neighbor.val)
+                
+            adj_dict[n.val] = neighbor_vals
+        
+        # populate adjacency dict
+        dfs(node)
+    
+        # build new graph
+
+        # create a node for each value found
+        nodes = [Node(val=v) for v in range(1, len(adj_dict) + 1)]
+
+        # update nodes' neighbors according to adj dict
+        for node_index in range(len(nodes)): 
+            node = nodes[node_index]
+            neighbors = []
+            for neighbor_val in adj_dict[node.val]:
+                neighbors.append(nodes[neighbor_val - 1])
+            node.neighbors = neighbors
+        
+        return nodes[0]
+```
+
+There might be a way to do this with a lower space complexity, i.e. by creating the copy *during* the DFS instead of after it, but this solution is perfectly functional.
+
+This solution has time complexity $O(m \cdot n)$, where $n$ is the size of the graph and $m$ is the width of the graph's representative adjacency list; that is, the maximum number of neighbors that a node has. 
+
 ## Course Schedule
+
+> There are a total of `numCourses` courses you have to take, labeled from `0` to `numCourses - 1`. You are given an array `prerequisites` where `prerequisites[i] = [`$a_i$`, `$b_i$`]` indicates that you must take course $b_i$ first if you want to take course $a_i$.
+> 
+> For example, the pair `[0, 1]`, indicates that to take course 0 you have to first take course `1`.
+> 
+> Return `true` if you can finish all courses. Otherwise, return `false`.
+
+This problem asks us to look for a cycle in the graph. We can do this via topological sort, which is described as follows (in Python-like pseudocode):
+
+```python
+while size(graph) > 0:
+    removable nodes = []
+    for node in graph:
+        if number_of(in_edges(node)) = 0:
+            add node to removable nodes
+    
+    if number_of(removable nodes) = 0:
+        return False
+    
+    for node in removable nodes:
+        remove node from graph
+
+return True
+```
+
+By going through the courses, iteratively removing any nodes with no prerequisites, we effectively conduct a topological traversal of the graph. Whatever subgraph obstructs the algorithm (at which time the number of removable courses is `0`) contains a cycle, which means that we can return `false`.
+
+Here is a solution:
+
+```{.python .numberLines startFrom="1" .good}
+class Solution:
+    def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:   
+        # create better version of the graph
+        prq = {i : set() for i in range(numCourses)}
+        for p in prerequisites:
+            prq[p[1]].add(p[0])
+        
+        # do topological sort
+        while len(prq) > 0:
+            pop = {k for k,v in prq.items() if len(v) == 0}
+            for k in pop:
+                prq.pop(k)
+            for k,v in prq.items():
+                prq[k] = v - pop
+            if len(pop) == 0:
+                return False
+        
+        return True
+```
+
+This solution runs in $O(m+n)$ time, where $m$ is the size of `numCourses` and $n$ is the size of `prerequisites`. 
+
 ## Pacific Atlantic Water Flow
 ## Number of Islands
 ## Longest Consecutive Sequence
