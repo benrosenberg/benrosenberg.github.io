@@ -1,0 +1,189 @@
+\documentclass{article}
+
+\title{Mechanical Keyboards: Can they shatter glass?}
+\author{Ben Rosenberg (\href{mailto:bar94@cornell.edu}{bar94@cornell.edu})}
+\date{\today}
+% \usepackage{nopageno}
+\usepackage[colorlinks = true,
+            linkcolor = blue,
+            urlcolor  = blue,
+            citecolor = blue,
+            anchorcolor = blue]{hyperref}
+\usepackage{multicol}
+\usepackage[normalem]{ulem}
+\usepackage{textcomp}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tipa}
+\usepackage[english]{babel}
+\usepackage{subcaption}
+
+\newcommand{\M}{\rotatebox[origin=c]{180}{\textwon}}
+
+\usepackage[margin=0.80in]{geometry}
+
+\begin{document}
+
+\maketitle
+
+\begin{multicols}{2}
+
+\section{Abstract}
+
+For Fun Fridays at the office, it is customary for office-goers\footnote{The cool ones} to bring along with them their mechanical keyboards. This is because the office tends to be rather devoid of people on Fridays, as most coworkers are working from home, and so the sounds of the mechanical keyboards will bother fewer people, if any at all.\footnote{It could be argued that the ``bothering'' factor is yet another reason for bringing the mechanical keyboards, as it contributes to the weekly Friday emigrations, allowing the interns to get progressively closer to their end goal of being the only people left in-person on the last day of the week, and so being able to do whatever they want.} In this paper, we attempt to answer the question which has plagued the mechanical keyboard users of the workplace for ages, more as a ``joke'' question than a true conundrum: 
+
+\begin{quote}
+    Is it possible to shatter the office windows using mechanical keyboard sounds?\footnote{A previous iteration of this question omitted the word ``sounds'', which would have allowed the use of physically smashing the keyboards against the window glass. While this would be effective, it would not be in the spirit of the problem.}
+\end{quote}
+
+While we do stretch the definition of using mechanical keyboard sounds to shatter the office glass, we conclude in this paper that it is indeed possible, and provide guidance on how to achieve the desired result.
+
+\section{Background}
+
+We must first define a ``mechanical keyboard'':
+
+\begin{quote}
+    Every key on a mechanical-switch keyboard contains a complete switch underneath... Mechanical keyboards typically have a longer lifespan than membrane or dome-switch keyboards.$^{[\text{\sf \emph{\href{https://en.wikipedia.org/wiki/Wikipedia:Citation_needed}{citation needed}}}]}$
+
+    \hfill - Wikipedia
+\end{quote}
+
+
+Clearly, mechanical keyboards are superior to their membrane or chiclet counterparts. We are specifically interested in the properties of mechanical keyboards insofar as their contents, the switches, are concerned. We want to ensure that we get the loudest sound output from our keyboard, and for this it is clear that we should use ``blue'' switches. According the website of Cherry MX, a well-known mechanical switch manufacturer, ``The characteristic of this tactile switch is featured by tactile and audible feedback.''
+
+Prior research has shown that it is indeed possible to break glass with sound [1]; however, it is required to use extremely high-decibel sound (in other words, really loud sounds) to do so. Of course, according to numerous eyewitness reports [2], mechanical keyboards are really loud, so this won't be an issue.
+
+
+There does not appear to be any previous work in this field, and as such the section has been omitted. 
+
+\section{\sout{Previous Work}}
+
+
+\section{Methodology}
+
+\subsection{Data collection}
+
+We first need some knowledge about the kinds of sounds mechanical keyboards produce. Unfortunately, the author of this paper did not have any keyboards with blue switches on hand, and as such was forced to resort to their red switch keyboard. The author assures the readers that there is minimal difference between the two types of switch in the most important aspect, as the author's testing revealed that the important part of making noise is hitting the keys really hard.
+
+In order to determine how loud the keyboard sounds were, the author downloaded the application ``Sound Meter Free Version - Upgrade to Remove Ads'' from the Google Play Store. The results of the analysis are seen below:
+
+% \begin{figure}
+%     \centering
+%     \begin{subfigure}{0.49\textwidth}
+%     \centering
+%     \includegraphics[width = \textwidth]{tikzexample2.png}
+%     \caption{Left figure}
+%     \label{fig:left}
+%     \end{subfigure}
+%     \begin{subfigure}{0.49\textwidth}
+%     \centering
+%     \includegraphics[width = \textwidth]{tikzexample2.png}
+%     \caption{Right figure}
+%     \label{fig:right}
+%     \end{subfigure}
+%     \caption{Combined figure}
+%     \label{fig:combined}
+% \end{figure}
+
+\begin{center}
+\includegraphics[width=0.65\linewidth]{sound_meter.jpg}\end{center}
+\begin{center}\small Sound Meter application \end{center}
+
+
+The author clicked the keys really hard and saw that the maximum volume in decibels (depicted on the image, surrounded by a red box) was 53.1. 
+
+The next experiment covered the frequency of the keyboard sounds. For this purpose, the author downloaded the application ``Free Sound Spectrum Analizer [\emph{sic}] no ads'' from the Google Play Store. \\
+
+\begin{center}
+\includegraphics[width=0.7\linewidth]{sound_spectrum.jpg} \end{center}
+\begin{center}\small Spectrum Analyzer application \end{center}
+
+To obtain the above results, the author smashed the keyboard really hard (but not so hard that it would break, because it was expensive). It was noticed that the keypresses created a spike at the $x$-position of the green text in the image, which corresponded to a frequency of around 3200hz. The author implores readers to note that the ``-87dB'' reading of the application is inaccurate, and that the reading from the ``Sound Meter Free Version - Upgrade to Remove Ads'' application should be trusted instead.
+
+\subsection{Implementation}
+
+According to [3], skyscraper windows (such as those likely found in the office, which is in a skyscraper) are generally composed ot two panes, which are each about 0.25 inches thick with about 0.5 inches of air space. For the purposes of this paper, we can consider the window thickness to be 0.25 inches (if we can break one, we can break two).
+
+While [1] mentioned that the level of sound needed to shatter glass was ``really loud'', we can further formalize this with research on the internet [4] which tells us that we need at least 100dB in order to break glass. However, this tends to refer to glass of about 1mm, as seen in [5]. Thus, we need to do some calculations to determine the correct decibel level for breaking the glass of the office windows.
+
+Further internet research [6] shows that for every 10 meters further the distance between a sound source and a listener, the volume of the sound decreases by 6dB. 
+
+
+Clearly, it will be difficult to break glass with one mechanical keyboard at out disposal - the mere 53dB that the one mechanical keyboard provides will be insufficient to crack even one pane of glass. Thus, we will need to turn to \emph{constructive interference} to amplify our overall sound output. 
+
+\begin{center}
+    \includegraphics[width=\linewidth]{constructive_interference.png} \end{center}
+\begin{center}\small Constructive interference \end{center}
+
+In order to take advantage of this interference, we need to be aware of the optimal positioning of the keyboards.
+
+\subsubsection{Optimal distance}
+
+To best crack the glass, we will want to focus on one point. 
+
+\begin{center}
+\includegraphics[width=0.8\linewidth]{interference_wave_diagram.png} \end{center}
+
+In the above diagram, we would want to ensure that the sources (the keyboards) are positioned such that the window lies at a red point, at which the sound waves will be of the greatest intensity. Since these points occur at each of the crests of the wave, we will need to be some factor of the wavelength away to obtain the greatest effect. We know from physics class that the following relationship holds: 
+$$\lambda = \frac{c}{v} = \frac{3\times 10^{8} m/s}{v}$$
+
+Plugging in our numbers, we get the following:
+$$\lambda = \frac{3\times 10^{8} m/s}{3200} = 93750m$$
+
+This is unfortunately really long - so long, in fact, that the keyboards might not even fit in the office. Therefore, it is probably best to just attempt to place the keyboards as close to the glass as possible, so as to attempt to get as close to the initial crest as possible. 
+
+\subsubsection{Optimal layout}
+
+As discussed, we would like to place the keyboards as close to the glass as possible. However, we should attempt to place them in such a way that we minimize destructive interference. As such, it is recommended to place them in a semispherical shape around the exact point on the glass window which we aim to crack, like so:
+
+\begin{center}
+\includegraphics[width=0.45\linewidth]{semisphere.jpeg} \end{center} \begin{center}\small Consider the blue point in the middle of the semisphere to be the point of the glass window we aim to break, and the gold shell of the semisphere to be a mesh of the keyboards. \end{center}
+
+\section{Feasibility}
+
+Unfortunately, it does not seem feasible for this method to produce the desired results. The factors preventing our success are as follows:
+
+\begin{itemize}
+    \item The wavelength of the keyboard sound isn't desirable -- the wavelength at which glass shatters is around 550hz, far from the keyboard's measured wavelength of around 3200hz. 
+    \item If we wanted to persevere despite the wavelength misalignment, we could do so by simply increasing the volume with constructive interference. However, the wavelength is so high that it is infeasible to do this and keep the keyboards within a reasonable range of the windows (let alone in the office, or within any reasonable area nearby New York City). If we did try this, the fact that decibels decrease by 6 logarithmically would make this impossible.
+    \item Lastly, the keyboards aren't really that loud. 53.1dB is nothing given that decibels are measured logarithmically -- the power ratio between 50dB and 100dB is about $10^5$.
+\end{itemize}
+
+\begin{center}
+\includegraphics[width=0.8\linewidth]{map.png} \end{center} \begin{center}\small With a wavelength of around 94km, it is rather infeasible to obtain the desired type of constructive interference. \end{center}
+
+\section{Conclusion}
+
+While these results were tragic, there are opportunities for further work in this field. It has been shown that a mechanical keyboard will indeed be able to shatter glass in the future, as the following DALL$\cdot$E-generated image demonstrates:
+
+\begin{center}
+\includegraphics[width=0.65\linewidth]{dalle_mech_kb_shattering_glass.png} \end{center} \begin{center}\small Image generated by DALL$\cdot$E. \end{center}
+
+Furthermore, there do exist some mechanical keyboards with speakers attached to them which may be able to actually break glass. The one shown in [7], for instance, has JBL speakers built in, which may reach up to 90dB according to the keyboard website. Placement of sufficient numbers of these keyboards in the pattern mentioned in section 4.2.2 may actually cause the glass to shatter (provided, of course, the noise played on the speakers is sufficient).
+
+More research needs to be done in this field, and the author is looking forward to what will be produced in this area in the future. Until that time, however, Friday officegoers may solemnly know that their blue switches, however loud they may seem, have no chance of shattering the office window glass.
+
+\end{multicols}
+
+\section{References}
+
+\begin{itemize}
+    \item[] [1]: Wikipedia: \emph{Mythbusters, 2005 Season}: Episode 31, \emph{Breaking Glass}. \\ \href{https://en.wikipedia.org/wiki/MythBusters\_(2005\_season)\#Breaking\_Glass}{https://en.wikipedia.org/wiki/MythBusters\_(2005\_season)\#Breaking\_Glass}
+    \item[] [2]: Tech Doctor: \emph{1 Hour Typing - Cherry MX Blue Switch Sound ASMR Mechanical Keyboard}. \\ \href{https://www.youtube.com/watch?v=fEi8ZjfYa9E}{https://www.youtube.com/watch?v=fEi8ZjfYa9E}
+    \item[] [3]: Thermomax Group: Green Innitiative [\emph{sic}] Technology: \emph{High Rise Window Glass Construction.} \\ \href{https://www.thermomax-group.com/high-rise-window-glass-construction/}{https://www.thermomax-group.com/high-rise-window-glass-construction/}
+    \item[] [4]: SalfordAcoustic: \emph{How to breaking [\emph{sic}] glass with sound.}\\ \href{https://salfordacoustics.co.uk/how-to-breaking-glass-with-sound}{https://salfordacoustics.co.uk/how-to-breaking-glass-with-sound}\
+    \item[] [5]: Le Blog iDealwine: \emph{Tasting: choosing the right wine glass.} \\ \href{https://www.idealwine.info/wine-glasses/}{https://www.idealwine.info/wine-glasses/}
+    \item[] [6]: Tontechnik-Rechner: \emph{sengpielaudio.} \\ \href{http://www.sengpielaudio.com/calculator-SoundAndDistance.htm}{http://www.sengpielaudio.com/calculator-SoundAndDistance.htm}
+    \item[] [7]: KnewKey: \emph{Knewkey DJ88 Rocksete-World's First Mechanical Keyboard With JBL HIFI Speakers} \\ \href{https://knewkey.com/products/rocksete-retro-bluetooth-mechanical-keyboard-with-built-in-jbl-speakers}{https://knewkey.com/products/rocksete-retro-bluetooth-mechanical-keyboard-with-built-in-jbl-speakers}
+\end{itemize}
+
+\vfill
+
+\setlength{\parindent}{0pt}
+
+\small \emph{The author of this paper takes no responsibility for the damage or destruction of corporate property; specifically, the author disavows the use of any devices, sound-producing or otherwise, in the shattering of skyscraper windows in corporate offices. Please note that this paper was intended to be satirical, and that the following additional disclaimer applies:} \\
+
+\emph{All the information in this paper is published in good faith and for general information purpose only. The contents if this paper are purely informational and intended to be humorous and satirical. Readers are advised not to confuse them with real advice. The author of this paper does not make any warranties about the completeness, reliability and accuracy of this information. Any action you take upon the information you find in this paper is strictly at your own risk. The author of this paper will not be liable for any losses and/or damages in connection with the use of the information contained within it.}
+
+\end{document}
