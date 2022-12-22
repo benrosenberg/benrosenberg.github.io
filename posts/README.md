@@ -69,7 +69,7 @@
     code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
   </style>
 
-## How to generate this page (spoiler alert: just run `update.sh`)
+## How to generate this page (run `update.sh`)
 
 This information may not be completely accurate. Look at `update.sh` for more details.
 
