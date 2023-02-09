@@ -1,3 +1,0 @@
-# recipes
-
-list of recipes
