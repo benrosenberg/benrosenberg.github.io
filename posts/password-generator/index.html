@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>ben rosenberg</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .center {
+      margin: 0;
+      top: 50%;
+      left: 50%;
+      right: 50%;
+      bottom: 50%;
+    }
+    .button {
+      background-color: #282828;
+      border: 1px solid #ebdbb2;
+      color: #ebdbb2;
+    }
+  </style>
+  <link rel="stylesheet" href="https://benrosenberg.info/style.css" />
+</head>
+<body>
+  <ul class="sidenav">
+    <li><a href="https://benrosenberg.info">Home</a></li>
+    <li><a class="active" href="https://benrosenberg.info/posts/index.html">Posts</a></li>
+    <li><a href="https://github.com/benrosenberg">GitHub</a></li>
+    <li><a href="https://benrosenberg.info/introcs-course/index.html">CS XXXX</a></li>
+    <li><a href="https://bots.benrosenberg.info">Bots</a></li>
+  </ul>
+
+  <div class="content">
+<header id="title-block-header">
+
+
+<h1 class="title", style="text-align: left;">password generator</h1>
+</header>
+
+<p>
+  <button onclick="generateAndUpdate()" class="button" style="font-size: 18pt;">generate new password</button>
+</p>
+
+<p>
+  <input type="range" id="passwordLength" min="8" max="50" step="2">
+  <label for="passwordLength" id="lengthLabel">length</label><br>
+</p>
+
+<p>
+  <input type="radio" id="numeric" name="passwordType">
+  <label for="numeric">numeric</label><br>
+  <input type="radio" id="alpha" name="passwordType">
+  <label for="alpha">alpha</label><br>
+  <input type="radio" id="alphanumeric" name="passwordType" checked="true">
+  <label for="alphanumeric">alphanumeric</label><br>
+  <input type="radio" id="everything" name="passwordType">
+  <label for="everything">everything</label>
+</p>
+
+<p id="passwordField">click the above button to generate a password...</p>
+
+<script src="password_generator.js"></script>
+
+</div>
+
+</body>
+</html>
