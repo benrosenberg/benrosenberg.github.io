@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>4=10 Solver</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .input_bar {
+      background-color: #282828;
+      color:#ebdbb2;
+    }
+    .button {
+      background-color: #282828;
+      border: 1px solid #ebdbb2;
+      color: #ebdbb2;
+    }
+  </style>
+  <link rel="stylesheet" href="https://benrosenberg.info/style.css" />
+  <script>
+    const valid_entry = new RegExp('[0-9]{4}')
+    function test_validity(){
+        var entry = document.getElementById('input_bar').value
+        if (valid_entry.test(entry) && (entry.length == 4)) {
+            document.getElementById("valid").textContent = "Your input is valid!"
+            document.getElementById("valid").style.color = "#8ec07c"
+            return true
+        }
+        else {
+            document.getElementById("valid").textContent = "Your input is not valid."
+            document.getElementById("valid").style.color = "#fb4934"
+            return false
+        }
+    }
+
+    function permutations(arr){
+        const permutations = [];
+        const swap = (a, b) => {
+            const tmp = arr[a];
+            arr[a] = arr[b];
+            arr[b] = tmp;
+        };
+        const c = new Array(arr.length).fill(0);
+        permutations.push(arr.slice());
+        let i = 0;
+        while (i < arr.length) {
+            if (c[i] < i) {
+                swap(i, i % 2 ? c[i] : 0);
+                permutations.push(arr.slice());
+
+                c[i] += 1;
+                i = 0;
+            }
+            else {
+                c[i] = 0;
+                i += 1;
+            }
+        }
+        return permutations;
+    }
+
+    function product(iterables, repeat){
+        var argv = Array.prototype.slice.call(arguments), argc = argv.length;
+        if (argc === 2 && !isNaN(argv[argc - 1])) {
+            var copies = [];
+            for (var i = 0; i < argv[argc - 1]; i++) {
+                copies.push(argv[0].slice()); // Clone
+            }
+            argv = copies;
+        }
+        return argv.reduce(function tl(accumulator, value) {
+            var tmp = [];
+            accumulator.forEach(function(a0) {
+                value.forEach(function(a1) {
+                    tmp.push(a0.concat(a1));
+                });
+            });
+            return tmp;
+        }, [[]]);
+    }
+    
+    function attempt(joined){
+        return Math.abs(eval(joined) - 10.0) < 0.1;
+    }
+
+    function generate_solutions(number_arr, operator_arr) {
+        var solutions = [];
+        var operator_arrangements = product(operator_arr, 3);
+        var number_arrangements = permutations(number_arr);
+        var paren_arrangements = [[0, 4], [1, 4], [2, 4], [0, 3], [0, 2], [1, 3]];
+        number_arrangements.forEach(number_arrangement => {
+            operator_arrangements.forEach(operator_arrangement => {
+                paren_arrangements.forEach(paren_arrangement => {
+                    // P N O P N (O P) (P O) N P O N P -> 12 slots
+                    let slots = new Array(12);
+                    let a, b, c, d, f, g, h, p, q;
+                    [a, b, c, d] = number_arrangement;
+                    [f, g, h] = operator_arrangement;
+                    [p, q] = paren_arrangement;
+                    // first paren
+                    if (p == 2) {
+                        slots[6] = '(';
+                    } else if (p == 0) {
+                        slots[0] = '(';
+                    } else {
+                        slots[3] = '(';
+                    }
+                    // second paren
+                    if (q == 2) {
+                        slots[5] = ')';
+                    } else if (q == 3) {
+                        slots[8] = ')';
+                    } else if (q == 4) {
+                        slots[11] = ')';
+                    }
+                    // numbers
+                    slots[1] = a;
+                    slots[4] = b;
+                    slots[7] = c;
+                    slots[10] = d;
+                    // operators
+                    slots[2] = f;
+                    slots[9] = h;
+                    if (typeof slots[5] === 'undefined'){
+                        slots[5] = g;
+                    } else {
+                        slots[6] = g;
+                    }
+                    joined = slots.join(' ');
+                    if (attempt(joined)){
+                        solutions.push(joined);
+                    }
+                });
+            });
+        });
+        return solutions;
+    }
+
+    function prettify_solution(solution){
+        var out = solution.replaceAll('*', '×').replaceAll('/', '÷', );
+        if (out[0] == '(' && out[out.length - 1] == ')') {
+            return '<b>' + out.substring(1, out.length - 1) + '</b>';
+        }
+        return out;
+    }
+
+    function print_solutions(solutions){
+        var pretty_solns = solutions.map(element => {
+            return prettify_solution(element) + '<br>';
+        });
+        pretty_solns.sort().reverse();
+        return pretty_solns.join('\n');
+    }
+
+    function get_arrs(){
+        var input = document.getElementById('input_bar');
+        var number_arr = input.value.split('').map(s => parseInt(s));
+        var operator_arr = [];
+        var operators = {'add' : '+', 'sub' : '-', 'mult' : '*', 'div' : '/'};
+        Object.keys(operators).forEach(op_name => {
+            if (document.getElementById(op_name).checked){
+                operator_arr.push(operators[op_name]);
+            }
+        });
+        return [number_arr, operator_arr];
+    }
+
+    function show_solutions(){
+        if (!test_validity()) {
+            document.getElementById("name").textContent = "Please enter a valid input."
+        } else {
+            let number_arr, operator_arr;
+            [number_arr, operator_arr] = get_arrs();
+            document.getElementById("name").innerHTML = print_solutions(generate_solutions(number_arr, operator_arr));
+        }
+    }
+  </script>
+</head>
+<body>
+  <ul class="sidenav">
+    <li><a href="https://benrosenberg.info">Home</a></li>
+    <li><a class="active" href="https://benrosenberg.info/posts/index.html">Posts</a></li>
+    <li><a href="https://github.com/benrosenberg">GitHub</a></li>
+    <li><a href="https://benrosenberg.info/introcs-course/index.html">CS XXXX</a></li>
+    <li><a href="https://bots.benrosenberg.info">Bots</a></li>
+  </ul>
+
+  <div class="content">
+
+<header id="title-block-header">
+<h1 class="title", style="text-align: left;">4=10 solver</h1>
+</header>
+
+<p>
+    In the below text box, please enter the string that corresponds 
+    to the 4=10 game you wish to solve.
+</p>
+
+<p>
+    The string should be formatted like <code>1234</code>, where 
+    <code>1234</code> are the numbers that appear in the puzzle.
+</p>
+
+<p>
+    In addition, you may need to select (or deselect) the allowed operators from the given list of checkboxes, depending on the limitations of that level.
+</p>
+
+<p>
+    Solutions without parentheses are <b>bolded</b> and are at the beginning of the list.
+</p>
+
+<input id="input_bar" onkeyup="test_validity()" type="text"
+  name="input_bar" class="input_bar" maxlength=8 placeholder="Enter query..." style="font-size: 14pt;">
+
+<div id="valid" style="color: #fb4934">
+  Your input is not valid.
+</div>
+
+<div id="allowed-inputs">
+    <ul>
+        <li style="margin-left: -30px; margin-top: 10px; list-style-type: none"><input type="checkbox" id="add" checked>
+        <label for="add"> + Addition +</label></li>
+        <li style="margin-left: -30px; margin-top: 10px; list-style-type: none"><input type="checkbox" id="sub" checked>
+        <label for="sub"> - Subtraction -</label></li>
+        <li style="margin-left: -30px; margin-top: 10px; list-style-type: none"><input type="checkbox" id="mult" checked>
+        <label for="mult"> × Multiplication ×</label></li>
+        <li style="margin-left: -30px; margin-top: 10px; list-style-type: none"><input type="checkbox" id="div" checked>
+        <label for="div"> ÷ Division ÷</label></li>
+    </ul>
+</div>
+
+<br>
+
+<button class="button" onclick="show_solutions()" style="font-size: 14pt;">
+    show solutions
+</button>
+  
+<br><br>
+
+<div id="name">
+  Click the button when ready.
+</div>
+</div>
+
+</body>
+
+<script>test_validity()</script>
+
+</html>
