@@ -213,3 +213,9 @@ pre.sourceCode.good {
   margin-left: 0px;
   padding-left: 10px;
 }
+
+/* converted ipynb styling */
+.wrapped-code {
+  border-left: 5px solid #ebdbb2;
+  padding-left: 15px;
+}
