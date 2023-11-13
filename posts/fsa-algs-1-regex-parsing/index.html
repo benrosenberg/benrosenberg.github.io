@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>FSA Algos - Regex Parsing</title>
+  <title>Converting a IPYNB file to a page on this site</title>
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -200,7 +200,7 @@
 </pre></div>
 
 </div><div class="wrapped-markdown">
-<p>Out of the symbols above, the ampersand (&amp;) may be confusing. This is our proxy for concatenation, since by default concatenation doesn't show up in regular expressions. For instance, the regex <code>ab</code> is really <span class="math display">a\cdot b</span>, but most of the time we omit the <span class="math display">\cdot</span>as it's just implied. This becomes annoying when we want to actually parse the expressions, so we add these ampersands in like this:</p>
+<p>Out of the symbols above, the ampersand (&amp;) may be confusing. This is our proxy for concatenation, since by default concatenation doesn't show up in regular expressions. For instance, the regex <code>ab</code> is really <code>a</code>•<code>b</code>, but most of the time we omit the • as it's just implied. This becomes annoying when we want to actually parse the expressions, so we add these ampersands in like this:</p>
 </div><div class="wrapped-code">
 <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">add_concat_ampersands</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
     <span class="n">string_with_concat</span> <span class="o">=</span> <span class="s1">&#39;&amp;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
