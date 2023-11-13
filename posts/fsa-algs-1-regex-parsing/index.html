@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>FSA Algos - Regex Parsing</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .center {
+      margin: 0;
+      top: 50%;
+      left: 50%;
+      right: 50%;
+      bottom: 50%;
+    }
+    .button {
+      background-color: #282828;
+      border: 1px solid #ebdbb2;
+      color: #ebdbb2;
+    }
+    /* color scheme source: https://github.com/daveyarwood/gruvbox-pygments/blob/master/gruvbox.css */
+    .highlight .hll { background-color: #ffffcc }
+    .highlight  { background: #282828; color: #ebdbb2; background-color: #282828 }
+    .highlight .c { color: #928374; font-style: italic; background-color: #282828 } /* Comment */
+    .highlight .err { color: #ebdbb2; background-color: #282828 } /* Error */
+    .highlight .esc { color: #ebdbb2; background-color: #282828 } /* Escape */
+    .highlight .g { color: #ebdbb2; background-color: #282828 } /* Generic */
+    .highlight .k { color: #fe8019; background-color: #282828 } /* Keyword */
+    .highlight .l { color: #ebdbb2; background-color: #282828 } /* Literal */
+    .highlight .n { color: #ebdbb2; background-color: #282828 } /* Name */
+    .highlight .o { color: #fe8019; background-color: #282828 } /* Operator */
+    .highlight .x { color: #ebdbb2; background-color: #282828 } /* Other */
+    .highlight .p { color: #ebdbb2; background-color: #282828 } /* Punctuation */
+    .highlight .ch { color: #928374; font-style: italic; background-color: #282828 } /* Comment.Hashbang */
+    .highlight .cm { color: #928374; font-style: italic; background-color: #282828 } /* Comment.Multiline */
+    .highlight .cp { color: #8ec07c; background-color: #282828 } /* Comment.Preproc */
+    .highlight .c1 { color: #928374; font-style: italic; background-color: #282828 } /* Comment.Single */
+    .highlight .cs { color: #928374; font-style: italic; background-color: #282828 } /* Comment.Special */
+    .highlight .gd { color: #282828; background-color: #fb4934 } /* Generic.Deleted */
+    .highlight .ge { color: #83a598; text-decoration: underline; background-color: #282828 } /* Generic.Emph */
+    .highlight .gr { color: #ebdbb2; font-weight: bold; background-color: #fb4934 } /* Generic.Error */
+    .highlight .gh { color: #b8bb26; font-weight: bold; background-color: #282828 } /* Generic.Heading */
+    .highlight .gi { color: #282828; background-color: #b8bb26 } /* Generic.Inserted */
+    .highlight .go { color: #504945; background-color: #282828 } /* Generic.Output */
+    .highlight .gp { color: #ebdbb2; background-color: #282828 } /* Generic.Prompt */
+    .highlight .gs { color: #ebdbb2; background-color: #282828 } /* Generic.Strong */
+    .highlight .gu { color: #b8bb26; font-weight: bold; background-color: #282828 } /* Generic.Subheading */
+    .highlight .gt { color: #ebdbb2; font-weight: bold; background-color: #fb4934 } /* Generic.Traceback */
+    .highlight .kc { color: #fe8019; background-color: #282828 } /* Keyword.Constant */
+    .highlight .kd { color: #fe8019; background-color: #282828 } /* Keyword.Declaration */
+    .highlight .kn { color: #fe8019; background-color: #282828 } /* Keyword.Namespace */
+    .highlight .kp { color: #fe8019; background-color: #282828 } /* Keyword.Pseudo */
+    .highlight .kr { color: #fe8019; background-color: #282828 } /* Keyword.Reserved */
+    .highlight .kt { color: #fabd2f; background-color: #282828 } /* Keyword.Type */
+    .highlight .ld { color: #ebdbb2; background-color: #282828 } /* Literal.Date */
+    .highlight .m { color: #d3869b; background-color: #282828 } /* Literal.Number */
+    .highlight .s { color: #b8bb26; background-color: #282828 } /* Literal.String */
+    .highlight .na { color: #b8bb26; font-weight: bold; background-color: #282828 } /* Name.Attribute */
+    .highlight .nb { color: #fabd2f; background-color: #282828 } /* Name.Builtin */
+    .highlight .nc { color: #ebdbb2; background-color: #282828 } /* Name.Class */
+    .highlight .no { color: #d3869b; background-color: #282828 } /* Name.Constant */
+    .highlight .nd { color: #ebdbb2; background-color: #282828 } /* Name.Decorator */
+    .highlight .ni { color: #fabd2f; background-color: #282828 } /* Name.Entity */
+    .highlight .ne { color: #fb4934; background-color: #282828 } /* Name.Exception */
+    .highlight .nf { color: #fabd2f; background-color: #282828 } /* Name.Function */
+    .highlight .nl { color: #fb4934; background-color: #282828 } /* Name.Label */
+    .highlight .nn { color: #ebdbb2; background-color: #282828 } /* Name.Namespace */
+    .highlight .nx { color: #ebdbb2; background-color: #282828 } /* Name.Other */
+    .highlight .py { color: #ebdbb2; background-color: #282828 } /* Name.Property */
+    .highlight .nt { color: #fb4934; background-color: #282828 } /* Name.Tag */
+    .highlight .nv { color: #ebdbb2; background-color: #282828 } /* Name.Variable */
+    .highlight .ow { color: #fe8019; background-color: #282828 } /* Operator.Word */
+    .highlight .w { color: #ebdbb2; background-color: #282828 } /* Text.Whitespace */
+    .highlight .mb { color: #d3869b; background-color: #282828 } /* Literal.Number.Bin */
+    .highlight .mf { color: #d3869b; background-color: #282828 } /* Literal.Number.Float */
+    .highlight .mh { color: #d3869b; background-color: #282828 } /* Literal.Number.Hex */
+    .highlight .mi { color: #d3869b; background-color: #282828 } /* Literal.Number.Integer */
+    .highlight .mo { color: #d3869b; background-color: #282828 } /* Literal.Number.Oct */
+    .highlight .sb { color: #b8bb26; background-color: #282828 } /* Literal.String.Backtick */
+    .highlight .sc { color: #b8bb26; background-color: #282828 } /* Literal.String.Char */
+    .highlight .sd { color: #b8bb26; background-color: #282828 } /* Literal.String.Doc */
+    .highlight .s2 { color: #b8bb26; background-color: #282828 } /* Literal.String.Double */
+    .highlight .se { color: #b8bb26; background-color: #282828 } /* Literal.String.Escape */
+    .highlight .sh { color: #b8bb26; background-color: #282828 } /* Literal.String.Heredoc */
+    .highlight .si { color: #b8bb26; background-color: #282828 } /* Literal.String.Interpol */
+    .highlight .sx { color: #b8bb26; background-color: #282828 } /* Literal.String.Other */
+    .highlight .sr { color: #b8bb26; background-color: #282828 } /* Literal.String.Regex */
+    .highlight .s1 { color: #b8bb26; background-color: #282828 } /* Literal.String.Single */
+    .highlight .ss { color: #83a598; background-color: #282828 } /* Literal.String.Symbol */
+    .highlight .bp { color: #fabd2f; background-color: #282828 } /* Name.Builtin.Pseudo */
+    .highlight .vc { color: #ebdbb2; background-color: #282828 } /* Name.Variable.Class */
+    .highlight .vg { color: #ebdbb2; background-color: #282828 } /* Name.Variable.Global */
+    .highlight .vi { color: #ebdbb2; background-color: #282828 } /* Name.Variable.Instance */
+    .highlight .il { color: #d3869b; background-color: #282828 } /* Literal.Number.Integer.Long */
+    img {
+        background-color: white;
+    }
+  </style>
+  <link rel="stylesheet" href="https://benrosenberg.info/style.css" />
+</head>
+<body>
+  <ul class="sidenav">
+    <li><a class="active" href="/">Home</a></li>
+    <li><a href="https://benrosenberg.info/posts">Posts</a></li>
+    <li><a href="https://github.com/benrosenberg">GitHub</a></li>
+    <li><a href="https://www.linkedin.com/in/ben-rosenberg-0b5359205/">LinkedIn</a></li>
+  </ul>
+
+  <div class="content">
+
+<div class="wrapped-ipynb"><div class="wrapped-markdown">
+<h1>FSA algorithms, Part 1: Regex parsing</h1>
+<p>I've been working on a game on and off for a while now, which involves the creation of a DFA or NFA that matches a given regular expression. I worked on something similar as a college project, but the end product was not so great as it was written in OCaml which has middling options for UI (and we spent most of the effort in the project on getting the core functionality working). </p>
+<p>In this series of posts I hope to go through the implementation of the relevant algorithms for this game in Python, which will make them a lot easier to understand (and also a lot easier to write up as I go). </p>
+<p>Here's the general plan for the series, which will follow the general algorithms needed for the base game functionality:</p>
+<ul>
+<li>Regular expression parsing. This is used for parsing the inputs to levels, so that they can be specified in a typical regex format rather than via some custom format that may be easier to parse but may be more difficult to use in the long run.</li>
+<li>Regex to NFA conversion</li>
+<li>NFA minimization. The algorithm for converting regular expressions to NFAs can be inefficient, so minimizing the resulting NFA can be a good optimization before proceeding to the DFA conversion.</li>
+<li>Efficient NFA to DFA conversion. It's common knowledge that converting an NFA to a DFA can result in exponentially many states, as the DFA has to contain the logic for the superposition of states that an NFA can handle. But there are ways to do this conversion slightly more efficiently than the naive subset method.</li>
+<li>DFA minimization. We'll need to minimize DFAs in order to ensure that they are compared accurately. Also, it will help us in scoring the user submission by determining whether fewer states could have been used.</li>
+<li>DFA comparison. Once we have the minimized DFAs, we need to compare them. But it's not a simple matter of <code>dfa1 == dfa2</code> - the names of the states may differ. We'll use some form of DFS here.</li>
+</ul>
+<p>This will be a long series, and I hope I can finish it in some reasonable timeframe. For now, here's regex parsing.</p>
+</div><div class="wrapped-markdown">
+<h2>Regex classes</h2>
+<p>First, we need to get some types going. In OCaml, this was pretty easy - the language is made for that kind of stuff. In Python, we'll have to be a bit more mundane and use classes.</p>
+</div><div class="wrapped-code">
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Regex</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Union</span><span class="p">(</span><span class="n">Regex</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">left</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">right</span>
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;Union(</span><span class="si">{}</span><span class="s1">, </span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">left</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">right</span><span class="p">))</span>
+
+
+<span class="k">class</span> <span class="nc">Concat</span><span class="p">(</span><span class="n">Regex</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">left</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">right</span>
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;Concat(</span><span class="si">{}</span><span class="s1">, </span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">left</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">right</span><span class="p">))</span>
+
+
+<span class="k">class</span> <span class="nc">Star</span><span class="p">(</span><span class="n">Regex</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exp</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">exp</span> <span class="o">=</span> <span class="n">exp</span>
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;Star(</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">exp</span><span class="p">))</span>
+
+<span class="k">class</span> <span class="nc">Letter</span><span class="p">(</span><span class="n">Regex</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">val</span> <span class="o">=</span> <span class="n">val</span>
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;Letter(</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">val</span><span class="p">)</span>
+</pre></div>
+
+</div><div class="wrapped-markdown">
+<p>These classes are basically just dummy AST nodes for the actual regular expression operations, along with some pretty printing functionality so we can check our results nicely.</p>
+</div><div class="wrapped-markdown">
+<h2>Parsing regex strings algorithmically</h2>
+<p>There are a couple options for parsing the regex strings. One might think of using some kind of parser framework, like PLY or Lark or something similar. But for simple languages like that of regular expressions, this won't be worth the hassle. </p>
+<p>As you may have noticed by the classes we have, we're not doing anything complicated here as far as regexes go - just the bare minimum (and the usual functionality subset, for courses which cover this materal): Kleene star, concatenation, and union. This subset is small enough that we can just use an algorithm and save ourselves a lot of overhead.</p>
+<p>Here's a brief summary of the algorithm we're going to use: <a href="https://en.m.wikipedia.org/wiki/Shunting_yard_algorithm">Shunting-yard algorithm (Wikipedia)</a></p>
+<p>This algorithm converts an expression in infix notation into one in postfix notation (RPN, which you may be familiar with from old calculators and programs like <code>dc</code>). This stack-based form of notation is much easier for us to parse manually than infix notation.</p>
+<p>So, our goal here is as follows:</p>
+<ul>
+<li>Convert the regular expression string passed into postfix notation</li>
+<li>Parse through the stack of this postfix notation and build up a Regex class which will serve as our AST</li>
+</ul>
+<p>In future sections, we'll parse this AST to get an NFA.</p>
+</div><div class="wrapped-markdown">
+<h3>Shunting-yard implementation</h3>
+<p>First, we need a way to get the precedence of operators. A simple function like this will work:</p>
+</div><div class="wrapped-code">
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">compare_precedence</span><span class="p">(</span><span class="n">op1</span><span class="p">,</span> <span class="n">op2</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">op1</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;(&#39;</span><span class="p">,</span> <span class="s1">&#39;)&#39;</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">if</span> <span class="n">op2</span> <span class="o">==</span> <span class="s1">&#39;*&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">if</span> <span class="n">op1</span> <span class="o">==</span> <span class="s1">&#39;*&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">if</span> <span class="n">op1</span> <span class="o">==</span> <span class="s1">&#39;+&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">if</span> <span class="n">op1</span> <span class="o">==</span> <span class="s1">&#39;&amp;&#39;</span> <span class="ow">and</span> <span class="n">op2</span> <span class="o">==</span> <span class="s1">&#39;&amp;&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">if</span> <span class="n">op1</span> <span class="o">==</span> <span class="s1">&#39;&amp;&#39;</span> <span class="ow">and</span> <span class="n">op2</span> <span class="o">==</span> <span class="s1">&#39;+&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">raise</span> <span class="ne">SyntaxError</span>
+</pre></div>
+
+</div><div class="wrapped-markdown">
+<p>Out of the symbols above, the ampersand (&amp;) may be confusing. This is our proxy for concatenation, since by default concatenation doesn't show up in regular expressions. For instance, the regex <code>ab</code> is really <span class="math display">a\cdot b</span>, but most of the time we omit the <span class="math display">\cdot</span>as it's just implied. This becomes annoying when we want to actually parse the expressions, so we add these ampersands in like this:</p>
+</div><div class="wrapped-code">
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">add_concat_ampersands</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="n">string_with_concat</span> <span class="o">=</span> <span class="s1">&#39;&amp;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
+    <span class="k">def</span> <span class="nf">remove_bad_concat</span><span class="p">(</span><span class="n">char_list</span><span class="p">):</span>
+        <span class="n">match</span> <span class="n">char_list</span><span class="p">:</span>
+            <span class="n">case</span> <span class="p">[]:</span>
+                <span class="k">return</span> <span class="p">[]</span>
+            <span class="n">case</span> <span class="p">[</span><span class="s1">&#39;*&#39;</span><span class="p">,</span> <span class="s1">&#39;&amp;&#39;</span><span class="p">,</span> <span class="o">*</span><span class="n">rest</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="p">[</span><span class="s1">&#39;*&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">remove_bad_concat</span><span class="p">(</span><span class="n">rest</span><span class="p">)</span>
+            <span class="n">case</span> <span class="p">[</span><span class="s1">&#39;(&#39;</span><span class="p">,</span> <span class="s1">&#39;&amp;&#39;</span><span class="p">,</span> <span class="o">*</span><span class="n">rest</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="p">[</span><span class="s1">&#39;(&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">remove_bad_concat</span><span class="p">(</span><span class="n">rest</span><span class="p">)</span>
+            <span class="n">case</span> <span class="p">[</span><span class="s1">&#39;&amp;&#39;</span><span class="p">,</span> <span class="s1">&#39;)&#39;</span><span class="p">,</span> <span class="o">*</span><span class="n">rest</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="p">[</span><span class="s1">&#39;)&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">remove_bad_concat</span><span class="p">(</span><span class="n">rest</span><span class="p">)</span>
+            <span class="n">case</span> <span class="p">[</span><span class="s1">&#39;+&#39;</span><span class="p">,</span> <span class="s1">&#39;&amp;&#39;</span><span class="p">,</span> <span class="o">*</span><span class="n">rest</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="p">[</span><span class="s1">&#39;+&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">remove_bad_concat</span><span class="p">(</span><span class="n">rest</span><span class="p">)</span>
+            <span class="n">case</span> <span class="p">[</span><span class="s1">&#39;&amp;&#39;</span><span class="p">,</span> <span class="s1">&#39;+&#39;</span><span class="p">,</span> <span class="s1">&#39;&amp;&#39;</span><span class="p">,</span> <span class="o">*</span><span class="n">rest</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="p">[</span><span class="s1">&#39;+&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">remove_bad_concat</span><span class="p">(</span><span class="n">rest</span><span class="p">)</span>
+            <span class="n">case</span> <span class="p">[</span><span class="s1">&#39;&amp;&#39;</span><span class="p">,</span> <span class="s1">&#39;+&#39;</span><span class="p">,</span> <span class="o">*</span><span class="n">rest</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="p">[</span><span class="s1">&#39;+&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">remove_bad_concat</span><span class="p">(</span><span class="n">rest</span><span class="p">)</span>
+            <span class="n">case</span> <span class="p">[</span><span class="n">head</span><span class="p">,</span> <span class="o">*</span><span class="n">rest</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="p">[</span><span class="n">head</span><span class="p">]</span> <span class="o">+</span> <span class="n">remove_bad_concat</span><span class="p">(</span><span class="n">rest</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">remove_bad_concat</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">string_with_concat</span><span class="p">)))</span>
+</pre></div>
+
+</div><div class="wrapped-markdown">
+<p>Basically, we just stick the ampersands everywhere, and then remove the ones that don't have any business being there (like the ones between characters and parentheses, or between other operators and their arguments).</p>
+<p>You may notice something else a bit strange here, which is that we're removing the ampersands between the stars (or asterisks, or Kleene stars - henceforth referred to as "stars") and their arguments in a way that would imply that the stars act on arguments to the <em>right</em> of them rather than the usual left. This is due to a limitation of the algorithm we're using to convert to RPN - it's much easier to work with unary operators like unary minus, which appear on the left side of their arguments. We'll get back to this later!</p>
+<p>For now, let's continue with the RPN-ifying journey. </p>
+</div><div class="wrapped-code">
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">regex_of_string_reversed_stars</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="n">string_without_bad_concat</span> <span class="o">=</span> <span class="n">add_concat_ampersands</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+
+    <span class="n">output_queue</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">op_stack</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="k">def</span> <span class="nf">stack_top</span><span class="p">(</span><span class="n">stack</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+    
+    <span class="o">...</span>
+</pre></div>
+
+</div><div class="wrapped-markdown">
+<p>After correctly adding our concat ampersands, we initialize our queue and stack, which will be used in the algorithm. We also define a quick function to pop from our stack (which may give us <code>None</code> if we have issues).</p>
+</div><div class="wrapped-code">
+<div class="highlight"><pre><span></span>    <span class="o">...</span>
+
+    <span class="k">def</span> <span class="nf">parse_token</span><span class="p">(</span><span class="n">token</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">token</span> <span class="o">==</span> <span class="s1">&#39; &#39;</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">if</span> <span class="n">token</span> <span class="o">==</span> <span class="s1">&#39;(&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">op_stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">token</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;*&#39;</span><span class="p">,</span> <span class="s1">&#39;+&#39;</span><span class="p">,</span> <span class="s1">&#39;&amp;&#39;</span><span class="p">]:</span>
+            <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">op_stack</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">compare_precedence</span><span class="p">(</span><span class="n">stack_top</span><span class="p">(</span><span class="n">op_stack</span><span class="p">),</span> <span class="n">token</span><span class="p">):</span>
+                <span class="n">output_queue</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">op_stack</span><span class="o">.</span><span class="n">pop</span><span class="p">())</span>
+            <span class="k">return</span> <span class="n">op_stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">token</span> <span class="o">==</span> <span class="s1">&#39;)&#39;</span><span class="p">:</span>
+            <span class="k">while</span> <span class="n">op_stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;(&#39;</span><span class="p">:</span>
+                <span class="n">output_queue</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">op_stack</span><span class="o">.</span><span class="n">pop</span><span class="p">())</span>
+            <span class="k">return</span> <span class="n">op_stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">output_queue</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+        <span class="n">parse_token</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+
+    <span class="o">...</span>
+</pre></div>
+
+</div><div class="wrapped-markdown">
+<p>Here, we define (and call) another helper function, which parses a given token (character in this case) according to some simple rules:</p>
+<ul>
+<li>We ignore any whitespace</li>
+<li>We stick any open parens on the stack</li>
+<li>If the token is an operator, we use our precedence rules and stack to pop off as many tokens as necessary into our queue</li>
+<li>If the token is a close paren, we pop from our stack onto our queue until we see an open paren</li>
+<li>If the token is something else (not an operator, paren, or whitespace) we just stick the token directly into the queue</li>
+</ul>
+<p>For a better explanation on why/how this works, see the above Wikipedia link on the algorithm.</p>
+</div><div class="wrapped-code">
+<div class="highlight"><pre><span></span>    <span class="o">...</span>
+
+    <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">op_stack</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">output_queue</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">op_stack</span><span class="o">.</span><span class="n">pop</span><span class="p">())</span>
+
+    <span class="n">output_stack</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="o">...</span>
+</pre></div>
+
+</div><div class="wrapped-markdown">
+<p>To prepare for the second part of the process - converting the RPN into an AST - we put the remaining items on the stack into the queue, and initialize an output stack. (We could have used the same stack as before but <code>out_stack</code> is a bit more accurate of a name.)</p>
+</div><div class="wrapped-code">
+<div class="highlight"><pre><span></span>    <span class="o">...</span>
+
+    <span class="k">def</span> <span class="nf">inv_rpn</span><span class="p">(</span><span class="n">token</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">token</span> <span class="o">==</span> <span class="s1">&#39;&amp;&#39;</span><span class="p">:</span>
+            <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">output_stack</span><span class="o">.</span><span class="n">pop</span><span class="p">(),</span> <span class="n">output_stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">output_stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Concat</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">token</span> <span class="o">==</span> <span class="s1">&#39;+&#39;</span><span class="p">:</span>
+            <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">output_stack</span><span class="o">.</span><span class="n">pop</span><span class="p">(),</span> <span class="n">output_stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">output_stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Union</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">token</span> <span class="o">==</span> <span class="s1">&#39;*&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">output_stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Star</span><span class="p">(</span><span class="n">output_stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()))</span>
+        <span class="k">return</span> <span class="n">output_stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Letter</span><span class="p">(</span><span class="n">token</span><span class="p">))</span>
+
+    <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">output_queue</span><span class="p">:</span>
+        <span class="n">inv_rpn</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">output_stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+</pre></div>
+
+</div><div class="wrapped-markdown">
+<p>Finally, we define a helper function to parse the RPN into an AST using the classes we created earlier.</p>
+<ul>
+<li>If the token is a dyadic operator (two args), we pop two items from the stack and create the relevant object using those items as arguments. (These operators are Concat and Union.)</li>
+<li>If the token is a monadic operator (single arg), we pop one item from the stack and create the relevant object using that item as an argument. (Here, the only monadic operator is Star.)</li>
+<li>If the token is not an operator, we just append it to the output stack as a Letter (which is basically just putting it there as the character itself).</li>
+</ul>
+<p>After we define the helper function, we iterate through the RPN'd tokens in the output queue we got from the first part and process each token. When we're done, the only remaining item on the stack should be the final result of the parsing process.</p>
+<p>Now we just have one task left, which is to reverse the star locations so that we can input the regex with the stars taking arguments on the left instead of on the right as our function requires.</p>
+</div><div class="wrapped-markdown">
+<h3>Reversing the star associativity</h3>
+<p>It turns out that there's not really a super nice way to do this either. We've gotta use another stack and queue, because we're dealing with parentheses.</p>
+<p>For instance, if we supply <code>c(a(b*a)*)**</code> as our regex string, we want to end up with <code>c*(a*(*ba))</code> - which might be difficult if we don't account for nested parens correctly.</p>
+<p>Here's the function, in all its gross glory:</p>
+</div><div class="wrapped-code">
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">reverse_star_locations</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="n">stack</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">queue</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;(&#39;</span><span class="p">:</span>
+            <span class="n">to_stack</span> <span class="o">=</span> <span class="s1">&#39;(&#39;</span>
+        <span class="k">elif</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;)&#39;</span><span class="p">:</span>
+            <span class="k">while</span> <span class="n">stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;(&#39;</span><span class="p">:</span>
+                <span class="n">popped</span> <span class="o">=</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+                <span class="n">queue</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">popped</span><span class="p">)</span>
+            <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+            <span class="n">to_stack</span> <span class="o">=</span> <span class="s1">&#39;(&#39;</span> <span class="o">+</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">q</span><span class="p">)</span> <span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="n">queue</span><span class="p">])</span> <span class="o">+</span> <span class="s1">&#39;)&#39;</span>
+            <span class="n">queue</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">elif</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;*&#39;</span><span class="p">:</span>
+            <span class="n">popped</span> <span class="o">=</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+            <span class="n">to_stack</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span> <span class="o">+</span> <span class="n">popped</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">to_stack</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">to_stack</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">stack</span><span class="p">)</span>
+</pre></div>
+
+</div><div class="wrapped-markdown">
+<p>What's going on here? We initialize our stack and queue, and go to process the items similarly. We're not using a helper function this time, and we're using a temp variable (<code>to_stack</code>) to store our action until the end of the loop, so it looks a bit messier.</p>
+<ul>
+<li>If the token we see is an open paren, we stick it on the stack</li>
+<li>If the token is a close paren, then we pop until we hit an open paren, sticking each of the tokens in the way into the queue. Then, we combine the entire queue into one string with, shove it into the stack, and empty the queue again</li>
+<li>If the token is a star, we pop from the stack, put the star in front of what we popped, and shove it back into the stack</li>
+<li>Otherwise, we just plop the token on the stack and continue</li>
+</ul>
+<p>When we're done, we've got a stack with some strings on it. We join them together and return the final result.</p>
+</div><div class="wrapped-markdown">
+<p>Now that we're done with all that, we can finally create a single function to give us the AST from a nice regex string.</p>
+</div><div class="wrapped-code">
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">regex_of_string</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="n">stars_reversed</span> <span class="o">=</span> <span class="n">reverse_star_locations</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">regex_of_string_reversed_stars</span><span class="p">(</span><span class="n">stars_reversed</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">output</span>
+</pre></div>
+
+</div><div class="wrapped-markdown">
+<p>Hope you enjoyed! If you liked this check out the other stuff on my website. See you next time!</p>
+</div></div>
+
+</div>
+
+</body>
+</html>
