@@ -133,6 +133,7 @@ def wrap_math(string):
     matches = []
     last_end_index = 0
     for m in re.finditer(regex, string):
+        print(m)
         delim = m.group(1)
         value = m.group(0)
         start = m.start()
@@ -144,7 +145,7 @@ def wrap_math(string):
     subbed = ''
     for (before, delim, value) in matches:
         subbed += before
-        if delim == '$':
+        if delim == '$$':
             math_type = 'display'
         else:
             math_type = 'inline'
