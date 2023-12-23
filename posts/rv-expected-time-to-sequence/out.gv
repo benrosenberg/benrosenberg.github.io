@@ -1,0 +1,21 @@
+digraph {
+	constraint=false rankdir=LR size="8,5"
+	node [shape=circle]
+	0
+	node [shape=circle]
+	1
+	node [shape=circle]
+	2
+	node [shape=doublecircle]
+	3
+	0 -> 1 [label=H]
+	0 -> 0 [label=T]
+	1 -> 1 [label=H]
+	1 -> 2 [label=T]
+	2 -> 3 [label=H]
+	2 -> 0 [label=T]
+	3 -> 3 [label=H]
+	3 -> 3 [label=T]
+	node [label="" shape=none]
+	"" -> 0
+}
