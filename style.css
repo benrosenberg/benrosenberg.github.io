@@ -219,3 +219,9 @@ pre.sourceCode.good {
   border-left: 5px solid #ebdbb2;
   padding-left: 15px;
 }
+
+select {
+    background-color: #282828;
+    border: 1px solid #ebdbb2;
+    color: #ebdbb2;
+}
