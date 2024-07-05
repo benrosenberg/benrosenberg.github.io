@@ -227,7 +227,7 @@ select {
 }
 
 input {
-    background-color: var(--color-bg);
-    border: 1px solid var(--color-text);
-    color: var(--color-text);
+    background-color: #282828;
+    border: 1px solid #ebdbb2;
+    color: #ebdbb2;
 }
