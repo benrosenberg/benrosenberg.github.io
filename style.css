@@ -231,3 +231,9 @@ input {
     border: 1px solid #ebdbb2;
     color: #ebdbb2;
 }
+
+textarea {
+    background-color: #282828;
+    border: 1px solid #ebdbb2;
+    color: #ebdbb2;
+}
