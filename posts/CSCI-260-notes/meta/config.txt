@@ -1,3 +1,3 @@
 SITENAME=CSCI 260 Notes
-#ROOT=https://benrosenberg.info/posts/CSCI-260-notes
-ROOT=http://localhost:3000
+ROOT=https://benrosenberg.info/posts/CSCI-260-notes
+#ROOT=http://localhost:3000
