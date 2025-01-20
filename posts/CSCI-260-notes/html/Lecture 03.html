@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css"
+            integrity="sha384-zh0CIslj+VczCZtlzBcjt5ppRcsAmDnRem7ESsYwWwg3m/OaJ2l4x7YBZl9Kxxib"
+            crossorigin="anonymous"
+        />
+        <script src="http://localhost:3000/meta/math.js"></script>
+        <script
+            defer
+            src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.js"
+            integrity="sha384-Rma6DA2IPUwhNxmrB/7S3Tno0YY7sFu9WSYMCuulLhIqYSGZ2gKCJWIqhBWqMQfh"
+            crossorigin="anonymous"
+            onload="render_katex_math()"
+        ></script>
+        <link
+            rel="stylesheet"
+            disabled=""
+            title="hljs-light"
+            href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs.min.css"
+        />
+        <link
+            rel="stylesheet"
+            title="hljs-dark"
+            href="http://localhost:3000/meta/hljs-gruvbox-dark.css"
+        />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/cpp.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/python.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/mipsasm.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/latex.min.js"></script>
+        <title>Lecture 03</title>
+        <link rel="stylesheet" href="http://localhost:3000/meta/style.css" />
+        <link rel="icon" type="image/png" href="http://localhost:3000/images/favicon.png">
+    </head>
+    <body>
+        <span style="display: none" id="SITE_ROOT_TAG">http://localhost:3000</span>
+        <!-- Popout menu -->
+        <nav class="menu" id="menu">
+            <div class="menu-header">
+                <h2><a href="http://localhost:3000/html/Lecture 01.html">CSCI 260 Notes</a></h2>
+            </div>
+            <div class="menu-content">
+                <ul><li><a href="http://localhost:3000/html/Lecture 01.html">Lecture 01</a><li><a href="http://localhost:3000/html/Lecture 02.html">Lecture 02</a><li class="currentpage"><a class="currentpage" href="http://localhost:3000/html/Lecture 03.html">Lecture 03</a><li><a href="http://localhost:3000/html/Lecture 04.html">Lecture 04</a><li><a href="http://localhost:3000/html/Lecture 05.html">Lecture 05</a><li><a href="http://localhost:3000/html/Lecture 06.html">Lecture 06</a><li><a href="http://localhost:3000/html/Lecture 07.html">Lecture 07</a><li><a href="http://localhost:3000/html/Lecture 08.html">Lecture 08</a><li><a href="http://localhost:3000/html/Lecture 09.html">Lecture 09</a><li><a href="http://localhost:3000/html/Lecture 10.html">Lecture 10</a><li><a href="http://localhost:3000/html/Lecture 11.html">Lecture 11</a><li><a href="http://localhost:3000/html/Lecture 12.html">Lecture 12</a><li><a href="http://localhost:3000/html/Lecture 13.html">Lecture 13</a><li><a href="http://localhost:3000/html/Lecture 14.html">Lecture 14</a><li><a href="http://localhost:3000/html/Lecture 15.html">Lecture 15</a><li><a href="http://localhost:3000/html/Lecture 16.html">Lecture 16</a></ul>
+            </div>
+            <div class="menu-footer">
+                <!-- <p>Menu Footer</p> -->
+                <p>
+                    <span class="theme-toggle"
+                        ><button
+                            class="theme-toggle-button"
+                            onclick="toggleColorMode();"
+                        >
+                            switch theme
+                        </button></span
+                    >
+                </p>
+            </div>
+        </nav>
+
+        <!-- Main content area -->
+        <div class="main-wrapper" id="main">
+            <!-- Hamburger menu button -->
+            <button class="hamburger" id="hamburger">☰</button>
+            <div class="main"><p>Will soon send out an enrollment verification thing that Hunter requires to ensure you actually attend the course. Important to fill out otherwise you will be dropped from the course.</p>
+<p>Office hours start next week.</p>
+<h1>RAM in more depth</h1>
+<p>Registers were the smallest and fastest memory - in our case, about 4 bytes in size for the general purpose registers we use for MIPS assembly.</p>
+<p>We now discuss RAM in more depth - &quot;zoom in&quot; on the contents.</p>
+<p>For programmers, RAM is presented as a linear array of bytes.</p>
+<p>\begin{figure}[H]
+\begin{centering}
+\includegraphics[]{images/01.jpg}
+\vspace*{-10mm}
+\caption{RAM}
+\end{centering}
+\end{figure}</p>
+<p><em>side note - in reality, not actually an array of bytes - physical limitations make this impossible (64 wires going into each byte, because of memory address sizes being 64 bit nowadays, makes this impossible or at least very inconvenient), but we can percieve it as linear. As programmers we can think using this abstraction.</em></p>
+<p>There is no way to have &quot;empty&quot; slots in RAM - something will always be there, whether it is zeroes or some other random value. There is no guarantee that it will be anything specific - could be anything at all.</p>
+<p>Every byte in RAM has its own memory address.</p>
+<p>(Note - do not confuse memory addresses and the content at those addresses.)</p>
+<p>We will use memory addresses when working with assembly to refer to memory locations.</p>
+<p>In Figure 1, we have 16 cells, so we need 16 different memory addresses.</p>
+<p><equation>16 = 2^4</equation>, so we need 4 binary digits in order to represent all memory addresses.</p>
+<blockquote>
+<p>Question: How much memory can we address with 32-bit addresses?</p>
+<p>Answer: <equation>2^{32} \approx 4</equation>GB of memory.</p>
+</blockquote>
+<p><em>side note - this limit based on memory address size is only the case for byte-addressable memory. For word-addressable memory (not commonly used) there could be more than the above-described limit.</em></p>
+<blockquote>
+<p>Question: What is the minimum size of memory addresses needed for 2000 bytes of RAM?</p>
+<p>Answer: Since <equation>2^{10} = 1024</equation> and <equation>2^{11} = 2048</equation>, this requires 11-bit addresses.</p>
+</blockquote>
+<p>The formula for the above type of problem is <equation>\lceil \log(N) \rceil</equation> where <equation>N</equation> is the number of bytes of RAM desired.</p>
+<p>Usually, when dealing with memory addresses, numbers in hexadecimal (hex) are used (i.e., [1, 2, 3, 4, 5, 6, 7, 8, 9, A, B, C, D, E, F]). This is because they are convenient to use - shorter than binary representations and easy to convert to binary and back.</p>
+<p>Easy to convert hex and binary - just convert groups of 4 bits at a time.</p>
+<blockquote>
+<p>Example converting hex to bin: 3DF corresponds to 0011 1101 1111</p>
+</blockquote>
+<p>(The above example is spaced out for readability, and zero-padded on the left for consistency.)</p>
+<blockquote>
+<p>Example converting bin to hex: 1010111 corresponds to 87</p>
+</blockquote>
+<p>We also deal with (contiguous) chunks of data of size greater than 1 byte.</p>
+<p>For these larger chunks, the memory address used to refer to them is the first (smallest) address in the chunk.</p>
+<h1>Programming languages and memory</h1>
+<p>All (high-level) programming languages have convenient ways to interact with memory: <strong>variables</strong></p>
+<p>Variables do not exist at a hardware level - just a tool that high-level programming languages have to conveniently refer to memory addresses.</p>
+<blockquote>
+<p>Example: <code>char symb = 'a';</code></p>
+</blockquote>
+<p>C++ first finds a place in RAM to store this new character. It will find some 1-byte chunk of RAM to use in this case.</p>
+<p>Then, every time a user interacts with <code>symb</code>, it will use that memory address.</p>
+<p>\begin{figure}[H]
+\begin{centering}
+\includegraphics[]{images/02.jpg}
+\vspace*{-10mm}
+\caption{\texttt{char symb = 'a';}}
+\end{centering}
+\end{figure}</p>
+<blockquote>
+<p>Example: <code>int var = 5;</code></p>
+</blockquote>
+<p>\begin{figure}[H]
+\begin{centering}
+\includegraphics[]{images/03.jpg}
+\vspace*{-10mm}
+\caption{\texttt{int var = 5;}}
+\end{centering}
+\end{figure}</p>
+<blockquote>
+<p>Example: <code>var++;</code></p>
+</blockquote>
+<p>For <code>var++</code>, the CPU does the following:</p>
+<ol>
+<li>the CPU asks for 4 bytes from address C (1100 in binary)</li>
+<li>the CPU does arithmetic to add 1 to this int</li>
+<li>the CPU stores the result back into RAM</li>
+</ol>
+<p>Note how the above steps correspond to the Fetch, Execute, and Writeback steps of CPU execution. (Decode is saved for later in the course.)</p>
+<p>We cannot write/modify RAM directly: it has to be modified in the CPU, and then written/copied back to RAM.</p>
+<p>The compiler stores memory addresses in a symbol table and retrieves them when the variable is used.</p>
+<p>Post-compilation, variables are turned into memory addresses.</p>
+<p><em>side note - for each program, the OS creates virtual memory so that programs do not overlap memory addresses in RAM. Addresses that we see from our program's perspective are not actual physical addresses - instead, they are virtual RAM addresses. this is convenient for us because we don't need to think about anything besides our use of RAM (i.e., we don't need to think about other programs running at the same time.)</em></p>
+<h1>Pointers</h1>
+<blockquote>
+<p>Example: <code>int *ptr;</code></p>
+</blockquote>
+<p>A pointer variable is just a variable.</p>
+<p>The <em>size</em> of a pointer depends on the architecture - e.g. for a 32-bit architecture, the size of a pointer is 4 bytes (32 bits); for a 64-bit architecture, it would be 8 bytes.</p>
+<p>In our example, presume that the size of a pointer is one byte.</p>
+<blockquote>
+<p>Example: <code>ptr = &amp;var;</code></p>
+</blockquote>
+<p>(recall <code>var</code> is stored at address 1100, and contains the integer 5.)</p>
+<p>So, now <code>ptr</code> stores 1100.</p>
+<p>The size of a pointer is the size of a memory address.</p>
+<p>\begin{figure}[H]
+\begin{centering}
+\includegraphics[]{images/04.jpg}
+\vspace*{-10mm}
+\caption{\texttt{ptr = &amp;var;}}
+\end{centering}
+\end{figure}</p>
+<p>The <em>int</em> part of the <code>int *ptr</code> is actually unnecessary because the size of pointers is always the same - it is just there for type safety. In fact, we can even have <code>void *ptr</code> if we want - we just need to explicitly cast it to some type before dereferencing.</p>
+<p><strong>For exams, know the following C++ type sizes:</strong></p>
+<table>
+<thead>
+<tr>
+<th>type</th>
+<th>typical size</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>char</td>
+<td>1 byte</td>
+</tr>
+<tr>
+<td>short</td>
+<td>4 bytes</td>
+</tr>
+<tr>
+<td>int</td>
+<td>4 bytes</td>
+</tr>
+<tr>
+<td>long</td>
+<td>at least size of int, typically 4 bytes</td>
+</tr>
+<tr>
+<td>long long</td>
+<td>8 bytes usually outside of embedded systems</td>
+</tr>
+<tr>
+<td>float</td>
+<td>4 bytes</td>
+</tr>
+<tr>
+<td>double</td>
+<td>8 bytes</td>
+</tr>
+<tr>
+<td>bool</td>
+<td>1 byte (byte is the min size in RAM)</td>
+</tr>
+</tbody>
+</table>
+<p><em>side note - for memory efficiency (at the cost of minor speed degradation), C++ vectors of booleans will use on average 1 bit per bool.</em></p>
+<p>These types also have unsigned versions - same size as signed versions, but are only positive. Just expressed in different ways (2's complement vs. bare binary number)</p>
+</div>
+        </div>
+
+        <footer class="footer" id="mainfooter">
+            <p
+                xmlns:cc="http://creativecommons.org/ns#"
+                xmlns:dct="http://purl.org/dc/terms/"
+            >
+                <a
+                    property="dct:title"
+                    rel="cc:attributionURL"
+                    href="https://benrosenberg.info"
+                    class="link-problem"
+                    >benrosenberg.info</a
+                >
+                by <span property="cc:attributionName">Ben Rosenberg</span> is
+                licensed under
+                <a
+                    href="https://creativecommons.org/licenses/by/4.0/?ref=chooser-v1"
+                    target="_blank"
+                    rel="license noopener noreferrer"
+                    style="display: inline-block"
+                    class="link-problem"
+                    >CC BY 4.0<img
+                        class="cc-svg"
+                        style="
+                            height: 20px !important;
+                            margin-left: 3px;
+                            vertical-align: middle;
+                        "
+                        src="http://localhost:3000/images/cc_dark.svg"
+                        alt="" /><img
+                        class="by-svg"
+                        style="
+                            height: 20px !important;
+                            margin-left: 3px;
+                            vertical-align: middle;
+                        "
+                        src="http://localhost:3000/images/by_dark.svg"
+                        alt=""
+                /></a>
+            </p>
+        </footer>
+        <script src="http://localhost:3000/meta/menu.js"></script>
+        <script src="http://localhost:3000/meta/theme.js"></script>
+        <script>
+            window.onload = function () {
+                hljs.highlightAll();
+            };
+        </script>
+    </body>
+</html>

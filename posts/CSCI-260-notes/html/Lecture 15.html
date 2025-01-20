@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css"
+            integrity="sha384-zh0CIslj+VczCZtlzBcjt5ppRcsAmDnRem7ESsYwWwg3m/OaJ2l4x7YBZl9Kxxib"
+            crossorigin="anonymous"
+        />
+        <script src="http://localhost:3000/meta/math.js"></script>
+        <script
+            defer
+            src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.js"
+            integrity="sha384-Rma6DA2IPUwhNxmrB/7S3Tno0YY7sFu9WSYMCuulLhIqYSGZ2gKCJWIqhBWqMQfh"
+            crossorigin="anonymous"
+            onload="render_katex_math()"
+        ></script>
+        <link
+            rel="stylesheet"
+            disabled=""
+            title="hljs-light"
+            href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs.min.css"
+        />
+        <link
+            rel="stylesheet"
+            title="hljs-dark"
+            href="http://localhost:3000/meta/hljs-gruvbox-dark.css"
+        />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/cpp.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/python.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/mipsasm.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/latex.min.js"></script>
+        <title>Lecture 15</title>
+        <link rel="stylesheet" href="http://localhost:3000/meta/style.css" />
+        <link rel="icon" type="image/png" href="http://localhost:3000/images/favicon.png">
+    </head>
+    <body>
+        <span style="display: none" id="SITE_ROOT_TAG">http://localhost:3000</span>
+        <!-- Popout menu -->
+        <nav class="menu" id="menu">
+            <div class="menu-header">
+                <h2><a href="http://localhost:3000/html/Lecture 01.html">CSCI 260 Notes</a></h2>
+            </div>
+            <div class="menu-content">
+                <ul><li><a href="http://localhost:3000/html/Lecture 01.html">Lecture 01</a><li><a href="http://localhost:3000/html/Lecture 02.html">Lecture 02</a><li><a href="http://localhost:3000/html/Lecture 03.html">Lecture 03</a><li><a href="http://localhost:3000/html/Lecture 04.html">Lecture 04</a><li><a href="http://localhost:3000/html/Lecture 05.html">Lecture 05</a><li><a href="http://localhost:3000/html/Lecture 06.html">Lecture 06</a><li><a href="http://localhost:3000/html/Lecture 07.html">Lecture 07</a><li><a href="http://localhost:3000/html/Lecture 08.html">Lecture 08</a><li><a href="http://localhost:3000/html/Lecture 09.html">Lecture 09</a><li><a href="http://localhost:3000/html/Lecture 10.html">Lecture 10</a><li><a href="http://localhost:3000/html/Lecture 11.html">Lecture 11</a><li><a href="http://localhost:3000/html/Lecture 12.html">Lecture 12</a><li><a href="http://localhost:3000/html/Lecture 13.html">Lecture 13</a><li><a href="http://localhost:3000/html/Lecture 14.html">Lecture 14</a><li class="currentpage"><a class="currentpage" href="http://localhost:3000/html/Lecture 15.html">Lecture 15</a><li><a href="http://localhost:3000/html/Lecture 16.html">Lecture 16</a></ul>
+            </div>
+            <div class="menu-footer">
+                <!-- <p>Menu Footer</p> -->
+                <p>
+                    <span class="theme-toggle"
+                        ><button
+                            class="theme-toggle-button"
+                            onclick="toggleColorMode();"
+                        >
+                            switch theme
+                        </button></span
+                    >
+                </p>
+            </div>
+        </nav>
+
+        <!-- Main content area -->
+        <div class="main-wrapper" id="main">
+            <!-- Hamburger menu button -->
+            <button class="hamburger" id="hamburger">☰</button>
+            <div class="main"><h2>More bitwise operation examples</h2>
+<p>Example: clear bits #4 and #6</p>
+<pre><code class="language-mips">addi $t0, $zero, -81 # create the mask
+and $s0, $s0, $t0 # apply mask
+</code></pre>
+<p>here, we are creating the following mask:</p>
+<blockquote>
+<p><code>1111111110101111</code></p>
+</blockquote>
+<p>This is the same as <equation>-1-64-16 = -81</equation></p>
+<p>The logic is that if we <code>and</code> with a 1, it will be unchanged, but if we <code>and</code> with a 0, it will get cleared.</p>
+<p>The way to generate the mask is:</p>
+<ul>
+<li>Start with -1</li>
+<li>For each bit with number X (e.g., bit #4) you want cleared, subtract <equation>2^X</equation><ul>
+<li>for example, for bit #4 it would be <equation>-1-2^4 = -1-16 = -17</equation></li>
+</ul>
+</li>
+</ul>
+<p>Example: invert bits 4 and 6</p>
+<pre><code class="language-mips">addi $t0, $zero, 80 # create mask
+xor $s0, $s0, $t0 # apply mask
+</code></pre>
+<p>The mask created here is the inverse of the one above (we can tell because it is negated and decremented, which is how 2's complement works):</p>
+<blockquote>
+<p><code>0000000001010000</code></p>
+</blockquote>
+<p>an <code>xor</code> with 1 flips the value of a bit:</p>
+<ul>
+<li>0 xor 1 = 1</li>
+<li>1 xor 1 = 0</li>
+</ul>
+<p>and an <code>xor</code> with 0 leaves the value alone:</p>
+<ul>
+<li>0 xor 0 = 0</li>
+<li>1 xor 0 = 1</li>
+</ul>
+<p>this allows our mask to work as desired.</p>
+<h1>CPU instructions</h1>
+<p>&quot;How large are CPU instructions?&quot; -&gt; MIPS instructions are 4 bytes long, or 32 bits.</p>
+<p>different types of instructions - R-type, I-type, and J-type</p>
+<h2>Example: R-type instruction (add)</h2>
+<p>R-type instructions have the following structure:</p>
+<pre><code class="language-plaintext">XXXX XX|XX XXX|X XXXX|XXXX X|XXX XX|XX XXXX
+opcode | rs   | rt   | rd   |shift | func
+</code></pre>
+<p>above, bits are split into groups of 4, but the way the bits are used does not use this 4-bit grouping, instead using the following:</p>
+<ul>
+<li>6 bits opcode (e.g., for R-type instructions, this is 0 - distinguish using function field)</li>
+<li>5 bits rs</li>
+<li>5 bits rt</li>
+<li>5 bits rd</li>
+<li>5 bits shift amt</li>
+<li>6 bits function</li>
+</ul>
+<p>rs, rt, and rd have the following meanings:</p>
+<ul>
+<li><code>rs</code> : register source</li>
+<li><code>rt</code> : register target (this is where the result is written for I-type, or immediate, instructions, if relevant)</li>
+<li><code>rd</code> : register destination (this is where the result is written for R-type instructions)</li>
+</ul>
+<p>each register has a numeric name, from 0 to 31. the 5 bits for each register are sufficient to identify each register because <equation>2^5 = 32</equation>.</p>
+<p>Example CPU instruction translation:</p>
+<pre><code class="language-mips">add $s0, $t0, $t1
+</code></pre>
+<p>We can use a table to verify the following numeric IDs for each of the registers above:</p>
+<ul>
+<li>s0 - 16 = 10000</li>
+<li>t0 - 8 = 01000</li>
+<li>t1 - 9 = 01001</li>
+</ul>
+<p>We are also given in a table that the format for the <code>add</code> instruction is:</p>
+<blockquote>
+<p><code>add rd, rs, rt</code> &lt;- so, the <code>rd</code> register gets the destination and the rs and rt registers are the inputs</p>
+</blockquote>
+<p>Also from the table we are told that the value of the function field for <code>add</code> is <code>100000</code>, and the shift amt is <code>00000</code>.</p>
+<p>This gives us the following for <code>add $s0, $t0, $t1</code>:</p>
+<blockquote>
+<p><code>0000 00|01 000|0 1001|1000 0|000 00|10 0000</code></p>
+</blockquote>
+<p>The breaks are added to show which parts are the operator, registers, etc.</p>
+<p>Without breaks or spacing it looks like this:</p>
+<blockquote>
+<p><code>00000001000010011000000000100000</code></p>
+</blockquote>
+<p>A little difficult to debug.</p>
+<h2>Example: I-type instruction (addi)</h2>
+<p>I-type instructions have the following structure:</p>
+<pre><code class="language-plaintext">XXXX XX|XX XXX|X XXXX|XXXX XXXX XXXX XXXX
+opcode | rs   | rt   | immediate value
+</code></pre>
+<p>For <code>addi</code>, we are told that the opcode is 8, or 001000 in binary.</p>
+<p>We will translate the following instruction:</p>
+<pre><code class="language-mips">addi $s1, $t7, 6
+</code></pre>
+<p>This is as follows, using the table for register numbers and converting 6 to the binary 110 and padding with zeros:</p>
+<blockquote>
+<p><code>001000 01111 10001 0000000000000110</code></p>
+</blockquote>
+<p>again, we split the above up by opcode, registers, and immediate value for visibility.</p>
+</div>
+        </div>
+
+        <footer class="footer" id="mainfooter">
+            <p
+                xmlns:cc="http://creativecommons.org/ns#"
+                xmlns:dct="http://purl.org/dc/terms/"
+            >
+                <a
+                    property="dct:title"
+                    rel="cc:attributionURL"
+                    href="https://benrosenberg.info"
+                    class="link-problem"
+                    >benrosenberg.info</a
+                >
+                by <span property="cc:attributionName">Ben Rosenberg</span> is
+                licensed under
+                <a
+                    href="https://creativecommons.org/licenses/by/4.0/?ref=chooser-v1"
+                    target="_blank"
+                    rel="license noopener noreferrer"
+                    style="display: inline-block"
+                    class="link-problem"
+                    >CC BY 4.0<img
+                        class="cc-svg"
+                        style="
+                            height: 20px !important;
+                            margin-left: 3px;
+                            vertical-align: middle;
+                        "
+                        src="http://localhost:3000/images/cc_dark.svg"
+                        alt="" /><img
+                        class="by-svg"
+                        style="
+                            height: 20px !important;
+                            margin-left: 3px;
+                            vertical-align: middle;
+                        "
+                        src="http://localhost:3000/images/by_dark.svg"
+                        alt=""
+                /></a>
+            </p>
+        </footer>
+        <script src="http://localhost:3000/meta/menu.js"></script>
+        <script src="http://localhost:3000/meta/theme.js"></script>
+        <script>
+            window.onload = function () {
+                hljs.highlightAll();
+            };
+        </script>
+    </body>
+</html>

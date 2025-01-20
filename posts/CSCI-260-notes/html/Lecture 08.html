@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css"
+            integrity="sha384-zh0CIslj+VczCZtlzBcjt5ppRcsAmDnRem7ESsYwWwg3m/OaJ2l4x7YBZl9Kxxib"
+            crossorigin="anonymous"
+        />
+        <script src="http://localhost:3000/meta/math.js"></script>
+        <script
+            defer
+            src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.js"
+            integrity="sha384-Rma6DA2IPUwhNxmrB/7S3Tno0YY7sFu9WSYMCuulLhIqYSGZ2gKCJWIqhBWqMQfh"
+            crossorigin="anonymous"
+            onload="render_katex_math()"
+        ></script>
+        <link
+            rel="stylesheet"
+            disabled=""
+            title="hljs-light"
+            href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs.min.css"
+        />
+        <link
+            rel="stylesheet"
+            title="hljs-dark"
+            href="http://localhost:3000/meta/hljs-gruvbox-dark.css"
+        />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/cpp.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/python.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/mipsasm.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/latex.min.js"></script>
+        <title>Lecture 08</title>
+        <link rel="stylesheet" href="http://localhost:3000/meta/style.css" />
+        <link rel="icon" type="image/png" href="http://localhost:3000/images/favicon.png">
+    </head>
+    <body>
+        <span style="display: none" id="SITE_ROOT_TAG">http://localhost:3000</span>
+        <!-- Popout menu -->
+        <nav class="menu" id="menu">
+            <div class="menu-header">
+                <h2><a href="http://localhost:3000/html/Lecture 01.html">CSCI 260 Notes</a></h2>
+            </div>
+            <div class="menu-content">
+                <ul><li><a href="http://localhost:3000/html/Lecture 01.html">Lecture 01</a><li><a href="http://localhost:3000/html/Lecture 02.html">Lecture 02</a><li><a href="http://localhost:3000/html/Lecture 03.html">Lecture 03</a><li><a href="http://localhost:3000/html/Lecture 04.html">Lecture 04</a><li><a href="http://localhost:3000/html/Lecture 05.html">Lecture 05</a><li><a href="http://localhost:3000/html/Lecture 06.html">Lecture 06</a><li><a href="http://localhost:3000/html/Lecture 07.html">Lecture 07</a><li class="currentpage"><a class="currentpage" href="http://localhost:3000/html/Lecture 08.html">Lecture 08</a><li><a href="http://localhost:3000/html/Lecture 09.html">Lecture 09</a><li><a href="http://localhost:3000/html/Lecture 10.html">Lecture 10</a><li><a href="http://localhost:3000/html/Lecture 11.html">Lecture 11</a><li><a href="http://localhost:3000/html/Lecture 12.html">Lecture 12</a><li><a href="http://localhost:3000/html/Lecture 13.html">Lecture 13</a><li><a href="http://localhost:3000/html/Lecture 14.html">Lecture 14</a><li><a href="http://localhost:3000/html/Lecture 15.html">Lecture 15</a><li><a href="http://localhost:3000/html/Lecture 16.html">Lecture 16</a></ul>
+            </div>
+            <div class="menu-footer">
+                <!-- <p>Menu Footer</p> -->
+                <p>
+                    <span class="theme-toggle"
+                        ><button
+                            class="theme-toggle-button"
+                            onclick="toggleColorMode();"
+                        >
+                            switch theme
+                        </button></span
+                    >
+                </p>
+            </div>
+        </nav>
+
+        <!-- Main content area -->
+        <div class="main-wrapper" id="main">
+            <!-- Hamburger menu button -->
+            <button class="hamburger" id="hamburger">☰</button>
+            <div class="main"><p>Power wall - we don't care about formulas or anything, just care about ideas</p>
+<p><strong><em>Overclock</em> - raise frequency above recommended level, can be dangerous</strong></p>
+<p>Can lower the amount of heat generated in the CPU by reducing the amount of electricity through the CPU:</p>
+<ul>
+<li>Generating less heat means we can raise frequency</li>
+<li>We also use less power</li>
+<li>And we have longer battery life</li>
+</ul>
+<p>But we can't use too little electricity. If the voltage drops too low, we won't be able to distinguish between on and off states in transistors. Transistor leakage will mean that &quot;off&quot; transistors could be seen as &quot;on&quot;.</p>
+<p><strong><em>Transistor leakage</em> - phenomena of electricity leaking through the transistor in the &quot;off&quot; state</strong></p>
+<h1>Assembly language programming</h1>
+<p>Assembly language -</p>
+<ul>
+<li>IS a programming language</li>
+<li>is NOT machine language</li>
+<li>IS specific to CPU architecture</li>
+</ul>
+<p>Assembly language, at a high level:</p>
+<ul>
+<li>All other programming languages are meant to be convenient for programmers - they have complicated abstractions used for application development.</li>
+<li>But the idea of assembly language is to closely represent CPU instructions.</li>
+<li>We use assembly to get complete control over what the CPU is doing.</li>
+<li>Even in C or C++, there isn't a way to interact directly with the CPU - the compiler still sits in the middle.</li>
+<li>ASM instructions are basically English versions of the CPU instructions</li>
+<li>Typical use case - make function very efficient. Outperforming compilers is difficult but can maybe be done for short programs</li>
+<li>More common use case - read generated ASM to see what is going on under the hood. Compiler can provide ASM output for debugging purposes</li>
+<li>ASM is a COMPILED language. No reason to have an interpreter - meant to deal directly with the CPU</li>
+<li>ASM is specific to CPU architecture - meant to represent CPU instructions, so will differ by CPU type</li>
+</ul>
+<p><strong><em>CPU architecture</em> - set of rules/specifications to create a CPU of a certain type</strong></p>
+<p><em><strong>Instruction Set Architecture (ISA)</strong></em>:</p>
+<ul>
+<li><strong>set of available CPU instructions</strong></li>
+<li><strong>Number of CPU registers</strong> (e.g. for MIPS, 32 general purpose CPU registers)</li>
+<li><strong>Word size/register size</strong> (e.g. for MIPS, 32 bits and 32 bits)</li>
+<li><strong>Addressing modes</strong></li>
+</ul>
+<p>Examples:</p>
+<ul>
+<li>MIPS</li>
+<li>RISC-V</li>
+<li>x86, x64 (x86_64)</li>
+<li>ARM-8 (likely in your smartphone)</li>
+</ul>
+<h2>MIPS architecture</h2>
+<ul>
+<li>CPU instructions - ISA</li>
+<li>CPU registers - 32 general-purpose, 4 bytes each</li>
+<li>Word size - 32 bits (4 bytes)</li>
+<li>Address size - 32 bits (4 bytes)</li>
+</ul>
+<p>MIPS emulators for use in this class -</p>
+<ul>
+<li>MARS</li>
+<li>SPIM</li>
+</ul>
+<p>Should not use online emulators.</p>
+<p><strong>Pseudo-instructions are not permitted in this class.</strong> They do not represent actual CPU instructions.</p>
+<h2>MIPS assembly</h2>
+<p>Example 1: <code>add</code></p>
+<pre><code class="language-mips">add $s0, $s1, $s7 # s0 = s1 + s7
+</code></pre>
+<ul>
+<li>Hashtag denotes a comment</li>
+<li>We are adding the value in register s1 with the value in s7, and putting the result in s0</li>
+</ul>
+<p>MIPS tips:</p>
+<ul>
+<li>In MIPS, always one instruction per line</li>
+<li>Don't forget dollar sign (<code>$</code>) with register names</li>
+<li>Don't forget about commas</li>
+<li>Follow the instruction format</li>
+<li>No pseudo-instructions</li>
+<li>Beware MARS hints - MARS will allow bad code or offer pseudo-instructions, in autocomplete popups</li>
+<li>Must separate instruction and arguments with a space</li>
+</ul>
+<p>To start we will use registers <code>$s0..$s7</code> and <code>$t0..$t7</code> (16 total registers)</p>
+<p>Example 2: <code>add</code></p>
+<pre><code class="language-mips">add $t6, $s1, $s0 # $t6 = $s1 + $s0
+</code></pre>
+<p>Example 3: <code>addi</code></p>
+<pre><code class="language-mips">addi $t6, $s1, 4 # t6 = s1 + 4
+</code></pre>
+<ul>
+<li><code>addi</code> means &quot;add immediate&quot;</li>
+<li>Need to put immediate parameter last</li>
+</ul>
+<p>Example 4: <code>addi</code></p>
+<pre><code class="language-mips">addi $t6, $zero, -125 # t6 = -125
+</code></pre>
+<ul>
+<li><code>$zero</code> is another type of register we will use</li>
+<li>It is a general purpose register with zero in it</li>
+<li>We cannot write to or change this register because zero is so commonly used</li>
+</ul>
+<p>Example 5: <code>sub</code></p>
+<pre><code class="language-mips">sub $t6, $s1, $s0 # t6 = s1 - s0
+</code></pre>
+</div>
+        </div>
+
+        <footer class="footer" id="mainfooter">
+            <p
+                xmlns:cc="http://creativecommons.org/ns#"
+                xmlns:dct="http://purl.org/dc/terms/"
+            >
+                <a
+                    property="dct:title"
+                    rel="cc:attributionURL"
+                    href="https://benrosenberg.info"
+                    class="link-problem"
+                    >benrosenberg.info</a
+                >
+                by <span property="cc:attributionName">Ben Rosenberg</span> is
+                licensed under
+                <a
+                    href="https://creativecommons.org/licenses/by/4.0/?ref=chooser-v1"
+                    target="_blank"
+                    rel="license noopener noreferrer"
+                    style="display: inline-block"
+                    class="link-problem"
+                    >CC BY 4.0<img
+                        class="cc-svg"
+                        style="
+                            height: 20px !important;
+                            margin-left: 3px;
+                            vertical-align: middle;
+                        "
+                        src="http://localhost:3000/images/cc_dark.svg"
+                        alt="" /><img
+                        class="by-svg"
+                        style="
+                            height: 20px !important;
+                            margin-left: 3px;
+                            vertical-align: middle;
+                        "
+                        src="http://localhost:3000/images/by_dark.svg"
+                        alt=""
+                /></a>
+            </p>
+        </footer>
+        <script src="http://localhost:3000/meta/menu.js"></script>
+        <script src="http://localhost:3000/meta/theme.js"></script>
+        <script>
+            window.onload = function () {
+                hljs.highlightAll();
+            };
+        </script>
+    </body>
+</html>

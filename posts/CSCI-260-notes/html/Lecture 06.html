@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css"
+            integrity="sha384-zh0CIslj+VczCZtlzBcjt5ppRcsAmDnRem7ESsYwWwg3m/OaJ2l4x7YBZl9Kxxib"
+            crossorigin="anonymous"
+        />
+        <script src="http://localhost:3000/meta/math.js"></script>
+        <script
+            defer
+            src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.js"
+            integrity="sha384-Rma6DA2IPUwhNxmrB/7S3Tno0YY7sFu9WSYMCuulLhIqYSGZ2gKCJWIqhBWqMQfh"
+            crossorigin="anonymous"
+            onload="render_katex_math()"
+        ></script>
+        <link
+            rel="stylesheet"
+            disabled=""
+            title="hljs-light"
+            href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs.min.css"
+        />
+        <link
+            rel="stylesheet"
+            title="hljs-dark"
+            href="http://localhost:3000/meta/hljs-gruvbox-dark.css"
+        />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/cpp.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/python.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/mipsasm.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/latex.min.js"></script>
+        <title>Lecture 06</title>
+        <link rel="stylesheet" href="http://localhost:3000/meta/style.css" />
+        <link rel="icon" type="image/png" href="http://localhost:3000/images/favicon.png">
+    </head>
+    <body>
+        <span style="display: none" id="SITE_ROOT_TAG">http://localhost:3000</span>
+        <!-- Popout menu -->
+        <nav class="menu" id="menu">
+            <div class="menu-header">
+                <h2><a href="http://localhost:3000/html/Lecture 01.html">CSCI 260 Notes</a></h2>
+            </div>
+            <div class="menu-content">
+                <ul><li><a href="http://localhost:3000/html/Lecture 01.html">Lecture 01</a><li><a href="http://localhost:3000/html/Lecture 02.html">Lecture 02</a><li><a href="http://localhost:3000/html/Lecture 03.html">Lecture 03</a><li><a href="http://localhost:3000/html/Lecture 04.html">Lecture 04</a><li><a href="http://localhost:3000/html/Lecture 05.html">Lecture 05</a><li class="currentpage"><a class="currentpage" href="http://localhost:3000/html/Lecture 06.html">Lecture 06</a><li><a href="http://localhost:3000/html/Lecture 07.html">Lecture 07</a><li><a href="http://localhost:3000/html/Lecture 08.html">Lecture 08</a><li><a href="http://localhost:3000/html/Lecture 09.html">Lecture 09</a><li><a href="http://localhost:3000/html/Lecture 10.html">Lecture 10</a><li><a href="http://localhost:3000/html/Lecture 11.html">Lecture 11</a><li><a href="http://localhost:3000/html/Lecture 12.html">Lecture 12</a><li><a href="http://localhost:3000/html/Lecture 13.html">Lecture 13</a><li><a href="http://localhost:3000/html/Lecture 14.html">Lecture 14</a><li><a href="http://localhost:3000/html/Lecture 15.html">Lecture 15</a><li><a href="http://localhost:3000/html/Lecture 16.html">Lecture 16</a></ul>
+            </div>
+            <div class="menu-footer">
+                <!-- <p>Menu Footer</p> -->
+                <p>
+                    <span class="theme-toggle"
+                        ><button
+                            class="theme-toggle-button"
+                            onclick="toggleColorMode();"
+                        >
+                            switch theme
+                        </button></span
+                    >
+                </p>
+            </div>
+        </nav>
+
+        <!-- Main content area -->
+        <div class="main-wrapper" id="main">
+            <!-- Hamburger menu button -->
+            <button class="hamburger" id="hamburger">☰</button>
+            <div class="main"><p>Benchmarking - run the same program on different computers to compare them.</p>
+<p><strong>A <em>benchmark</em> is a standard program used to compare the performance of computers.</strong></p>
+<p>Typically run as a suite, to test all different components of a computer.</p>
+<p>Note: performance-related problems will appear on midterm/final.</p>
+<p>We said that frequency was the number of signals sent by a CPU clock every second.</p>
+<p>Frequency is measured in Hertz (abbr. Hz) which is the inverse of a second. 5 Hz means 5 times per second or one time per 0.2 seconds.</p>
+<h2>SI prefixes</h2>
+<table>
+<thead>
+<tr>
+<th>prefix</th>
+<th>full prefix</th>
+<th>meaning</th>
+<th>value</th>
+<th>full value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>G</td>
+<td>Giga</td>
+<td>1 billion</td>
+<td>1e9</td>
+<td>1,000,000,000</td>
+</tr>
+<tr>
+<td>M</td>
+<td>Mega</td>
+<td>1 million</td>
+<td>1e6</td>
+<td>1,000,000</td>
+</tr>
+<tr>
+<td>k</td>
+<td>kilo</td>
+<td>1 thousand</td>
+<td>1e3</td>
+<td>1,000</td>
+</tr>
+<tr>
+<td>T</td>
+<td>Tera</td>
+<td>1 trillion</td>
+<td>1e12</td>
+<td>1,000,000,000,000</td>
+</tr>
+</tbody>
+</table>
+<p>For example 2,500,000,000 Hz = 2.5 GHz, and 0.5 GHz = 500 MHz = 500,000 kHz = 500,000,000 Hz</p>
+<h3>Byte prefixes</h3>
+<p>Bytes are different. Memory is usually measured in powers of 2:</p>
+<p>byte amount | more accurate amount | amount
+-|-|-
+kB|kiB|2^10
+MB|MiB|2^20
+GB|GiB|2^30
+TB|TiB|2^40</p>
+<p>In the real world, always assume that the SI prefix (k,M,etc.) corresponds to the &quot;i&quot; prefix (powers of 2) when working with bytes, even if it is not supposed to by definition.</p>
+<h2>Execution time</h2>
+<p>Execution time is how long a program runs.</p>
+<p>There is a difference between elapsed time and CPU time. The CPU may pause to work on something else. In this course when we say execution time, we mean CPU time, not elapsed time.</p>
+<p>Say there are two programs, P1 which takes 10 seconds and P2 which takes 15 seconds. We say P1 is 1.5 times faster than P2.</p>
+<p>Note that we did not say 5 seconds faster. In this class, we always compare using ratios or percentages, not flat amounts.</p>
+<p>(Dynamic) instruction count - the number of instructions run by the CPU.</p>
+<p>When we talk about instruction count, we mean dynamic instruction count. Not every instruction will be run by the CPU due to conditionals, and some may be run a lot due to loops.</p>
+<p>Dynamic instruction count is the number of instructions the CPU executes in order to finish the program.</p>
+<p><strong><em>CPI</em> - cycles per instruction.</strong></p>
+<p>Some instructions take more clock cycles or ticks to execute than others.</p>
+<p>When we say cycles, we refer to CPU clock cycles.</p>
+<p>These cycles are <em>not</em> the same as machine cycles.</p>
+<p>The Average CPI is the total number of cycles divided by the dynamic instruction count.</p>
+<p>For example, 1 million instructions, 2.1 cycles per instruction means 2.1 million cycles.</p>
+<p>Note: use <strong>units</strong> in calculations to receive credit.</p>
+<p>The unit for CPI is cycles/instruction.</p>
+<p>(Using units is helpful because they can assist in validating answers.)</p>
+<p>Note that average CPI can in reality be below 1 because modern CPUs execute some instructions in parallel.</p>
+<p>Example problem:</p>
+<blockquote>
+<p>Question: Program runs on CPU A in 10s and A is 2 GHz. Want CPU B to run it in 6s. B has 1.2 times as many clock cycles as program A. What CPU frequency should we target for B?</p>
+<p>Answer:
+Total cycles for A = 2,000,000,000 cycles/second * 10 seconds = 20e9 cycles.
+Total cycles for B = 1.2 * total cycles of A = 1.2 * 20e9 cycles = 24e9 cycles
+Clock rate of B = 24e9 cycles/6 seconds = 4e9 cycles/second = 4 GHz</p>
+</blockquote>
+</div>
+        </div>
+
+        <footer class="footer" id="mainfooter">
+            <p
+                xmlns:cc="http://creativecommons.org/ns#"
+                xmlns:dct="http://purl.org/dc/terms/"
+            >
+                <a
+                    property="dct:title"
+                    rel="cc:attributionURL"
+                    href="https://benrosenberg.info"
+                    class="link-problem"
+                    >benrosenberg.info</a
+                >
+                by <span property="cc:attributionName">Ben Rosenberg</span> is
+                licensed under
+                <a
+                    href="https://creativecommons.org/licenses/by/4.0/?ref=chooser-v1"
+                    target="_blank"
+                    rel="license noopener noreferrer"
+                    style="display: inline-block"
+                    class="link-problem"
+                    >CC BY 4.0<img
+                        class="cc-svg"
+                        style="
+                            height: 20px !important;
+                            margin-left: 3px;
+                            vertical-align: middle;
+                        "
+                        src="http://localhost:3000/images/cc_dark.svg"
+                        alt="" /><img
+                        class="by-svg"
+                        style="
+                            height: 20px !important;
+                            margin-left: 3px;
+                            vertical-align: middle;
+                        "
+                        src="http://localhost:3000/images/by_dark.svg"
+                        alt=""
+                /></a>
+            </p>
+        </footer>
+        <script src="http://localhost:3000/meta/menu.js"></script>
+        <script src="http://localhost:3000/meta/theme.js"></script>
+        <script>
+            window.onload = function () {
+                hljs.highlightAll();
+            };
+        </script>
+    </body>
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css"
+            integrity="sha384-zh0CIslj+VczCZtlzBcjt5ppRcsAmDnRem7ESsYwWwg3m/OaJ2l4x7YBZl9Kxxib"
+            crossorigin="anonymous"
+        />
+        <script src="http://localhost:3000/meta/math.js"></script>
+        <script
+            defer
+            src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.js"
+            integrity="sha384-Rma6DA2IPUwhNxmrB/7S3Tno0YY7sFu9WSYMCuulLhIqYSGZ2gKCJWIqhBWqMQfh"
+            crossorigin="anonymous"
+            onload="render_katex_math()"
+        ></script>
+        <link
+            rel="stylesheet"
+            disabled=""
+            title="hljs-light"
+            href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs.min.css"
+        />
+        <link
+            rel="stylesheet"
+            title="hljs-dark"
+            href="http://localhost:3000/meta/hljs-gruvbox-dark.css"
+        />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/cpp.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/python.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/mipsasm.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/latex.min.js"></script>
+        <title>Lecture 02</title>
+        <link rel="stylesheet" href="http://localhost:3000/meta/style.css" />
+        <link rel="icon" type="image/png" href="http://localhost:3000/images/favicon.png">
+    </head>
+    <body>
+        <span style="display: none" id="SITE_ROOT_TAG">http://localhost:3000</span>
+        <!-- Popout menu -->
+        <nav class="menu" id="menu">
+            <div class="menu-header">
+                <h2><a href="http://localhost:3000/html/Lecture 01.html">CSCI 260 Notes</a></h2>
+            </div>
+            <div class="menu-content">
+                <ul><li><a href="http://localhost:3000/html/Lecture 01.html">Lecture 01</a><li class="currentpage"><a class="currentpage" href="http://localhost:3000/html/Lecture 02.html">Lecture 02</a><li><a href="http://localhost:3000/html/Lecture 03.html">Lecture 03</a><li><a href="http://localhost:3000/html/Lecture 04.html">Lecture 04</a><li><a href="http://localhost:3000/html/Lecture 05.html">Lecture 05</a><li><a href="http://localhost:3000/html/Lecture 06.html">Lecture 06</a><li><a href="http://localhost:3000/html/Lecture 07.html">Lecture 07</a><li><a href="http://localhost:3000/html/Lecture 08.html">Lecture 08</a><li><a href="http://localhost:3000/html/Lecture 09.html">Lecture 09</a><li><a href="http://localhost:3000/html/Lecture 10.html">Lecture 10</a><li><a href="http://localhost:3000/html/Lecture 11.html">Lecture 11</a><li><a href="http://localhost:3000/html/Lecture 12.html">Lecture 12</a><li><a href="http://localhost:3000/html/Lecture 13.html">Lecture 13</a><li><a href="http://localhost:3000/html/Lecture 14.html">Lecture 14</a><li><a href="http://localhost:3000/html/Lecture 15.html">Lecture 15</a><li><a href="http://localhost:3000/html/Lecture 16.html">Lecture 16</a></ul>
+            </div>
+            <div class="menu-footer">
+                <!-- <p>Menu Footer</p> -->
+                <p>
+                    <span class="theme-toggle"
+                        ><button
+                            class="theme-toggle-button"
+                            onclick="toggleColorMode();"
+                        >
+                            switch theme
+                        </button></span
+                    >
+                </p>
+            </div>
+        </nav>
+
+        <!-- Main content area -->
+        <div class="main-wrapper" id="main">
+            <!-- Hamburger menu button -->
+            <button class="hamburger" id="hamburger">☰</button>
+            <div class="main"><p>Reading from a hard disk is <em>not</em> random access - could take longer or shorter depending on the location of the item we want to read on the disk.</p>
+<h1>Cache</h1>
+<p><strong>Note:</strong> most of this info is not going to show up on exams, just need to know the definition of cache.</p>
+<p>RAM is slow, and is the bottleneck of computer performance.</p>
+<p>To make average CPU-RAM interactions faster, cache memory was introduced.</p>
+<p>The cache is close to the CPU. <strong>The <em>cache</em> is a memory device used to make average CPU-RAM interactions (that is, reads and writes) faster.</strong></p>
+<p>Cache is relatively small and fast.</p>
+<p>When the CPU needs something from RAM, it checks cache first. If not found, it goes to RAM.</p>
+<p>When something new is delivered to the CPU from RAM, it is copied to cache first, as well as its neighbors in RAM. (Usually around 64 to 128 bytes are copied to cache at a time - depends on the CPU model.)</p>
+<p>Cache stores the most recently accessed pieces of memory, removing the least recently used items over time. (This is known as an LRU cache.)</p>
+<p>We can think of cache + RAM as being a black box, the CPU just thinks it's accessing RAM and has no knowledge of the cache's existence.</p>
+<p>Caching is used widely, not just in hardware but also in browsers and many other places where reading again is expensive.</p>
+<p>The goal for CPU manufacturers when designing cache memory devices is to maximize the <em>hit ratio</em>, or the proportion of time that the CPU finds what it is looking for in cache rather than in RAM.</p>
+<p>But the cache is a mechanical device - it's not complex, so typically it will use a simplification of the LRU cache algorithm that approximates it.</p>
+<p>We said previously that RAM is random access, meaning it takes on average the same amount of time to access any piece of memory in RAM. However, in practice, we want to stay in the same areas of RAM, so we minimize cache misses (because the cache loads contiguous chunks of memory into RAM all at once, including neighbors). For this reason, iterating over arrays is faster than iterating over linked lists in practice, despite both having O(n) iteration runtime complexity: arrays are cache-friendly, as they are literally contiguous blocks of memory themselves.</p>
+<p>Cache specifically influences <em>average</em> speed of CPU-memory interactions, rather than all interaction speeds - there are still cache misses, which will take the same time as without cache.</p>
+<p>Modern cache memory can have up to 90% hit ratio - very good, only 1/10 attempted read/write operations from CPU result in a cache miss and have to go to RAM.</p>
+<p>Cache also speeds up RAM write, but it's a more complicated process than reading - the cache may delay writing to RAM for the sake of efficiency, or use other tricks.</p>
+<p>Size hierarchy:</p>
+<ul>
+<li>CPU registers are on the order of bytes</li>
+<li>Cache memory is on the order of kilobytes</li>
+<li>RAM is on the order of megabytes to gigabytes</li>
+<li>Storage is on the order of gigabytes and higher</li>
+</ul>
+<h1>Memory volatility and storage devices</h1>
+<p>Ram is <em>volatile</em>.</p>
+<p><strong>We say a memory device is <em>volatile</em> if the device loses all data when power is lost.</strong></p>
+<p>To get around the volatile property of RAM, we have storage devices.</p>
+<p><strong>We define <em>storage devices</em> as large memory devices that use non-volatile technology.</strong></p>
+<p>Common storage devices: HDD, SSD</p>
+<ul>
+<li>HDD - large, cheap, slow. Possibly spinning disks, not random access</li>
+<li>SSD - faster than HDD, but still slow compared to RAM</li>
+<li>Other storage devices - flash drives, CDs/optical storage devices, tape (tape is still used in practice for backups)</li>
+</ul>
+<p>Regardless of storage type, all storage is still significantly slower than RAM.</p>
+<p>Because of this, file reading/writing to storage is typically done on another thread, or separately from other program execution.</p>
+<p>Throughput of storage devices may be comparable to that of RAM (e.g. 6GB/s for SATA), but the delay until data is recieved is significant regardless.</p>
+<h1>Executable files</h1>
+<p><strong>An <em>executable</em> file is a file that contains program code.</strong></p>
+<p>When you click on an icon on your computer, you tell the PC (operating system) to start an executable.</p>
+<p>Then, it <strong>copies the code from the executable file on the hard disk into RAM, and begins executing the program</strong>.</p>
+<p>Executable files do not have all data necessary for program execution - other data could be retrieved during program execution from the filesystem, network calls, etc.</p>
+<h1>ROM</h1>
+<p>The last memory device we will cover is ROM.</p>
+<p><strong>ROM stands for <em>read-only memory</em>. ROM is a separate memory chip/device that stores programs necessary for the computer to boot up/start.</strong></p>
+<p>When the PC starts, the CPU starts reading and executing from ROM.</p>
+<p>ROM is also sometimes called <em>firmware</em>.</p>
+</div>
+        </div>
+
+        <footer class="footer" id="mainfooter">
+            <p
+                xmlns:cc="http://creativecommons.org/ns#"
+                xmlns:dct="http://purl.org/dc/terms/"
+            >
+                <a
+                    property="dct:title"
+                    rel="cc:attributionURL"
+                    href="https://benrosenberg.info"
+                    class="link-problem"
+                    >benrosenberg.info</a
+                >
+                by <span property="cc:attributionName">Ben Rosenberg</span> is
+                licensed under
+                <a
+                    href="https://creativecommons.org/licenses/by/4.0/?ref=chooser-v1"
+                    target="_blank"
+                    rel="license noopener noreferrer"
+                    style="display: inline-block"
+                    class="link-problem"
+                    >CC BY 4.0<img
+                        class="cc-svg"
+                        style="
+                            height: 20px !important;
+                            margin-left: 3px;
+                            vertical-align: middle;
+                        "
+                        src="http://localhost:3000/images/cc_dark.svg"
+                        alt="" /><img
+                        class="by-svg"
+                        style="
+                            height: 20px !important;
+                            margin-left: 3px;
+                            vertical-align: middle;
+                        "
+                        src="http://localhost:3000/images/by_dark.svg"
+                        alt=""
+                /></a>
+            </p>
+        </footer>
+        <script src="http://localhost:3000/meta/menu.js"></script>
+        <script src="http://localhost:3000/meta/theme.js"></script>
+        <script>
+            window.onload = function () {
+                hljs.highlightAll();
+            };
+        </script>
+    </body>
+</html>

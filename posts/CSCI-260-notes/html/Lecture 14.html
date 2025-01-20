@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css"
+            integrity="sha384-zh0CIslj+VczCZtlzBcjt5ppRcsAmDnRem7ESsYwWwg3m/OaJ2l4x7YBZl9Kxxib"
+            crossorigin="anonymous"
+        />
+        <script src="http://localhost:3000/meta/math.js"></script>
+        <script
+            defer
+            src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.js"
+            integrity="sha384-Rma6DA2IPUwhNxmrB/7S3Tno0YY7sFu9WSYMCuulLhIqYSGZ2gKCJWIqhBWqMQfh"
+            crossorigin="anonymous"
+            onload="render_katex_math()"
+        ></script>
+        <link
+            rel="stylesheet"
+            disabled=""
+            title="hljs-light"
+            href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs.min.css"
+        />
+        <link
+            rel="stylesheet"
+            title="hljs-dark"
+            href="http://localhost:3000/meta/hljs-gruvbox-dark.css"
+        />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/cpp.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/python.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/mipsasm.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/latex.min.js"></script>
+        <title>Lecture 14</title>
+        <link rel="stylesheet" href="http://localhost:3000/meta/style.css" />
+        <link rel="icon" type="image/png" href="http://localhost:3000/images/favicon.png">
+    </head>
+    <body>
+        <span style="display: none" id="SITE_ROOT_TAG">http://localhost:3000</span>
+        <!-- Popout menu -->
+        <nav class="menu" id="menu">
+            <div class="menu-header">
+                <h2><a href="http://localhost:3000/html/Lecture 01.html">CSCI 260 Notes</a></h2>
+            </div>
+            <div class="menu-content">
+                <ul><li><a href="http://localhost:3000/html/Lecture 01.html">Lecture 01</a><li><a href="http://localhost:3000/html/Lecture 02.html">Lecture 02</a><li><a href="http://localhost:3000/html/Lecture 03.html">Lecture 03</a><li><a href="http://localhost:3000/html/Lecture 04.html">Lecture 04</a><li><a href="http://localhost:3000/html/Lecture 05.html">Lecture 05</a><li><a href="http://localhost:3000/html/Lecture 06.html">Lecture 06</a><li><a href="http://localhost:3000/html/Lecture 07.html">Lecture 07</a><li><a href="http://localhost:3000/html/Lecture 08.html">Lecture 08</a><li><a href="http://localhost:3000/html/Lecture 09.html">Lecture 09</a><li><a href="http://localhost:3000/html/Lecture 10.html">Lecture 10</a><li><a href="http://localhost:3000/html/Lecture 11.html">Lecture 11</a><li><a href="http://localhost:3000/html/Lecture 12.html">Lecture 12</a><li><a href="http://localhost:3000/html/Lecture 13.html">Lecture 13</a><li class="currentpage"><a class="currentpage" href="http://localhost:3000/html/Lecture 14.html">Lecture 14</a><li><a href="http://localhost:3000/html/Lecture 15.html">Lecture 15</a><li><a href="http://localhost:3000/html/Lecture 16.html">Lecture 16</a></ul>
+            </div>
+            <div class="menu-footer">
+                <!-- <p>Menu Footer</p> -->
+                <p>
+                    <span class="theme-toggle"
+                        ><button
+                            class="theme-toggle-button"
+                            onclick="toggleColorMode();"
+                        >
+                            switch theme
+                        </button></span
+                    >
+                </p>
+            </div>
+        </nav>
+
+        <!-- Main content area -->
+        <div class="main-wrapper" id="main">
+            <!-- Hamburger menu button -->
+            <button class="hamburger" id="hamburger">☰</button>
+            <div class="main"><h1>Operations on bits (bitwise operations)</h1>
+<p>Example:</p>
+<pre><code class="language-c++">int pixel {102345}; // stores some pixel color value
+</code></pre>
+<p>to make darker by a factor of 2, we just need to halve each byte component - would need to use bitwise operations</p>
+<p>Example: to change the way devices work, we may want to flip bits in a register</p>
+<p><code>srl</code>, <code>sll</code> - shift right logical and shift left logical</p>
+<p>Example (srl, sll):</p>
+<pre><code class="language-mips">srl $t1, $t0, 2 # shift 2 bits right
+sll $s0, $s5, 3 # shift 3 bits left
+</code></pre>
+<ul>
+<li>bits that &quot;fall off&quot; are discarded</li>
+<li>&quot;empty&quot; bits as a result are filled with zeroes</li>
+</ul>
+<p>Example (c++):</p>
+<pre><code class="language-c++">int a,b;
+b = a &lt;&lt; 2;
+b = a &gt;&gt; 1;
+</code></pre>
+<p>Example (shifting one position left):</p>
+<pre><code>0000 0011 = 3
+0000 0110 = 6
+0000 1100 = 12
+0001 1000 = 24
+</code></pre>
+<p>each shift multiplies by 2</p>
+<p>Example (shifting one position right):</p>
+<pre><code>1100 = 12
+0110 = 6
+0011 = 3
+0001 = 1
+</code></pre>
+<p>each shift does int division by 2</p>
+<p>Note: <code>srl</code> and <code>sll</code> are preferred to mult or div when using powers of 2, because they are much more simple (and efficient)</p>
+<p>Other binary operations:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>and</th>
+<th>or</th>
+<th>xor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>symbol</td>
+<td><code>&amp;</code></td>
+<td>(pipe)</td>
+<td><code>^</code></td>
+</tr>
+<tr>
+<td><code>0101 op 0110</code></td>
+<td><code>0100</code></td>
+<td><code>0111</code></td>
+<td><code>0011</code></td>
+</tr>
+</tbody>
+</table>
+<p>&quot;pipe&quot; above is <code>|</code> (markdown table formatting makes it hard to write)</p>
+<p>Example:</p>
+<pre><code class="language-mips">and $t4, $t3, $t1 # t4 = t3 &amp; t1
+andi $t4, $t3, 6 # t4 = t3 &amp; 6
+</code></pre>
+<p>also, <code>xori</code> and <code>ori</code> operators exist.</p>
+<p>Other things to do with bit operations:</p>
+<ul>
+<li>flip a specific bit</li>
+<li>set a specific bit</li>
+<li>clear a specific bit</li>
+<li>get a specific bit</li>
+</ul>
+<p>When counting bits, we go right to left, counting from 0 to 31. (again, in this course we assume 32-bit word size.)</p>
+<p>So for example, bit #2 of a number is the 4s place (in general, bit X is the <equation>2^X</equation> place)</p>
+<p>Example:</p>
+<pre><code class="language-mips"># s0 holds value. goto L1 if bit #2 is set.
+
+addi $t0, $zero, 4 # create mask
+and $t1, $s0, $t0 # apply mask to s0
+bne $t1, $zero, L1 # goto L1 if bit was set
+</code></pre>
+<p>in this case the <code>and</code> will zero out the value if bit #2 was not set and give the result of the mask if it is set, so the <code>bne</code> will only jump if the bit was set.</p>
+<p>(note: in above code, the addi and and could have been collapsed into a single <code>andi</code> instruction, but was separated for pedagogical purposes.)</p>
+<p>Example: set bits 4 and 6 in s0</p>
+<pre><code class="language-mips"># create mask - 01010000
+addi $t0, $zero, 0x50 # create mask
+or $s0, $s0, $t0 # apply mask
+</code></pre>
+<blockquote>
+<p>note - in above code, could have used <code>ori</code> operator as well.</p>
+</blockquote>
+<blockquote>
+<p>note - in the above code, we use 0x50 because this is the shorter hex version of 01010000. it is easy to convert - split into groups of 4 binary digits and convert each to hex. for example, 0101 is 5 and 0000 is 0, so we get 0x50.</p>
+</blockquote>
+</div>
+        </div>
+
+        <footer class="footer" id="mainfooter">
+            <p
+                xmlns:cc="http://creativecommons.org/ns#"
+                xmlns:dct="http://purl.org/dc/terms/"
+            >
+                <a
+                    property="dct:title"
+                    rel="cc:attributionURL"
+                    href="https://benrosenberg.info"
+                    class="link-problem"
+                    >benrosenberg.info</a
+                >
+                by <span property="cc:attributionName">Ben Rosenberg</span> is
+                licensed under
+                <a
+                    href="https://creativecommons.org/licenses/by/4.0/?ref=chooser-v1"
+                    target="_blank"
+                    rel="license noopener noreferrer"
+                    style="display: inline-block"
+                    class="link-problem"
+                    >CC BY 4.0<img
+                        class="cc-svg"
+                        style="
+                            height: 20px !important;
+                            margin-left: 3px;
+                            vertical-align: middle;
+                        "
+                        src="http://localhost:3000/images/cc_dark.svg"
+                        alt="" /><img
+                        class="by-svg"
+                        style="
+                            height: 20px !important;
+                            margin-left: 3px;
+                            vertical-align: middle;
+                        "
+                        src="http://localhost:3000/images/by_dark.svg"
+                        alt=""
+                /></a>
+            </p>
+        </footer>
+        <script src="http://localhost:3000/meta/menu.js"></script>
+        <script src="http://localhost:3000/meta/theme.js"></script>
+        <script>
+            window.onload = function () {
+                hljs.highlightAll();
+            };
+        </script>
+    </body>
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css"
+            integrity="sha384-zh0CIslj+VczCZtlzBcjt5ppRcsAmDnRem7ESsYwWwg3m/OaJ2l4x7YBZl9Kxxib"
+            crossorigin="anonymous"
+        />
+        <script src="http://localhost:3000/meta/math.js"></script>
+        <script
+            defer
+            src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.js"
+            integrity="sha384-Rma6DA2IPUwhNxmrB/7S3Tno0YY7sFu9WSYMCuulLhIqYSGZ2gKCJWIqhBWqMQfh"
+            crossorigin="anonymous"
+            onload="render_katex_math()"
+        ></script>
+        <link
+            rel="stylesheet"
+            disabled=""
+            title="hljs-light"
+            href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs.min.css"
+        />
+        <link
+            rel="stylesheet"
+            title="hljs-dark"
+            href="http://localhost:3000/meta/hljs-gruvbox-dark.css"
+        />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/cpp.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/python.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/mipsasm.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/latex.min.js"></script>
+        <title>Lecture 07</title>
+        <link rel="stylesheet" href="http://localhost:3000/meta/style.css" />
+        <link rel="icon" type="image/png" href="http://localhost:3000/images/favicon.png">
+    </head>
+    <body>
+        <span style="display: none" id="SITE_ROOT_TAG">http://localhost:3000</span>
+        <!-- Popout menu -->
+        <nav class="menu" id="menu">
+            <div class="menu-header">
+                <h2><a href="http://localhost:3000/html/Lecture 01.html">CSCI 260 Notes</a></h2>
+            </div>
+            <div class="menu-content">
+                <ul><li><a href="http://localhost:3000/html/Lecture 01.html">Lecture 01</a><li><a href="http://localhost:3000/html/Lecture 02.html">Lecture 02</a><li><a href="http://localhost:3000/html/Lecture 03.html">Lecture 03</a><li><a href="http://localhost:3000/html/Lecture 04.html">Lecture 04</a><li><a href="http://localhost:3000/html/Lecture 05.html">Lecture 05</a><li><a href="http://localhost:3000/html/Lecture 06.html">Lecture 06</a><li class="currentpage"><a class="currentpage" href="http://localhost:3000/html/Lecture 07.html">Lecture 07</a><li><a href="http://localhost:3000/html/Lecture 08.html">Lecture 08</a><li><a href="http://localhost:3000/html/Lecture 09.html">Lecture 09</a><li><a href="http://localhost:3000/html/Lecture 10.html">Lecture 10</a><li><a href="http://localhost:3000/html/Lecture 11.html">Lecture 11</a><li><a href="http://localhost:3000/html/Lecture 12.html">Lecture 12</a><li><a href="http://localhost:3000/html/Lecture 13.html">Lecture 13</a><li><a href="http://localhost:3000/html/Lecture 14.html">Lecture 14</a><li><a href="http://localhost:3000/html/Lecture 15.html">Lecture 15</a><li><a href="http://localhost:3000/html/Lecture 16.html">Lecture 16</a></ul>
+            </div>
+            <div class="menu-footer">
+                <!-- <p>Menu Footer</p> -->
+                <p>
+                    <span class="theme-toggle"
+                        ><button
+                            class="theme-toggle-button"
+                            onclick="toggleColorMode();"
+                        >
+                            switch theme
+                        </button></span
+                    >
+                </p>
+            </div>
+        </nav>
+
+        <!-- Main content area -->
+        <div class="main-wrapper" id="main">
+            <!-- Hamburger menu button -->
+            <button class="hamburger" id="hamburger">☰</button>
+            <div class="main"><p>Another example problem:</p>
+<blockquote>
+<p>Question: Computer A runs at 250 picoseconds (ps) per cycle and has CPI 2 cycles/instruction, and computer B runs at 500 ps/cycle and has CPI of 1.2 cycles/instruction. Which is faster and by how much?</p>
+<p>Answer:
+Seconds per instruction of A = 2 cycles/instruction * 250 ps/cycle = 500 ps/instruction
+Seconds per instruction of B = 1.2 cycles/instruction * 500 ps/cycle = 600 ps/instruction
+Therefore, A is 600/500 = 1.2 times faster than B</p>
+</blockquote>
+<p>Yet another example problem:</p>
+<blockquote>
+<p>Question: Compiler designer is deciding between two code sequences when compiling to a specific PC architecture. He is given this information:</p>
+</blockquote>
+<p>type of instruction|A|B|C
+-|-|-|-
+CPI|1|2|3</p>
+<p>code sequence|A|B|C|
+-|-|-|-|-
+1|2|1|2|number of inst. for code seq 1
+2|4|1|1|number of inst. for code seq 2</p>
+<blockquote>
+<p>How many total instructions for each code sequence? What is the total number of cycles for each code sequence? What is the CPI for each code sequence?</p>
+<p>Answer:
+Total instructions code seq 1 = 2 instructions + 1 instruction + 2 instructions = 5 instructions
+Total instructions code seq 2 = 4 instructions + 1 instruction + 1 instruction = 6 instructions
+Total cycles for code seq 1 = 2 instructions * 1 cycle/instruction + 1 instruction * 2 cycles/instruction + 2 instructions * 3 cycles/instruction = 2 instr. + 2 instr. + 6 instr. = 10 instructions
+Total cycles for code seq 2 = 4 instructions * 1 cycle/instr + 1 instruction * 2 cycles/instr + 1 instruction * 3 cycles/instr = 9 instructions
+CPI of code seq 1 = 10 cycles / 5 instructions = 2 cycles/instruction
+CPI of code seq 2 = 9 cycles / 6 instructions = 1.5 cycles/instruction</p>
+</blockquote>
+<p>Yet <em>another</em> example:</p>
+<blockquote>
+<p>Question: Given the same table above for cycles per each instruction type A, B, C, we are also given the following information about the composition of a program into instruction types:</p>
+</blockquote>
+<p>|A|B|C
+-|-|-|-
+proportion|50%|35%|15%</p>
+<blockquote>
+<p>What is the total CPI of this program?</p>
+<p>Answer:
+Total CPI = 0.5 * 1 cycle/instruction + 0.35 * 2 cycles/instruction + 0.15 * 3 cycles/instruction = 0.5 cycles/instruction + 0.7 cycles/instr + 0.45 cycles/instr = 1.65 cycles/instr</p>
+</blockquote>
+<h1>Power wall</h1>
+<p>This section is about the power wall.</p>
+<p><strong>The <em>power wall</em> describes the physical limitations that prevent us from making faster computers.</strong></p>
+<p>When we increase frequency, more heat is generated so the CPU overheats.</p>
+<p>This is an issue because electrical components can get overheated - the transistors in the CPU will begin to misbehave when heat is increased.</p>
+<p><strong>A <em>transistor</em> is a small element with an incoming wire, outgoing wire, and one other &quot;switch&quot; wire that determines whether current flows through the incoming and outcoing wire.</strong></p>
+<p>There is no sufficiently efficient way to cool CPUs, so we cannot increase frequency.</p>
+</div>
+        </div>
+
+        <footer class="footer" id="mainfooter">
+            <p
+                xmlns:cc="http://creativecommons.org/ns#"
+                xmlns:dct="http://purl.org/dc/terms/"
+            >
+                <a
+                    property="dct:title"
+                    rel="cc:attributionURL"
+                    href="https://benrosenberg.info"
+                    class="link-problem"
+                    >benrosenberg.info</a
+                >
+                by <span property="cc:attributionName">Ben Rosenberg</span> is
+                licensed under
+                <a
+                    href="https://creativecommons.org/licenses/by/4.0/?ref=chooser-v1"
+                    target="_blank"
+                    rel="license noopener noreferrer"
+                    style="display: inline-block"
+                    class="link-problem"
+                    >CC BY 4.0<img
+                        class="cc-svg"
+                        style="
+                            height: 20px !important;
+                            margin-left: 3px;
+                            vertical-align: middle;
+                        "
+                        src="http://localhost:3000/images/cc_dark.svg"
+                        alt="" /><img
+                        class="by-svg"
+                        style="
+                            height: 20px !important;
+                            margin-left: 3px;
+                            vertical-align: middle;
+                        "
+                        src="http://localhost:3000/images/by_dark.svg"
+                        alt=""
+                /></a>
+            </p>
+        </footer>
+        <script src="http://localhost:3000/meta/menu.js"></script>
+        <script src="http://localhost:3000/meta/theme.js"></script>
+        <script>
+            window.onload = function () {
+                hljs.highlightAll();
+            };
+        </script>
+    </body>
+</html>

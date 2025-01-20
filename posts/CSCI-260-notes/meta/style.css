@@ -1,0 +1,229 @@
+:root {    
+    --color-bg: #282828;
+    --color-bg2: #343434;
+    --color-bg3: #404040;
+    --color-text: #ebdbb2;
+    --color-tagbg: #555;
+    --color-hoverbg: #555;
+    --color-easy: #00ba38;
+    --color-medium: #d38900;
+    --color-hard: #d71600;
+    --color-darktext: #a3987c;
+    --color-buttonborderthickness: 2px;
+}
+
+body {
+    box-sizing: border-box;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    font-family:Arial, Helvetica, sans-serif;
+    color: var(--color-text);
+    background-color: var(--color-bg);
+    font-size: larger;
+}
+
+/* Left-hand menu styles */
+.menu {
+    margin: 0;
+    padding: 0;
+    background-color: var(--color-bg2);
+    color: var(--color-text);
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    height: 100%;
+    transform: translateX(0);
+    transition: transform 0.3s ease;
+}
+
+.menu.inactive {
+    transform: translateX(-100%);
+}
+
+.menu-header, .menu-footer {
+    margin: 0;
+    padding: 0;
+    background-color: var(--color-bg3);
+    text-align: center;
+}
+
+.menu-content {
+    margin: 0;
+    padding: 0;
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.menu-content ul {
+    list-style: none;
+}
+
+.menu-content ul li {
+    margin: 0.5rem 0;
+}
+
+.menu-content ul li a {
+    text-decoration: none;
+}
+
+/* Main content area styles */
+.main-wrapper {
+    margin: 0;
+    padding: 0;
+    flex-grow: 1;
+    margin-left: 250px;
+    transition: margin-left 0.3s ease;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    padding-top: 4rem;
+}
+
+.main-wrapper.menuinactive {
+    margin-left: 0px;
+}
+
+.main {
+    padding-left: 20%;
+    padding-right: 20%;
+}
+
+.footer {
+    margin: 0;
+    padding: 0;
+    background-color: var(--color-bg2);
+    text-align: center;
+    margin-left: 250px;
+    transition: margin-left 0.3s ease;
+    max-height: fit-content;
+    text-align: center;
+    color: var(--color-text);
+}
+
+.footer.menuinactive {
+    margin-left: 0px;
+}
+
+/* Hamburger menu button */
+.hamburger {
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    margin-left: 250px;
+    transition: margin-left 0.3s ease;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: var(--color-text);
+    z-index: 2000;
+}
+
+.hamburger.menuinactive {
+    margin-left: 0px;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+    background: var(--color-text);
+  }
+  
+  ::-webkit-scrollbar-corner {
+    background: var(--color-text);
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: var(--color-bg);
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-text);
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-hoverbg);
+  }
+
+.theme-toggle {
+    text-align: center;
+}
+
+.theme-toggle-button {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    border-radius: 1rem;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 7px;
+    padding-right: 7px;
+    border: var(--color-buttonborderthickness) solid var(--color-text);
+    box-sizing: border-box;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+.theme-toggle-button:hover {
+    background-color: var(--color-tagbg);
+  }
+  
+.theme-toggle-button:focus {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+}
+
+.theme-toggle-button:focus-visible {
+    box-shadow: none;
+}
+
+.link, a {
+    color: var(--color-text);
+}
+
+.link-problem {
+    color: var(--color-text);
+}
+
+a.currentpage {
+    display: inline;
+    border-left: 5px solid var(--color-text);
+    padding-left: 5px;
+    border-radius: 0%;
+    margin-left: -10px;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .menu {
+        position: fixed;
+        z-index: 1000;
+        width: 100%;
+    }
+
+    .main-wrapper {
+        margin-left: 0;
+        max-width: 100%;
+    }
+
+    .main {
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+
+    .footer {
+        margin-left: 0;
+    }
+
+    .hamburger {
+        margin-left: 0;
+    }
+
+    .theme-toggle {
+        display:inline;
+    }
+}

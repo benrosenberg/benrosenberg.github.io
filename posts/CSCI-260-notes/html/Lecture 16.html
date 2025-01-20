@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css"
+            integrity="sha384-zh0CIslj+VczCZtlzBcjt5ppRcsAmDnRem7ESsYwWwg3m/OaJ2l4x7YBZl9Kxxib"
+            crossorigin="anonymous"
+        />
+        <script src="http://localhost:3000/meta/math.js"></script>
+        <script
+            defer
+            src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.js"
+            integrity="sha384-Rma6DA2IPUwhNxmrB/7S3Tno0YY7sFu9WSYMCuulLhIqYSGZ2gKCJWIqhBWqMQfh"
+            crossorigin="anonymous"
+            onload="render_katex_math()"
+        ></script>
+        <link
+            rel="stylesheet"
+            disabled=""
+            title="hljs-light"
+            href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs.min.css"
+        />
+        <link
+            rel="stylesheet"
+            title="hljs-dark"
+            href="http://localhost:3000/meta/hljs-gruvbox-dark.css"
+        />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/cpp.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/python.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/mipsasm.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/latex.min.js"></script>
+        <title>Lecture 16</title>
+        <link rel="stylesheet" href="http://localhost:3000/meta/style.css" />
+        <link rel="icon" type="image/png" href="http://localhost:3000/images/favicon.png">
+    </head>
+    <body>
+        <span style="display: none" id="SITE_ROOT_TAG">http://localhost:3000</span>
+        <!-- Popout menu -->
+        <nav class="menu" id="menu">
+            <div class="menu-header">
+                <h2><a href="http://localhost:3000/html/Lecture 01.html">CSCI 260 Notes</a></h2>
+            </div>
+            <div class="menu-content">
+                <ul><li><a href="http://localhost:3000/html/Lecture 01.html">Lecture 01</a><li><a href="http://localhost:3000/html/Lecture 02.html">Lecture 02</a><li><a href="http://localhost:3000/html/Lecture 03.html">Lecture 03</a><li><a href="http://localhost:3000/html/Lecture 04.html">Lecture 04</a><li><a href="http://localhost:3000/html/Lecture 05.html">Lecture 05</a><li><a href="http://localhost:3000/html/Lecture 06.html">Lecture 06</a><li><a href="http://localhost:3000/html/Lecture 07.html">Lecture 07</a><li><a href="http://localhost:3000/html/Lecture 08.html">Lecture 08</a><li><a href="http://localhost:3000/html/Lecture 09.html">Lecture 09</a><li><a href="http://localhost:3000/html/Lecture 10.html">Lecture 10</a><li><a href="http://localhost:3000/html/Lecture 11.html">Lecture 11</a><li><a href="http://localhost:3000/html/Lecture 12.html">Lecture 12</a><li><a href="http://localhost:3000/html/Lecture 13.html">Lecture 13</a><li><a href="http://localhost:3000/html/Lecture 14.html">Lecture 14</a><li><a href="http://localhost:3000/html/Lecture 15.html">Lecture 15</a><li class="currentpage"><a class="currentpage" href="http://localhost:3000/html/Lecture 16.html">Lecture 16</a></ul>
+            </div>
+            <div class="menu-footer">
+                <!-- <p>Menu Footer</p> -->
+                <p>
+                    <span class="theme-toggle"
+                        ><button
+                            class="theme-toggle-button"
+                            onclick="toggleColorMode();"
+                        >
+                            switch theme
+                        </button></span
+                    >
+                </p>
+            </div>
+        </nav>
+
+        <!-- Main content area -->
+        <div class="main-wrapper" id="main">
+            <!-- Hamburger menu button -->
+            <button class="hamburger" id="hamburger">☰</button>
+            <div class="main"><p>CPU instructions (continnued)</p>
+<ul>
+<li>all instructions are 4 bytes long</li>
+<li>op code is always in leftmost 6 bits</li>
+<li>rest of instruction is interpreted based on the first (leftmost) 6 bits</li>
+</ul>
+<p>to convert instruction to binary:</p>
+<ul>
+<li>use textbook appendix to look up instruction format - will be given on exams</li>
+</ul>
+<h3>I-type instrs. cont.</h3>
+<p>For the immediate values in I-type instructions, need to use 2's complement to specify negative immediate values. This means that the range for immediate values is <equation>[-2^{15}, 2^{15}]</equation> (the same as the range of a short int).</p>
+<p>Therefore, you cannot fully load large values into the register - there are &quot;load upper immediate&quot; instructions that we use to fill the upper half of the register (this is NOT covered in this course)</p>
+<h2>J-type (jump) instructions</h2>
+<p>Example J-type instruction:</p>
+<pre><code class="language-mips">j label
+</code></pre>
+<p>J-type instruction structure:</p>
+<pre><code class="language-plaintext">XXXXXX|XXXXXXXXXXXXXXXXXXXXXXXXXX
+opcode| target address
+</code></pre>
+<p>We are told that for jump instructions, the opcode is 2.</p>
+<h2>Addressing modes</h2>
+<p>26 bits is insufficient to address the entire range of RAM (we assume RAM is addressible using 32 bits), so we need to use tricks (&quot;addressing modes&quot;)</p>
+<p>Four different addressing modes we will cover:</p>
+<ul>
+<li>Base addressing<ul>
+<li>Just use offset from a register, like when loading or storing</li>
+<li>Example: <code>lhu $s0, 4($s5)</code> -&gt; address is s5 + 4</li>
+<li>Limitation: there is a limitation on how large the immediate value can be, as discussed above for I-type instructions<ul>
+<li>Typically we don't encounter this issue, the imm. values just take advantage of already having the base address stored in a register - <equation>2^{15}</equation> is around 32 to 33 KB in either direction so we are not super likely to run into issues, and if we do, the compiler will just take care of it</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>PC-relative (program-counter-relative) addressing<ul>
+<li>Use an offset from the program counter</li>
+<li>Example: <code>beq $t0, $t1, L1</code> -&gt; address is PC + L1 <equation>\times</equation> 4</li>
+<li>Limitation: needs to be an address reasonably close to the program counter for this to work<ul>
+<li>Typically this limitation is addressed by the compiler, won't go over it in our course</li>
+</ul>
+</li>
+<li>PC-relative addressing uses the 16-bit immediate value for I-type instructions<ul>
+<li>We are able to slice off the last 2 bits (on the right side) because the instructions are always a multiple of 4 (provided the alignment for instructions is done correctly), saving us 2 bits</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Pseudodirect addressing<ul>
+<li>Like pc-relative addressing - we cut out the last 2 bits because the instructions are always a multiple of 4, and then cut off the first 4 bits so that the address fits into the 26-bit space we are given</li>
+<li>Limitation: The 4 bits at the start are just taken from the PC so we can't jump super far.<ul>
+<li>Compiler probably addresses this issue too</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Register addressing<ul>
+<li>Literally just set PC to the register contents</li>
+<li>Example: <code>jr $ra</code> -&gt; set PC to contents of <code>$ra</code></li>
+<li>Limitations: none.</li>
+<li>Typically used when returning from function call after calling <code>jal</code> on the level above</li>
+</ul>
+</li>
+</ul>
+<h3>Example with most of the addressing modes (just without register addressing, will see that later)</h3>
+<p>Convert the following mips code to binary, and put it at address <code>0x00400068</code>, using big-endian bit direction.</p>
+<pre><code class="language-mips">Label1:
+    bne $t1, $zero, Label2
+    lw $t7, -2($s0)
+    add $t7, $t7, $zero
+    j Label1
+
+Label2:
+    ...
+</code></pre>
+<ul>
+<li>We note that the jump must be to address <code>0x00400068</code> because Label1 is at the start of the code</li>
+<li>Note that the PC keeps the address of the NEXT instruction, so to compute the distance when labeling we use the next instruction as a starting point (for e.g. the BEQ instruction)</li>
+<li>For the BEQ instruction, we will jump 3 instructions ahead. When we are the BEQ instruction, our PC points to the LW instruction, so jumping ahead means adding 3 to the PC.</li>
+<li>For the LW instruction, we need to put -2 in the immediate value. This is -1 + -1, so we just need to remove 1 from the all-ones 16-digit binary number <code>1111 1111 1111 1111</code>, which gives us <code>1111 1111 1111 1110</code> for the immediate value.</li>
+</ul>
+<p>The instructions are translated as follows:</p>
+<ul>
+<li><code>bne $t1, $zero, Label2</code><ul>
+<li><code>000101 01001 00000 0000000000000011</code></li>
+<li>opcode is 5</li>
+</ul>
+</li>
+<li><code>lw $t7, -2($s0)</code><ul>
+<li><code>100011 10000 01111 1111111111111110</code></li>
+<li>opcode is 0x23 or 35. imm value is discussed above</li>
+</ul>
+</li>
+<li><code>add $t7, $t7, $zero</code><ul>
+<li><code>000000 01111 00000 01111 00000 100000</code></li>
+<li>opcode is 0, function is 0x20</li>
+</ul>
+</li>
+<li><code>j Label1</code><ul>
+<li><code>000010 00000100000000000000011010</code></li>
+<li>opcode is 2, address is just <code>0x00400068</code> but missing the first (leftmost) 4 bits and without the last (rightmost) 2 bits due to the addressing mode</li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+
+        <footer class="footer" id="mainfooter">
+            <p
+                xmlns:cc="http://creativecommons.org/ns#"
+                xmlns:dct="http://purl.org/dc/terms/"
+            >
+                <a
+                    property="dct:title"
+                    rel="cc:attributionURL"
+                    href="https://benrosenberg.info"
+                    class="link-problem"
+                    >benrosenberg.info</a
+                >
+                by <span property="cc:attributionName">Ben Rosenberg</span> is
+                licensed under
+                <a
+                    href="https://creativecommons.org/licenses/by/4.0/?ref=chooser-v1"
+                    target="_blank"
+                    rel="license noopener noreferrer"
+                    style="display: inline-block"
+                    class="link-problem"
+                    >CC BY 4.0<img
+                        class="cc-svg"
+                        style="
+                            height: 20px !important;
+                            margin-left: 3px;
+                            vertical-align: middle;
+                        "
+                        src="http://localhost:3000/images/cc_dark.svg"
+                        alt="" /><img
+                        class="by-svg"
+                        style="
+                            height: 20px !important;
+                            margin-left: 3px;
+                            vertical-align: middle;
+                        "
+                        src="http://localhost:3000/images/by_dark.svg"
+                        alt=""
+                /></a>
+            </p>
+        </footer>
+        <script src="http://localhost:3000/meta/menu.js"></script>
+        <script src="http://localhost:3000/meta/theme.js"></script>
+        <script>
+            window.onload = function () {
+                hljs.highlightAll();
+            };
+        </script>
+    </body>
+</html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css"
+            integrity="sha384-zh0CIslj+VczCZtlzBcjt5ppRcsAmDnRem7ESsYwWwg3m/OaJ2l4x7YBZl9Kxxib"
+            crossorigin="anonymous"
+        />
+        <script src="http://localhost:3000/meta/math.js"></script>
+        <script
+            defer
+            src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.js"
+            integrity="sha384-Rma6DA2IPUwhNxmrB/7S3Tno0YY7sFu9WSYMCuulLhIqYSGZ2gKCJWIqhBWqMQfh"
+            crossorigin="anonymous"
+            onload="render_katex_math()"
+        ></script>
+        <link
+            rel="stylesheet"
+            disabled=""
+            title="hljs-light"
+            href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs.min.css"
+        />
+        <link
+            rel="stylesheet"
+            title="hljs-dark"
+            href="http://localhost:3000/meta/hljs-gruvbox-dark.css"
+        />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/cpp.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/python.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/mipsasm.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/latex.min.js"></script>
+        <title>Lecture 04</title>
+        <link rel="stylesheet" href="http://localhost:3000/meta/style.css" />
+        <link rel="icon" type="image/png" href="http://localhost:3000/images/favicon.png">
+    </head>
+    <body>
+        <span style="display: none" id="SITE_ROOT_TAG">http://localhost:3000</span>
+        <!-- Popout menu -->
+        <nav class="menu" id="menu">
+            <div class="menu-header">
+                <h2><a href="http://localhost:3000/html/Lecture 01.html">CSCI 260 Notes</a></h2>
+            </div>
+            <div class="menu-content">
+                <ul><li><a href="http://localhost:3000/html/Lecture 01.html">Lecture 01</a><li><a href="http://localhost:3000/html/Lecture 02.html">Lecture 02</a><li><a href="http://localhost:3000/html/Lecture 03.html">Lecture 03</a><li class="currentpage"><a class="currentpage" href="http://localhost:3000/html/Lecture 04.html">Lecture 04</a><li><a href="http://localhost:3000/html/Lecture 05.html">Lecture 05</a><li><a href="http://localhost:3000/html/Lecture 06.html">Lecture 06</a><li><a href="http://localhost:3000/html/Lecture 07.html">Lecture 07</a><li><a href="http://localhost:3000/html/Lecture 08.html">Lecture 08</a><li><a href="http://localhost:3000/html/Lecture 09.html">Lecture 09</a><li><a href="http://localhost:3000/html/Lecture 10.html">Lecture 10</a><li><a href="http://localhost:3000/html/Lecture 11.html">Lecture 11</a><li><a href="http://localhost:3000/html/Lecture 12.html">Lecture 12</a><li><a href="http://localhost:3000/html/Lecture 13.html">Lecture 13</a><li><a href="http://localhost:3000/html/Lecture 14.html">Lecture 14</a><li><a href="http://localhost:3000/html/Lecture 15.html">Lecture 15</a><li><a href="http://localhost:3000/html/Lecture 16.html">Lecture 16</a></ul>
+            </div>
+            <div class="menu-footer">
+                <!-- <p>Menu Footer</p> -->
+                <p>
+                    <span class="theme-toggle"
+                        ><button
+                            class="theme-toggle-button"
+                            onclick="toggleColorMode();"
+                        >
+                            switch theme
+                        </button></span
+                    >
+                </p>
+            </div>
+        </nav>
+
+        <!-- Main content area -->
+        <div class="main-wrapper" id="main">
+            <!-- Hamburger menu button -->
+            <button class="hamburger" id="hamburger">☰</button>
+            <div class="main"><h1>Words</h1>
+<p><strong>A <em>(memory) word</em> is is an amount if data that the system/computer can handle in one action.</strong></p>
+<p>We can think if it as a &quot;convenient&quot; amount of data for the computer.</p>
+<p>In one transfer operation from RAM to a CPU register, we can move as much memory as is in one word.</p>
+<p>People are used to 4-byte words, so they call 8-byte words &quot;double words&quot; sometimes. Often, the terminology used is that 4 bytes is a word; however, in this class, we recognize that this is inaccurate and that word length can vary by system.</p>
+<h1>Buses</h1>
+<p><strong>A <em>bus</em> is a communication channel that can be used by <em>more than 2 devices</em>.</strong></p>
+<p>(For 2 devices, we use the term <em>point-to-point</em> channel.)</p>
+<p>Under the hood, a bus is a data channel with a bunch of wires that each transfer 1 bit (either there is voltage on the wire, or no voltage on the wire). In a 64-bit system, there would be 64 wires.</p>
+<p>There are three types of buses we discuss:</p>
+<ul>
+<li>Data bus: data (program data, and program instructions) flows over this bus.</li>
+<li>Address bus: memory addresses flow over this bus. When the CPU reads from or writes to RAM, it needs to pass the memory address to read from with it. This comes via the address bus.</li>
+<li>Control bus: when the CPU interacts with RAM, it needs to tell RAM whether it is reading or writing. This read/write indicator comes via the control bus.</li>
+</ul>
+<p>When people use the term &quot;system bus&quot;, they mean a combination of all three of these buses.</p>
+<h1>CPU clock</h1>
+<p><strong>The <em>CPU clock</em> is a device that generates synchronization pulses/signals.</strong></p>
+<p>When this signal is received, each CPU component does one unit of work.</p>
+<p>For example, registers are only updated when the CPU clock signal is received.</p>
+<p>We can think of the CPU clock as being the conductor of an orchestra, keeping tempo among CPU components.</p>
+<h2>Frequency</h2>
+<p><strong>We say <em>CPU frequency</em> is the number of signals that the CPU clock can issue in a single second.</strong></p>
+<p>In other words, CPU frequency = # CPU clock cycles / second.</p>
+<p>We measure CPU frequency in Hertz (Hz). (We'll go over this and other units of measurement once we reach the performance part of the course.)</p>
+<p><em>side note - RAM does not work on the same frequency as the CPU; it is synchronized with the CPU in another way.</em></p>
+<h1>Program counter</h1>
+<p>We said previously that the CPU is constantly spinning in a &quot;machine cycle&quot; - fetch, decode, execute, write back. We also said previously that the CPU has a special register for program instructions.</p>
+<p>The address of the next instruction is stored in the <em>program counter</em>.</p>
+<p><strong>The <em>program counter</em> is a register inside the CPU that stores the address of the <em>next</em> instruction to execute.</strong></p>
+<p>The address of the next instruction itself is also known as the program counter.</p>
+<p>Programs end with a special halt instruction that returns control to the OS.</p>
+<p>Once the CPU orders instruction reading, the CPU immediately puts the next instruction's address in the program counter.</p>
+<p>In the case of MIPS, which we will see later, the program counter is immediately incremented by 4.</p>
+<h1>Machine language and programming languages</h1>
+<h2>Machine language</h2>
+<p>We mentioned that in the &quot;fetch&quot; step of the machine cycle, the CPU gets instructions from RAM.</p>
+<p><strong>This instruction is a CPU instruction, written in what is known as <em>machine language</em>.</strong></p>
+<p>(Instructions are not written in C++, or assembly - just machine language.)</p>
+<p>Machine language is always just a bunch of zeroes and ones. (However, answering as much on an exam will result in no credit.)</p>
+<p>In MIPS, a machine language instruction will be a group of 4 bytes.</p>
+<h2>Programming languages - history and process</h2>
+<p>At first, all programs were written in machine language.</p>
+<p>Next, assembly language was created, to make writing machine code easier.</p>
+<p>Eventually, we created high-level programming languages which are compiled into machine code by <em>compilers</em>.</p>
+<p><strong>A <em>compiler</em> is a program that translates a programming language into machine code.</strong></p>
+<p>Compilers convert source code into machine language. Then, this (&quot;executable&quot;) file can be fed into the CPU.</p>
+<p>(To see an example of a computer in which programs are written in machine code, look up the Altair 8800.)</p>
+<p>The compilation process is as follows:</p>
+<ul>
+<li>Write CPP and header file</li>
+<li>Compiler translates into machine language - binary executable</li>
+<li>Program is run<ul>
+<li>Program is loaded into RAM</li>
+<li>CPU executes program from RAM</li>
+</ul>
+</li>
+</ul>
+<p>An executable file is not typically readable by a text editor - it just looks like garbage because it attempts to interpret it as ASCII.</p>
+<h3>Compilers vs. interpreters</h3>
+<p>There are two (general) models of program execution: compilation, and the use of an interpreter.</p>
+<p>An <em>interpreter</em> does not turn the source code directly into machine code. Instead, it is a program that runs on the CPU, and takes source code/a script and does what the script says to do.</p>
+</div>
+        </div>
+
+        <footer class="footer" id="mainfooter">
+            <p
+                xmlns:cc="http://creativecommons.org/ns#"
+                xmlns:dct="http://purl.org/dc/terms/"
+            >
+                <a
+                    property="dct:title"
+                    rel="cc:attributionURL"
+                    href="https://benrosenberg.info"
+                    class="link-problem"
+                    >benrosenberg.info</a
+                >
+                by <span property="cc:attributionName">Ben Rosenberg</span> is
+                licensed under
+                <a
+                    href="https://creativecommons.org/licenses/by/4.0/?ref=chooser-v1"
+                    target="_blank"
+                    rel="license noopener noreferrer"
+                    style="display: inline-block"
+                    class="link-problem"
+                    >CC BY 4.0<img
+                        class="cc-svg"
+                        style="
+                            height: 20px !important;
+                            margin-left: 3px;
+                            vertical-align: middle;
+                        "
+                        src="http://localhost:3000/images/cc_dark.svg"
+                        alt="" /><img
+                        class="by-svg"
+                        style="
+                            height: 20px !important;
+                            margin-left: 3px;
+                            vertical-align: middle;
+                        "
+                        src="http://localhost:3000/images/by_dark.svg"
+                        alt=""
+                /></a>
+            </p>
+        </footer>
+        <script src="http://localhost:3000/meta/menu.js"></script>
+        <script src="http://localhost:3000/meta/theme.js"></script>
+        <script>
+            window.onload = function () {
+                hljs.highlightAll();
+            };
+        </script>
+    </body>
+</html>

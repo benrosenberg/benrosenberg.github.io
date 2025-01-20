@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css"
+            integrity="sha384-zh0CIslj+VczCZtlzBcjt5ppRcsAmDnRem7ESsYwWwg3m/OaJ2l4x7YBZl9Kxxib"
+            crossorigin="anonymous"
+        />
+        <script src="http://localhost:3000/meta/math.js"></script>
+        <script
+            defer
+            src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.js"
+            integrity="sha384-Rma6DA2IPUwhNxmrB/7S3Tno0YY7sFu9WSYMCuulLhIqYSGZ2gKCJWIqhBWqMQfh"
+            crossorigin="anonymous"
+            onload="render_katex_math()"
+        ></script>
+        <link
+            rel="stylesheet"
+            disabled=""
+            title="hljs-light"
+            href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs.min.css"
+        />
+        <link
+            rel="stylesheet"
+            title="hljs-dark"
+            href="http://localhost:3000/meta/hljs-gruvbox-dark.css"
+        />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/cpp.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/python.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/mipsasm.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/latex.min.js"></script>
+        <title>Lecture 09</title>
+        <link rel="stylesheet" href="http://localhost:3000/meta/style.css" />
+        <link rel="icon" type="image/png" href="http://localhost:3000/images/favicon.png">
+    </head>
+    <body>
+        <span style="display: none" id="SITE_ROOT_TAG">http://localhost:3000</span>
+        <!-- Popout menu -->
+        <nav class="menu" id="menu">
+            <div class="menu-header">
+                <h2><a href="http://localhost:3000/html/Lecture 01.html">CSCI 260 Notes</a></h2>
+            </div>
+            <div class="menu-content">
+                <ul><li><a href="http://localhost:3000/html/Lecture 01.html">Lecture 01</a><li><a href="http://localhost:3000/html/Lecture 02.html">Lecture 02</a><li><a href="http://localhost:3000/html/Lecture 03.html">Lecture 03</a><li><a href="http://localhost:3000/html/Lecture 04.html">Lecture 04</a><li><a href="http://localhost:3000/html/Lecture 05.html">Lecture 05</a><li><a href="http://localhost:3000/html/Lecture 06.html">Lecture 06</a><li><a href="http://localhost:3000/html/Lecture 07.html">Lecture 07</a><li><a href="http://localhost:3000/html/Lecture 08.html">Lecture 08</a><li class="currentpage"><a class="currentpage" href="http://localhost:3000/html/Lecture 09.html">Lecture 09</a><li><a href="http://localhost:3000/html/Lecture 10.html">Lecture 10</a><li><a href="http://localhost:3000/html/Lecture 11.html">Lecture 11</a><li><a href="http://localhost:3000/html/Lecture 12.html">Lecture 12</a><li><a href="http://localhost:3000/html/Lecture 13.html">Lecture 13</a><li><a href="http://localhost:3000/html/Lecture 14.html">Lecture 14</a><li><a href="http://localhost:3000/html/Lecture 15.html">Lecture 15</a><li><a href="http://localhost:3000/html/Lecture 16.html">Lecture 16</a></ul>
+            </div>
+            <div class="menu-footer">
+                <!-- <p>Menu Footer</p> -->
+                <p>
+                    <span class="theme-toggle"
+                        ><button
+                            class="theme-toggle-button"
+                            onclick="toggleColorMode();"
+                        >
+                            switch theme
+                        </button></span
+                    >
+                </p>
+            </div>
+        </nav>
+
+        <!-- Main content area -->
+        <div class="main-wrapper" id="main">
+            <!-- Hamburger menu button -->
+            <button class="hamburger" id="hamburger">☰</button>
+            <div class="main"><h1>MIPS assembly continued</h1>
+<p><code>subi</code> instruction does NOT exist - we can just use <code>addi</code> with a negative immediate value for the same result</p>
+<ul>
+<li>Adding an extra instruction to the CPU requires adding extra physical circuitry to the CPU, so it is not desirable</li>
+<li>If we can get away with using one instruction multiple ways that is good</li>
+</ul>
+<p>For exams, expectation is that we memorize all MIPS instructions - no cheatsheet will be given</p>
+<h4>Example 1: Convert the following piece of C++ code to MIPS</h4>
+<pre><code class="language-cpp">var++;
+</code></pre>
+<p>We are given that the value of <code>var</code> is stored in <code>$s3</code>.</p>
+<hr />
+<p>Answer:</p>
+<pre><code class="language-mips">addi $s3, $s3, 1 # var++
+</code></pre>
+<p>Note - class requirement is that the <code>++</code> instruction should store the result in the same register.</p>
+<h4>Example 2: Convert the following piece of C++ code to MIPS</h4>
+<pre><code class="language-cpp">var = 2 - var; // value of var is in $t1
+</code></pre>
+<hr />
+<p>Answer:</p>
+<pre><code class="language-mips">addi $s0, $zero, 2 # put 2 in register s0
+sub $t1, $s0, $t1 # t1 = s0 - t1 -&gt; var = 2 - var
+</code></pre>
+<h4>Example 3: Convert the following piece of C++ code to MIPS</h4>
+<pre><code class="language-cpp">var = var + (25 - var) // var in s6
+</code></pre>
+<p>Do NOT simplify this expression. In general our MIPS translation should just be copying whatever is in the C++ code blindly.</p>
+<hr />
+<p>Answer:</p>
+<pre><code class="language-mips">addi $s0, $zero, 25 # put 25 in register s0
+sub $s1, $s0, $s6 # s1 = 25 - var
+add $s6, $s6, $s1 # var = var + s1
+</code></pre>
+<p>Also, when asked to comment on this, should comment on every line (or almost every line)</p>
+<h4>Example of a forbidden pseudo-instruction</h4>
+<p>Correct way:</p>
+<pre><code class="language-mips">addi $s0, $zero, 7
+</code></pre>
+<p>Incorrect way:</p>
+<pre><code class="language-mips">li $s0, 7
+</code></pre>
+<h2>MIPS assembly memory operations - loads and stores</h2>
+<p>Example of memory operations in C++:</p>
+<pre><code class="language-cpp">int num = 0; // compiler reserves 4 bytes of memory in RAM
+num = 20;
+</code></pre>
+<ul>
+<li><strong><em>Loading</em> - copying data from RAM to CPU register</strong></li>
+<li><strong><em>Storing</em> - copying data from CPU register to RAM</strong></li>
+</ul>
+<p>Example: <code>lw</code></p>
+<pre><code class="language-mips">lw $t5, 2($s0)
+</code></pre>
+<p><code>lw</code> means &quot;load word&quot; - copy 4 bytes from RAM to CPU register</p>
+<ul>
+<li><code>$t5</code> - destination register</li>
+<li><code>$s0</code> - base register - parens indicate to treat it as an address</li>
+<li><code>2</code> - offset</li>
+</ul>
+<p>The address read from in this line is <code>$s0 + 2</code>.</p>
+<p><strong>If the offset is zero, we must specify this explicitly, e.g. <code>0($s0)</code>.</strong></p>
+</div>
+        </div>
+
+        <footer class="footer" id="mainfooter">
+            <p
+                xmlns:cc="http://creativecommons.org/ns#"
+                xmlns:dct="http://purl.org/dc/terms/"
+            >
+                <a
+                    property="dct:title"
+                    rel="cc:attributionURL"
+                    href="https://benrosenberg.info"
+                    class="link-problem"
+                    >benrosenberg.info</a
+                >
+                by <span property="cc:attributionName">Ben Rosenberg</span> is
+                licensed under
+                <a
+                    href="https://creativecommons.org/licenses/by/4.0/?ref=chooser-v1"
+                    target="_blank"
+                    rel="license noopener noreferrer"
+                    style="display: inline-block"
+                    class="link-problem"
+                    >CC BY 4.0<img
+                        class="cc-svg"
+                        style="
+                            height: 20px !important;
+                            margin-left: 3px;
+                            vertical-align: middle;
+                        "
+                        src="http://localhost:3000/images/cc_dark.svg"
+                        alt="" /><img
+                        class="by-svg"
+                        style="
+                            height: 20px !important;
+                            margin-left: 3px;
+                            vertical-align: middle;
+                        "
+                        src="http://localhost:3000/images/by_dark.svg"
+                        alt=""
+                /></a>
+            </p>
+        </footer>
+        <script src="http://localhost:3000/meta/menu.js"></script>
+        <script src="http://localhost:3000/meta/theme.js"></script>
+        <script>
+            window.onload = function () {
+                hljs.highlightAll();
+            };
+        </script>
+    </body>
+</html>

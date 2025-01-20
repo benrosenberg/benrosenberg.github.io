@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css"
+            integrity="sha384-zh0CIslj+VczCZtlzBcjt5ppRcsAmDnRem7ESsYwWwg3m/OaJ2l4x7YBZl9Kxxib"
+            crossorigin="anonymous"
+        />
+        <script src="http://localhost:3000/meta/math.js"></script>
+        <script
+            defer
+            src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.js"
+            integrity="sha384-Rma6DA2IPUwhNxmrB/7S3Tno0YY7sFu9WSYMCuulLhIqYSGZ2gKCJWIqhBWqMQfh"
+            crossorigin="anonymous"
+            onload="render_katex_math()"
+        ></script>
+        <link
+            rel="stylesheet"
+            disabled=""
+            title="hljs-light"
+            href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs.min.css"
+        />
+        <link
+            rel="stylesheet"
+            title="hljs-dark"
+            href="http://localhost:3000/meta/hljs-gruvbox-dark.css"
+        />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/cpp.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/python.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/mipsasm.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/latex.min.js"></script>
+        <title>Lecture 01</title>
+        <link rel="stylesheet" href="http://localhost:3000/meta/style.css" />
+        <link rel="icon" type="image/png" href="http://localhost:3000/images/favicon.png">
+    </head>
+    <body>
+        <span style="display: none" id="SITE_ROOT_TAG">http://localhost:3000</span>
+        <!-- Popout menu -->
+        <nav class="menu" id="menu">
+            <div class="menu-header">
+                <h2><a href="http://localhost:3000/html/Lecture 01.html">CSCI 260 Notes</a></h2>
+            </div>
+            <div class="menu-content">
+                <ul><li class="currentpage"><a class="currentpage" href="http://localhost:3000/html/Lecture 01.html">Lecture 01</a><li><a href="http://localhost:3000/html/Lecture 02.html">Lecture 02</a><li><a href="http://localhost:3000/html/Lecture 03.html">Lecture 03</a><li><a href="http://localhost:3000/html/Lecture 04.html">Lecture 04</a><li><a href="http://localhost:3000/html/Lecture 05.html">Lecture 05</a><li><a href="http://localhost:3000/html/Lecture 06.html">Lecture 06</a><li><a href="http://localhost:3000/html/Lecture 07.html">Lecture 07</a><li><a href="http://localhost:3000/html/Lecture 08.html">Lecture 08</a><li><a href="http://localhost:3000/html/Lecture 09.html">Lecture 09</a><li><a href="http://localhost:3000/html/Lecture 10.html">Lecture 10</a><li><a href="http://localhost:3000/html/Lecture 11.html">Lecture 11</a><li><a href="http://localhost:3000/html/Lecture 12.html">Lecture 12</a><li><a href="http://localhost:3000/html/Lecture 13.html">Lecture 13</a><li><a href="http://localhost:3000/html/Lecture 14.html">Lecture 14</a><li><a href="http://localhost:3000/html/Lecture 15.html">Lecture 15</a><li><a href="http://localhost:3000/html/Lecture 16.html">Lecture 16</a></ul>
+            </div>
+            <div class="menu-footer">
+                <!-- <p>Menu Footer</p> -->
+                <p>
+                    <span class="theme-toggle"
+                        ><button
+                            class="theme-toggle-button"
+                            onclick="toggleColorMode();"
+                        >
+                            switch theme
+                        </button></span
+                    >
+                </p>
+            </div>
+        </nav>
+
+        <!-- Main content area -->
+        <div class="main-wrapper" id="main">
+            <!-- Hamburger menu button -->
+            <button class="hamburger" id="hamburger">☰</button>
+            <div class="main"><h1>Syllabus</h1>
+<p>Items of note:</p>
+<ul>
+<li>Use Slack link ASAP, as it expires within 30 days</li>
+<li>Midterm date is unknown - based on the speed with which we cover the material</li>
+<li>Final date is known already based on the CUNY schedule, but may change (although unlikely)</li>
+<li>No homework resubmissions</li>
+</ul>
+<p>Class is split into 4 parts:</p>
+<ol>
+<li>Review of material from previous classes</li>
+<li>Performance, and some performance-related calculations</li>
+<li>Assembly language - MIPS</li>
+<li>CPU design</li>
+</ol>
+<p>Lists of topics for each part will be published throughout the semester. These lists will be useful for reviewing content for the midterm and final exams.</p>
+<h1>Review of prior course material</h1>
+<p>How do computers work?</p>
+<ul>
+<li>Computers just store numbers and do simple arithemtic</li>
+<li>Data is meaningful non-program information</li>
+<li>CPU executes instructions in order</li>
+<li><strong>The <em>CPU</em> is a hardware component responsible for executing instructions</strong></li>
+</ul>
+<p>Note: definitions will be asked on exams. Be specific, or points will be deducted.</p>
+<ul>
+<li><strong>A <em>machine cycle</em> is the sequence of steps a CPU goes through to execute a single instruction</strong></li>
+<li>Note that a machine cycle is <em>not</em> the same as a clock cycle, especially in modern CPUs</li>
+</ul>
+<p>Machine cycle steps:</p>
+<ol>
+<li>Fetch - fetch an instruction from memory, and bring it into the CPU</li>
+<li>Decode - prepare for instruction execution</li>
+<li>Execute - execute the instruction</li>
+<li>Write-back - if result must be placed somewhere, do it in this step</li>
+</ol>
+<p>RAM and the CPU:</p>
+<ul>
+<li>Instructions come from the RAM to the CPU</li>
+<li>Data also comes from RAM</li>
+<li>During fetch step, instructions are copied to CPU registers</li>
+</ul>
+<p>Registers:</p>
+<ul>
+<li>There are two types of registers:<ul>
+<li>General-purpose CPU registers, and</li>
+<li>Special-purpose CPU registers</li>
+</ul>
+</li>
+<li>General purpose registers - to be used by programs. We will use these registers when writing our MIPS programs</li>
+<li>Special purpose registers - registers with special purpose in the CPU, e.g. the instruction register which has the instruction to be executed next</li>
+</ul>
+<p><em>Side note: registers are also present in I/O devices, used to control them</em></p>
+<p>RAM vs. CPU speed:</p>
+<ul>
+<li>All running programs must be in RAM - only place CPU can fetch instructions or data from</li>
+<li>Hard disk data and programs must be loaded into RAM first, before CPU can access them</li>
+<li>Speed in this context is the time it takes to read/write data.</li>
+<li>CPU registers are basically instant for our purposes</li>
+<li>RAM is &quot;slow&quot; (compared to CPU)</li>
+<li>For example, addition in the CPU could take around 20 cycles, while reading from RAM could take around 400 cycles</li>
+<li>CPU instructions include loading from and storing to RAM</li>
+</ul>
+<p><em>Side note: we are already at or near the physical limit for RAM speed. Also, VRAM and RAM are similar in speed, the only caveat is that it takes longer to move things between RAM and VRAM</em></p>
+<ul>
+<li>Because RAM is slow, we try to minimize reads and writes to/from RAM</li>
+<li>RAM speed is a big bottleneck for CPU/computer speed</li>
+<li><strong>A <em>memory stall</em> occurs when the CPU has to wait for RAM to deliver necessary data</strong></li>
+<li>A memory stall is an inefficiency that can sometimes be optimized away by a compiler by reordering instructions.<ul>
+<li>Compilers try to minimize memory stalls, but are not always successful</li>
+</ul>
+</li>
+<li>Memory stalls still happen all the time</li>
+<li>Individual memory stalls are not on their own perceptible as the CPU is still fast, but in aggregate they can be noticeable</li>
+</ul>
+<p>RAM:</p>
+<ul>
+<li><strong>We say something is <em>random access</em> if it takes roughly the same amount of time to access a piece of data, no matter where it is physically on the device</strong></li>
+<li>Not all memory is random access</li>
+<li>Some non-RAM devices can be random access too</li>
+</ul>
+</div>
+        </div>
+
+        <footer class="footer" id="mainfooter">
+            <p
+                xmlns:cc="http://creativecommons.org/ns#"
+                xmlns:dct="http://purl.org/dc/terms/"
+            >
+                <a
+                    property="dct:title"
+                    rel="cc:attributionURL"
+                    href="https://benrosenberg.info"
+                    class="link-problem"
+                    >benrosenberg.info</a
+                >
+                by <span property="cc:attributionName">Ben Rosenberg</span> is
+                licensed under
+                <a
+                    href="https://creativecommons.org/licenses/by/4.0/?ref=chooser-v1"
+                    target="_blank"
+                    rel="license noopener noreferrer"
+                    style="display: inline-block"
+                    class="link-problem"
+                    >CC BY 4.0<img
+                        class="cc-svg"
+                        style="
+                            height: 20px !important;
+                            margin-left: 3px;
+                            vertical-align: middle;
+                        "
+                        src="http://localhost:3000/images/cc_dark.svg"
+                        alt="" /><img
+                        class="by-svg"
+                        style="
+                            height: 20px !important;
+                            margin-left: 3px;
+                            vertical-align: middle;
+                        "
+                        src="http://localhost:3000/images/by_dark.svg"
+                        alt=""
+                /></a>
+            </p>
+        </footer>
+        <script src="http://localhost:3000/meta/menu.js"></script>
+        <script src="http://localhost:3000/meta/theme.js"></script>
+        <script>
+            window.onload = function () {
+                hljs.highlightAll();
+            };
+        </script>
+    </body>
+</html>

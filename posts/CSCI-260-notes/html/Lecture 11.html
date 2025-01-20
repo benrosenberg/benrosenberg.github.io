@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css"
+            integrity="sha384-zh0CIslj+VczCZtlzBcjt5ppRcsAmDnRem7ESsYwWwg3m/OaJ2l4x7YBZl9Kxxib"
+            crossorigin="anonymous"
+        />
+        <script src="http://localhost:3000/meta/math.js"></script>
+        <script
+            defer
+            src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.js"
+            integrity="sha384-Rma6DA2IPUwhNxmrB/7S3Tno0YY7sFu9WSYMCuulLhIqYSGZ2gKCJWIqhBWqMQfh"
+            crossorigin="anonymous"
+            onload="render_katex_math()"
+        ></script>
+        <link
+            rel="stylesheet"
+            disabled=""
+            title="hljs-light"
+            href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs.min.css"
+        />
+        <link
+            rel="stylesheet"
+            title="hljs-dark"
+            href="http://localhost:3000/meta/hljs-gruvbox-dark.css"
+        />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/cpp.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/python.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/mipsasm.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/latex.min.js"></script>
+        <title>Lecture 11</title>
+        <link rel="stylesheet" href="http://localhost:3000/meta/style.css" />
+        <link rel="icon" type="image/png" href="http://localhost:3000/images/favicon.png">
+    </head>
+    <body>
+        <span style="display: none" id="SITE_ROOT_TAG">http://localhost:3000</span>
+        <!-- Popout menu -->
+        <nav class="menu" id="menu">
+            <div class="menu-header">
+                <h2><a href="http://localhost:3000/html/Lecture 01.html">CSCI 260 Notes</a></h2>
+            </div>
+            <div class="menu-content">
+                <ul><li><a href="http://localhost:3000/html/Lecture 01.html">Lecture 01</a><li><a href="http://localhost:3000/html/Lecture 02.html">Lecture 02</a><li><a href="http://localhost:3000/html/Lecture 03.html">Lecture 03</a><li><a href="http://localhost:3000/html/Lecture 04.html">Lecture 04</a><li><a href="http://localhost:3000/html/Lecture 05.html">Lecture 05</a><li><a href="http://localhost:3000/html/Lecture 06.html">Lecture 06</a><li><a href="http://localhost:3000/html/Lecture 07.html">Lecture 07</a><li><a href="http://localhost:3000/html/Lecture 08.html">Lecture 08</a><li><a href="http://localhost:3000/html/Lecture 09.html">Lecture 09</a><li><a href="http://localhost:3000/html/Lecture 10.html">Lecture 10</a><li class="currentpage"><a class="currentpage" href="http://localhost:3000/html/Lecture 11.html">Lecture 11</a><li><a href="http://localhost:3000/html/Lecture 12.html">Lecture 12</a><li><a href="http://localhost:3000/html/Lecture 13.html">Lecture 13</a><li><a href="http://localhost:3000/html/Lecture 14.html">Lecture 14</a><li><a href="http://localhost:3000/html/Lecture 15.html">Lecture 15</a><li><a href="http://localhost:3000/html/Lecture 16.html">Lecture 16</a></ul>
+            </div>
+            <div class="menu-footer">
+                <!-- <p>Menu Footer</p> -->
+                <p>
+                    <span class="theme-toggle"
+                        ><button
+                            class="theme-toggle-button"
+                            onclick="toggleColorMode();"
+                        >
+                            switch theme
+                        </button></span
+                    >
+                </p>
+            </div>
+        </nav>
+
+        <!-- Main content area -->
+        <div class="main-wrapper" id="main">
+            <!-- Hamburger menu button -->
+            <button class="hamburger" id="hamburger">☰</button>
+            <div class="main"><h1>MIPS assembly continued</h1>
+<h2>Memory</h2>
+<p>Arrays:</p>
+<ul>
+<li>An array of e.g. integers are all stored next to each other in a contiguous block of memory.</li>
+<li>If you know where the array starts and what the data size is, you can get all items</li>
+<li>For example, if the first element is at address 100, the next element is at address 104 (because an integer has a size of 4 bytes)</li>
+</ul>
+<h4>Example 1: Array of objects</h4>
+<pre><code class="language-cpp">// in memory, this will look the same
+// as an array of length 2
+class C {
+    int num1;
+    int num2;
+} o1;
+
+// so this will be like an array
+// of length 6
+objs[3];
+</code></pre>
+<p>In this class we don't require thinking about struct alignment on exams or homeworks.</p>
+<p>Class methods:</p>
+<ul>
+<li>If a method is defined in a class, it is not stored in the object location</li>
+<li>Instead, it is stored with the rest of program code</li>
+</ul>
+<h2>Unsigned notation</h2>
+<p>In unsigned notation, we write 12 base 10 as <code>0000 1100</code> in binary.</p>
+<p>In unsigned notation, we pad numbers with zeros regardless of sign.</p>
+<p>However, in signed (2's complement) notation we pad negative numbers with ones.</p>
+<p><strong>2's complement will appear on the exam.</strong></p>
+<h3><code>lbu</code> and <code>lhu</code> instructions</h3>
+<p><code>lbu</code> stands for &quot;Load Byte Unsigned&quot;</p>
+<ul>
+<li>Treat byte as unsigned int, so pad with zeros, regardless of whether leading bit in data read from RAM is a zero or a one</li>
+</ul>
+<p>Similarly, <code>lhu</code> stands for &quot;load half-word unsigned&quot;, and behaves similarly except it reads 2 bytes instead of one.</p>
+<p><strong>There is no &quot;<code>lwu</code>&quot; instruction</strong>:</p>
+<ul>
+<li>There is no need to pad the left side of the register with anything for a word because it is 4 bytes and fills up the entire register.</li>
+<li>Meaning is preserved regardless.</li>
+</ul>
+<p><img src="2024-10-20-13-41-07.png" alt="Example of lb instruction with negative number" /></p>
+<p><strong>We do not need unsigned &quot;store&quot; instructions</strong>:</p>
+<ul>
+<li>There is nothing to extend to preserve the meaning of the number signs</li>
+<li>RAM is byte-by-byte, so when storing meaning is always preserved - <code>sb</code> only affects one byte, not a 4-byte area like <code>lb</code> does, so no need to pad</li>
+</ul>
+<p><strong>Common exam question</strong> - &quot;give -65 in 16-bit 2's complement notation&quot;</p>
+<p>Since -1 is <code>1111 1111 1111 1111</code> in 2's complement notation, we just need to subtract 64 from this to get the desired result. 64 is <equation>2^5</equation>, so we get <code>1111 1111 1011 1111</code> (note that we start counting from the right side at <equation>2^0</equation>).</p>
+<p>2's complement is basically just taking all the numbers up to the maximum number given by the range (all 1's) and then slicing off the top half and calling them negative numbers. The top half is sliced off and placed in front of the range starting at 0, so all 1's corresponds to -1. In order to write -x, we just need to find what the binary version of +x is and then subtract that from the maximum integer (all 1's) but then add 1 back, because all 1's represents -1.</p>
+<p>(Note that negative numbers necessarily cannot be expressed in unsigned notation.)</p>
+<h2>Endianness - in what order bytes are loaded into the register</h2>
+<p>Two approaches - &quot;big-endian&quot; and &quot;little-endian&quot;</p>
+<p>Sy we have the following in RAM, where B1..B4 represent bytes 1 through 4:</p>
+<p>contents|address
+-|-
+B1|8
+B2|9
+B3|A
+B4|B</p>
+<p>And we have the following instruction in MIPS:</p>
+<pre><code class="language-mips">lw $s0, -2($s7)
+</code></pre>
+<p>Assume <code>s7</code> holds 10 (A in hex), so <code>-2($s7)</code> means 8</p>
+<p>Here is what is in <code>s0</code>:</p>
+<ul>
+<li>Big-endian: [ B1 B2 B3 B4 ]</li>
+<li>Little endian: [ B4 B3 B2 B1 ]</li>
+</ul>
+<p>By default our class uses the <strong>big-endian</strong> approach.</p>
+<p>Regardless of endianness, we still start filling the register from the right side:</p>
+<ul>
+<li>If we did <code>lh $s0, -2($s7)</code> instead:<ul>
+<li>Big-endian: [ 0 0 B1 B2 ]</li>
+<li>Little-endian: [ 0 0 B2 B1 ]</li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+
+        <footer class="footer" id="mainfooter">
+            <p
+                xmlns:cc="http://creativecommons.org/ns#"
+                xmlns:dct="http://purl.org/dc/terms/"
+            >
+                <a
+                    property="dct:title"
+                    rel="cc:attributionURL"
+                    href="https://benrosenberg.info"
+                    class="link-problem"
+                    >benrosenberg.info</a
+                >
+                by <span property="cc:attributionName">Ben Rosenberg</span> is
+                licensed under
+                <a
+                    href="https://creativecommons.org/licenses/by/4.0/?ref=chooser-v1"
+                    target="_blank"
+                    rel="license noopener noreferrer"
+                    style="display: inline-block"
+                    class="link-problem"
+                    >CC BY 4.0<img
+                        class="cc-svg"
+                        style="
+                            height: 20px !important;
+                            margin-left: 3px;
+                            vertical-align: middle;
+                        "
+                        src="http://localhost:3000/images/cc_dark.svg"
+                        alt="" /><img
+                        class="by-svg"
+                        style="
+                            height: 20px !important;
+                            margin-left: 3px;
+                            vertical-align: middle;
+                        "
+                        src="http://localhost:3000/images/by_dark.svg"
+                        alt=""
+                /></a>
+            </p>
+        </footer>
+        <script src="http://localhost:3000/meta/menu.js"></script>
+        <script src="http://localhost:3000/meta/theme.js"></script>
+        <script>
+            window.onload = function () {
+                hljs.highlightAll();
+            };
+        </script>
+    </body>
+</html>

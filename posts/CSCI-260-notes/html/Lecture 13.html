@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css"
+            integrity="sha384-zh0CIslj+VczCZtlzBcjt5ppRcsAmDnRem7ESsYwWwg3m/OaJ2l4x7YBZl9Kxxib"
+            crossorigin="anonymous"
+        />
+        <script src="http://localhost:3000/meta/math.js"></script>
+        <script
+            defer
+            src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.js"
+            integrity="sha384-Rma6DA2IPUwhNxmrB/7S3Tno0YY7sFu9WSYMCuulLhIqYSGZ2gKCJWIqhBWqMQfh"
+            crossorigin="anonymous"
+            onload="render_katex_math()"
+        ></script>
+        <link
+            rel="stylesheet"
+            disabled=""
+            title="hljs-light"
+            href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs.min.css"
+        />
+        <link
+            rel="stylesheet"
+            title="hljs-dark"
+            href="http://localhost:3000/meta/hljs-gruvbox-dark.css"
+        />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/cpp.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/python.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/mipsasm.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/latex.min.js"></script>
+        <title>Lecture 13</title>
+        <link rel="stylesheet" href="http://localhost:3000/meta/style.css" />
+        <link rel="icon" type="image/png" href="http://localhost:3000/images/favicon.png">
+    </head>
+    <body>
+        <span style="display: none" id="SITE_ROOT_TAG">http://localhost:3000</span>
+        <!-- Popout menu -->
+        <nav class="menu" id="menu">
+            <div class="menu-header">
+                <h2><a href="http://localhost:3000/html/Lecture 01.html">CSCI 260 Notes</a></h2>
+            </div>
+            <div class="menu-content">
+                <ul><li><a href="http://localhost:3000/html/Lecture 01.html">Lecture 01</a><li><a href="http://localhost:3000/html/Lecture 02.html">Lecture 02</a><li><a href="http://localhost:3000/html/Lecture 03.html">Lecture 03</a><li><a href="http://localhost:3000/html/Lecture 04.html">Lecture 04</a><li><a href="http://localhost:3000/html/Lecture 05.html">Lecture 05</a><li><a href="http://localhost:3000/html/Lecture 06.html">Lecture 06</a><li><a href="http://localhost:3000/html/Lecture 07.html">Lecture 07</a><li><a href="http://localhost:3000/html/Lecture 08.html">Lecture 08</a><li><a href="http://localhost:3000/html/Lecture 09.html">Lecture 09</a><li><a href="http://localhost:3000/html/Lecture 10.html">Lecture 10</a><li><a href="http://localhost:3000/html/Lecture 11.html">Lecture 11</a><li><a href="http://localhost:3000/html/Lecture 12.html">Lecture 12</a><li class="currentpage"><a class="currentpage" href="http://localhost:3000/html/Lecture 13.html">Lecture 13</a><li><a href="http://localhost:3000/html/Lecture 14.html">Lecture 14</a><li><a href="http://localhost:3000/html/Lecture 15.html">Lecture 15</a><li><a href="http://localhost:3000/html/Lecture 16.html">Lecture 16</a></ul>
+            </div>
+            <div class="menu-footer">
+                <!-- <p>Menu Footer</p> -->
+                <p>
+                    <span class="theme-toggle"
+                        ><button
+                            class="theme-toggle-button"
+                            onclick="toggleColorMode();"
+                        >
+                            switch theme
+                        </button></span
+                    >
+                </p>
+            </div>
+        </nav>
+
+        <!-- Main content area -->
+        <div class="main-wrapper" id="main">
+            <!-- Hamburger menu button -->
+            <button class="hamburger" id="hamburger">☰</button>
+            <div class="main"><h1>MIPS assembly - more exercises</h1>
+<h4>Example 1: Convert the following C++ code to MIPS</h4>
+<pre><code class="language-cpp">// var is an unsigned int
+// address of var is in $s3
+do  {
+    var -= 20;
+} while (var &gt; 100);
+</code></pre>
+<hr />
+<p>Answer:</p>
+<p><strong>Version 1</strong>:</p>
+<pre><code class="language-mips">    addi $s0, $zero, 100 # put 100 in s0
+    lw $s1, 0($s3) # load var into s1
+
+LOOP: 
+    addi $s1, $s1, -20 # var -= 20
+    sltu $s2, $s0, $s1 # check if 100 &lt; var (UNSIGNED)
+    beq $zero, $s2, END # if var &lt;= 100 ($s2 = 0), break
+    j LOOP # 100 &lt; var, so continue looping
+
+END:
+    sw $s1, 0($s3) # update var
+</code></pre>
+<p><strong>Version 2</strong>:</p>
+<pre><code class="language-mips">    addi $s0, $zero, 100 # put 100 in s0
+    lw $s1, 0($s3) # load var into s1
+
+LOOP: 
+    addi $s1, $s1, -20 # var -= 20
+    sltu $s2, $s0, $s1 # check if 100 &lt; var (UNSIGNED)
+    bne $zero, $s2, LOOP # if var &lt; 100 ($s2 = 0), continune looping
+
+    sw $s1, 0($s3) # update var
+</code></pre>
+<p>Notes:</p>
+<ul>
+<li>Since <code>var</code> is an unsigned <em>int</em>, we don't need to use an unsigned instruction - there is no <code>lwu</code> instruction because there is no padding necessary as an int is 4 bytes, which is the same size as a register</li>
+<li>We could load and store in each loop, but it is more efficent to load once pre-loop and store once post-loop.</li>
+<li>Version 2 is more efficient because we save one instruction by checking for inequality instead of equality.</li>
+</ul>
+<h4>Example 2: Convert the following C++ code to MIPS</h4>
+<pre><code class="language-cpp">// value of a is in s0
+switch (a) {
+    case 0:
+        // case 0...
+        break
+    case 1:
+        // case 1...
+        break
+    default:
+        // default case...
+}
+</code></pre>
+<hr />
+<p>Answer:</p>
+<p><strong>Version 1</strong>:</p>
+<pre><code class="language-mips">    beq $zero, $s0, CASE_0 # if a is 0, go to case 0
+    addi $s1, $zero, 1 # put 1 in s1
+    beq $s1, $s0, CASE_1 # if a is 1, go to case 1
+    j DEFAULT # if a is something else, go to default case
+
+CASE_0: 
+    # case 0...
+    j EXIT
+
+CASE_1:
+    # case 1
+    j EXIT
+
+DEFAULT:
+    # default case
+
+EXIT: ...
+</code></pre>
+<p><strong>Version 2</strong>:</p>
+<pre><code class="language-mips">CASE_0:
+    bne $zero, $s0, CASE_1 # a != 0 so jump to case 1
+    # case 0...
+    j EXIT
+
+CASE_1:
+    addi $s1, $zero, 1 # put 1 in s1
+    bne $s1, $s0, DEFAULT # a != 1 so jump to default case
+    # case 1...
+    j EXIT
+
+DEFAULT:
+    # default case...
+
+EXIT: ...
+</code></pre>
+</div>
+        </div>
+
+        <footer class="footer" id="mainfooter">
+            <p
+                xmlns:cc="http://creativecommons.org/ns#"
+                xmlns:dct="http://purl.org/dc/terms/"
+            >
+                <a
+                    property="dct:title"
+                    rel="cc:attributionURL"
+                    href="https://benrosenberg.info"
+                    class="link-problem"
+                    >benrosenberg.info</a
+                >
+                by <span property="cc:attributionName">Ben Rosenberg</span> is
+                licensed under
+                <a
+                    href="https://creativecommons.org/licenses/by/4.0/?ref=chooser-v1"
+                    target="_blank"
+                    rel="license noopener noreferrer"
+                    style="display: inline-block"
+                    class="link-problem"
+                    >CC BY 4.0<img
+                        class="cc-svg"
+                        style="
+                            height: 20px !important;
+                            margin-left: 3px;
+                            vertical-align: middle;
+                        "
+                        src="http://localhost:3000/images/cc_dark.svg"
+                        alt="" /><img
+                        class="by-svg"
+                        style="
+                            height: 20px !important;
+                            margin-left: 3px;
+                            vertical-align: middle;
+                        "
+                        src="http://localhost:3000/images/by_dark.svg"
+                        alt=""
+                /></a>
+            </p>
+        </footer>
+        <script src="http://localhost:3000/meta/menu.js"></script>
+        <script src="http://localhost:3000/meta/theme.js"></script>
+        <script>
+            window.onload = function () {
+                hljs.highlightAll();
+            };
+        </script>
+    </body>
+</html>
