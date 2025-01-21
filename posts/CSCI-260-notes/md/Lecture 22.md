@@ -35,6 +35,8 @@ Appendix A in the textbook has a table of syscalls, with the following terminolo
 - Arguments: register and datatype, e.g. "$a0 = integer"
 - Result: eg., "integer in $v0"
 
+![Syscall table](2025-01-20-21-27-01.png)
+
 Example: print "a":
 
 ```mips

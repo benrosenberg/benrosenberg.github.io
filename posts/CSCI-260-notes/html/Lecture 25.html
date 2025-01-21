@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css"
+            integrity="sha384-zh0CIslj+VczCZtlzBcjt5ppRcsAmDnRem7ESsYwWwg3m/OaJ2l4x7YBZl9Kxxib"
+            crossorigin="anonymous"
+        />
+        <script src="https://benrosenberg.info/posts/CSCI-260-notes/meta/math.js"></script>
+        <script
+            defer
+            src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.js"
+            integrity="sha384-Rma6DA2IPUwhNxmrB/7S3Tno0YY7sFu9WSYMCuulLhIqYSGZ2gKCJWIqhBWqMQfh"
+            crossorigin="anonymous"
+            onload="render_katex_math()"
+        ></script>
+        <link
+            rel="stylesheet"
+            disabled=""
+            title="hljs-light"
+            href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs.min.css"
+        />
+        <link
+            rel="stylesheet"
+            title="hljs-dark"
+            href="https://benrosenberg.info/posts/CSCI-260-notes/meta/hljs-gruvbox-dark.css"
+        />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/cpp.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/python.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/mipsasm.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/latex.min.js"></script>
+        <title>Lecture 25</title>
+        <link rel="stylesheet" href="https://benrosenberg.info/posts/CSCI-260-notes/meta/style.css" />
+        <link rel="icon" type="image/png" href="https://benrosenberg.info/posts/CSCI-260-notes/images/favicon.png">
+    </head>
+    <body>
+        <span style="display: none" id="SITE_ROOT_TAG">https://benrosenberg.info/posts/CSCI-260-notes</span>
+        <!-- Popout menu -->
+        <nav class="menu" id="menu">
+            <div class="menu-header">
+                <h2><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 01.html">CSCI 260 Notes</a></h2>
+            </div>
+            <div class="menu-content">
+                <ul><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 01.html">Lecture 01</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 02.html">Lecture 02</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 03.html">Lecture 03</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 04.html">Lecture 04</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 05.html">Lecture 05</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 06.html">Lecture 06</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 07.html">Lecture 07</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 08.html">Lecture 08</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 09.html">Lecture 09</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 10.html">Lecture 10</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 11.html">Lecture 11</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 12.html">Lecture 12</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 13.html">Lecture 13</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 14.html">Lecture 14</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 15.html">Lecture 15</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 16.html">Lecture 16</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 17.html">Lecture 17</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 18.html">Lecture 18</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 19.html">Lecture 19</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 20.html">Lecture 20</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 21.html">Lecture 21</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 22.html">Lecture 22</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 23.html">Lecture 23</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 24.html">Lecture 24</a><li class="currentpage"><a class="currentpage" href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 25.html">Lecture 25</a></ul>
+            </div>
+            <div class="menu-footer">
+                <!-- <p>Menu Footer</p> -->
+                <p>
+                    <span class="theme-toggle"
+                        ><button
+                            class="theme-toggle-button"
+                            onclick="toggleColorMode();"
+                        >
+                            switch theme
+                        </button></span
+                    >
+                </p>
+            </div>
+        </nav>
+
+        <!-- Main content area -->
+        <div class="main-wrapper" id="main">
+            <!-- Hamburger menu button -->
+            <button class="hamburger" id="hamburger">☰</button>
+            <div class="main"><h2>CPU components (cont.)</h2>
+<p>Example: Steps to executing an <code>sw</code> (store word) instruction:</p>
+<ol>
+<li>Instruction goes to instruction memory<ul>
+<li>Instruction memory goes to RAM at address given by PC</li>
+<li>Instruction gets stored in &quot;instruction register&quot; within instruction memory</li>
+</ul>
+</li>
+<li>Instruction is disassembled into parts which go to different components of the CPU<ul>
+<li>e.g., register #1 goes to register file - 5 bits</li>
+</ul>
+</li>
+<li>Register in register file goes to ALU to be added with immediate value, so that the store word instruction gets the address with the correct offset</li>
+</ol>
+<p>Additional components:</p>
+<ul>
+<li>&quot;sign-extend&quot; component - 16 bits in, 32 bits out. Takes leftmost bit and extends to 16 more bits for a total of 32</li>
+</ul>
+<p>Note: Not expected to memorize circuitry for exam, but expected to understand picture. Should be able to, e.g.:</p>
+<ul>
+<li>Remove part of picture, ask to fill in missing part (infer from context)</li>
+<li>What is the meaning of the load word instruction's ALU output? (answer: address (register value) + offset (immediate value) gives address in RAM to load from)</li>
+<li>What is the bit width of a given channel? (infer from context)</li>
+</ul>
+<p>Recall the machine cycle steps:</p>
+<ul>
+<li>Fetch</li>
+<li>Decode</li>
+<li>Execute</li>
+<li>Write back</li>
+</ul>
+<p>Each time the &quot;fetch&quot; instruction happens, the PC is immediately updated to the new value.</p>
+<p>Argument registers:</p>
+<ul>
+<li>Registers that need to be read</li>
+<li>Always first two registers in the instruction (e.g., rs, rt)</li>
+<li>Need to be first two registers because those bits of the instruction are wired up to the &quot;read register&quot; inputs of the register file</li>
+</ul>
+<p>Example: <code>BEQ</code> instruction steps</p>
+<ol>
+<li>PC passes instruction address to instruction memory</li>
+<li>Instruction register arguments passed to register file</li>
+<li>Argument registers go to ALU - compare values by subtracting</li>
+<li>Check difference:</li>
+</ol>
+<ul>
+<li>If difference was 0, produce a value of 1, to send along the &quot;zero&quot; indicator (meaning that the values were equal)<ul>
+<li>This goes to an AND gate with the Branch control line from the opcode, to update the Program Counter to reflect the fact that the branch has occurred</li>
+<li>Branch amount:<ul>
+<li>take 16-bit immediate value (recall that BEQ is an I-type instruction)</li>
+<li>sign-extend using the sign extend component</li>
+<li>shift left two bits (due to addressing mode)</li>
+<li>add to program counter (not necessary to use full ALU for this - can just use adder, because the immediate value could be negative)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>If the difference was nonzero, send 0 along the &quot;zero&quot; indicator line, so the AND gate is zeroed out and the jump does not occur, and the PC is left as is</li>
+</ul>
+<h3>Control units</h3>
+<p>ALU control unit:</p>
+<ul>
+<li>Gets a channel of width 4 bits, which are set based on the opcode</li>
+<li>Uses the below table (from the textbook; will be provided with it if necessary on the final exam)</li>
+<li>Controls which operation is performed by the ALU (e.g., AND, OR, NOT, ADD, etc.)</li>
+</ul>
+<p><img src="2025-01-20-21-28-43.png" alt="ALU control input table" /></p>
+<p>(big) Control Unit:</p>
+<ul>
+<li>Takes opcode as input (6 leftmost bits of instruction)</li>
+<li>Generates corresponding output, which sends bits through control lines as needed</li>
+</ul>
+<p><img src="2025-01-20-21-33-23.png" alt="Control unit" /></p>
+<p>Example use of control units: determine the values of each of the control lines for the below instruction:</p>
+<pre><code class="language-mips">add $s0, $t5, $t6
+</code></pre>
+<p>Opcode: 000000 because this is an R-type instruction.</p>
+<p>Control line values:</p>
+<ul>
+<li>RegDst: 1</li>
+<li>Branch: 0</li>
+<li>MemRead: 0</li>
+<li>MemtoReg: 0</li>
+<li>ALUOp: 10</li>
+<li>MemWrite: 0</li>
+<li>ALUSrc: 0</li>
+<li>RegWrite: 1</li>
+</ul>
+</div>
+        </div>
+
+        <footer class="footer" id="mainfooter">
+            <p
+                xmlns:cc="http://creativecommons.org/ns#"
+                xmlns:dct="http://purl.org/dc/terms/"
+            >
+                <a
+                    property="dct:title"
+                    rel="cc:attributionURL"
+                    href="https://benrosenberg.info"
+                    class="link-problem"
+                    >benrosenberg.info</a
+                >
+                by <span property="cc:attributionName">Ben Rosenberg</span> is
+                licensed under
+                <a
+                    href="https://creativecommons.org/licenses/by/4.0/?ref=chooser-v1"
+                    target="_blank"
+                    rel="license noopener noreferrer"
+                    style="display: inline-block"
+                    class="link-problem"
+                    >CC BY 4.0<img
+                        class="cc-svg"
+                        style="
+                            height: 20px !important;
+                            margin-left: 3px;
+                            vertical-align: middle;
+                        "
+                        src="https://benrosenberg.info/posts/CSCI-260-notes/images/cc_dark.svg"
+                        alt="" /><img
+                        class="by-svg"
+                        style="
+                            height: 20px !important;
+                            margin-left: 3px;
+                            vertical-align: middle;
+                        "
+                        src="https://benrosenberg.info/posts/CSCI-260-notes/images/by_dark.svg"
+                        alt=""
+                /></a>
+            </p>
+        </footer>
+        <script src="https://benrosenberg.info/posts/CSCI-260-notes/meta/menu.js"></script>
+        <script src="https://benrosenberg.info/posts/CSCI-260-notes/meta/theme.js"></script>
+        <script>
+            window.onload = function () {
+                hljs.highlightAll();
+            };
+        </script>
+    </body>
+</html>
