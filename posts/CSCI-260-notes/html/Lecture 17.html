@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css"
+            integrity="sha384-zh0CIslj+VczCZtlzBcjt5ppRcsAmDnRem7ESsYwWwg3m/OaJ2l4x7YBZl9Kxxib"
+            crossorigin="anonymous"
+        />
+        <script src="https://benrosenberg.info/posts/CSCI-260-notes/meta/math.js"></script>
+        <script
+            defer
+            src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.js"
+            integrity="sha384-Rma6DA2IPUwhNxmrB/7S3Tno0YY7sFu9WSYMCuulLhIqYSGZ2gKCJWIqhBWqMQfh"
+            crossorigin="anonymous"
+            onload="render_katex_math()"
+        ></script>
+        <link
+            rel="stylesheet"
+            disabled=""
+            title="hljs-light"
+            href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs.min.css"
+        />
+        <link
+            rel="stylesheet"
+            title="hljs-dark"
+            href="https://benrosenberg.info/posts/CSCI-260-notes/meta/hljs-gruvbox-dark.css"
+        />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/cpp.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/python.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/mipsasm.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/latex.min.js"></script>
+        <title>Lecture 17</title>
+        <link rel="stylesheet" href="https://benrosenberg.info/posts/CSCI-260-notes/meta/style.css" />
+        <link rel="icon" type="image/png" href="https://benrosenberg.info/posts/CSCI-260-notes/images/favicon.png">
+    </head>
+    <body>
+        <span style="display: none" id="SITE_ROOT_TAG">https://benrosenberg.info/posts/CSCI-260-notes</span>
+        <!-- Popout menu -->
+        <nav class="menu" id="menu">
+            <div class="menu-header">
+                <h2><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 01.html">CSCI 260 Notes</a></h2>
+            </div>
+            <div class="menu-content">
+                <ul><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 01.html">Lecture 01</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 02.html">Lecture 02</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 03.html">Lecture 03</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 04.html">Lecture 04</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 05.html">Lecture 05</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 06.html">Lecture 06</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 07.html">Lecture 07</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 08.html">Lecture 08</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 09.html">Lecture 09</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 10.html">Lecture 10</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 11.html">Lecture 11</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 12.html">Lecture 12</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 13.html">Lecture 13</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 14.html">Lecture 14</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 15.html">Lecture 15</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 16.html">Lecture 16</a><li class="currentpage"><a class="currentpage" href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 17.html">Lecture 17</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 18.html">Lecture 18</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 19.html">Lecture 19</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 20.html">Lecture 20</a></ul>
+            </div>
+            <div class="menu-footer">
+                <!-- <p>Menu Footer</p> -->
+                <p>
+                    <span class="theme-toggle"
+                        ><button
+                            class="theme-toggle-button"
+                            onclick="toggleColorMode();"
+                        >
+                            switch theme
+                        </button></span
+                    >
+                </p>
+            </div>
+        </nav>
+
+        <!-- Main content area -->
+        <div class="main-wrapper" id="main">
+            <!-- Hamburger menu button -->
+            <button class="hamburger" id="hamburger">☰</button>
+            <div class="main"><h2>Recap - addressing modes</h2>
+<ul>
+<li>Base addressing<ul>
+<li>Example: <code>lhu $s0, 4($s5) # addr = s5 + 4</code></li>
+<li>Limit for offset is approx between -32k and 32k</li>
+</ul>
+</li>
+<li>PC-relative addressing<ul>
+<li>Example: <code>beq $t0, $t1, L1 # addr = PC + 4 * L1</code> b/c each address adds 4 bytes<ul>
+<li>Note that this &quot;L1&quot; term being multiplied by 4 is really the offset</li>
+</ul>
+</li>
+<li>PC has the <em>next instruction's address</em></li>
+</ul>
+</li>
+<li>Pseudo-direct addressing<ul>
+<li>Example: <code>j label1 # addr = 4 bits from PC + 4 * label1</code><ul>
+<li>Note that here, the &quot;label1&quot; term is not an offset but rather the actual address being jumped to (with 4 bits taken off the left and 2 off the right of course)</li>
+</ul>
+</li>
+<li>If you start at a multiple of 4, then all instructions are of the form ...00 because the 2's and 1's digits will be 0</li>
+<li>Limitation: Can only jump to instructions sharing the first 4 bits of the program counter</li>
+</ul>
+</li>
+<li>Register addressing<ul>
+<li>Example: <code>jr $r # addr = ra</code></li>
+</ul>
+</li>
+</ul>
+<h1>Program in Memory (RAM)</h1>
+<p>The following are synonyms:</p>
+<ul>
+<li>program in memory</li>
+<li>process</li>
+<li>running program</li>
+</ul>
+<p><img src="2025-01-20-18-38-40.png" alt="Stack and Heap memory" /></p>
+<p>The diagram above is the entire memory allocated to the process by the operating system. How the OS allocates this virtual memory is a topic outside the scope of this course, but basically we can think of the memory as starting at 0 and going up to some large number, and not worry about other processes' concurrent memory usage.</p>
+<p>Parts of memory:</p>
+<ul>
+<li>Stack: local variables, saved registers, return addresses, function parameters</li>
+<li>Heap: dynamic memory allocations. <code>new</code>, <code>malloc</code>, etc. affect the heap</li>
+<li>Data: global and static data</li>
+<li>Text: program code</li>
+</ul>
+<p>Notes:</p>
+<ul>
+<li>The first step of the process of running is to put the program code in the text section</li>
+<li>The stack &quot;hangs upside down&quot; on top of the heap</li>
+<li>The heap can also grow - it grows up while the stack grows down</li>
+<li>The stack is used for function purposes - calling a function creates a stack frame for the function</li>
+<li>The stack and heap grow towards each other. If they collide, the program runs out of memory<ul>
+<li>On modern computers, this doesn't typically happen because the size of the rectangle between the stack and heap is huge</li>
+</ul>
+</li>
+</ul>
+<p><img src="2025-01-20-18-46-55.png" alt="Another picture" /></p>
+<h2>Examples</h2>
+<pre><code class="language-c++">// global var, so goes in the data section
+double glob = 3.14
+
+int main() {
+    // local var of function main, so goes in stack
+    int num = 0;
+
+    // this instr goes in text section, along with rest of program code
+    cout &lt;&lt; num;
+
+    // dynamic memory allocation
+    // BUT ptr is a var so ptr goes on the stack
+    // while the char array goes on the heap
+    char* ptr = new char[10];
+
+    // nums is a ptr to object or something
+    vector&lt;int&gt; nums{1, 2, 3, 4};
+}
+</code></pre>
+<p>Note: immediate values hardcoded like <code>num = 0</code> are stored in program code (text section)</p>
+<p>Rule: &quot;stack is fast, heap is slow&quot;:</p>
+<ul>
+<li>Allocating memory on the stack is fast, allocating memory on the heap is slow</li>
+<li>This is because next memory location on stack will always be on &quot;top&quot; of the stack (bottom if you look at the memory) - while for heap, may need to search through heap to find empty space to use<ul>
+<li>Heap may have holes of varying sizes as well due to memory that was freed up in between chunks of memory that are still being used - &quot;memory fragmentation&quot;</li>
+</ul>
+</li>
+<li>The <strong>stack pointer</strong> register ($sp) holds the address for the top of the stack, so it is easy to know where the top of the stack is at all times<ul>
+<li>In our case, to expand the stack size by 4 bytes (e.g. to store an int on the stack) we would do <code>sp -= 4</code> (or in MIPS, we would do <code>addi $sp, $sp, -4</code>)</li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+
+        <footer class="footer" id="mainfooter">
+            <p
+                xmlns:cc="http://creativecommons.org/ns#"
+                xmlns:dct="http://purl.org/dc/terms/"
+            >
+                <a
+                    property="dct:title"
+                    rel="cc:attributionURL"
+                    href="https://benrosenberg.info"
+                    class="link-problem"
+                    >benrosenberg.info</a
+                >
+                by <span property="cc:attributionName">Ben Rosenberg</span> is
+                licensed under
+                <a
+                    href="https://creativecommons.org/licenses/by/4.0/?ref=chooser-v1"
+                    target="_blank"
+                    rel="license noopener noreferrer"
+                    style="display: inline-block"
+                    class="link-problem"
+                    >CC BY 4.0<img
+                        class="cc-svg"
+                        style="
+                            height: 20px !important;
+                            margin-left: 3px;
+                            vertical-align: middle;
+                        "
+                        src="https://benrosenberg.info/posts/CSCI-260-notes/images/cc_dark.svg"
+                        alt="" /><img
+                        class="by-svg"
+                        style="
+                            height: 20px !important;
+                            margin-left: 3px;
+                            vertical-align: middle;
+                        "
+                        src="https://benrosenberg.info/posts/CSCI-260-notes/images/by_dark.svg"
+                        alt=""
+                /></a>
+            </p>
+        </footer>
+        <script src="https://benrosenberg.info/posts/CSCI-260-notes/meta/menu.js"></script>
+        <script src="https://benrosenberg.info/posts/CSCI-260-notes/meta/theme.js"></script>
+        <script>
+            window.onload = function () {
+                hljs.highlightAll();
+            };
+        </script>
+    </body>
+</html>

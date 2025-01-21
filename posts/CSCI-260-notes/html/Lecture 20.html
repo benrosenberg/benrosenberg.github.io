@@ -33,7 +33,7 @@
         <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/python.min.js"></script>
         <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/mipsasm.min.js"></script>
         <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/latex.min.js"></script>
-        <title>Lecture 10</title>
+        <title>Lecture 20</title>
         <link rel="stylesheet" href="https://benrosenberg.info/posts/CSCI-260-notes/meta/style.css" />
         <link rel="icon" type="image/png" href="https://benrosenberg.info/posts/CSCI-260-notes/images/favicon.png">
     </head>
@@ -45,7 +45,7 @@
                 <h2><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 01.html">CSCI 260 Notes</a></h2>
             </div>
             <div class="menu-content">
-                <ul><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 01.html">Lecture 01</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 02.html">Lecture 02</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 03.html">Lecture 03</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 04.html">Lecture 04</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 05.html">Lecture 05</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 06.html">Lecture 06</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 07.html">Lecture 07</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 08.html">Lecture 08</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 09.html">Lecture 09</a><li class="currentpage"><a class="currentpage" href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 10.html">Lecture 10</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 11.html">Lecture 11</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 12.html">Lecture 12</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 13.html">Lecture 13</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 14.html">Lecture 14</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 15.html">Lecture 15</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 16.html">Lecture 16</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 17.html">Lecture 17</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 18.html">Lecture 18</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 19.html">Lecture 19</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 20.html">Lecture 20</a></ul>
+                <ul><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 01.html">Lecture 01</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 02.html">Lecture 02</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 03.html">Lecture 03</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 04.html">Lecture 04</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 05.html">Lecture 05</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 06.html">Lecture 06</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 07.html">Lecture 07</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 08.html">Lecture 08</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 09.html">Lecture 09</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 10.html">Lecture 10</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 11.html">Lecture 11</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 12.html">Lecture 12</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 13.html">Lecture 13</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 14.html">Lecture 14</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 15.html">Lecture 15</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 16.html">Lecture 16</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 17.html">Lecture 17</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 18.html">Lecture 18</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 19.html">Lecture 19</a><li class="currentpage"><a class="currentpage" href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 20.html">Lecture 20</a></ul>
             </div>
             <div class="menu-footer">
                 <!-- <p>Menu Footer</p> -->
@@ -66,25 +66,83 @@
         <div class="main-wrapper" id="main">
             <!-- Hamburger menu button -->
             <button class="hamburger" id="hamburger">☰</button>
-            <div class="main"><h1>MIPS assembly continued</h1>
-<p>MIPS addresses are 4 bytes long, but so are MIPS instructions - so we need to use addressing modes to reach certain parts of memory.</p>
-<p>Example -</p>
-<pre><code class="language-mips">lw $t5, 2($s0)
+            <div class="main"><h2>Functions, continued (example)</h2>
+<p>Example from last lecture, but we save s0 on the stack so that value is preserved across function calls:</p>
+<pre><code class="language-mips">sum:
+    # save s0 on the stack
+    addi $sp, $sp, -4 # make stack 4 bytes larger to save full word-sized value
+    sw $s0, 0($sp) # save s0 to the stack where space was just made for it
+    add $s0, $a0, $a1
+    add $v0, $zero, $s0
+
+    # restore s0 from the stack
+    lw $s0, 0($sp) # restore s0 contents from the stack to s0
+    addi $sp, $sp, 4 # make stack 4 bytes smaller
+    jr $ra
 </code></pre>
-<p><code>2</code> is the offset, parens indicate that <code>$s0</code> should be treated as a memory address.</p>
-<h2>Loading - <code>lw</code>, <code>lh</code>, and <code>lb</code></h2>
-<p><img src="2024-10-20-13-23-27.png" alt="How lw works in memory" /></p>
-<p><img src="2024-10-20-13-24-04.png" alt="How lb and lh work in memory" /></p>
-<h2>Storing - <code>sw</code>, <code>sh</code>, and <code>sb</code></h2>
-<p><img src="2024-10-20-13-24-25.png" alt="How sw, sh, and sb work in memory" /></p>
-<h2>Storing and loading - signed integers</h2>
-<p>For <code>lh</code> and <code>lb</code>, only part of the register is filled, so it will autofill remaining bits depending on the <strong>sign</strong> of the integer.</p>
-<p><code>lb</code> and <code>lh</code> assume that we load a signed int.</p>
-<p>They use the idea of <strong>2's complement</strong> to <strong>preserve the meaning of data</strong>.</p>
+<h3>stack pointer revisited</h3>
+<p>Stack pointer - general purpose register indicating the end of the stack</p>
+<p>Using the stack pointer in a function:</p>
 <ul>
-<li>For numbers with leading zeroes, <code>lh</code> and <code>lb</code> fill the left side with zeroes</li>
-<li>For numbers with leading ones, <code>lh</code> and <code>lb</code> fill the left side with ones to preserve negativity</li>
+<li>Make stack larger by decreasing sp</li>
+<li>Then: use new sp as starting point, because RAM grows upwards while stack grows down</li>
+<li>Also: need to return stack to original state once function is over, by moving stack pointer</li>
 </ul>
+<p>Note on function pointer:</p>
+<ul>
+<li>We will not use fp in this class</li>
+<li>There are some architectures that don't have access to fp, and only use sp</li>
+</ul>
+<p>Example: multi-argument saving to the stack:</p>
+<pre><code class="language-mips">AVERAGE:
+    # store s0 and s1 on stack
+    addi $sp, $sp, -8
+    sw $s0, 0($sp)
+    sw $s1, 4($sp)
+
+    # function body
+    add $s0, $a0, $a1
+    srl $s1, $s0, 1
+    add $v0, $zero, $s1
+
+    # revert s0 and s1 to pre-function call values
+    lw $s0, 0($sp)
+    lw $s1, 4($sp)
+    addi $sp, $sp, 8
+    jr $ra
+</code></pre>
+<p>Example: calling another function inside a function:</p>
+<pre><code class="language-mips"># issue: $ra will have been overwritten by this function call
+# solution: put $ra on the stack as well!
+
+AVERAGE:
+    addi $sp, $sp, -12
+    sw $s0, 0($sp)
+    sw $s1, 4($sp)
+    sw $ra, 8($sp)
+
+    # function body
+    add $a3, $a0, $a1
+    jal DIVBYTWO # parameter in a3, result in v1
+    add $v0, $zero, $v1
+
+    lw $s0, 0($sp)
+    lw $s1, 4($sp)
+    lw $ra, 8($sp)
+    addi $sp, $sp, 12
+    jr $ra
+</code></pre>
+<p>Example: using t-register outside a function:</p>
+<pre><code class="language-mips">addi $t0, $zero, 8
+addi $a0, $zero, 4
+addi $a1, $zero, 5
+addi $sp, $sp, -4 # inc stack size by 4 bytes
+sw $t0, 0($sp) # preserve t0 on stack
+jal SUM
+lw $t0, 0($sp) # retrieve t0 from stack
+addi $sp, $sp, 4 # dec stack size by 4 bytes
+add $t1, $v0, $t0
+</code></pre>
 </div>
         </div>
 

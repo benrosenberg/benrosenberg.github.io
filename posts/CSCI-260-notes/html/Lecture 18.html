@@ -33,7 +33,7 @@
         <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/python.min.js"></script>
         <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/mipsasm.min.js"></script>
         <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/latex.min.js"></script>
-        <title>Lecture 10</title>
+        <title>Lecture 18</title>
         <link rel="stylesheet" href="https://benrosenberg.info/posts/CSCI-260-notes/meta/style.css" />
         <link rel="icon" type="image/png" href="https://benrosenberg.info/posts/CSCI-260-notes/images/favicon.png">
     </head>
@@ -45,7 +45,7 @@
                 <h2><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 01.html">CSCI 260 Notes</a></h2>
             </div>
             <div class="menu-content">
-                <ul><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 01.html">Lecture 01</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 02.html">Lecture 02</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 03.html">Lecture 03</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 04.html">Lecture 04</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 05.html">Lecture 05</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 06.html">Lecture 06</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 07.html">Lecture 07</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 08.html">Lecture 08</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 09.html">Lecture 09</a><li class="currentpage"><a class="currentpage" href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 10.html">Lecture 10</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 11.html">Lecture 11</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 12.html">Lecture 12</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 13.html">Lecture 13</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 14.html">Lecture 14</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 15.html">Lecture 15</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 16.html">Lecture 16</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 17.html">Lecture 17</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 18.html">Lecture 18</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 19.html">Lecture 19</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 20.html">Lecture 20</a></ul>
+                <ul><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 01.html">Lecture 01</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 02.html">Lecture 02</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 03.html">Lecture 03</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 04.html">Lecture 04</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 05.html">Lecture 05</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 06.html">Lecture 06</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 07.html">Lecture 07</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 08.html">Lecture 08</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 09.html">Lecture 09</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 10.html">Lecture 10</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 11.html">Lecture 11</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 12.html">Lecture 12</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 13.html">Lecture 13</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 14.html">Lecture 14</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 15.html">Lecture 15</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 16.html">Lecture 16</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 17.html">Lecture 17</a><li class="currentpage"><a class="currentpage" href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 18.html">Lecture 18</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 19.html">Lecture 19</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 20.html">Lecture 20</a></ul>
             </div>
             <div class="menu-footer">
                 <!-- <p>Menu Footer</p> -->
@@ -66,24 +66,61 @@
         <div class="main-wrapper" id="main">
             <!-- Hamburger menu button -->
             <button class="hamburger" id="hamburger">☰</button>
-            <div class="main"><h1>MIPS assembly continued</h1>
-<p>MIPS addresses are 4 bytes long, but so are MIPS instructions - so we need to use addressing modes to reach certain parts of memory.</p>
-<p>Example -</p>
-<pre><code class="language-mips">lw $t5, 2($s0)
-</code></pre>
-<p><code>2</code> is the offset, parens indicate that <code>$s0</code> should be treated as a memory address.</p>
-<h2>Loading - <code>lw</code>, <code>lh</code>, and <code>lb</code></h2>
-<p><img src="2024-10-20-13-23-27.png" alt="How lw works in memory" /></p>
-<p><img src="2024-10-20-13-24-04.png" alt="How lb and lh work in memory" /></p>
-<h2>Storing - <code>sw</code>, <code>sh</code>, and <code>sb</code></h2>
-<p><img src="2024-10-20-13-24-25.png" alt="How sw, sh, and sb work in memory" /></p>
-<h2>Storing and loading - signed integers</h2>
-<p>For <code>lh</code> and <code>lb</code>, only part of the register is filled, so it will autofill remaining bits depending on the <strong>sign</strong> of the integer.</p>
-<p><code>lb</code> and <code>lh</code> assume that we load a signed int.</p>
-<p>They use the idea of <strong>2's complement</strong> to <strong>preserve the meaning of data</strong>.</p>
+            <div class="main"><h3>Review from last lecture</h3>
+<p>The heap is slow because of <em>fragmentation</em> - data can be like this:</p>
 <ul>
-<li>For numbers with leading zeroes, <code>lh</code> and <code>lb</code> fill the left side with zeroes</li>
-<li>For numbers with leading ones, <code>lh</code> and <code>lb</code> fill the left side with ones to preserve negativity</li>
+<li>A</li>
+<li>B</li>
+<li>C</li>
+</ul>
+<p>Then, B is deleted, creating a &quot;memory hole&quot;:</p>
+<ul>
+<li>A</li>
+<li>_</li>
+<li>C</li>
+</ul>
+<p>This causes searching to take longer.</p>
+<h3>Stack and functions</h3>
+<p><img src="2025-01-20-18-57-58.png" alt="Stack function calling example" /></p>
+<ul>
+<li>The stack has an (artificially) limited size, imposed by the computer</li>
+<li>Exceeding this limit causes what is known as a &quot;stack overflow&quot;</li>
+</ul>
+<p>Some code examples:</p>
+<pre><code class="language-c++">// huge static array
+// if size is too big, could cause stack overflow
+double nums[1000];
+
+// dynamic array (NOT covered [prohibited in fact] in this class)
+double nums[x]; // where x is defined earlier
+
+// dynamically allocated array (the correct way to do it)
+vector&lt;double&gt; nums[100000000];
+
+// incorrect way to do it - static array would be too big
+// and this would cause a stack overflow
+double* nums = new double[100000000];
+</code></pre>
+<p>Another way to cause a stack overflow is with recursive functions:</p>
+<ul>
+<li>A recursive function is a function that calls itself</li>
+<li>If recursive functions go too deep into the stack, it will cause a stack overflow</li>
+</ul>
+<p>Frames:</p>
+<ul>
+<li>The piece of a stack used by a function is the &quot;frame&quot; or &quot;call frame&quot;</li>
+<li>In addition to the sp (stack pointer) there may also be an fp (frame pointer) that points to the bottom of the frame (see diagram), depending on the architecture<ul>
+<li>In this class we ignore the frame pointer, even though MIPS has it. Just use stack pointer for simplicity</li>
+</ul>
+</li>
+</ul>
+<p><img src="2025-01-20-19-07-35.png" alt="Frame and stack pointers" /></p>
+<h1>Functions</h1>
+<ul>
+<li>A <em>function</em> is a named piece of code that we can run (&quot;call&quot;) from other places in code</li>
+<li>Once a function is done, execution returns to where the function was called</li>
+<li>Return address - the address of the <strong>next</strong> instruction after the function call</li>
+<li><strong>A function should always know its return address</strong></li>
 </ul>
 </div>
         </div>

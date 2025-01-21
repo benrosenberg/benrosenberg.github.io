@@ -74,7 +74,7 @@ Since -1 is `1111 1111 1111 1111` in 2's complement notation, we just need to su
 
 Two approaches - "big-endian" and "little-endian"
 
-Sy we have the following in RAM, where B1..B4 represent bytes 1 through 4:
+Say we have the following in RAM, where B1..B4 represent bytes 1 through 4:
 
 contents|address
 -|-

@@ -33,7 +33,7 @@
         <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/python.min.js"></script>
         <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/mipsasm.min.js"></script>
         <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/latex.min.js"></script>
-        <title>Lecture 10</title>
+        <title>Lecture 19</title>
         <link rel="stylesheet" href="https://benrosenberg.info/posts/CSCI-260-notes/meta/style.css" />
         <link rel="icon" type="image/png" href="https://benrosenberg.info/posts/CSCI-260-notes/images/favicon.png">
     </head>
@@ -45,7 +45,7 @@
                 <h2><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 01.html">CSCI 260 Notes</a></h2>
             </div>
             <div class="menu-content">
-                <ul><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 01.html">Lecture 01</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 02.html">Lecture 02</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 03.html">Lecture 03</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 04.html">Lecture 04</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 05.html">Lecture 05</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 06.html">Lecture 06</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 07.html">Lecture 07</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 08.html">Lecture 08</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 09.html">Lecture 09</a><li class="currentpage"><a class="currentpage" href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 10.html">Lecture 10</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 11.html">Lecture 11</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 12.html">Lecture 12</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 13.html">Lecture 13</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 14.html">Lecture 14</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 15.html">Lecture 15</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 16.html">Lecture 16</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 17.html">Lecture 17</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 18.html">Lecture 18</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 19.html">Lecture 19</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 20.html">Lecture 20</a></ul>
+                <ul><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 01.html">Lecture 01</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 02.html">Lecture 02</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 03.html">Lecture 03</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 04.html">Lecture 04</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 05.html">Lecture 05</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 06.html">Lecture 06</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 07.html">Lecture 07</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 08.html">Lecture 08</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 09.html">Lecture 09</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 10.html">Lecture 10</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 11.html">Lecture 11</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 12.html">Lecture 12</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 13.html">Lecture 13</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 14.html">Lecture 14</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 15.html">Lecture 15</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 16.html">Lecture 16</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 17.html">Lecture 17</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 18.html">Lecture 18</a><li class="currentpage"><a class="currentpage" href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 19.html">Lecture 19</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 20.html">Lecture 20</a></ul>
             </div>
             <div class="menu-footer">
                 <!-- <p>Menu Footer</p> -->
@@ -66,25 +66,78 @@
         <div class="main-wrapper" id="main">
             <!-- Hamburger menu button -->
             <button class="hamburger" id="hamburger">☰</button>
-            <div class="main"><h1>MIPS assembly continued</h1>
-<p>MIPS addresses are 4 bytes long, but so are MIPS instructions - so we need to use addressing modes to reach certain parts of memory.</p>
-<p>Example -</p>
-<pre><code class="language-mips">lw $t5, 2($s0)
-</code></pre>
-<p><code>2</code> is the offset, parens indicate that <code>$s0</code> should be treated as a memory address.</p>
-<h2>Loading - <code>lw</code>, <code>lh</code>, and <code>lb</code></h2>
-<p><img src="2024-10-20-13-23-27.png" alt="How lw works in memory" /></p>
-<p><img src="2024-10-20-13-24-04.png" alt="How lb and lh work in memory" /></p>
-<h2>Storing - <code>sw</code>, <code>sh</code>, and <code>sb</code></h2>
-<p><img src="2024-10-20-13-24-25.png" alt="How sw, sh, and sb work in memory" /></p>
-<h2>Storing and loading - signed integers</h2>
-<p>For <code>lh</code> and <code>lb</code>, only part of the register is filled, so it will autofill remaining bits depending on the <strong>sign</strong> of the integer.</p>
-<p><code>lb</code> and <code>lh</code> assume that we load a signed int.</p>
-<p>They use the idea of <strong>2's complement</strong> to <strong>preserve the meaning of data</strong>.</p>
+            <div class="main"><h2>Functions (cont.): <code>jal</code> and <code>jr</code></h2>
+<p>JAL:</p>
 <ul>
-<li>For numbers with leading zeroes, <code>lh</code> and <code>lb</code> fill the left side with zeroes</li>
-<li>For numbers with leading ones, <code>lh</code> and <code>lb</code> fill the left side with ones to preserve negativity</li>
+<li>Tool to jump to function code: <code>jal</code></li>
+<li>The return address gets stored in <code>$ra</code> when the <code>jal</code> instruction is run</li>
+<li>JAL stands for &quot;jump and link&quot; - the linking here being the save of the return address in ra</li>
 </ul>
+<p>JR:</p>
+<ul>
+<li>Tool to return to the original postion: <code>jr</code> (i.e., <code>jr $ra</code>)</li>
+<li><code>$ra</code> - general purpose register, stands for &quot;return address&quot;</li>
+</ul>
+<p>To mark a function, use a label as we have seen before</p>
+<p>Argument and return (value) registers:</p>
+<ul>
+<li>Registers <code>$a0, $a1, $a2, $a3</code> are general purpose registers, supposed to be used to hold arguments in function calls</li>
+<li>Registers <code>$v0, $v1</code> are general purpose registers, supposed to be used to hold return values of function calls</li>
+</ul>
+<p>Example:</p>
+<p>Convert the following code. The first parameter is in <code>$a0</code>, second parameter is in <code>$a1</code>. Answer should be placed in <code>$v0</code>.</p>
+<pre><code class="language-c++">int sum(int a, int b) { return a + b; }
+</code></pre>
+<p>Solution (MIPS):</p>
+<pre><code class="language-mips">sum:
+    add $t0, $a0, $a1 # a+b
+    add $v0, $zero, $t0 # and place in return register
+    jr $ra
+
+...
+
+# function usage
+
+addi $s0, $zero, 8
+addi $a0, $zero, 4
+addi $a1, $zero, 5
+jal sum
+add $t1, $v0, $s0
+</code></pre>
+<p>In memory, there may be a &quot;halt&quot; instruction before function code space so that functions are not executed except by jumping directly to them:</p>
+<pre><code class="language-mips"># ...program code...
+
+HALT
+
+func1: 
+    ...
+    jr $ra
+
+func2:
+    ...
+    jr $ra
+</code></pre>
+<h2>Function calling conventions</h2>
+<p>But what if registers used in a function are storing things outside the function? Then the registers will be overwritten, because registers are global variables. For instance, in the previous example, if instead of <code>$s0</code> we had set <code>$t0</code> to some value, it would have been overwritten during the function call.</p>
+<p>Solution: function calling conventions.</p>
+<ul>
+<li>&quot;caller&quot; - piece of code that calls a function</li>
+<li>&quot;callee&quot; - piece of code that is called</li>
+</ul>
+<p>Convention:</p>
+<ul>
+<li>a function can use s-registers, but the function must guarantee that values of all s-registers before and after the function call are the same</li>
+<li>a function may use t-registers without any limitations</li>
+</ul>
+<p>Note:</p>
+<ul>
+<li>ALL functions must follow the above conventions.</li>
+<li>These rules apply to all general-purpose registers, not just s- and t-registers<ul>
+<li>See the green page in the textbook appendix for information on the responsibility of register preservation</li>
+</ul>
+</li>
+</ul>
+<p>In this class, we should assume that any function we are given (e.g. on an exam) follows the function calling convention correctly.</p>
 </div>
         </div>
 

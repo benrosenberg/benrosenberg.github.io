@@ -1,4 +1,4 @@
-CPU instructions (continnued)
+CPU instructions (continued)
 
 - all instructions are 4 bytes long
 - op code is always in leftmost 6 bits
