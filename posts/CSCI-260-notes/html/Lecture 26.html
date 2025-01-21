@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css"
+            integrity="sha384-zh0CIslj+VczCZtlzBcjt5ppRcsAmDnRem7ESsYwWwg3m/OaJ2l4x7YBZl9Kxxib"
+            crossorigin="anonymous"
+        />
+        <script src="https://benrosenberg.info/posts/CSCI-260-notes/meta/math.js"></script>
+        <script
+            defer
+            src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.js"
+            integrity="sha384-Rma6DA2IPUwhNxmrB/7S3Tno0YY7sFu9WSYMCuulLhIqYSGZ2gKCJWIqhBWqMQfh"
+            crossorigin="anonymous"
+            onload="render_katex_math()"
+        ></script>
+        <link
+            rel="stylesheet"
+            disabled=""
+            title="hljs-light"
+            href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs.min.css"
+        />
+        <link
+            rel="stylesheet"
+            title="hljs-dark"
+            href="https://benrosenberg.info/posts/CSCI-260-notes/meta/hljs-gruvbox-dark.css"
+        />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/cpp.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/python.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/mipsasm.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/latex.min.js"></script>
+        <title>Lecture 26</title>
+        <link rel="stylesheet" href="https://benrosenberg.info/posts/CSCI-260-notes/meta/style.css" />
+        <link rel="icon" type="image/png" href="https://benrosenberg.info/posts/CSCI-260-notes/images/favicon.png">
+    </head>
+    <body>
+        <span style="display: none" id="SITE_ROOT_TAG">https://benrosenberg.info/posts/CSCI-260-notes</span>
+        <!-- Popout menu -->
+        <nav class="menu" id="menu">
+            <div class="menu-header">
+                <h2><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 01.html">CSCI 260 Notes</a></h2>
+            </div>
+            <div class="menu-content">
+                <ul><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 01.html">Lecture 01</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 02.html">Lecture 02</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 03.html">Lecture 03</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 04.html">Lecture 04</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 05.html">Lecture 05</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 06.html">Lecture 06</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 07.html">Lecture 07</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 08.html">Lecture 08</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 09.html">Lecture 09</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 10.html">Lecture 10</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 11.html">Lecture 11</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 12.html">Lecture 12</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 13.html">Lecture 13</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 14.html">Lecture 14</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 15.html">Lecture 15</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 16.html">Lecture 16</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 17.html">Lecture 17</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 18.html">Lecture 18</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 19.html">Lecture 19</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 20.html">Lecture 20</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 21.html">Lecture 21</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 22.html">Lecture 22</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 23.html">Lecture 23</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 24.html">Lecture 24</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 25.html">Lecture 25</a><li class="currentpage"><a class="currentpage" href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 26.html">Lecture 26</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 27.html">Lecture 27</a></ul>
+            </div>
+            <div class="menu-footer">
+                <!-- <p>Menu Footer</p> -->
+                <p>
+                    <span class="theme-toggle"
+                        ><button
+                            class="theme-toggle-button"
+                            onclick="toggleColorMode();"
+                        >
+                            switch theme
+                        </button></span
+                    >
+                </p>
+            </div>
+        </nav>
+
+        <!-- Main content area -->
+        <div class="main-wrapper" id="main">
+            <!-- Hamburger menu button -->
+            <button class="hamburger" id="hamburger">☰</button>
+            <div class="main"><h2>Control unit and control lines (cont.)</h2>
+<p>Note: in the textbook there is a table (see below) that has information on control circuitry (do NOT need to memorize for final exam).</p>
+<p>Additional terminology:</p>
+<ul>
+<li>&quot;deasserted&quot; =&gt; set to 0</li>
+<li>&quot;asserted&quot; =&gt; set to 1</li>
+<li>&quot;signal name&quot; =&gt; e.g., &quot;RegDst&quot;, or &quot;ALUSrc&quot;</li>
+<li>&quot;don't care condition&quot; =&gt; if we don't care about the value on a control line, we write &quot;X&quot; instead of 0 or 1.<ul>
+<li>Note that this matters for the exam - if we write 0 or 1 instead of X, even if it isn't used, points will be deducted.</li>
+</ul>
+</li>
+</ul>
+<p>Control line functions:</p>
+<ul>
+<li>MemRead: controls whether Data Memory component performs memory reading or not<ul>
+<li>Supplies 1 through control line if so, otherwise 0</li>
+<li>e.g. for ADD instruction, send 0</li>
+</ul>
+</li>
+<li>MemtoReg: leads to Multiplexor (MUX)<ul>
+<li>if 0 then sends ALU result to register file</li>
+<li>if 1 sends memory content (from data memory read) to register file</li>
+</ul>
+</li>
+<li>RegDst: determines where to write<ul>
+<li>If asserted, register to write comes from Instr[15:11] (shorthand for bits 15 through 11 of the instruction)</li>
+<li>If deasserted, comes from Instr[20:16]</li>
+</ul>
+</li>
+<li>MemWrite: whether to write to memory or not</li>
+<li>ALUSrc: control second output of ALU<ul>
+<li>immediate value vs. register</li>
+<li>immediate value is 1, register is 0</li>
+</ul>
+</li>
+<li>RegWrite: controls whether register is written to in register file<ul>
+<li>Basically just the &quot;write enable&quot; input from earlier</li>
+</ul>
+</li>
+<li>ALUOp: linked to ALU control unit</li>
+</ul>
+<p>ALU control unit:</p>
+<ul>
+<li>2 inputs:<ul>
+<li>First input: Instr[5:0] (function field)<ul>
+<li>Recall: R-type instructions have opcode 0 and are differentiated by the function field</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>Example: Control line values for <code>sw</code> instruction</p>
+<pre><code class="language-mips">sw $s0, 12($t6)
+</code></pre>
+<p>Control lines for the above instruction will have the following values:</p>
+<ul>
+<li>RegDst: X (&quot;don't care&quot;)</li>
+<li>Branch: 0</li>
+<li>MemRead: 0</li>
+<li>MemtoReg: X (&quot;don't care&quot;)</li>
+<li>ALUOp: 00 (see table for ALU operations in previous lecture)</li>
+<li>MemWrite: 1</li>
+<li>ALUSrc: 0</li>
+<li>RegWrite: 0</li>
+</ul>
+<p>The &quot;don't care&quot; conditions are relevant in the following example scenarios:</p>
+<ul>
+<li>RegWrite is 0, so we are not writing<ul>
+<li>Therefore, RegDst should be &quot;X&quot; because choosing which register &quot;not&quot; to write to is meaningless</li>
+</ul>
+</li>
+<li>MemRead is 0, so we are not reading from memory<ul>
+<li>Therefore, MemtoReg should be &quot;X&quot; because choosing how to use the memory value we are &quot;not&quot; reading from is meaningless</li>
+</ul>
+</li>
+</ul>
+<h1>CPU design approaches</h1>
+<ol>
+<li>Single-cycle: 1 instruction per cycle<ul>
+<li>Bad because instructions take different time to execute</li>
+<li>Can only choose one clock speed, so every clock cycle needs to take at least as long as the longest-running instruction (ends up being very slow)</li>
+</ul>
+</li>
+<li>Multi-cycle: different instructions take different numbers of cycles<ul>
+<li>Good because we can differentiate between short-running and long-running instructions</li>
+<li>But we can do better - still some inefficiencies</li>
+</ul>
+</li>
+<li>Pipelining<ul>
+<li>Idea: start working on next instruction while processing previous instruction</li>
+</ul>
+</li>
+</ol>
+</div>
+        </div>
+
+        <footer class="footer" id="mainfooter">
+            <p
+                xmlns:cc="http://creativecommons.org/ns#"
+                xmlns:dct="http://purl.org/dc/terms/"
+            >
+                <a
+                    property="dct:title"
+                    rel="cc:attributionURL"
+                    href="https://benrosenberg.info"
+                    class="link-problem"
+                    >benrosenberg.info</a
+                >
+                by <span property="cc:attributionName">Ben Rosenberg</span> is
+                licensed under
+                <a
+                    href="https://creativecommons.org/licenses/by/4.0/?ref=chooser-v1"
+                    target="_blank"
+                    rel="license noopener noreferrer"
+                    style="display: inline-block"
+                    class="link-problem"
+                    >CC BY 4.0<img
+                        class="cc-svg"
+                        style="
+                            height: 20px !important;
+                            margin-left: 3px;
+                            vertical-align: middle;
+                        "
+                        src="https://benrosenberg.info/posts/CSCI-260-notes/images/cc_dark.svg"
+                        alt="" /><img
+                        class="by-svg"
+                        style="
+                            height: 20px !important;
+                            margin-left: 3px;
+                            vertical-align: middle;
+                        "
+                        src="https://benrosenberg.info/posts/CSCI-260-notes/images/by_dark.svg"
+                        alt=""
+                /></a>
+            </p>
+        </footer>
+        <script src="https://benrosenberg.info/posts/CSCI-260-notes/meta/menu.js"></script>
+        <script src="https://benrosenberg.info/posts/CSCI-260-notes/meta/theme.js"></script>
+        <script>
+            window.onload = function () {
+                hljs.highlightAll();
+            };
+        </script>
+    </body>
+</html>

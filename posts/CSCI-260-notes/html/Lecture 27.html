@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css"
+            integrity="sha384-zh0CIslj+VczCZtlzBcjt5ppRcsAmDnRem7ESsYwWwg3m/OaJ2l4x7YBZl9Kxxib"
+            crossorigin="anonymous"
+        />
+        <script src="https://benrosenberg.info/posts/CSCI-260-notes/meta/math.js"></script>
+        <script
+            defer
+            src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.js"
+            integrity="sha384-Rma6DA2IPUwhNxmrB/7S3Tno0YY7sFu9WSYMCuulLhIqYSGZ2gKCJWIqhBWqMQfh"
+            crossorigin="anonymous"
+            onload="render_katex_math()"
+        ></script>
+        <link
+            rel="stylesheet"
+            disabled=""
+            title="hljs-light"
+            href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs.min.css"
+        />
+        <link
+            rel="stylesheet"
+            title="hljs-dark"
+            href="https://benrosenberg.info/posts/CSCI-260-notes/meta/hljs-gruvbox-dark.css"
+        />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/cpp.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/python.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/mipsasm.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/latex.min.js"></script>
+        <title>Lecture 27</title>
+        <link rel="stylesheet" href="https://benrosenberg.info/posts/CSCI-260-notes/meta/style.css" />
+        <link rel="icon" type="image/png" href="https://benrosenberg.info/posts/CSCI-260-notes/images/favicon.png">
+    </head>
+    <body>
+        <span style="display: none" id="SITE_ROOT_TAG">https://benrosenberg.info/posts/CSCI-260-notes</span>
+        <!-- Popout menu -->
+        <nav class="menu" id="menu">
+            <div class="menu-header">
+                <h2><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 01.html">CSCI 260 Notes</a></h2>
+            </div>
+            <div class="menu-content">
+                <ul><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 01.html">Lecture 01</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 02.html">Lecture 02</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 03.html">Lecture 03</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 04.html">Lecture 04</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 05.html">Lecture 05</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 06.html">Lecture 06</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 07.html">Lecture 07</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 08.html">Lecture 08</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 09.html">Lecture 09</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 10.html">Lecture 10</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 11.html">Lecture 11</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 12.html">Lecture 12</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 13.html">Lecture 13</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 14.html">Lecture 14</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 15.html">Lecture 15</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 16.html">Lecture 16</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 17.html">Lecture 17</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 18.html">Lecture 18</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 19.html">Lecture 19</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 20.html">Lecture 20</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 21.html">Lecture 21</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 22.html">Lecture 22</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 23.html">Lecture 23</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 24.html">Lecture 24</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 25.html">Lecture 25</a><li><a href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 26.html">Lecture 26</a><li class="currentpage"><a class="currentpage" href="https://benrosenberg.info/posts/CSCI-260-notes/html/Lecture 27.html">Lecture 27</a></ul>
+            </div>
+            <div class="menu-footer">
+                <!-- <p>Menu Footer</p> -->
+                <p>
+                    <span class="theme-toggle"
+                        ><button
+                            class="theme-toggle-button"
+                            onclick="toggleColorMode();"
+                        >
+                            switch theme
+                        </button></span
+                    >
+                </p>
+            </div>
+        </nav>
+
+        <!-- Main content area -->
+        <div class="main-wrapper" id="main">
+            <!-- Hamburger menu button -->
+            <button class="hamburger" id="hamburger">☰</button>
+            <div class="main"><p>Final exam - scheduled for 12/19/2024</p>
+<ul>
+<li>Cumulative - mostly new questions but will have some old material as well</li>
+<li>2 hours - 6:20-8:20</li>
+</ul>
+<hr />
+<p>Pipelining - start working on next instruction before previous instruction is done executing.</p>
+<p>Idea: take picture (CPU diagram) and reposition components to come in stages/layers</p>
+<ul>
+<li>Draw dotted lines between sections of diagram</li>
+<li>Each section gets a clock tick</li>
+</ul>
+<p>As soon as first instruction moves to register file from instruction memory unit, second instruction can go to instruction memory unit.</p>
+<ul>
+<li>Leads to higher CPU component utilization</li>
+<li>Will not go into implementation details because of limited time</li>
+<li>Will not be asked to deal with pipeline diagrams on final either</li>
+</ul>
+<h2>MIPS pipelining stages</h2>
+<ol>
+<li>Instruction fetch</li>
+<li>Instruction decode (including control unit, and register reading)</li>
+<li>Execution</li>
+<li>Memory access</li>
+<li>Write back</li>
+</ol>
+<p>Note: in reality, there are 20-30 pipelining stages - the above is a simplified pipeline.</p>
+<p>The more pipelining stages there are, the more efficient the CPU will be.</p>
+<h2>Pipeline hazards</h2>
+<p>Sometimes, there are situations where pipelining malfunctions or isn't possible - these are known as <strong>pipelining hazards</strong>.</p>
+<ul>
+<li>Structural hazard: two instructions need the same component at the same time<ul>
+<li>Not an issue for MIPS</li>
+</ul>
+</li>
+<li>Data hazard: can either deal with via data forwarding, or there may be no easy way out<ul>
+<li>Data forwarding: compiler helps with this issue by rearranging instructions (see example)</li>
+<li>No easy way out: rearranging instructions may not be able to help with the issue (see example)</li>
+</ul>
+</li>
+<li>Control hazard: CPU unsure where program goes next, needs to wait for program to continue executing to determine<ul>
+<li>Branch prediction can be used to eliminate some of the issue with this but not always accurate</li>
+</ul>
+</li>
+</ul>
+<p>Example: data and control hazards</p>
+<pre><code class="language-mips"># data hazard that can be fixed with data forwarding
+# (compiler rearranging instructions)
+addi $t0, $t1, 3
+add $t2, $t0, $t4
+
+# data hazard with no easy way out
+lw $t0, 0($s1)
+add $t2, $t0, $t4
+
+# control hazard - will behave differently based on branch
+beq $s1, $s2, L1
+add $t0, $t0, $t0
+sw $t0, 0($s7)
+L1: addi $t0, $t0, -1
+</code></pre>
+<p>More terminology:</p>
+<ul>
+<li>&quot;Pipeline bubble&quot;: waiting (stalling) for data from previous instruction</li>
+<li>&quot;Pipeline stall&quot;: pipeline has to wait for instruction(s) to finish</li>
+</ul>
+<p>Data forwarding:</p>
+<ul>
+<li>Method to mitigate (at least partially) inefficiencies introduced to data hazards when pipelining</li>
+<li>Value that next instruction needs may be ready even before that instruction has finished the rest of the pipeline</li>
+<li>e.g., the result from the ALU can be forwarded back to the ALU input directly</li>
+</ul>
+<p>Branch prediction (aka speculative execution):</p>
+<ul>
+<li>Method of (or hardware mechanism for) mitigating control hazards</li>
+<li>Tries to predict which branch is taken - CPU guesses</li>
+<li>If guess is incorrect, CPU needs to flush pipeline</li>
+<li>Note: in modern CPUs, there is a complicated branch prediction unit</li>
+<li>Note: compilers may use &quot;branchless programming&quot; or alternative methods to make branches more predictable</li>
+</ul>
+</div>
+        </div>
+
+        <footer class="footer" id="mainfooter">
+            <p
+                xmlns:cc="http://creativecommons.org/ns#"
+                xmlns:dct="http://purl.org/dc/terms/"
+            >
+                <a
+                    property="dct:title"
+                    rel="cc:attributionURL"
+                    href="https://benrosenberg.info"
+                    class="link-problem"
+                    >benrosenberg.info</a
+                >
+                by <span property="cc:attributionName">Ben Rosenberg</span> is
+                licensed under
+                <a
+                    href="https://creativecommons.org/licenses/by/4.0/?ref=chooser-v1"
+                    target="_blank"
+                    rel="license noopener noreferrer"
+                    style="display: inline-block"
+                    class="link-problem"
+                    >CC BY 4.0<img
+                        class="cc-svg"
+                        style="
+                            height: 20px !important;
+                            margin-left: 3px;
+                            vertical-align: middle;
+                        "
+                        src="https://benrosenberg.info/posts/CSCI-260-notes/images/cc_dark.svg"
+                        alt="" /><img
+                        class="by-svg"
+                        style="
+                            height: 20px !important;
+                            margin-left: 3px;
+                            vertical-align: middle;
+                        "
+                        src="https://benrosenberg.info/posts/CSCI-260-notes/images/by_dark.svg"
+                        alt=""
+                /></a>
+            </p>
+        </footer>
+        <script src="https://benrosenberg.info/posts/CSCI-260-notes/meta/menu.js"></script>
+        <script src="https://benrosenberg.info/posts/CSCI-260-notes/meta/theme.js"></script>
+        <script>
+            window.onload = function () {
+                hljs.highlightAll();
+            };
+        </script>
+    </body>
+</html>
