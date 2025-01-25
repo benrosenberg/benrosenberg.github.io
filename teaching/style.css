@@ -2,3 +2,8 @@ body {
     margin: 3rem;
     font-family: sans-serif;
 }
+
+table, td, th {
+    border: 1px solid #000;
+    border-collapse: collapse;
+}
