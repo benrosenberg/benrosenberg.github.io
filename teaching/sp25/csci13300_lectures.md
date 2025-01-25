@@ -30,6 +30,7 @@ Unit 1 resources:
 
 - [Learn something new](csci13300_units/1_Learn.pdf) [PDF]
 - [Apply what you learned](csci13300_units/1_Apply.pdf) [PDF]
+- [Solutions](unit_solutions/unit1_solution.html)
 
 Links:
 
