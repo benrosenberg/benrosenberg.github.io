@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, user-scalable=yes"
+        />
+        <meta name="author" content="Ben Rosenberg" />
+        <title>Color Scheme Generator</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+        <script src="https://unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/js.min.js"></script>
+        <script src="https://unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/python.min.js"></script>
+        <script src="https://unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/d.min.js"></script>
+        <style>
+            :root {
+                --color-bg: #282828;
+                --color-1: #ebdbb2;
+                --color-2: #fb4934;
+                --color-3: #83a598;
+                --color-4: #fabd2f;
+                --color-5: #8f3f71;
+                --color-6: #fe8019;
+                --color-7: #b8bb26;
+                --color-8: #8ec07c;
+                --color-9: #928374;
+            }
+
+            body,
+            textarea,
+            input,
+            button,
+            select,
+            option {
+                background-color: #282828;
+                color: #ebdbb2;
+            }
+
+            .hljs {
+                display: block;
+                overflow-x: auto;
+                padding: 0.5em;
+                background: var(--color-bg);
+            }
+
+            .hljs,
+            .hljs-subst {
+                color: var(--color-1);
+            }
+
+            /* Gruvbox Red */
+            .hljs-deletion,
+            .hljs-formula,
+            .hljs-keyword,
+            .hljs-link,
+            .hljs-selector-tag {
+                color: var(--color-2);
+            }
+
+            /* Gruvbox Blue */
+            .hljs-built_in,
+            .hljs-emphasis,
+            .hljs-name,
+            .hljs-quote,
+            .hljs-strong,
+            .hljs-title,
+            .hljs-variable {
+                color: var(--color-3);
+            }
+
+            /* Gruvbox Yellow */
+            .hljs-attr,
+            .hljs-params,
+            .hljs-template-tag,
+            .hljs-type {
+                color: var(--color-4);
+            }
+
+            /* Gruvbox Purple */
+            .hljs-builtin-name,
+            .hljs-doctag,
+            .hljs-literal,
+            .hljs-number {
+                color: var(--color-5);
+            }
+
+            /* Gruvbox Orange */
+            .hljs-code,
+            .hljs-meta,
+            .hljs-regexp,
+            .hljs-selector-id,
+            .hljs-template-variable {
+                color: var(--color-6);
+            }
+
+            /* Gruvbox Green */
+            .hljs-addition,
+            .hljs-meta-string,
+            .hljs-section,
+            .hljs-selector-attr,
+            .hljs-selector-class,
+            .hljs-string,
+            .hljs-symbol {
+                color: var(--color-7);
+            }
+
+            /* Gruvbox Aqua */
+            .hljs-attribute,
+            .hljs-bullet,
+            .hljs-class,
+            .hljs-function,
+            .hljs-function .hljs-keyword,
+            .hljs-meta-keyword,
+            .hljs-selector-pseudo,
+            .hljs-tag {
+                color: var(--color-8);
+            }
+
+            /* Gruvbox Gray */
+            .hljs-comment {
+                color: var(--color-9);
+            }
+
+            /* Gruvbox Purple */
+            .hljs-link_label,
+            .hljs-literal,
+            .hljs-number {
+                color: var(--color-5);
+            }
+
+            .hljs-comment,
+            .hljs-emphasis {
+                font-style: italic;
+            }
+
+            .hljs-section,
+            .hljs-strong,
+            .hljs-tag {
+                font-weight: bold;
+            }
+        </style>
+        <link rel="stylesheet" href="https://benrosenberg.info/style.css" />
+        <link
+            rel="icon"
+            type="image/png"
+            href="https://benrosenberg.info/favicon.png"
+        />
+        <style>
+            table,
+            td,
+            tr {
+                border: none;
+            }
+            .mobilewarning {
+                display: none;
+            }
+            @media screen and (max-width: 900px) {
+                .mobilewarning {
+                    display: initial;
+                    font-weight: bold;
+                }
+            }
+
+            @media screen and (max-width: 500px) {
+                .mobilewarning {
+                    display: initial;
+                    font-weight: bold;
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+        <ul class="sidenav">
+            <li><a href="/">Home</a></li>
+            <li>
+                <a class="active" href="https://benrosenberg.info/posts"
+                    >Posts</a
+                >
+            </li>
+            <li><a href="https://github.com/benrosenberg">GitHub</a></li>
+            <li>
+                <a href="https://www.linkedin.com/in/ben-rosenberg-0b5359205/"
+                    >LinkedIn</a
+                >
+            </li>
+        </ul>
+
+        <div class="content">
+            <p class="mobilewarning">
+                This site is not optimized for use on a mobile device.
+            </p>
+            <table style="width: 100%">
+                <tr>
+                    <td>
+                        <h1>Color scheme generator</h1>
+                        <p>
+                            Methodology: the "generate color scheme" button
+                            generates random colors that are somewhat far from
+                            the input background color and from each other.
+                            Starting with the background color, it generates 100
+                            random colors for each of the 9 it needs to
+                            generate, and takes the one that has the largest
+                            distance to all the other colors generated (or
+                            chosen, in the case of the background color) so far.
+                            This is somewhat volatile but ensures that the
+                            colors generated each time are different, and in
+                            different orders.
+                        </p>
+                        <p>
+                            This was done really quickly and without care for
+                            code quality, so use/inspect at your own risk.
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Select background color:
+                        <input id="bgcolor" type="color" value="#282828" />
+                        <button onclick="randomize_bg()">Random color</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button
+                            onclick="generate_and_apply_scheme_based_on_background()"
+                        >
+                            Generate and apply new scheme
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p><canvas id="colorCanvas" height="0"></canvas></p>
+                        <details>
+                            <summary>Color list - Hex and RGB</summary>
+                            <p id="colorlist">
+                                Default color scheme is gruvbox-dark (from <a href="https://github.com/morhetz/gruvbox">https://github.com/morhetz/gruvbox</a>)
+                            </p>
+                        </details>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="language">Choose a language:</label
+                        ><select id="langSelect" name="language">
+                            <option value="d">d</option>
+                            <option value="js">js</option>
+                            <option selected value="python3">python3</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button onclick="fill_with_sample_code()">
+                            Fill code area with sample code</button
+                        ><button onclick="refresh_output()">
+                            Refresh output
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top">
+                        <textarea
+                            placeholder="Paste some code..."
+                            rows="50"
+                            cols="100"
+                            id="codeinput"
+                        ></textarea>
+                    </td>
+                    <td><div id="output">output...</div></td>
+                </tr>
+            </table>
+        </div>
+        <script>
+            function random_color() {
+                return new Color(
+                    Math.floor(Math.random() * 256),
+                    Math.floor(Math.random() * 256),
+                    Math.floor(Math.random() * 256)
+                );
+            }
+
+            function randomize_bg() {
+                var bgcolor = document.getElementById("bgcolor");
+                var newcolor = random_color();
+                bgcolor.value = newcolor.toHex();
+            }
+
+            const language_map = {
+                d: "d",
+                python3: "python",
+                js: "js",
+            };
+
+            function apply_scheme(bg, colorlist) {
+                var code = document.getElementById("codeinput").value;
+                var output = document.getElementById("output");
+                var langSelect = document.getElementById("langSelect");
+                output.innerHTML = `<pre><code class="language-${
+                    language_map[langSelect.value]
+                }">${code}</code></pre>`;
+                hljs.highlightAll();
+                const colors = {
+                    bg: bg,
+                    1: colorlist[0],
+                    2: colorlist[1],
+                    3: colorlist[2],
+                    4: colorlist[3],
+                    5: colorlist[4],
+                    6: colorlist[5],
+                    7: colorlist[6],
+                    8: colorlist[7],
+                    9: colorlist[8],
+                };
+                const root = document.documentElement;
+                Object.entries(colors).forEach(([color, value]) => {
+                    var cssVarName = `--color-${color}`;
+                    root.style.setProperty(cssVarName, value);
+                });
+
+                var colorlist_display = document.getElementById("colorlist");
+                var bgrgb = bg.toString();
+                var colorlist_text = `<p style="font-family: monospace">color-bg:<br>Hex = ${bg.toHex()}<br>RGB = ${bgrgb.substring(
+                    4,
+                    bgrgb.length - 1
+                )}</p>`;
+                colorlist.forEach((color, idx) => {
+                    var rgb = color.toString();
+                    colorlist_text += `<p style="font-family: monospace">color-${idx}:<br>Hex = ${color.toHex()}<br>RGB = ${rgb.substring(
+                        4,
+                        rgb.length - 1
+                    )}</p>`;
+                });
+                colorlist_display.innerHTML = colorlist_text;
+            }
+
+            function refresh_output() {
+                var code = document.getElementById("codeinput").value;
+                var output = document.getElementById("output");
+                var langSelect = document.getElementById("langSelect");
+                output.innerHTML = `<pre><code class="language-${
+                    language_map[langSelect.value]
+                }">${code}</code></pre>`;
+                hljs.highlightAll();
+            }
+
+            class Color {
+                constructor(r, g, b) {
+                    // If constructor receives 3 arguments, it's assumed to be r, g, b values
+                    if (arguments.length === 3) {
+                        this.r = r;
+                        this.g = g;
+                        this.b = b;
+                    }
+                    // If a single argument is passed, it should be a hex string
+                    else if (arguments.length === 1 && typeof r === "string") {
+                        // Strip off the leading '#' if present
+                        r = r.replace("#", "");
+
+                        // Parse hex string into r, g, b components
+                        this.r = parseInt(r.substring(0, 2), 16);
+                        this.g = parseInt(r.substring(2, 4), 16);
+                        this.b = parseInt(r.substring(4, 6), 16);
+
+                        // console.log(this.toString());
+                    }
+                }
+
+                toString() {
+                    return `rgb(${this.r}, ${this.g}, ${this.b})`;
+                }
+
+                toHex() {
+                    return `#${this.r.toString(16)}${this.g.toString(
+                        16
+                    )}${this.b.toString(16)}`;
+                }
+            }
+
+            // Function to calculate squared distance between two RGB colors
+            function colorDistanceSq(c1, c2) {
+                return (
+                    (c1.r - c2.r) ** 2 + (c1.g - c2.g) ** 2 + (c1.b - c2.b) ** 2
+                );
+            }
+
+            // Function to generate a random Color color
+            function generateRandomColor() {
+                return new Color(
+                    Math.floor(Math.random() * 256),
+                    Math.floor(Math.random() * 256),
+                    Math.floor(Math.random() * 256)
+                );
+            }
+
+            // Function to find the most distant color from the existing set
+            function findMostDistantColor(existingColors) {
+                let bestColor = null;
+                let maxMinDist = -1;
+
+                // Try 100 random candidates and pick the one that's farthest from existing colors
+                for (let i = 0; i < 100; i++) {
+                    const candidate = generateRandomColor();
+                    let minDist = Math.min(
+                        ...existingColors.map((c) =>
+                            colorDistanceSq(c, candidate)
+                        )
+                    );
+
+                    if (minDist > maxMinDist) {
+                        maxMinDist = minDist;
+                        bestColor = candidate;
+                    }
+                }
+
+                return bestColor;
+            }
+
+            // Function to generate optimized colors by picking the most distant ones
+            function generateOptimizedColors(existingColors, count) {
+                let generatedColors = [];
+                for (let i = 0; i < count; i++) {
+                    let newColor = findMostDistantColor(
+                        existingColors.concat(generatedColors)
+                    );
+                    generatedColors.push(newColor);
+                }
+                return generatedColors;
+            }
+
+            function drawColorGrid(colors, squareSize = 100, cols = 6) {
+                const totalColors = colors.length;
+                const rows = Math.ceil(totalColors / cols);
+
+                const imgWidth = cols * squareSize;
+                const imgHeight = rows * squareSize;
+
+                const canvas = document.getElementById("colorCanvas");
+                canvas.width = imgWidth;
+                canvas.height = imgHeight;
+                const ctx = canvas.getContext("2d");
+
+                for (let i = 0; i < colors.length; i++) {
+                    const x = (i % cols) * squareSize;
+                    const y = Math.floor(i / cols) * squareSize;
+
+                    const color = colors[i].toString();
+                    // console.log(color, x, y);
+                    ctx.fillStyle = color;
+                    ctx.fillRect(x, y, squareSize, squareSize);
+                    ctx.strokeStyle = "black";
+                    ctx.strokeRect(x, y, squareSize, squareSize);
+                }
+            }
+
+            function generate_and_apply_scheme_based_on_background() {
+                var color = document.getElementById("bgcolor").value;
+                const inputColors = [new Color(color)];
+
+                const optimizedColors = generateOptimizedColors(inputColors, 9);
+
+                drawColorGrid(optimizedColors, (squareSize = 100), (cols = 9));
+
+                apply_scheme(inputColors[0], optimizedColors);
+            }
+
+            const sample_code = {
+                python3: `import numpy as np
+from scipy.spatial.distance import cdist
+from scipy.optimize import minimize
+
+# Define input colors (in RGB space, values 0-255)
+input_colors = np.array([
+    # [30, 30, 30],   # fg1
+    # [220, 220, 220], # fg2
+    # [0, 0, 0],      # bg1
+    # [255, 255, 255]  # bg2
+    [0, 88, 163], # bg1
+    [255, 204, 2],   # fg1
+    [3, 81, 148],  # bg2
+    [255, 255, 255],      # fg2
+])
+
+# Function to calculate the minimum pairwise distance between colors
+def min_distance(colors):
+    all_colors = np.vstack((input_colors, colors))
+    dist_matrix = cdist(all_colors, all_colors, metric='euclidean')
+    np.fill_diagonal(dist_matrix, np.inf)  # Ignore self-distances
+    return np.min(dist_matrix)
+
+# Objective function for optimizer (maximize distance by minimizing negative)
+def objective(x):
+    colors = x.reshape(-1, 3)
+    return -min_distance(colors)
+
+# Generate initial random colors
+initial_guess = np.random.randint(0, 256, size=(8, 3))
+
+# Bounds for RGB values (0-255)
+bounds = [(0, 255)] * 24  # 8 colors * 3 channels
+
+# Optimize colors to maximize spacing
+result = minimize(objective, initial_guess.flatten(), bounds=bounds, method='L-BFGS-B')
+optimized_colors = result.x.reshape(-1, 3).astype(int)
+
+print("Generated Colors:")
+print(optimized_colors)
+
+
+from PIL import Image, ImageDraw
+
+# Function to visualize colors in a 6x2 grid
+def create_color_grid(input_colors, generated_colors, square_size=100, grid_size=(6, 2)):
+    all_colors = np.vstack((input_colors, generated_colors))
+    img_width = grid_size[0] * square_size
+    img_height = grid_size[1] * square_size
+
+    # Create a blank image
+    img = Image.new("RGB", (img_width, img_height), "white")
+    draw = ImageDraw.Draw(img)
+
+    # Draw each color as a square
+    for idx, color in enumerate(all_colors):
+        x = (idx % grid_size[0]) * square_size
+        y = (idx // grid_size[0]) * square_size
+        draw.rectangle([x, y, x + square_size, y + square_size], fill=tuple(color))
+
+    img.show()  # Display the image
+    img.save("color_scheme.png")  # Save the image as a file
+
+# Visualize the input and generated colors
+create_color_grid(input_colors, optimized_colors)
+`,
+                d: `import std.stdio;
+import std.algorithm;
+import std.range;
+import std.random;
+import std.math;
+import std.array;
+import std.conv;
+import arsd.simpledisplay;
+
+// Define a struct to represent RGB colors
+struct RGB {
+    ubyte r, g, b;
+
+    // Calculate Euclidean distance to another color
+    double distanceTo(RGB other) const {
+        return sqrt(to!float(pow(r - other.r, 2) + pow(g - other.g, 2) + pow(b - other.b, 2)));
+    }
+}
+
+// Function to calculate the minimum pairwise distance among a set of colors
+double minDistance(RGB[] colors) {
+    double minDist = double.max;
+    foreach (i, colorA; colors) {
+        foreach (j, colorB; colors) {
+            if (i != j) {
+                minDist = min(minDist, colorA.distanceTo(colorB));
+            }
+        }
+    }
+    return minDist;
+}
+
+// Function to generate 8 colors maximizing the minimum distance
+RGB[] generateOptimizedColors(RGB[] inputColors, int count = 8) {
+    RGB[] bestColors;
+    double bestDistance = 0;
+
+    // Try random sampling to maximize the minimum pairwise distance
+    foreach (a; 0 .. 10_000) { // Increase iterations for better results
+        RGB[] generated;
+        foreach (b; 0 .. count) {
+            generated ~= RGB(
+                cast(ubyte) uniform(0, 256),
+                cast(ubyte) uniform(0, 256),
+                cast(ubyte) uniform(0, 256)
+            );
+        }
+
+        RGB[] allColors = inputColors ~ generated;
+        double minDist = minDistance(allColors);
+        if (minDist > bestDistance) {
+            bestDistance = minDist;
+            bestColors = generated.dup;
+        }
+    }
+
+    return bestColors;
+}
+
+// Function to draw the color grid
+void drawColorGrid(RGB[] colors, int squareSize = 100, int cols = 6) {
+    int totalColors = to!int(colors.length);
+    int rows = (totalColors + cols - 1) / cols; // Compute number of rows needed
+
+    int imgWidth = cols * squareSize;
+    int imgHeight = rows * squareSize;
+
+    auto window = new SimpleWindow(imgWidth, imgHeight, "Color Scheme");
+
+    for (int i = 0; i < colors.length; i++) {
+        int x = (i % cols) * squareSize;
+        int y = (i / cols) * squareSize;
+
+        RGB color = colors[i];
+
+        auto painter = window.draw();
+
+        painter.outlineColor = Color(color.r, color.g, color.b);
+        painter.fillColor = Color(color.r, color.g, color.b);
+
+        // Draw rectangle with the given RGB color
+        painter.drawRectangle(Point(x, y), squareSize, squareSize);
+    }
+
+    window.eventLoop();
+}
+
+void main() {
+    RGB[] inputColors = [
+        RGB(30, 30, 30), // fg1
+        RGB(220, 220, 220), // fg2
+        RGB(0, 0, 0), // bg1
+        RGB(255, 255, 255) // bg2
+    ];
+
+    auto optimizedColors = generateOptimizedColors(inputColors);
+
+    writeln("Generated Colors:");
+    foreach (color; optimizedColors) {
+        writeln("RGB(", color.r, ", ", color.g, ", ", color.b, ")");
+    }
+
+    auto all_colors = inputColors ~ optimizedColors;
+
+    drawColorGrid(all_colors);
+}
+`,
+                js: `class Color {
+    constructor(r, g, b) {
+        // If constructor receives 3 arguments, it's assumed to be r, g, b values
+        if (arguments.length === 3) {
+            this.r = r;
+            this.g = g;
+            this.b = b;
+        }
+        // If a single argument is passed, it should be a hex string
+        else if (arguments.length === 1 && typeof r === "string") {
+            // Strip off the leading '#' if present
+            r = r.replace("#", "");
+
+            // Parse hex string into r, g, b components
+            this.r = parseInt(r.substring(0, 2), 16);
+            this.g = parseInt(r.substring(2, 4), 16);
+            this.b = parseInt(r.substring(4, 6), 16);
+
+            // console.log(this.toString());
+        }
+    }
+
+    toString() {
+        return 'rgb(' + String(this.r) + ', ' + String(this.g) + ', ' + String(this.b) + ')';
+    }
+}
+
+// Function to calculate squared distance between two RGB colors
+function colorDistanceSq(c1, c2) {
+    return (
+        (c1.r - c2.r) ** 2 + (c1.g - c2.g) ** 2 + (c1.b - c2.b) ** 2
+    );
+}
+
+// Function to generate a random Color color
+function generateRandomColor() {
+    return new Color(
+        Math.floor(Math.random() * 256),
+        Math.floor(Math.random() * 256),
+        Math.floor(Math.random() * 256)
+    );
+}
+
+// Function to find the most distant color from the existing set
+function findMostDistantColor(existingColors) {
+    let bestColor = null;
+    let maxMinDist = -1;
+
+    // Try 100 random candidates and pick the one that's farthest from existing colors
+    for (let i = 0; i < 100; i++) {
+        const candidate = generateRandomColor();
+        let minDist = Math.min(
+            ...existingColors.map((c) =>
+                colorDistanceSq(c, candidate)
+            )
+        );
+
+        if (minDist > maxMinDist) {
+            maxMinDist = minDist;
+            bestColor = candidate;
+        }
+    }
+
+    return bestColor;
+}
+
+// Function to generate optimized colors by picking the most distant ones
+function generateOptimizedColors(existingColors, count) {
+    let generatedColors = [];
+    for (let i = 0; i < count; i++) {
+        let newColor = findMostDistantColor(
+            existingColors.concat(generatedColors)
+        );
+        generatedColors.push(newColor);
+    }
+    return generatedColors;
+}
+
+function drawColorGrid(colors, squareSize = 100, cols = 6) {
+    const totalColors = colors.length;
+    const rows = Math.ceil(totalColors / cols);
+
+    const imgWidth = cols * squareSize;
+    const imgHeight = rows * squareSize;
+
+    const canvas = document.getElementById("colorCanvas");
+    canvas.width = imgWidth;
+    canvas.height = imgHeight;
+    const ctx = canvas.getContext("2d");
+
+    for (let i = 0; i < colors.length; i++) {
+        const x = (i % cols) * squareSize;
+        const y = Math.floor(i / cols) * squareSize;
+
+        const color = colors[i].toString();
+        // console.log(color, x, y);
+        ctx.fillStyle = color;
+        ctx.fillRect(x, y, squareSize, squareSize);
+        ctx.strokeStyle = "black";
+        ctx.strokeRect(x, y, squareSize, squareSize);
+    }
+}
+
+// Exponential penalty function based on color distance
+function exponentialPenalty(distance, alpha = 0.05, maxPenalty = Infinity) {
+    let penalty = Math.exp(alpha * distance);
+    // return penalty;
+    return penalty > maxPenalty ? maxPenalty : penalty;
+}
+
+function computePenaltyMatrix(
+    existingColors,
+    generatedColors,
+    alpha
+) {
+    const penaltyMatrix = [];
+
+    for (let i = 0; i < generatedColors.length; i++) {
+        penaltyMatrix[i] = [];
+        for (let j = 0; j < existingColors.length; j++) {
+            const distSq = colorDistanceSq(
+                generatedColors[i],
+                existingColors[j]
+            );
+            const penalty = exponentialPenalty(distSq, alpha);
+            penaltyMatrix[i][j] = penalty;
+        }
+    }
+
+    return penaltyMatrix;
+}
+
+function greedyBipartiteMatching(costMatrix) {
+    const matchL = new Array(costMatrix.length).fill(-1); // Matches for generated colors
+    const matchR = new Array(costMatrix[0].length).fill(-1); // Matches for existing colors
+    const visited = new Array(costMatrix.length).fill(false); // Visited flags
+
+    for (let i = 0; i < costMatrix.length; i++) {
+        // Find the best match for each generated color
+        let minCost = Infinity;
+        let bestMatch = -1;
+
+        for (let j = 0; j < costMatrix[i].length; j++) {
+            if (costMatrix[i][j] < minCost && matchR[j] === -1) {
+                minCost = costMatrix[i][j];
+                bestMatch = j;
+            }
+        }
+
+        if (bestMatch !== -1) {
+            matchL[i] = bestMatch;
+            matchR[bestMatch] = i;
+        }
+    }
+
+    return matchL; // Return the final pairing of generated colors to existing colors
+}
+
+function mapGeneratedToExistingColors(
+    existingColors,
+    generatedColors,
+    alpha = 0.05
+) {
+    const penaltyMatrix = computePenaltyMatrix(
+        existingColors,
+        generatedColors,
+        alpha
+    );
+    const matching = greedyBipartiteMatching(penaltyMatrix);
+
+    const mappedColors = matching.map(
+        (index) => existingColors[index]
+    );
+    return mappedColors;
+}
+
+// Input colors (fg1, fg2, bg1, bg2)
+const inputColors = [
+    // new Color(30, 30, 30),      // bg1
+    // new Color(0, 0, 0),         // bg2
+    // new Color(220, 220, 220),   // fg1
+    // new Color(255, 255, 255)    // fg2
+    new Color("#0058a3"),
+    new Color("#035194"),
+    new Color("#ffcc02"),
+    new Color("#ffffff"),
+];
+
+const gruvboxColors = {
+    'red'    : new Color('fb4934'),
+    'blue'   : new Color('83a598'),
+    'yellow' : new Color('fabd2f'),
+    'purple' : new Color('8f3f71'),
+    'orange' : new Color('fe8019'),
+    'green'  : new Color('b8bb26'),
+    'aqua'   : new Color('8ec07c'),
+    'gray'   : new Color('928374')
+}
+
+const optimizedColors = generateOptimizedColors(inputColors, 8);
+// console.log(optimizedColors);
+
+const allColors = inputColors.concat(optimizedColors);
+// console.log(allColors);
+// drawColorGrid(allColors);
+
+const gv_colors = Object.values(gruvboxColors);
+
+// Now map the generated colors to the existing colors
+const mappedColors = mapGeneratedToExistingColors(
+    optimizedColors,
+    gv_colors,
+    0.01
+);
+
+const map_check_colors = gv_colors.concat(mappedColors).concat(optimizedColors);
+
+console.log(optimizedColors);
+console.log(mappedColors);
+
+drawColorGrid(map_check_colors, squareSize=100, cols=8);`,
+            };
+
+            function fill_with_sample_code() {
+                var langSelect = document.getElementById("langSelect");
+                var code = sample_code[langSelect.value];
+                var codeinput = document.getElementById("codeinput");
+                codeinput.value = code;
+            }
+        </script>
+    </body>
+</html>
