@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Go to homepage" />
+  <title>CSCI 13300 SP 2025</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="../../style.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+   var mathElements = document.getElementsByClassName("math");
+   var macros = [];
+   for (var i = 0; i < mathElements.length; i++) {
+    var texText = mathElements[i].firstChild;
+    if (mathElements[i].tagName == "SPAN") {
+     katex.render(texText.data, mathElements[i], {
+      displayMode: mathElements[i].classList.contains('display'),
+      throwOnError: false,
+      macros: macros,
+      fleqn: false
+     });
+  }}});
+  </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">CSCI 13300 SP 2025</h1>
+<p class="author"><a href="https://benrosenberg.info/teaching/sp25/csci13300.html">Go to homepage</a></p>
+<p class="date">Last updated: 2025-01-30</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#unit-2-additional-tasks">Unit 2: Additional tasks</a>
+<ul>
+<li><a href="#task-1-maximum-words-and-line-lengths-in-characters">Task 1: Maximum words and line lengths in characters</a></li>
+<li><a href="#task-2-word-length-statistics">Task 2: Word length statistics</a></li>
+<li><a href="#task-3-sample-variance-and-sample-standard-deviation-of-mean-word-length">Task 3: <span>Sample variance</span> and <span>sample standard deviation</span> of mean word length</a></li>
+<li><a href="#task-4-zipf-distribution">Task 4: Zipf distribution</a></li>
+<li><a href="#task-5-trying-out-matplotlib-and-other-libraries">Task 5: Trying out <code>matplotlib</code> and other libraries</a>
+<ul>
+<li><a href="#troubleshooting">Troubleshooting</a></li>
+<li><a href="#part-1-create-a-histogram">Part 1: Create a histogram</a></li>
+<li><a href="#part-2-fitting-a-curve">Part 2: Fitting a curve</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="unit-2-additional-tasks">Unit 2: Additional tasks</h1>
+<p>Please finish the “Apply what you learned” section before you begin these tasks.</p>
+<p>Solutions will be made available at the end of class, in the same page as the solutions to the “Apply what you learned” exercises.</p>
+<h2 id="task-1-maximum-words-and-line-lengths-in-characters">Task 1: Maximum words and line lengths in characters</h2>
+<p>Print out the following information about the content of <a href="pap.txt">pap.txt</a>:</p>
+<ol type="1">
+<li>Maximum line length (characters, not words) and the line that had the maximum length</li>
+<li>Maximum word length and the word that had the maximum length</li>
+</ol>
+<h2 id="task-2-word-length-statistics">Task 2: Word length statistics</h2>
+<p>Print out the following descriptive statistics related to word length in <a href="pap.txt">pap.txt</a>:</p>
+<ol type="1">
+<li>Average word length (<span class="math inline">\hat\mu</span>)</li>
+<li>Mode (most common) word length</li>
+<li>Least common word length</li>
+<li>Median word length
+<ul>
+<li>Relevant Python features:
+<ul>
+<li>The <code>.sort()</code> method of lists</li>
+<li>The mod (<code>%</code>) operator</li>
+<li>The integer division (<code>//</code>) operator</li>
+</ul></li>
+</ul></li>
+</ol>
+<h2 id="task-3-sample-variance-and-sample-standard-deviation-of-mean-word-length">Task 3: <a href="https://en.wikipedia.org/wiki/Variance#Sample_variance">Sample variance</a> and <a href="https://en.wikipedia.org/wiki/Standard_deviation#Uncorrected_sample_standard_deviation">sample standard deviation</a> of mean word length</h2>
+<p>Use the following formulas for sample variance and sample standard deviation, using the following definitions:</p>
+<ul>
+<li><span class="math inline">n</span> is the number of observations (the number of words, in our case)</li>
+<li><span class="math inline">x_1</span> through <span class="math inline">x_n</span> are the values of the observations (in our case, the lengths of words 1 through <span class="math inline">n</span>)</li>
+<li><span class="math inline">\hat\mu</span> is the average word length that you calculated earlier in Task 2 part 1</li>
+</ul>
+<p><span class="math display">\begin{aligned}
+\text{sample variance} &amp;= \frac{1}{n-1}\sum_{i=1}^n (x_i-\hat\mu)^2 \\
+\text{sample standard deviation} &amp;= \sqrt{\frac{1}{n-1}\sum_{i=1}^n (x_i-\hat\mu)^2}
+\end{aligned}</span></p>
+<p>If we haven’t gone over it by this point, you can raise a number to a power in Python using the syntax <code>a**b</code>, which will give you <span class="math inline">a^b</span>. You can use this syntax for square roots as well, if you choose the correct value of <span class="math inline">b</span>.</p>
+<h2 id="task-4-zipf-distribution">Task 4: Zipf distribution</h2>
+<p>From <a href="https://en.wikipedia.org/wiki/Zipf%27s_law">Wikipedia</a>:</p>
+<blockquote>
+<p>Zipf’s Law states that when a list of measured values is sorted in decreasing order, the value of the <span class="math inline">n</span>th entry is often inversely proportional to <span class="math inline">n</span>.</p>
+</blockquote>
+<p>Verify for yourself that the frequency of words in <a href="pap.txt">pap.txt</a> is consistent with this law, using the following steps:</p>
+<ul>
+<li>For each word in <a href="pap.txt">pap.txt</a>, count the number of occurrences of the word
+<ul>
+<li>You will want to store the unique words somewhere, and then iterate through a second time to fill a second list with the counts for each unique word</li>
+<li>If this is slow, you can look into using <a href="https://docs.python.org/3.10/tutorial/datastructures.html#dictionaries">dictionaries</a> instead of lists</li>
+<li>You can also save yourself a lot of time by directly using the <code>collections.Counter</code> class, which you can read about here: <a href="https://docs.python.org/3.10/library/collections.html?highlight=counter#collections.Counter">Python 3.10 <code>collections.Counter</code> documentation</a></li>
+</ul></li>
+<li>Rank these counts from largest to smallest
+<ul>
+<li>You can use the list method <code>.sort()</code> to sort a list. To specify that you want to sort from largest to smallest (instead of smallest to largest), pass the keyword argument <code>reverse=True</code></li>
+<li>If you used a Counter in the previous step, you can directly use the <code>.most_common()</code> method to sort the counts for you</li>
+</ul></li>
+<li>Print out the top 25 most frequent words and their frequencies</li>
+<li>Compare the variation in frequency with what you would expect from Zipf’s law</li>
+</ul>
+<h2 id="task-5-trying-out-matplotlib-and-other-libraries">Task 5: Trying out <code>matplotlib</code> and other libraries</h2>
+<h3 id="troubleshooting">Troubleshooting</h3>
+<p>If you are running into import issues with <code>matplotlib</code> or <code>numpy</code>, try the following in the <code>cmd</code> shell (accessible via the search menu and typing “cmd”):</p>
+<pre class="plaintext"><code>python -m pip install matplotlib numpy</code></pre>
+<p>Let me know if this doesn’t work.</p>
+<h3 id="part-1-create-a-histogram">Part 1: Create a histogram</h3>
+<p>Create a histogram for word <strong>length</strong> frequency in <a href="pap.txt">pap.txt</a>, using the <code>matplotlib</code> plotting library.</p>
+<p>Below is a template for your code, which needs to import <code>matplotlib</code> and call the <code>plt.hist()</code> function. I have also added a <code>numpy</code> import of <code>arange</code> which allows us to have the bins in the histogram align exactly with the numbers on the resulting plot.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib <span class="im">import</span> pyplot <span class="im">as</span> plt</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> numpy <span class="im">import</span> arange</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">&#39;pap.txt&#39;</span>, <span class="st">&#39;r&#39;</span>) <span class="im">as</span> f:</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    ...</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>bins <span class="op">=</span> arange(<span class="dv">25</span>) <span class="op">-</span> <span class="fl">0.5</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># you need to define word_lengths</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>plt.hist(word_lengths, bins)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
+<p>You should get the following plot:</p>
+<p><img src="unit2_fig1.png" /></p>
+<h3 id="part-2-fitting-a-curve">Part 2: Fitting a curve</h3>
+<p>Try fitting a Gamma distribution to the word frequency data, and plot the result.</p>
+<p>Here are the imports you should use:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib <span class="im">import</span> pyplot <span class="im">as</span> plt</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> numpy <span class="im">import</span> arange</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scipy.stats <span class="im">as</span> stats</span></code></pre></div>
+<p>And here is some boilerplate that will plot the word histogram and the fit of the distribution:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>lengths.sort()</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>bins <span class="op">=</span> arange(<span class="dv">30</span>) <span class="op">-</span> <span class="fl">0.5</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>plt.hist(lengths, bins, density<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>fit_alpha, fit_loc, fit_beta <span class="op">=</span> stats.gamma.fit(lengths)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> stats.gamma.pdf(lengths, a<span class="op">=</span>fit_alpha, loc<span class="op">=</span>fit_loc)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>plt.plot(lengths, y, <span class="st">&#39;-&#39;</span>, color<span class="op">=</span><span class="st">&#39;red&#39;</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
+<p>All you need to do is supply the word lengths as a list.</p>
+<p>You should get the following plot:</p>
+<p><img src="unit2_fig2.png" /></p>
+</body>
+</html>

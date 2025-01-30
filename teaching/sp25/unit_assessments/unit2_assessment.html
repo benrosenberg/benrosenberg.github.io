@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Go to homepage" />
+  <title>CSCI 13300 SP 2025</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <link rel="stylesheet" href="../../style.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">CSCI 13300 SP 2025</h1>
+<p class="author"><a href="https://benrosenberg.info/teaching/sp25/csci13300.html">Go to homepage</a></p>
+<p class="date">Last updated: 2025-01-30</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#unit-2-assessment">Unit 2 Assessment</a>
+<ul>
+<li><a href="#due-date-and-submission">Due date and submission</a></li>
+<li><a href="#data">Data</a></li>
+</ul></li>
+<li><a href="#instructions">Instructions</a>
+<ul>
+<li><a href="#task-1">Task 1</a></li>
+<li><a href="#task-2">Task 2</a></li>
+</ul></li>
+<li><a href="#final-output">Final output</a></li>
+<li><a href="#notes">Notes</a></li>
+</ul>
+</nav>
+<h1 id="unit-2-assessment">Unit 2 Assessment</h1>
+<h2 id="due-date-and-submission">Due date and submission</h2>
+<p>This assignment is due <strong>February 15th</strong> at 11:59 PM. Submit your solution on BrightSpace, under the “Unit 2” assignment.</p>
+<h2 id="data">Data</h2>
+<p>This assignment uses the file <a href="julius_caesar.txt">julius_caesar.txt</a>. You can click on the filename to download the file.</p>
+<h1 id="instructions">Instructions</h1>
+<p>Write a program in Python that performs the following tasks:</p>
+<h2 id="task-1">Task 1</h2>
+<p>Read in the contents of the provided file <a href="julius_caesar.txt">julius_caesar.txt</a> and print the following information about the file’s contents:</p>
+<ol type="1">
+<li>The total number of words in the file</li>
+<li>The average number of words per line (take the total number of words in the file and divide it by the number of lines in the file)</li>
+<li>The line with the most words, and the number of words that this line has</li>
+<li>The total number of lines in your Python source code (you should be writing this code in a <code>.py</code> file)</li>
+</ol>
+<p>Your program should have the following output for this task:</p>
+<pre class="plaintext"><code>Total number of words: 21011
+Average number of words in a line: 4.525306913633426
+Longest line has 17 words: Nay, I beseech you, sir, be not out with me; yet, if you be out, sir, I
+
+Total number of lines in Python source code: 33</code></pre>
+<h2 id="task-2">Task 2</h2>
+<p>Use the contents of the file <a href="julius_caesar.txt">julius_caesar.txt</a> that you downloaded earlier to make an interface for looking up a word in the file.</p>
+<p>The user should be able to enter a word (in the below example, <code>Brutus</code>) and after hitting Enter, your program should print out the first (up to) 10 lines that contain that word, and the total number of lines that contain it.</p>
+<p>The interface should look something like this:</p>
+<pre class="plaintext"><code>Enter word: Brutus
+ Scene I. Rome. Brutus’ orchard
+
+ Scene IV. Another part of the same street, before the house of Brutus
+
+ Scene II. Before Brutus’ tent, in the camp near Sardis
+
+ Scene III. Within the tent of Brutus
+
+Brutus and Cassius.
+
+VARRO, CLITUS, CLAUDIUS, STRATO, LUCIUS, DARDANIUS, Servants to Brutus
+
+PORTIA, wife to Brutus
+
+Calphurnia, Portia, Decius, Cicero, Brutus, Cassius and Casca; a great
+
+[_Sennet. Exeunt all but Brutus and Cassius._]
+
+Brutus, I do observe you now of late:
+
+172 lines contain Brutus</code></pre>
+<h1 id="final-output">Final output</h1>
+<p>Your program’s final output should look something like the following (assuming the word chosen by the user is <code>Brutus</code>):</p>
+<pre class="plaintext"><code>Total number of words: 21011
+Average number of words in a line: 4.525306913633426
+Longest line has 17 words: Nay, I beseech you, sir, be not out with me; yet, if you be out, sir, I
+
+Total number of lines in Python source code: 33
+Enter word: Brutus
+ Scene I. Rome. Brutus’ orchard
+
+ Scene IV. Another part of the same street, before the house of Brutus
+
+ Scene II. Before Brutus’ tent, in the camp near Sardis
+ Scene III. Within the tent of Brutus
+
+Brutus and Cassius.
+
+VARRO, CLITUS, CLAUDIUS, STRATO, LUCIUS, DARDANIUS, Servants to Brutus
+
+PORTIA, wife to Brutus
+
+Calphurnia, Portia, Decius, Cicero, Brutus, Cassius and Casca; a great
+
+[_Sennet. Exeunt all but Brutus and Cassius._]
+
+Brutus, I do observe you now of late:
+
+172 lines contain Brutus</code></pre>
+<h1 id="notes">Notes</h1>
+<p>You should be able to do all of the tasks with only the Python topics we covered in class so far. However, if you want to try doing the homework in a more idiomatic (“Pythonic”) way, you could try the following questions in Google:</p>
+<ul>
+<li>What is list comprehension in Python?</li>
+<li>How does the sum function work in Python?</li>
+<li>How does the join method of strings work in Python?</li>
+<li>How does slicing work in Python?</li>
+</ul>
+<p>The Python documentation may also be helpful: <a href="https://docs.python.org/3.10/">Python 3.10 documentation</a></p>
+</body>
+</html>

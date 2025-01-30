@@ -1,7 +1,7 @@
 ---
 title: CSCI 13300 SP 2025
 author: "[Go to homepage](https://benrosenberg.info/teaching/sp25/csci13300.html)"
-date: "Last updated: 2025-01-25"
+date: "Last updated: 2025-01-30"
 css: "../style.css"
 ---
 
@@ -62,3 +62,32 @@ Links:
 
 - Python download page: [Download Python 3.10.4](https://www.python.org/downloads/release/python-3104/)
   - Once you download Python, you should have IDLE installed on your computer. For information on using IDLE, see the "Learn something new" PDF file from Lecture 1 above.
+
+## Lecture 2
+
+### Agenda
+
+1. Agenda
+2. Some additional checks:
+   - Attendance (checked at 30 minutes into lecture)
+   - Check status of netIDs
+   - Discuss Python access on home computers for assignments
+3. Discuss assignment 1
+   - Submission method: single `.py` file or `.txt` file, not images
+   - Don't need to submit output
+   - Answer any questions on assignment 1
+4. Lecture process overview reminder:
+   - Learn something new (lecture)
+   - Apply what you learned (groupwork)
+   - Discuss next assignment
+5. Begin unit #2
+
+### Resources
+
+Unit 2 resources:
+
+- [Learn something new](csci13300_units/2_Learn.pdf) [PDF]
+- [Apply what you learned](csci13300_units/2_Apply.pdf) [PDF]
+- [pap.txt](csci13300_units/pap.txt)
+- [Additional tasks for early finishers](csci13300_units/unit2_additional_tasks.html)
+- [Solutions](unit_solutions/unit2_solution.html)
