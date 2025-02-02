@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <meta name="author" content="Go to homepage" />
+    <title>CSCI 13300 SP 2025</title>
+    <style>
+        code {
+            white-space: pre-wrap;
+        }
+
+        span.smallcaps {
+            font-variant: small-caps;
+        }
+
+        span.underline {
+            text-decoration: underline;
+        }
+
+        div.column {
+            display: inline-block;
+            vertical-align: top;
+            width: 50%;
+        }
+
+        div.hanging-indent {
+            margin-left: 1.5em;
+            text-indent: -1.5em;
+        }
+
+        ul.task-list {
+            list-style: none;
+        }
+    </style>
+    <link rel="stylesheet" href="../style.css" />
+    <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+    <header id="title-block-header">
+        <h1 class="title">CSCI 13300 SP 2025</h1>
+        <p class="author"><a href="https://benrosenberg.info/teaching/sp25/csci13300.html">Go to homepage</a></p>
+        <p class="date">Last updated: 2025-02-02</p>
+    </header>
+    <h1 id="final-grade-calculator">Final grade calculator</h1>
+    <p>Enter your information into the below form and click the “Calculate” button to see your final point total and
+        letter grade.</p>
+    <p>
+        <label for="lecture-count">Number of lectures late by over 30 minutes or missed:</label>
+        <select name="lecture-count" id="lecture-count">
+            <option value="0" selected="selected">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+            <option value="13">13</option>
+            <option value="14">14</option>
+        </select>
+    </p>
+    <p>
+        <label for="late-count">Number of assignments submitted late:</label>
+        <select name="late-count" id="late-count">
+            <option value="0" selected="selected">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+        </select>
+    </p>
+    <p>Assignment credit:
+    <p>
+        <input type="checkbox" id="hw-1" name="hw-1" checked><label for="hw-1">1</label>
+        <input type="checkbox" id="hw-2" name="hw-2" checked><label for="hw-2">2</label>
+        <input type="checkbox" id="hw-3" name="hw-3" checked><label for="hw-3">3</label>
+        <input type="checkbox" id="hw-4" name="hw-4" checked><label for="hw-4">4</label>
+        <input type="checkbox" id="hw-5" name="hw-5" checked><label for="hw-5">5</label>
+        <input type="checkbox" id="hw-6" name="hw-6" checked><label for="hw-6">6</label>
+        <input type="checkbox" id="hw-7" name="hw-7" checked><label for="hw-7">7</label>
+        <input type="checkbox" id="hw-8" name="hw-8" checked><label for="hw-8">8</label>
+        <input type="checkbox" id="hw-9" name="hw-9" checked><label for="hw-9">9</label>
+        <input type="checkbox" id="hw-10" name="hw-10" checked><label for="hw-10">10</label>
+        <input type="checkbox" id="hw-11" name="hw-11" checked><label for="hw-11">11</label>
+    </p>
+    </p>
+    <p><button onclick="calculate()">Calculate</button></p>
+    <p id="output">Hit "Calculate" to see your final grade here.</p>
+
+    <script>
+        const assignmentWeight = {
+            "1": 3.93,
+            "2": 4.68,
+            "3": 5.49,
+            "4": 6.36,
+            "5": 7.31,
+            "6": 8.31,
+            "7": 9.38,
+            "8": 10.52,
+            "9": 11.72,
+            "10": 12.99,
+            "11": 14.31
+        }
+
+        const gradeMapping = {
+            "D": 60,
+            "C-": 70,
+            "C": 72.5,
+            "C+": 77.5,
+            "B-": 80,
+            "B": 82.5,
+            "B+": 87.5,
+            "A-": 90,
+            "A": 92.5,
+            "A+": 97.5,
+        }
+
+        function calculate() {
+            var missed_count = parseInt(document.getElementById('lecture-count').value);
+            var late_count = parseInt(document.getElementById('late-count').value);
+            var penalty = late_count + ((10 / 14) * missed_count);
+            for (var idx = 1; idx < 12; idx++) {
+                var completed = document.getElementById(`hw-${idx}`).checked;
+                if (!completed) {
+                    penalty += assignmentWeight[`${idx}`];
+                }
+            }
+            var finalPointTotal = 105 - penalty;
+            var finalGrade = 'F';
+            for (const [letterGrade, minNumericalGrade] of Object.entries(gradeMapping)) {
+                if (finalPointTotal > minNumericalGrade) {
+                    finalGrade = letterGrade;
+                }
+            }
+            var output = document.getElementById('output');
+            output.innerHTML = `Final point total: <b>${finalPointTotal}</b><br>Final letter grade: <b>${finalGrade}</b>`;
+        }
+    </script>
+</body>
+
+</html>
