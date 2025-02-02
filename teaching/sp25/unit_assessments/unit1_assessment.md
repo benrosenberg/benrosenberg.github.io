@@ -11,6 +11,10 @@ css: ../../style.css
 
 This assignment is due **February 8th** at 11:59 PM. Submit your solution on BrightSpace, under the "Unit 1" assignment.
 
+**Please copy your code into the text box, don't submit a file. This will make it easier for me to grade.**
+
+You can submit multiple times. I will only grade your last submission.
+
 # Instructions
 
 Write a program in Python that performs the following tasks:

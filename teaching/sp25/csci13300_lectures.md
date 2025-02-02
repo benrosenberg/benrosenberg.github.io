@@ -1,7 +1,7 @@
 ---
 title: CSCI 13300 SP 2025
 author: "[Go to homepage](https://benrosenberg.info/teaching/sp25/csci13300.html)"
-date: "Last updated: 2025-01-30"
+date: "Last updated: 2025-02-01"
 css: "../style.css"
 ---
 
@@ -73,7 +73,7 @@ Links:
    - Check status of netIDs
    - Discuss Python access on home computers for assignments
 3. Discuss assignment 1
-   - Submission method: single `.py` file or `.txt` file, not images
+   - Submission method: copy code into text box, don't submit a file
    - Don't need to submit output
    - Answer any questions on assignment 1
 4. Lecture process overview reminder:
@@ -91,3 +91,24 @@ Unit 2 resources:
 - [pap.txt](csci13300_units/pap.txt)
 - [Additional tasks for early finishers](csci13300_units/unit2_additional_tasks.html)
 - [Solutions](unit_solutions/unit2_solution.html)
+
+### Post-lecture notes
+
+Topics covered:
+
+- Reading files line by line
+- Splitting strings by spaces
+- Getting the length of a list or string using the `len` function
+- How to get the maximum or minimum element in a list or range using a for-loop
+- How to get the sum or total count of elements that satisfy a certain criteria (e.g., characters that are vowels) in a list or range using a for-loop
+- How to add elements to a list using the `append` method
+- How to get user input with the `input` function
+
+Information:
+
+- If you didn't finish the "Apply what you learned" questions in class, please take some time to finish them on your own. They won't be graded, but finishing these questions will make you more prepared for the assignments, which are graded.
+- The Unit 1 assessment is due next week on February 8th at 11:59 PM. Please try to work on it soon so that you aren't rushing to complete it.
+- The solutions for the "Apply what you learned" section of class, and the additional tasks, are on the [Unit 2 solutions page](unit_solutions/unit2_solution.html) (also linked above). The key for the Unit 2 solutions is `swordfish`.
+- I have posted the first assignment on the course site. You can access it from the course site homepage, or go directly here: [Assignment 2](unit_assessments/unit2_assessment.html)
+- If you don't have a netID, email the course coordinator to get it sorted out. Please try to have your netID ready by next lecture so we can all use the computers in the classroom.
+- If you don't have access to a device running Windows at home, you can use this link to figure out how to download Python and IDLE so that you can complete the homework assignments: [Python 3.10 downloads page](https://www.python.org/downloads/release/python-3100/). Scroll to the bottom of the page to see the downloads for your operating system.

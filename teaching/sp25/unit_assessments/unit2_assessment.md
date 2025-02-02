@@ -11,6 +11,10 @@ css: ../../style.css
 
 This assignment is due **February 15th** at 11:59 PM. Submit your solution on BrightSpace, under the "Unit 2" assignment.
 
+**Please copy your code into the text box, don't submit a file. This will make it easier for me to grade.**
+
+You can submit multiple times. I will only grade your last submission.
+
 ## Data
 
 This assignment uses the file [julius_caesar.txt](julius_caesar.txt). You can click on the filename to download the file. If it opens in your browser, can you use the shortcut `Ctrl + S` (or `Cmd + S` on macOS) to save the file to your computer.
