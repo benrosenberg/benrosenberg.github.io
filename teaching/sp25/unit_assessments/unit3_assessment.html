@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Go to homepage" />
+  <title>CSCI 13300 SP 2025</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <link rel="stylesheet" href="../../style.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">CSCI 13300 SP 2025</h1>
+<p class="author"><a href="https://benrosenberg.info/teaching/sp25/csci13300.html">Go to homepage</a></p>
+<p class="date">Last updated: 2025-02-06</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#unit-3-assessment">Unit 3 Assessment</a>
+<ul>
+<li><a href="#due-date-and-submission">Due date and submission</a></li>
+<li><a href="#data">Data</a></li>
+</ul></li>
+<li><a href="#instructions">Instructions</a>
+<ul>
+<li><a href="#task-1">Task 1</a></li>
+<li><a href="#task-2">Task 2</a></li>
+</ul></li>
+<li><a href="#final-output">Final output</a></li>
+<li><a href="#notes">Notes</a></li>
+</ul>
+</nav>
+<h1 id="unit-3-assessment">Unit 3 Assessment</h1>
+<h2 id="due-date-and-submission">Due date and submission</h2>
+<p>This assignment is due <strong>February 22nd</strong> at 11:59 PM. Submit your solution on BrightSpace, under the “Unit 3” assignment.</p>
+<p><strong>Please copy your code into the text box, don’t submit a file. This will make it easier for me to grade.</strong></p>
+<p>You can submit multiple times. I will only grade your last submission.</p>
+<h2 id="data">Data</h2>
+<p>This assignment uses the file <a href="guido_tweets.txt">guido_tweets.txt</a>, which contains a list of tweets made by Guido van Rossum, the creator of the Python programming language. You can click on the filename to download the file. If it opens in your browser, can you use the shortcut <code>Ctrl + S</code> (or <code>Cmd + S</code> on macOS) to save the file to your computer.</p>
+<h1 id="instructions">Instructions</h1>
+<p>Write a program in Python that performs the following tasks:</p>
+<h2 id="task-1">Task 1</h2>
+<p>Print the following:</p>
+<ol type="1">
+<li>The total number of tweets in the file</li>
+<li>The tweet that contains the most words</li>
+</ol>
+<p>Expected output:</p>
+<pre class="plaintext"><code>Number of tweets: 792
+Tweet with max number of words: [Repeat so more people are aware of this]\\nPython 4 FAQ.\\n1. The version after 3.9 is 3.10; in fact it already exists (in github master).\\n2. If there ever is a version 4, the transition from 3 to 4 will be more like that from 1 to 2 rather than 2 to 3.</code></pre>
+<h2 id="task-2">Task 2</h2>
+<p>A <strong>username</strong> is a word that begins with the <code>@</code> symbol (e.g., <code>@MarkTwain</code>).</p>
+<ul>
+<li>Clean the data before this step: make all letters lowercase (with the string <code>lower()</code> method) and remove all punctuation except for the <code>@</code> symbol</li>
+<li>Compile the information on how many times different usernames are mentioned in Guido van Rossum’s tweets (a concordance)</li>
+<li>Create an interface for users to quickly look up how many times any particular username is mentioned</li>
+</ul>
+<p>Sample usage:</p>
+<pre class="plaintext"><code>Enter username: gvanrossum
+Not mentioned.
+Enter username: @gvanrossum
+Mentioned 15 times.
+Enter username: dropbox
+Not mentioned.
+Enter username: @Dropbox
+Not mentioned.
+Enter username: Dropbox
+Not mentioned.
+Enter username: @dropbox
+Mentioned 5 times.</code></pre>
+<p>Note that the lookup is case-sensitive, and requires the <code>@</code> symbol to be included.</p>
+<h1 id="final-output">Final output</h1>
+<p>Your program’s final output should look something like the following:</p>
+<pre class="plaintext"><code>Number of tweets: 792
+Tweet with max number of words: [Repeat so more people are aware of this]\\nPython 4 FAQ.\\n1. The version after 3.9 is 3.10; in fact it already exists (in github master).\\n2. If there ever is a version 4, the transition from 3 to 4 will be more like that from 1 to 2 rather than 2 to 3.
+
+Enter username: gvanrossum
+Not mentioned.
+Enter username: @gvanrossum
+Mentioned 15 times.
+Enter username: dropbox
+Not mentioned.
+Enter username: @Dropbox
+Not mentioned.
+Enter username: Dropbox
+Not mentioned.
+Enter username: @dropbox
+Mentioned 5 times.</code></pre>
+<h1 id="notes">Notes</h1>
+<p>You should be able to do all of the tasks with only the Python topics we covered in class so far. However, if you want to try doing the homework in a more idiomatic (“Pythonic”) way, you could try the following questions in Google:</p>
+<ul>
+<li>What is a <code>defaultdict</code> in Python?</li>
+<li>How does the <code>key</code> parameter of <code>max</code> work in Python?</li>
+</ul>
+<p>The Python documentation may also be helpful: <a href="https://docs.python.org/3.10/">Python 3.10 documentation</a></p>
+</body>
+</html>

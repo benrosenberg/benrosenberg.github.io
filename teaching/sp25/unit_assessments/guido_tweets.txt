@@ -1,0 +1,792 @@
+PyCharm users can now run mypy super fast using a plugin written by @ILevkivskyi: https://t.co/qtHuMU8RrB #PyCharm #mypy
+Python 3.7b5 -- bonus beta! https://t.co/LUS9rQoMj6 **If you use the ast module, test your code with this -- ESPECIALLY if you already made changes for the ast in earlier 3.7 betas.**
+Just discovered that Jake Edge's excellent notes on the Python Language Summit last month at PyCon have been out for a while: https://t.co/79J19XV1qj (But LWN subscribers got to see these before me!)
+This Wednesday I'm speaking in the Stanford EE380 colloquium (for the third time!) https://t.co/FQFP0vRH6C
+Yet another talk I gave on mypy etc. https://t.co/UftHsKI5K1
+mypy 0.610 released! Daemon mode much improved, tons of other improvements and fixes. Thanks to our dozens of contributors! https://t.co/vLzjgQWP5x; https://t.co/V6oInQ5UEs
+Origin of the Zen of Python. https://t.co/2dzzLF922E
+Python 3.7.0rc1 and 3.6.6rc1 are now available! Please test your apps and libs (esp. with 3.7). Thanks again to @baybryj and a cast of thousands. https://t.co/kHkAivSSSo
+We gotta do more of this! https://t.co/d0AWSzYg8F @heddle317
+Python 3.7.0 is released! Bring out the celebratory libations. Thanks @baybryj and a cast of thousands on python-dev and GitHub. https://t.co/wEG4vO76Rd
+Cool sites about the Python 3 transition: https://t.co/R0HIGfO0WN, https://t.co/00WDCOtral, https://t.co/sDmPBs2sty, https://t.co/giiS9CNn8V
+My new favorite YouTube channel. https://t.co/JlTTtMLeNI
+New draft for PEP 572 (assignment expressions) posted to python-dev, https://t.co/VOK5RTXzeX and https://t.co/jIBTdeDF2O
+PEP 572 accepted. https://t.co/N9lKeDs7e5
+Thanks for all the support (email and Twitter). I'm overwhelmed by the responses and won't be replying to most emails in person (except from core devs) but it's much appreciated. I'm still going to be around in the background!
+In other news, we released mypy 0.620 today (https://t.co/ubs4nw7nUZ). It adds support for dataclasses, a major redo of overloads, support for partial packages, and more. Also PEP 561 support. Thanks to all contributors!
+clever boy https://t.co/k6NbbD2cfK
+FWIW I misspoke in the interview and said AI where I should have said data science. Sorry!
+Strange how some people are capable to do the Googling needed to find my email address, only to ask a question that could be answered with even less Googling. (Not in reference to any particular Tweet or email, just an observation.)
+I don't usually listen to podcasts, but when I do, I listen to a guy with a thick German accent talking about consciousness and literature.
+New mypy release: https://t.co/PolzR6FUKg -- Callable protocols and more fixes to overload.
+Finally the asyncio docs are not an embarrassment to us all. Thanks @1st1, @WillingCarol, @elprans and @andrew_svetlov!
+Six years ago I photographed a pelican stretching. https://t.co/9A9R1eKImf
+Best additions to Python logo ever: https://t.co/ye79uSwZmi (Yes, there's Python in Kyrgyzstan!)
+Read about the Dropbox Client Python 3 migration! https://t.co/dXIJvxn9lL
+Would you believe I received a personal email from a co-founder of a $10M company with a TRACKING PIXEL? Who does such a thing?
+Mypy release 0.640 is out! New features: "Final" qualifiers, omitting __init__ return type, PEP 420 namespace package support. Also --allow-untyped-globals, and tons of bugs fixed. https://t.co/CyKtk8EkLG
+Whoops. There was a bug, and I'm withdrawing the release. See https://t.co/BVJdbD4LI8. New release Monday.
+This is the corrected mypy release. Have at it! And sorry for the mess last Friday.
+Take the 2018 Python Developers Survey!
+Python 3.6.7 and 3.7.1 released! https://t.co/jIVCXNPkiZ
+I totally misread the headline "CIA director flies to Turkey" :-)
+Sorry, I read it as "flees". :-(
+RT @OracleDevs: #CodeOne18 Groundbreakers Panel: Tech Trends discussion https://t.co/EnwzB4TvRZ
+If you havent seen this visualization of spin-1/2 be amazed. https://t.co/iQAFv9iRDP
+Groundbreaker award article https://t.co/GJhrf1P7Df @WorlWindWriting
+RT @CWInl: Celebrating 30 years of open Internet in Europe (17 November), CWI director @JosBaetenCWI unveiled a timeline with more CWI mile
+This was a great conversation! Thanks Lex.
+A little blog post. https://t.co/CtSaOZG0ya
+RT @europythons: EuroPython 2019: Venue and location selected: Basel from July 8-14 2019 ... https://t.co/vzRqX7iIlM
+The holiday season starts early this year...
+Please support @chicktechorg -- they help women and girls, often low income, to break into tech. #RallyForChickTech
+Python 3.7.2rc1 and 3.6.8rc1 now available for testing https://t.co/17lr8jk8Yj
+Changelogs for the latest Python 3.6/3.7 releases:\n* 3.7: https://t.co/PgZHCxjAvC\n* 3.6: https://t.co/vqw2Z6yqQ5\n(Thanks @VictorStinner)
+New Python point releases ready for Xmas! Following an old tradition (e.g. https://t.co/CJth3VzghU)
+Bunch of good essays on software engineering issues by my friend Talin: https://t.co/PA6zknj9rq
+We've released mypy 0.660: compiled mypy binary, Literal[] type, mypy daemon Windows support! And more: https://t.co/C0O49UjPHL
+GPIOzero I love you! https://t.co/w3CnUGx3yO
+Huh. I finally realized something about the Travis-CI "matrix" concept. WITHOUT using the matrix keyword, several keywords (e.g. env, rvm) combine to create a matrix. The matrix keyword is used to indicate *exceptions* and *additions*. https://t.co/3eFHHe51Wq
+From G+ shutdown email: "From all of us on the Google+ team, thank you for making Google+ such a  special place. We are grateful for the talented group of artists,  community builders, and thought leaders who made Google+ their home. It would not have been the same [...]" 
+Python 3.8.0a1 is now available for testing! Thanks @llanga and crew! https://t.co/FVXJXdeQFX (Note this is an alpha, meant for testing, not production use. If you maintain a PyPI package, start testing now!)
+I really love the line-of-code completions in the new https://t.co/TcfoSNq6b4. Thanks for the demo @asmith!
+RT @pycascades: Anybody have a good picture of @gvanrossum in his "Python is for girls" t-shirt? \n\nWorking on an ad campaign to help turnou
+We've released mypy 0.670. Best new feature: `--allow-redefinition` allows variable redefinition! Also: Flask stubs. For lots more: https://t.co/57Df2Vcxt2
+The full scoop on mypy plugins: https://t.co/uex3M64NL6
+New blog post: Why Operators Are Useful\n\nhttps://t.co/zmkRCxqGme
+Looking forward to this event in Seattle: https://t.co/QPyakwsn4A a panel with four language creators organized by the amazing Seattle area Python users group #PuPPy
+So I just learned there is no way to stop strangers (i.e. not "friends") from sending you chat requests on Facebook Messenger, even if all your privacy settings say "friends only".
+My concern is not spammy notifications. It is very effective at not showing me any of those. My concern is that people who legitimately contact me that way don't get a bounce message, so I come off as rudely not responding. (I check facebook rarely, so it doesn't bother *me*.)
+The 996 work schedule is inhumane. https://t.co/ajXt3YKRAc
+Love this interview with Eric @EricRWeinstein by Lex @lexfridman: https://t.co/77uDEonTmk
+Big speed up for mypy 0,700!
+Cool hack! https://t.co/EUIIT7DEBs
+RT @1st1: New asyncio web framework: Blacksheep. Pretty excited to see so much innovation in async space, keep it coming! ;)  repo: https:/
+Important presentation tip for #PyCon speakers. When using screenshots, use a LIGHT theme. Dark themes are hard to read. Also, use larger fonts in the screenshot. Your audience will thank you! Squintingly, #pycon2019
+Compare these... cant read the text on black st all from here. https://t.co/3nojOtgAh0
+Another example https://t.co/a4oyNdyKgj
+This is fine though! https://t.co/A6kQrgrpTf
+Heres the link https://t.co/XXpjzDMqzC
+@kcunning teaching at Young Coders. See that focus and concentration in the room! https://t.co/2b2r4zh7mZ
+Your contributions help fund workshops, conferences, and pay meetup fees. The PSF can't do this without your support. Please consider donating to help them continue to their work - https://t.co/6oqRDeZ5vr
+Do understand that I meant this as a random example. Didnt mean to pick on specific presenters. (This was the *only* example I saw in this particular talk. Great talk BTW.)
+I still get this wrong... Thank Anna for the reminder!
+I'm doing some research and I wonder -- who coined the name "walrus operator" for ":="? Since it has stuck we might as well know its history. The first use I found in my email archive was July 3rd 2018.
+The PSF Annual Report shows you just a few ways the generous support  from their partners and friends helps support the mission - https://t.co/wZKYO5rfzH. Support the PSF by donating - https://t.co/6oqRDeHu6R.  #idonatedtothepsf
+It's about time!
+RT @thenextwomen: Speaker #7  Carmen Pop / @Dropbox you rock! #TNWomen2019 #TNW2019 https://t.co/K8L5n9R3vh
+Second PyCon Thailand! Congrats to the organizers.
+Remember that Python 2 will reach end of life on 1/1/2020. For the impact on *your* project, see https://t.co/giiS9CNn8V
+Nice day at Bair Island. #RestoreBair1 https://t.co/uIHBj9nnoQ
+While there are no plans to introduce it in Python, the operator &lt;: has a new name: the "party hat" operator. &lt;:-)  Thanks @ChristianHeimes -- https://t.co/MSpETTJY9e
+"Python is designed to deliver an experience that is simple and easy to use. This is only possible through a combination of advanced technologies and sophisticated engineering."
+I cribbed that quote from https://t.co/uFOB6fXpQU, with the words 'The iPhone' crossed out and 'Python' written in in crayon.
+Steven was so much to me... Friend, colleague, tech lead, mentor, role model, English teacher, Dutch student, rival, party organizer, movie critic, fashion icon... Thanks for all the good times we had together! See you in November. @stevenpemberton
+What he said. The new semantic analyzer will clear the road to recursive type definitions (to be implemented soon). Also thanks to the many contributors at the PyCon mypy sprint.
+Random Python History thing: I stole Python's 'elif' from the C Preprocessor. https://t.co/qkE1Jn2LXu
+RT @mypyproject: Mypy 0.711 was just released. It's a bugfix release that fixes mypy daemon on Windows and false positives related to funct
+In other news, as I was reminded in an old thread on Stack Overflow, Python's `dir()` function was named after the `dir` command in DOS.
+New to contributing to open source, and confused about git and GitHub? Read @WillingCarol's post and it will all fall into place! https://t.co/HwezfpNv0L
+I just finished reading a fascinating (hi)story of the east coast ("Silicon Alley") part of the dotcom boom and bust by @wiresmith -- https://t.co/sAoFqOdSqH
+Control Data Cyber 70 or so.
+mypy 0.720 released. New semantic analyzer is now the default! Also, --warn-unreachable flag, and many more fixes and updates. Thanks to all who contributed! https://t.co/mRWGpF9I1U
+My first post on Medium: https://t.co/lhw7rOogj8
+Here's the next PEG installment: https://t.co/oaO9qHLOKR (I hope to post every Sunday).
+We're looking for stories about first-time contribution to Python (or other open source projects for that matter), successful or not. Read the whole thread below.
+This feels true to me...\nhttps://t.co/eWqfLCom9e
+I experienced this up close last April: A Chinese Internet vigilante didn't like what I tweeted about Chinese politics, doxxed a Chinese citizen who had participated in the thread, and blackmailed me into silence (for fear of more doxxing).
+Next PEG post is up: generating the parser from the grammar, and packrat parsing through memoization. https://t.co/y3GeLVHidi
+Visualizing what a PEG parser does: https://t.co/U34GLOkQnH
+Or go straight to the GIF: https://t.co/6XkQcXDi7Y
+Or embedded in Twitter: https://t.co/jEjUoP95Oe
+With a week's delay, here's the next PEG parsing episode. This week we tackle left recursion in grammars. https://t.co/Kp8KNNmLHX
+I'm reading a fun and interesting book about internet culture (through the lens of language but covering many other topics): https://t.co/mqPf93fXSt . Apparently I am one of the "Old Internet People". :-) @GretchenAMcC
+Python 3.8b4 is out. We need your help testing it, esp. if you maintain a library or package! https://t.co/rwUcqUK7PR
+New blog post: adding actions to a PEG grammar https://t.co/wu0N6x4VEK
+[Corrected link] Series overview: https://t.co/sIQ2Xp0Ln8 (from now on I'll always post friend links, and the overview contains all friend links, so no worries about the paywall).
+Hey, @JukkaLeh wrote up the history of @mypyproject for the @dropbox tech blog. Sweet nostalgia! And 4 million lines checked. https://t.co/JNWcKIOmas
+It's (even more) official: support for Python 2 ends 1/1/2020. Read why, and what you should do: https://t.co/48ihncvHxL
+A Meta-Grammar for PEG Parsers. https://t.co/3diCT7EWQ2
+Would you look at that. Another blog post, part 8 already: Implementing PEG Features. https://t.co/cxOLDkNmVW
+RT @voidspace: A Q&amp;A panel at the end of the Python Core Dev sprint 2019. Python Steering Committee members @gvanrossum @brettsky and @Will
+So happy I can go to #nbpy this year!
+What I did at the core dev sprint in London. With a PEG twist. https://t.co/lBv8XSLcOk
+Python now has a new Code of Conduct: https://t.co/QTD4BhUvkG
+This is a big one!
+https://t.co/EvU7zIDPvy
+Here's the PDF of the talk I gave this evening about mypy at @dropbox in our Mountain View office. (But I said a lot of things that weren't in the slides.)\nhttps://t.co/xPm8MkWcZE
+RT @CWInl: Registration for this years' Lectures (21 &amp; 22 Nov) on #Programming &amp; #Cryptology with @gvanrossum and @chaumdotcom is now open!
+RT @llanga: Good news: Python 3.8.0 is finally here! On schedule, on budget, excellent new features. Thanks to all of the many volunteers w
+Nice use of Python language tools and Jupyter notebooks. https://t.co/haBLh6x7K8
+This will be a unique event!
+Highly recommended!
+Thanks to @bvenners of @ArtimaInc for keeping the Artima blogs and forums up for all those years! Just had fun browsing Python's history, e.g. https://t.co/PW1MyY75LV
+It's bittersweet: I'm leaving @dropbox, and am now retired. I've learned a lot during my time as an engineer here -- e.g. type annotations came from this experience -- and I'll miss working here. https://t.co/0ROaUrHQLt
+See also my own blog post at https://t.co/lBv8XSLcOk
+I'm heading to Petaluma for @northbaypython, hoping to arrive in time for dinner. If anyone else is up for dinner, let's meet up in the hotel lobby, say 7ish?
+Looks like Im going to miss it. Was delayed leaving, held up by traffic, gotta eat on the road. :-(
+Jacob Kaplan-Moss says: stop using passwords. Use Login with Google/Facebook/etc., or login by email. Googles security team is better than yours. Amen. #nbpy
+Jacobs talk explaining his position: https://t.co/xfbF4wRPdW
+Video of my talk at North Bay Python ("Writing a PEG parser for fun and profit") is now up!\nhttps://t.co/QIABgEI4sn\n#nbpy
+RT @northbaypython: #nbpy Writing a PEG parser for fun and profit - Guido van Rossum https://t.co/WN3d7LYKx4
+On Monday 18 November at 5pm I'm doing a Q&amp;A at the Oxford Union in, um, Oxford, England. I don't know if it's open to the general public or only to members. https://t.co/rnyTFtuVic
+Follow up: non-members can attend as guests of @OxfordUnion members.
+RT @CWInl: CWI will grant the honorary title 'Dijkstra Fellow' for the first time. Next week, the Fellowship will be awarded to David Chaum
+RT @CWInl: Volgende week ontvangen David Chaum @chaumdotcom en Guido van Rossum @gvanrossum van CWI de eretitel "Dijkstra Fellow" voor de b
+https://t.co/gyIF9tTl5B
+Twenty-five years ago I bought a suitcase for a trip to the US, and marked it "GvR Python". Today I am back for six days in Amsterdam with the same suitcase. https://t.co/GKZEgU5h5H
+TIL: When Uber warns you of 1.9x surge pricing, they mean 2.9x.
+Yes thats me. (In Dutch.)
+Super interesting talk!
+A different kind of interview, by my friend and former coworker Anthony Kosner. https://t.co/q1fyaMKMtX
+Congrats to the mypy team, this looks like a significant update!
+A random blog post from the past, for my Twitter fans. https://t.co/WOwFzB2xAP (And yes, I did get to throw that pie the next year.)
+Give to the PSF!
+Interview voor New Scientist .NL (ook in het Parool): https://t.co/XG1hTm5ZHf
+RT @NewScientistNL: De bedenker van de wereldberoemde programmeertaal Python, @gvanrossum, heeft een eretitel ontvangen van het Amsterdamse
+This is amazing. I never thought my baby would have been used for such an important project! (Scanning of Rembrandt's Night Watch.)
+RT @llanga: #Python 3.8.1rc1 is now available for testing! Take it for a spin now, will you? \n\nhttps://t.co/iToCumKuLV\n\nI'll tell you wher
+Congrats to @Yhg1s and @VictorStinner for being newly elected to the Python Steering Council! And congrats to incumbents @pumpichank, @WillingCarol and @brettsky for their reelection. https://t.co/c2m06e0KAA
+Is there a way to recover a fake Instagram account? I just joined and gvanrossum is taken by a clear fake.
+So just to be clear I switched to IH-realgvanrossum but I still cannot change to IH-gvanrossum (where IH- stands for Instagram Handle, else Twitter gets confused).
+&gt;&gt;&gt; greetings = ["world hello", "nieuwjaar gelukkig", "happy year new"]\n&gt;&gt;&gt; for g in greetings:\n...     words = sorted(g.split())\n...     print(" ".join(words).title())\n... \nHello World\nGelukkig Nieuwjaar\nHappy New Year\n&gt;&gt;&gt;
+My Q&amp;A at the Oxford Union online: https://t.co/WEznqiKNSF
+Looking for packratsr historians. Does anyone have python-list (comp.lang.python) or python-dev (https://t.co/ySU6P49snl) archives from *before* February 1999? The pipermail archives and the Activestate archives end there. Google groups has (almost) nothing.
+Thanks to the kind people at Facebook my Instagram handle is now https://t.co/DgvjG5htH5 
+First PyCon in Turkey, in the wonderful city of Istanbul!
+I'm going to PyCon US in Pittsburgh! April 14-21. #pycon2020
+I  just read this. Its harsh but not untrue. I like the recommendation to do a post-mortem of the Python 3 transition.
+The next EuroPython is in Dublin, July 20-26.
+I'm going to... #pycascades in Portland (OR) Feb 8-9, and sprinting Feb 10. Alas, will miss Friday night and Saturday morning (other duties). https://t.co/3qUnSeCkkj
+Today's Python history lesson: Python took its control and data structures from ABC, its identifiers, strings and %-string formats from C, and its regular expressions from Perl. But its # comments (and #!) and -c command line flag came from the UNIX v7 shell.
+Thanks for the birthday wishes everyone. I doubt I'll be around for 0x80.
+I just discovered that in order to use e.g. "OK Google, play the Beatles on Spotify" I have to enable web &amp; app activity tracking on all my devices. Shame on you Google!
+I wrote something about getting started contributing to CPython https://t.co/pZXXR1mMry #pycascades
+Love the 2020 EuroPython Logo for Dublin! https://t.co/mWzRQuPfSH
+In memoriam Larry Tesler. I remember meeting him when he was working on Stagecraft. Interesting stuff. https://t.co/XfBNULj9UE
+RT @justvanrossum: I made something. It sounds boring: it's an application to look at fonts. But it can do a lot! Most of which I described
+I  @PyLadies! Thank you all so much for making Python's community more diverse (and not just qua gender!). I fancy myself a feminist and an ally but you do the hard work and make it stick. Way to go #pyladies
+Trolling the Haskell folks: Finally found a Monad tutorial for Python programmers.
+RT @ramalhoorg: Facilidade para comunicao verbal  mais relevante para prever sua capacidade de aprender a programar do que aptido matem
+PyCon US may be revised or cancelled. Read the full post linked below.
+Good deep tech post from Dropbox' sync team (rewriting the sync engine in Rust). https://t.co/lLPnOgi1eg @dropbox
+Alas, @pycon is cancelled. Read more here: https://t.co/ZKtFPHFH5Q. Thanks to the PyCon staff and PSF board for making this difficult decision. Stay healthy!
+"Were all devastated that well lose in-person interactions this year, but the health and safety of our attendees comes first. \nEven though the in-person event isnt happening in 2020, [we] are already planning to deliver several PyCon US components remotely throughout April."
+RT @ThePSF: New pip resolver to roll out this year https://t.co/lX8f0VOgfX
+RT @llanga: Stay safe, and test our latest #Python release: 3.9.0a5!\n\nhttps://t.co/5x6Qnyc7je\n\nAs usual, we're leaving the juiciest new fea
+Random historic note: if I hadn't chosen the __dunder__ naming scheme for Python language internals long ago, dunders would have been an obscure feature of the C preprocessor.\n\nWho knows when, where and by whom the term "dunder" was coined? It wasn't me, and it was years later.
+Python 2.7.18 release candidate 1 is out: https://t.co/wasS1V0UqC\nThis is your last chance! The final release will be out in two weeks.
+The word "dunder" was coined on September 26, 2002, by Mark Jackson and Tim Hochberg. Thanks Ned for digging this up!
+An explanation of Python's use indentation by Oliver Fromme, from 2007. https://t.co/h40E76YqMJ
+So true
+The final Python 2 release is out. Thank you @gutworth for being the 2.7 release manager during 11 long years. Read the announcement here! https://t.co/WpxmHPxn40
+Python 3.9a6 is out! With new parser (PEP 617), dict|dict (PEP 584), list[int] (PEP 585), str.remove{prefix,suffix}() (PEP 616), and much more! Please test with your favorite packages. https://t.co/jhJ24UBGrw
+PyCon 2020 in Pittsburgh didn't happen -- but PyCon Online is happening! New talks every week at: https://t.co/NxXHSjlct3. Many thanks to our loyal sponsors. #pycon2020
+Excited to see this happening! Timezones move into the stdlib.
+One of my rare public appearances! I discuss what happened at the online Python Language Summit.
+RT @WillingCarol: Thank you @jessejiryudavis for the excellent coverage of the Python Language Summit @ThePSF. You captured the spirit of t
+What one should also read once a decade: @joshbloch's talk on API design -- https://t.co/kwf9x3df2T
+Python 3.9b1 is out. Try it! Thanks to everyone who contributed, to @baybryj, @llanga , @zooba (the release team), and to @VictorStinner for so many things... https://t.co/LpYVzJYvaw
+RT @PyLadiesSEA: Today is the day. Join us this evening as @christytoes moderates What We Love About Python: A PyLadies Panel featuring @gv
+https://t.co/7Pm5f9sLUr
+RT @pyconmy: class PyconAPAC2020:\n        def interview_with_guido(self):\n               print("""#askguido""")
+The Zen of Python set to amazing music. Enjoy listening!
+Our first bike ride in Half Moon Bay since March 16! Beach parking is still closed, but we saw plenty of people on a few popular beaches -- *with* umbrellas and tents. :-) @ Half Moon Bay, California https://t.co/gVZxaZCwzB
+More musical Python! "[...] how I got into loops and caffeine" (?!)
+RT @edgedatabase: EdgeDB 1.0 Alpha 3 "Proxima Centauri" is here: https://t.co/2g2V4w7sRL
+Has GameSalad's password db been leaked? I just got one of those scam btc extortion emails showing a password I once used for GameSalad.
+Python 3.9.0 beta 3 is out now, for your immediate testing. Wait, what happened to beta 2? Interesting story. Read it here: https://t.co/uOrdJLpvzP [correct URL this time]
+RT @europython: We're very excited to announce our third keynote speaker:\n\nGuido van Rossum, Creator of #Python\n\nhttps://t.co/F9nGA6WcNC\n\nW
+Cool: I asked "Alexa, sing me a song" and she responded with a little rap about Grace Hopper.
+This was such a fun project!
+Yay type annotations in pytest!
+This makes me sad. I rode Caltrain into SF daily from 2008 till my retirement in 2019.
+I'm in illustrious company at this programmers conference (virtually) in Angola.
+Python 3.8.5 *and* 3.9.0b5 are out!
+RT @ThePyPA:  pip 20.2 is out! \n\nhttps://t.co/DtQF7tQQ7p\n\nIncludes an optional beta of the new dependency resolver -- test it soon, since
+RT @ThePyPA: And when you hit a ResolutionImpossible error, pip 20.2 gives better conflict resolution advice &amp; points to https://t.co/xZnZ5
+This is the weirdest news of the week.
+My UNIX fu is waning. When playing around with the cherry-picker tool I naively typed `alias cp=cherry-picker`. Days later I got a mysterious error when trying to copy a directory. :-)
+RT @matrixise: Gifts (#python stickers) from @ThePSF . Thank you @betswaliszewski and  @gvanrossum . I will share them in #Europe when I wi
+RT @pydanny: This is a fantastic opinionated guide to Django views. I enjoy strong, informed options.\n\nWhile I disagree on some of his part
+This is worth learning.
+Ooh, 3.9.0rc1 is out! https://t.co/pIF0t8vBTq\n\nThanks @llanga and thousands of contributors!
+RT @nayafia: Hi I wrote a book!\n\nIt's called Working in Public, and it's the story of modern open source and its implications for online co
+I already retweeted @nayafias tweet about her book. But now that Ive actually read (most of) it, I feel I need to recommend it strongly to all open source maintainers, especially on large projects or who are struggling keeping up with issues and PRs or discussion threads.
+I'm looking for a corpus of Python syntax errors (don't ask why). I found https://t.co/Q1TzNWrzSy by Alexander William Wong et al., which has https://t.co/FOTHPPsqE0 (thank you authors!). Does anyone know of others?
+TIL: When in a video conference, take off your airpods before taking a bathroom break.
+RT @drakeguan: PyCon Taiwan, 2012~2020. #pycontw2020 #pycontw https://t.co/NPfihPOoA8
+Emacs won out over vim. https://t.co/hG2NCFiNGY
+Python 3.8.6rc1 is now ready for testing. Thanks @llanga ! https://t.co/hWm92gFKt2
+Code snippets in Python docs are now explicitly licensed under BSD-zero. That means you can freely copy this code without license or attribution! https://t.co/a4A6F8qaDB
+RT @robertnishihara: We began @raydistributed several years ago at @UCBerkeley (in @ucbrise, @amplab, and @berkeley_ai). Today there are 30
+RT @europython: The first batch of 30 edited videos is available on our YouTube channel.\n\nWe'll release more over the next few days/weeks.
+Python 4 FAQ.\n1. The version after 3.9 is 3.10; in fact it already exists (in github master).\n2. If there ever is a version 4, the transition from 3 to 4 will be more like that from 1 to 2 rather than 2 to 3.
+[Repeat so more people are aware of this]\nPython 4 FAQ.\n1. The version after 3.9 is 3.10; in fact it already exists (in github master).\n2. If there ever is a version 4, the transition from 3 to 4 will be more like that from 1 to 2 rather than 2 to 3.
+Python 3.9.0rc2@is out! https://t.co/Cavfox2yoK @llanga
+RT @europython: We are running an "Ask me Anything" on Thursday, Sept 24, 19:30 CEST.\n\nIf you're planning to run an online event and have q
+RT @ThePSF: Ask a Core Dev Anything!  Connect with Python core devs by sending in a Q about Python: https://t.co/M3RtIVcDLI. Submit Qs befo
+Stay motivated during the pandemic, learn Python! Thanks for the suggestion NABA_UNCC. (And if you already know Python, try Machine Learning. :-)
+What a waste of time.
+Farewell Python 3.5. Thanks Larry and co! https://t.co/mi4CGZucGX
+Big changes coming to dependency resolver in pip 20.2: please try! https://t.co/PzLb3GrJrI
+Watch this cute video about it. Kudos to the whole pip team. So diverse!! https://t.co/ditUcrMxnS
+Quick! Inject bleach!
+If youre using Python type annotations, please ask yourself whether it works when you add from __future__ import annotations.  This will be the default in 3.10 and we need you to prepare for that. (Also, 3.9.0 is now out.)
+To clarify, this is part of PEP 563. It will affect inspect.signature() for annotated functions, the types come back stringified. E.g. (a: int) instead of (a: int). See https://t.co/ttb5cGPPrN
+Another reminder.
+RT @llanga: #Python 3.9 is now officially available! Get it here:\n\nhttps://t.co/qVhXvbdhhh\n\nReleased on time, on budget, great features and
+Congrats EuroPython with your trademark protection!
+RT @ThePSF: Want to get a cool Python Gift Pack? Join the Python Developers Survey 2020. https://t.co/devKyhusbN
+Congrats to the mypy team! Lots of good new stuff here.
+In a minute we start the Python Core Dev Q&amp;A. Watch live: https://t.co/NRw3jLnB9W
+RT @PythonDiscord: We are livestreaming the Python Core Developers Q&amp;A, with @gvanrossum  and many other core developers, today at 20:00 UT
+Happy 20th birthday PyGame! A great accomplishment. And now, version 2.0! (And still Python 2.7 backward compatible too!) https://t.co/yNifIE8Wqr
+Last week's Core Devs and Community Q&amp;A was just uploaded to @ThePSF's youtube channel: https://t.co/DLej0s8yFl
+RT @roguelynn: For nearly 2 years, I've been working on building audio processing infrastructure at @SpotifyEng . And finally, I can actual
+Yes!!!!!!!!!!!
+RT @nnja: Got a minute for a message from the organizing team of @PyCascades?\n\nOur CFP is open now and wed love to hear from you.\n\nPlease
+Umm... why is there a MacBook Pro in my Find My... list thats in China? Im not missing any. @Apple https://t.co/t2hobltKuS
+Top hypothesis: Dropbox resold my old laptop. Wonder if it still has the stickers. :-)
+I decided that retirement was boring and have joined the Developer Division at Microsoft. To do what? Too many options to say! But itll make using Python better for sure (and not just on Windows :-). Theres lots of open source here. Watch this space.
+Excited to see notebooks in VS Code learning to fly on their own!
+Thank you, arash!
+Next time you see a US election or COVID map, use this to put it in perspective: https://t.co/DG8stBk9vM
+Congrats on the new gig, Ola!
+I learned how to do a simple thing on Azure: https://t.co/bmPSXTwTMq
+.@dependabot sent a bunch of stray PRs our way (all my cpython forks were hit). Anyone know whats up with that? We have it disabled, we shouldnt expect any, right?
+Lots of stuff you can learn about the Python community from GitHub's 2020 State of the Octoverse: https://t.co/3I3AUlqLLm
+Three new Python releases: 3.9.1, 3.10.0a1, and 3.8.7rc1. https://t.co/gnbpdc7RSF Test them all, but especially the rc!
+Please help the @psf survive the pandemic! There are 22 days to go on our end of 2020 fundraiser: https://t.co/ogxBlPmPhv
+RT @ThePSF: Elaine Wong Awarded the PSF Community Service Award for Q3 2020 https://t.co/oV8yxSZnkw
+RT @ThePSF: Invest in the PSF &amp; help fund Core Python Development! @ThePSF allocated $25,000 USD to support CPython development sprints in
+RT @EWDurbin: While there was so much more hiring planned for @ThePSF this year, this opening will clearly be one of the most pivotal for t
+RT @pythonvscode: The December 2020 release of the #Python extension for @code is out! \n\nCheck out our new  refactoring code actions for
+Great visualization of election results. I wonder if @EdwardTufte can improve on this.
+This is two years old but really resonates with me. Thank you @evancz! (Also, how are you doing? Email me.)
+Beautiful book. A worthy capstone for the series.
+Time flies! Python 3.10a4 was released today: https://t.co/LJKV8xfX8C Thanks @pyblogsal @baybryj and @zooba! Folks, if you access type annotations via get_type_hints(), please test with this release!
+"Getting a vaccine will not free you from all the personal and public restrictions that will continue." San Mateo County Health Officer: https://t.co/Ohf4TBVD5g -- so much good stuff here!
+What does this print?\nx = 0\ny = 0\ndef f():\n    x = 1\n    y = 1\n    class C:\n        print(x, y)  # What does this print?\n        x = 2\nf()\nFrom https://t.co/8iZEYr23rx (@kevmod) Still in Python 3.9!
+I should've named it "Elvis", then I'd be exchanging tweets with Elvis Costello. :-)
+Thanks for the kind words Joannah.
+RT @nicktrog: Bring your most pressing questions for @gvanrossum (#Python's BDFL-emeritus, Distinguished Engineer @Microsoft), who's joinin
+Python 3.10.0a5 is now available. Same as always: test the heck out of it, but not in prod! https://t.co/5dcF6iLvXD
+Notebooks in VS Code revamped. ToC, Diffing, Gather, LiveShare, and more. https://t.co/H00tGM7se5 Thanks @ClaudiaRegio !
+Nice! Thanks for the walk through memory lane.
+Got my first COVID-19 shot! Still need to wear mask and social distance of course. Be safe everyone!
+RT @freakboy3742: It's going to take a few years before we can reliably use this in production code - but I'm really excited by this new la
+For folks trying to get their head around PEP 634 (pattern matching), which will land in the next alpha release of 3.10, here's a brief tutorial I wrote: (more concise than the introduction in PEP 636): https://t.co/xWK2v0Rzgt
+(The same tutorial is also Appendix A of PEP 636.)
+RT @sfermigier: Python is 30 years old this month. Here's an archive of the first beta release (by @gvanrossum obviously), version 0.9.1, w
+Python 3.9.2 and 3.8.8 are out! https://t.co/D3tojd6NGf The wonder of free two-day deliveries, indeed. :-)
+That bowl was one of my mom's favorites. And thanks Nina for being such a great host and organizer.
+RT @WillingCarol: Here's the @pycascades video for the Core Python Devs panel about COVID and its impact on core Python development. @nnja
+Hey internet linguists! Where do people pronounce Jaguar as JAG-wire?
+Pattern Matching (PEP 634-636) was merged into cpython master today! Will be in 3.10 alpha 6, to be released Monday.
+Largest mouse pad in the world https://t.co/FzsVxNrPsN
+Python 3.10a6 is about to be released. The docs are already up: https://t.co/7rfOfV8QY1
+3.10a6 is out! With Pattern Matching. https://t.co/uLAdGb1IQ4\nOn April 5 we'll have alpha 7, then on May 3rd beta 1.
+While its still pi day in some time zones, look up math.tau.
+Signups for the Python Language Summit at PyCon (online only) are now open. If you're representing a third party package and want to have a say in Python's future please sign up! https://t.co/dese6xGE1A
+RT @kashleytwit: My dream in my book (#1 in Amazon 2nd day!) is that artists use #Python and data scientists become more like artists... \n@
+Awesome walk-through!
+PyWeek is a cool twice-yearly game creation contest. The next jam is coming up. https://t.co/sefttuog87
+This year's Turing Award goes to Aho and Ullman, the authors of the very fine Dragon Book. I have a first edition proudly on my bookshelf. https://t.co/5BPhe8NlHC
+The last of the Python 3.10 alphas is out: 3.10.0a7. Next up is beta 1, scheduled for May 3rd, which starts the feature freeze. https://t.co/e0dy8mVwK2
+Why did I not know before about "git worktree"?  :-(  https://t.co/wBM6uO2DX8
+RT @MSFTReactor: Next month, Python creator @gvanrossum will join us for an exclusive Q&amp;A session about his role at Microsoft and the past,
+RT @pythonvscode:  The best editing experience for #Python in @code has landed with huge upgrades to our default language support, powered
+RT @frlazzeri: This Friday I will interview the creator of Python,\n@gvanrossum!\nJoin us for an exclusive Q&amp;A session about the past, presen
+RT @pythonvscode: We're THRILLED to be joining @pycon  this week! \n\nCheck out all the cool  things we're bringing to #PyConUS and how yo
+RT @AzureSDK: We're thrilled to be joining @pycon this week!  Learn about the Azure SDK for #Python, @pythonvscode, and all that Microsoft
+I'm going live on learntv in a minute! https://t.co/U2OmYqVOIW  #pycon2021 #pycon #python
+This 2018 paper about user preferences for runtime semantics in a gradually typed language mentions Python but is strangely lacking any references to PEP 484 (created in 2014). Why? https://t.co/Cs9Wisvc9b
+Good summary of our talk at the summit. Looking forward to the rest in the series!
+Looks like I missed an important talk!
+Someone tracked down a version of the Grail browser that I wrote around 1995. Now they are looking for help getting it to run again. Anybody want to help? https://t.co/iStOOJdPtN
+RT @mariatta:  No more #Python Language Summit FOMO! @Jo_Jablonski got you covered! Read the blog post of the first discussion item: Exce
+RT @lvh: Breaking out the 10 year anniversary PyCon shirt! https://t.co/00ay8fcE0O
+It saddens me to see an abomination like this in an otherwise nice academic paper. https://t.co/qLvmyJdxTP
+PS. Why does Twitter add all that whitespace to the top of the screenshot?
+Oh, it's because the Windows Snip &amp; Sketch tool thought I was drawing on the image. :-(
+I apologize, I did not intend to disrespect a specific author. I only meant that this aspect of Black's style is not great for humans. I prefer it this way:\n\nif (is_interesting(attempt)\n        and len(attempt.record) &lt;= len(source.record)):\n    source = attempt
+This is a great opportunity. @MillsCollege is great (I gave a lecture there a while ago) and the social justice impact will be amazing. Wish I could take it. Anyone interested?
+Imagine the dread caused by this error:\n  TypeError: func expected at least 14 arguments, got 0
+This new release of mypy is a huge step forward. Type stubs for 3rd party packages are now installed separately. Read the blog. Thanks to the mypy team.
+We're hiring for "Faster CPython"! https://t.co/qpxiezVH5M, https://t.co/NY92DBm82I
+Looks like the IC link was hard to find from the tweet, so here it is: https://t.co/NY92DBm82I
+D'oh, I was confused, because Twitter turned the second (IC) link into a preview, while keeping the first (manager) link as a truncated link. Here's the manager link again: https://t.co/qpxiezVH5M
+RT @justvanrossum: My toddler says this is a fish and who am I to argue https://t.co/OeMXxrlA7Y
+We're still looking for more candidates to manage our little team: https://t.co/qpxiezVH5M
+How can I say "we would especially love to hear from women, Latinx and Black candidates" without sounding, how do I say this, "bigoted"? This subject is so touchy that the standard phrasing on our career site doesn't even fit in a tweet. :-)
+RT @MillsCollege: #MillsCollege and Boston-based @Northeastern University enter talks to create a joint alliance that advances student acce
+Python 3.10 beta 3 is out. Please give it a try with your libraries  dont get caught unawares when the final release goes out this fall! https://t.co/EzE9QgMkgQ
+Congrats @ambv! Awesome to see you in this role. Kick &lt;you know what&gt;!
+Wow! The last beta of 3.10 already. People, do test this!
+Read ukasz' blog on his role as CPython Developer in Residence: https://t.co/fAyCOsi7C3\nI am so grateful to everyone who made this possible!
+So the new Dune remake will be an episode of Star Wars? :-)
+RT @pyconthailand: We are excited to have Audrey Tang @audreyt, Digital Minister of Taiwan as one of our keynote speakers @PyConAPAC 2021!
+I'm sick of twitter.
+Talks submission is open through August 31!
+Great story! Read the whole thread. I call it the tech version of bringing bibles to those poor people in the colonies
+This is my skip-manager.
+Pattern matching is live in Python 3.10 today! https://t.co/e2BJExILJA
+RT @OpenAtMicrosoft: Join @ScottGu at ElasticON Global 2021, on October 57. Sessions and workshops help improve your Elastic skills. Regis
+I look very serious here. :-) Happy hacking, Japanese Pythonistas!
+Who is using Python 3.10 (released two weeks ago)? Any good uses for match/case yet?
+Tomorrow at 9am Pacific, @hotpyguy and I will be on @mkennedys show, live on YouTube (apparently) at https://t.co/NxCIzOKGEa, talking about Python performance.
+Correction, 10am Pacific (17:00 UTC).
+Congrats Anders! Its great to be working with you.
+The Python Software Foundation (@ThePSF) is looking for a new executive director. Thank you @ewa_jodlowska for your ten years at the top of the PSF! Those are big shoes to fill. The PSF has made tremendous growth in those years. https://t.co/OoZlupJXWV
+RT @vboykis: Oh lord, everything about this post about the custom in-house use of Python at investment banks, inject it straight into my ve
+This was a fun conversation, and it is a fun project to work on. I am learning a lot of new things about CPUs! ;-)
+To get an extra Democratic senator, democrats should move en masse to Wyoming. Right?
+Seen on a T-shirt:\n\nKnock knock\nRace condition\nWhos there!
+So after ~25 years I'm finally reading Guns, Germs and Steel. It looks a bit dated, and I suspect there's a lot of new research. What should I read that's more up to date?
+Windows users: if for any reason you'd like to get your Python directly from Microsoft, you can now get Python 3.10 from the Windows store: https://t.co/HqSRHXxFC6 (Versions 3.7-3.9 are also available, just use the search on that page.)
+Calling out @JukkaLeh , @mypyproject . Good to hear the attraction plug-in was so successful.
+*attrs, not attraction
+One day I will visit your amazing country.
+Python 3.10.1 is ready (https://t.co/vpWNsNxJ2O). Like lastr time, I'd love to hear from people who are using 3.10 in production!
+Also, such a cool logo! https://t.co/cTsWM22JmZ
+Python influencing JavaScript (again).
+RT @omer_bensaadon: Twitter friends I need your help.\n\nWe are kicking off a round of user research around how relatively large, multi-contr
+Please test!
+RT @nhuntwalker: Life is so long. So, so, so long. Youll likely have plenty of opportunities to be laser-focused on finding success. Dont
+Can anybody explain the GoodRx business model? How do they make money?
+Okay, so GoodRx is a "marketer" and they make money like all marketers. Thanks everyone, I learned something!
+Python's "-Wall" flag is a tribute to Larry Wall and Perl.
+RT @brunoborges: Five questions. That's all we are asking you about #Microservices and your choice of programming language.\n\nHere's the lin
+It's happening! BPO is migrating to GitHub tomorrow. https://t.co/kQcoaEduil
+Just discovered Hedy, a gradual programming language. It's a new idea on how to teach programming to beginners. Very cool! https://t.co/3dBnmTqfAs @hedycode
+After two delays, it's now *really* happening. bpo is read-only. Take the weekend off. :-)
+It's just about done! https://t.co/GjFaGfmq3M is dead. Long love https://t.co/wM2m1BrDr8.
+Another @py_bay event is coming up. Call for papers is still open! https://t.co/BvLW54TjIC
+Last day for this!
+Python 3.11b4 is *finally* released. WE NEED YOU TO TEST YOUR PACKAGES WITH THIS! https://t.co/gijX2VQUiJ
+RT @pypi: Today we received reports of a phishing campaign targeting PyPI users. This is the first known phishing attack against PyPI. \n\nWe
+See you there in 11 days!
+If you'd asked me "when was the reign of king Charles III" I would have assumed it was somewhere in the 1400s.
+I will be there, with @1st1 .
+The current state of AI is like this. A marketing person talks to an engineer. After 5 minutes the marketing person can speak the engineer's lingo perfectly, e.g. "async server protocol." But understanding? (Reference: https://t.co/Hjcbn93ERO and many others,)
+I've worked with Andrew for many years as a core dev. I can totally vouch for him. Hire him now!
+From the internets: new Python 3.11 logo :-) https://t.co/CtLkJygNT0
+Monday starting 17:00 UTC @pyblogsal will be releasing Python 3.11 *live*. Expect cameos by some other core devs. Watch the live stream: https://t.co/faznSICweb
+This is happening in less than an hour now!!!!! Go Pablo.
+If you speak German...
+A few weeks ago we had a Python Core Dev sprint hosted by Google. Here's the PSF blog about this! https://t.co/7BArwjR7bZ
+Music fans: I participated in an interview with Weezer's lead Rivers Cuomo in the podcase "Sing for Science" ( @singforscience). It goes live today at https://t.co/mixD6cYk0d and (soon) https://t.co/RLmFWyf5oC
+Article "The Origins of Python" by my mentor, Lambert Meertens. https://t.co/dDbRsCknLh
+RT @singforscience: Believe it or not, @Weezer and Python were created about the same time. Listen to @RiversCuomo and @gvanrossum talk on
+I first read this as "lib-req-OS" (a library for requiring an operating system???) but it is "libre-QoS", i.e., free quality of service. It's a free software server that ISPs use to improve their QoS. Dave has helped fight buffer bloat, so he knows what he's talking about.
+RT @jpjVideoTuts: UPDATED WEBSITE: it now has 275 detailed Python video tutorials with a combined runtime duration of over 50 hours. In add
+Looks like soon I will lose the blue checkmark. I can't say I care.
+My artist friend Julie Newdoll has a new website! https://t.co/Oc9SIlupfp (Also on IG: https://t.co/yI0dOPZRwu)
+I just have to plug this explaination of AI by my fellow hacker Monica Anderson: https://t.co/xBk7rVFbSd
+Microsoft Semantic Kernel now in Python flavor: https://t.co/1AY2zCFWf3
+In my high school senior year I was voted "least likely to invent his own programming language."
+My weather app gave me an alert that comes down to the water is cold and the beaches are busy. Really? Thats alert-worthy? https://t.co/CpNK7H1qGC
+Sept 19 Language Creator Panel in Bellevue, Washington: https://t.co/Gqkv61zLT7
+RT @PyDataSeattle: Our inaugural charity event. Featuring the creators of C#, Java, Perl, Python, TypeScript, and Smalltalk in a conversati
+I just cleaned the clogged drain hoses of our dishwasher. A draining job. I more than ever respect the people who do that work for a living.
+Yeah, so I helped the Excel team with this. Excited that it's out! https://t.co/zH1o2Fiaad
+80s album of the week is Making Movies by Dire Straits.
+RT @BajoranEngineer:  @djangogirls is coming to DjangoCon US in downtown Durham, NC  Oct 15, 2023 \n\nOne-day FREE workshop for women, fem
+Python wins the 2023 NEC C&amp;C Prize. https://t.co/pbMMviO3vM
+If yo use Python, you're a Pythonista. Please fill out the PSF's annual Python Developers Survey here: https://t.co/drETTepTiC
+Should I fill this out or not? :-)
+RT @kevin_scott: Incredibly proud to see my colleague @gvanrossum be honored for developing the Python programming language. Today, its on
+Talk by  my coworker (and co core dev) Brandt Bucher on how we plan a JIT for Python 3.13. https://t.co/5NFDDWUySR
+Read more about how Python in Excel works!
+Wow, this is amazing!
+Me, like youve never seen me before (and wont see again :-) https://t.co/jqSYc7m9Su
+An interesting, balanced view on C++ safety by my esteemed colleague @herbsutter: https://t.co/3OGQbmaCE7
+My laptop and its charger have reached a stalemate: the laptop refuses to charge beyond 80%, and the charger refuses to change its light from orange to green.
+Does anybody have a relatively blemish-free first edition of the Pascal User Manual and Report by Jensen and Wirth they are willing to sell to me? It is a cherished childhood memory but I never possessed a copy. It must be from around 1974 or before.
+Thumbs up or down? https://t.co/bEyr65cnY3
+https://t.co/kZcivibiUY
+Next year we should have Python2.7girl at the Eurovision Song Festival.
+RT @pythonvscode:  Were excited to announce the general availability of Data Wrangler for VS @Code. Our new, code-centric, AI-powered dat
+Dear #pycon presenters. Here are my accessibility requests for next year. 1. No colorized code on black backgrounds. Blue or purple or gray is really hard to read. 2. Use large text please. I cannot read your regular terminal font. PLEASE.
+I m really enjoying listening to Midst, a semi-improvised fantasy/SF story in podcast form by three anonymous narrators. https://t.co/TylgEyfmGP, Spotify or YouTube. Its the first podcast Ive ever listened to! (Sorry Pablo and ukasz. :-)
+Fun nonfiction book: A City on Mars, by Kelly and Zach Weinersmith. I dont want to give away the ending but its about space colonization and its dangers and risks.
+RT @pamelafox: Our Python Web Apps series starts today!\nCheck out our live stream (with @noble_renee) at 3:30PT on Web Apps 101 covering HT
+Exactly. https://t.co/D3XWGVJHbq
+PSA: According to Verizon tier 2 tech support, all international plan customers have lost access to the network as of 2pm Eastern time yesterday, with no ETA for a fix (could be Monday). I guess a server crashed. Kinda sucks since I'm in Europe this week and next. :-(
+We are vacationing on Terschelling. We rented e-bikes at De Groot Fietsen. This is an amazing guy -- not only did he ask if I was the Python guy, he also turns out to have filmed amazing time lapses of an art piece here, "The Streken". https://t.co/TBTMJZnOR3 and https://t.co/44dWvV9KVT
+RT @anilananth: Don't know how other authors feel, but seeing the first physical copy of your book, after years of looking at Word files an
+RT @pamelafox: Join me next week for an intro to using Large Language Models with Python!\n\nhttps://t.co/kdKyjTRM5q\n\nFree, Online @ August 7
+Good interview with Leslie Lamport. https://t.co/QVSCsqZwVN
+RT @pamelafox: Registration is open now for #RAGHack: a global hackathon to build RAG applications!\n\nPlus, we'll have 25+ free live streams
+Websites are hard https://t.co/Ef5zVN0ADV
+Want to know why import works the way it works? Watch @akaptur explore the decision process: https://t.co/RgnttUXpkC (Love the fish quote.)
+Great talk by @akaptur on how (not!) to read the CPython (interpreter) source code: https://t.co/2Cs7YTLyYJ
+[LWN links from summit cont'd] (8) Python on mobile systems:\nhttp://t.co/lnhHVgiw1U
+(9)  Adding Requests to the standard library?\nhttp://t.co/wNM3G1KE9r
+(10) Jython Native Interface (JyNI):\nhttp://t.co/QkweSHzz5J
+(11) Python installation options for Windows:\nhttp://t.co/TEq20yWMQL
+(12) Python at Heroku: http://t.co/e0CXdoRASP
+That's all from Jake Edwards of LWN, folks!
+Correction: those language summit overviews were written by Jake *Edge*, jake@lwn.net
+Oh, also missed (13) PyMetabiosis: http://t.co/RXTpuuPDps
+Funny how Amazon keeps showing me ads for things I've researched and then bought (or not :-).
+Python marches on towards mobile... https://t.co/ZONq8vspGI
+Be an active ally. E.g. when called on, pass your turn to a lesser privileged participant who's been waiting longer. https://t.co/6ENhLnLwJ3
+** CORRECTION ** Wonderful love letter to Python: http://t.co/QxiaudsYfn The real author was: @OssAnna16 *If you RT'ed please RT correction*
+Thanks everyone for pointing this out. And sorry again @OssAnna16
+Lifehack is so full of distractions that this page is impossible to read, ironically: http://t.co/q9JCz9BLFH
+See you next year in Cuba? https://t.co/VAxTVWx5le
+RT @adriarichards: Running for @ThePSF (Python Software Foundation) Board of Directors this year https://t.co/bviTtTWSEG http://t.co/awdQ8K
+@jepsmep Just go to http://t.co/gMzbvWQHR4
+Startups in Cuba! https://t.co/aT2hJFyq0l
+"When a woman tells you something is sexist, believe her." http://t.co/go7cxSCQKp
+os.makedirs() design is broken. I always end up with "if not os.path.exists(p): os.makedirs(p)"
+Impressive list of things fixed in Python 2.7.10. https://t.co/gYMBPNjqrL
+@carlmalamud That's sad. Why not upgrade?
+Python 3.5 beta 1 is out: https://t.co/Ehqq5BhUqL
+.@raymondh What about list items? :-)
+Python 3.5.0 beta 2 is out: https://t.co/7P6PNTUGSr
+Awesomeness! https://t.co/zdoDPahqiT
+If you're a woman interning in the Bay Area this summer, be sure to apply for Summer Hack Day! http://t.co/EWRYCLUdmb
+A trip down to memory lane: the Grail web browser, written in Python in 1995. http://t.co/BFfp9ekH0S
+RT @dropboxapi: Oooh! We made a breaking change to API v2. I guess that's why we call it "preview".  https://t.co/VIuwhSJFq4
+I don't suppose the NSA is attempting to hack Chinese IT infrastructure?
+Fun if long read about code in Businessweek: http://t.co/x23HtZmiFH
+@ColonR17 In Python as in mathematics.
+@ColonR17 So now C# is the measure of the world?
+@productivico Just read @raymondh's Twitter stream. :-)
+@productivico Strange, since I'm on vacation.
+@i_elnady Have you tried "from __future__ import braces"?
+@wldcordeiro @dabeaz That's a question for python-tulip@googlegroups.com. But how would the server know what to call it with? Or use lambda.
+RT @MerchiseMeetup: Speakers are welcome for July 25th meetup http://t.co/xYqYxSSjn3 Contact info@merchise.com #Cuba #startups #coding
+@yan0731_a Python the Hard Way. Or just the tutorial at http://t.co/znIHMqscXf. Be sure to learn Python 3!
+@regebro @hpk42 @isallmaroon I sometimes get uncivil when asked certain questions too often, e.g. recruiters or amateur language critics.
+@DevNamedEthan You're welcome to propose some on python-ideas@python.org (subscribe first). But it's been discussed to death already...
+@DevNamedEthan I was and still am in favor, but I don't see a reasonable way to extend them to multi-line, *and* I think it's unnecessary.
+@DevNamedEthan Hm, beware though that all lambda incur the full overhead of a Python function call, which is relatively expensive.
+Maybe this little shop in Bilbao supports Python? :-) https://t.co/K0DDUs6eSf #europython
+Hobbit lovers must love Bilbao's bus system... :-) https://t.co/I4yYyyEwzZ #europython
+RT @toddwaits: Ola and Ola telling the origins of @djangogirls using a fairy tale. #europython http://t.co/edkC2URqrC
+RT @oinopion: #europython keynote is full of squirrels! http://t.co/LkdQTnO3v5
+RT @DjangoGirlsEP15: #djangogirls founders @olasitarska and @asendecka take the stage for the #europython keynote, plus one #potato http://
+RT @ben_nuttall: @martinohanlon @gvanrossum Print has actual features now it's a function! You should check it out.
+Pretty harsh criticism of Tornado: https://t.co/JqougOsCgq #tornado
+Reports of the GIL's death have been greatly exaggerated.
+Bye #europuthon, it's been great fun!
+To the person who cornered me about datetime at #europython: https://t.co/hEU9aI2nYF
+.@russnelson IIUC when we say UTC we really mean POSIX timestamps, which ignore leap seconds (IMO that's good).
+Bye bye Bilbao. #Europython #ep2015 http://t.co/Tnaq6tmuMl
+Hey, Python 3.5 rc1 is out!! https://t.co/b8Z3GdKTgA
+Pro tip: don't plug a US power strip with surge protection into a European power socket.
+.@harrydord I have 8 different devices, 8 different chargers, all rated 110-240 V, all US plugs. (Most non-USB.)
+.@harrydord Honestly surge protectors seem a typical American scam. You never see them in Europe.
+Given a graph with 10K-1M nodes, what interactive visualisation tool would you use? (I want to browse a large import graph.)
+@n770 This fell through the cracks in the rush up to 3.5 beta 1. But please bring it up on python-ideas.
+.@pawel_szmajda That's more a question for @ThePSF .
+If you're building extensions for Python 3.5 on Windows, read this: http://t.co/Z8k8TCIQLi
+Also, Python 3.5 rc 2 is out: https://t.co/S60O37dtXG
+(The trouble with) DST explained visually: https://t.co/2PRsSpS1Rn; discussion: https://t.co/YPZflZjNaj
+Bruce Eckel announces he's going to write Atomic Python: http://t.co/2RYDGAgfts
+Python 3.5rc3 released: https://t.co/BEDJRcIK2Q Thanks Larry Hastings and everyone on the core Python team!
+Yeah, so Python 3.5.0 is really out! https://t.co/OvHQb2PDPx Thanks all Python core contributors!
+Whoa, Python is ahead of PHP on the Tiobe index now?! :-)
+RT @aosabook: Learn about coroutines from @jessejiryudavis and @gvanrossum in the newest "500 Lines or Less" early access chapter: http://t
+.@aosabook Thanks so much @jessejiryudavis for writing such a great intro to asyncio given my puny 500 lines example!
+Why is Python 3 better than Python 2? Start reading here: https://t.co/JGtln1J0Jf
+.@karnauskas Yes, pip is on by default: https://t.co/p4UbgFn0wK
+Test flakes are like snow flakes. No two are alike.
+The flexibility of print() in PY3: for i in range(1000): print(end='.', flush=True); time.sleep(0.01)
+.@raymondh A plug for the work of Edward Tufte: http://t.co/84JnY6pVhF
+RT @rhomsany: Open Sourcing Zulip  a Dropbox Hack WeekProject https://t.co/FK3LvRzKjq
+Using mocks? Read this! http://t.co/nknHXcwchv Everyone has this. :-(
+Is there a cowsay in Python? https://t.co/P87oTJqU4l
+@regebro What do you mean "mistakenly"?
+Worth watching out for if you file a Python issue! https://t.co/wKkXbPYjz0
+@_malikbutler Yes, this happens to me all the time. I have a GMail filter that forces mail from the tracker to be treated as not-spam.
+RT @alfredtwo: Computer Science Teacher: An Inside Look at Being A Computer Science Teacher... http://t.co/qlNvwfy8gt
+I've been playing with micropython on the BBC micro:bit and it's amazing! &lt;3
+Dear @Caltrain_News, long time rider and big supporter here. Some ideas following (sorry for the multi-tweets).
+.@Caltrain_News Could you hire traffic guards for busy level crossings? Quicker and cheaper than waiting for level separations.
+.@Caltrain_News For travelers, how about a GPS-based real-time train information system so we can see train status on phone or computer.
+@sonduszeyad88 Sure, I charge $1000 per hour for homework services like that.
+@isithasub Sorry, no, it's an interpreter. But it's mighty small and fast! (It's *micro* after all.)
+MicroPython on the BBC micro:bit goes open source: https://t.co/ZC2mPGK9BO
+.@jykae @ThePSF asyncio is here to stay. Provisional just allows adding (small) new features in bugfix releases. Otherwise it's stable.
+.@Lucretiel @jykae @ThePSF Compiling to C/C++/etc. is not the focus of most Python development. If you want faster Python, sponsor PyPy!
+Python everywhere! https://t.co/m06Qrbq47p
+What is an exceptino? It's an exception that's really hard to observe.
+Hidden Genius Project wins Google prize: https://t.co/tODnLllx25 "Training black male youth to become tech entrepreneurs and leaders"
+Python 0.4 released: https://t.co/wYpHlKZ6Ht Looks like solid progress!
+[corrected] *Pyston* 0.4 released: https://t.co/wYpHlKZ6Ht  Looks like solid progress!
+Look at all this work based on asyncio! https://t.co/3nuMBLHrN6
+RT @tweakers: In aflevering drie van Polderpioniers vertelt @gvanrossum over het ontstaan van de populaire programmeertaal Python: https://
+https://t.co/q0uhpnWZTT has a new game out: Empire of Code. https://t.co/AGsqYLsgzd
+RT @queirozMario21: The next Python Brazil is in Florianpolis. It will be a pleasure to welcome you. #oktoberpython #pybr12 #Python
+Awesome! https://t.co/syvKcLjUtm
+The very first https://t.co/2j12YXhlJD home page, from May 1997: https://t.co/KwtE7rjX9P
+Please support this diversity web series project by a former mentee of mine: "the developers" https://t.co/wt4oOxpRzT
+@kstallett @randal_olson @covertress Maybe you missed that there is no reason to switch to 4 at all. It would just be fluff branding.
+@kstallett @randal_olson @covertress Just stop worrying. It won't happen until 2025.
+"If you think English isn't hard to learn, learn [Qlb]." https://t.co/SWCHX09fMp
+@ismael_vc @l337d474 It's not my project -- I just provide moral support. (!) Check out https://t.co/0hQF9kaESy for what I'm working on.
+Python is a clue in NYT mini puzzle https://t.co/AK3VHozOE6
+What?! Sarah Palin is still a thing? Unbelievable!
+@carlmalamud Then I'll move back to Amsterdam.
+Wonder about Python version lifespans? Wonder no more! https://t.co/TKxxh7yRUQ
+The pep257 tool is now pydocstyle: https://t.co/l8tqQPr81k Congrats with the new name folks!
+@izaimo How will you help?
+Jigsaw puzzle cutter. I can watch this for hours. https://t.co/sUeqa67kdc
+@sam_et_max Can you file a bug at https://t.co/srhLH6eSXG with a complete repro?
+Oh the places Python goes! https://t.co/OnSI58QWBz Congrats PyCon Namibia on a successful workshop.
+@_kamerontanseli What should it return? d.days*24 + d.seconds//3600? But that would be inconsistent. Better ask on python-list.
+RT @pycon: Here are our Keynote speakers! https://t.co/aUbXnz8wEA\nThey are @laparisa @2braids @LorenaABarba @crisewing plus regulars @gvanr
+Mypy 0.3 is out! See https://t.co/bRNzUharjg -- or just "python3 -m pip install -U mypy-lang". Repo is now https://t.co/wTeL5TeuMV.
+PYTHON FLAGS ENABLE THREE LAWS https://t.co/MhFAoNwy1J
+Great deep-dive by @brettsky about async/await in Python 3.5: https://t.co/9M9RnC41Qp
+BBC microbit w/ Python launching! https://t.co/CxFUvzkYvT
+.@dangayle @raymondh @dabeaz @pycon Yeah, Sunday 5/29 from 1:30-3pm. Sponsored by Dropbox.
+@titouandk Hi Titouan, that question can't be answered in 140 characters; try the python-ideas list (https://t.co/Ovhxin11Cz)
+Help! Where can I buy a USB-C cable for my OnePlus2 phone in Orlando near Disney world? I'm leaving today for the Gulf Coast.
+Walmart: fail. Best Buy: over half an hour to find someone who knew where the item was. Finally all set. Moral: don't get a OnePlus phone.
+.@Dos8ht You bet! Many starting points are collected here: https://t.co/ERvOfUseyD
+Going to #PyCon in Portland OR this year? Come to our mypy talk: https://t.co/4QOKzX1Bzn
+@polarweasel @mhoye Is that good or bad? Will easy diff/merge encourage more contributors or just enable the most vocal ones even more?
+@polarweasel @mhoye Have you ever managed the tracker for a popular project? I'm very skeptical about your claim.
+@polarweasel @mhoye I have no numbers, but expect it to be low too. But how do you even define user here?
+MicroPython 1.7 released! Now with cross-compiler. https://t.co/gWq50gVEwk Congrats Damien and contributors!
+OH: "A risk of a bug every 584 years is acceptable."
+Kite looks pretty cool: machine-learning applied to programming in Python. https://t.co/tiCZP7amCs (If only Emacs integration was ready. :-)
+@joeswislocki What's with all the name calling?
+Random: I love to use A=abstract class, B=base class, C=class, D=derived class...
+New blog post: https://t.co/D8BiNcc9OG
+Yay asyncio on steroids! https://t.co/ICHEvSU7QL
+.@derek_arg @dabeaz I dream of gradual typing these nights.
+Been talking about this a bit, but Adrian nails it. https://t.co/1Q6H5qdkZj
+mypy 0.4 released today! https://t.co/mS7TkbM9do 'pip install mypy-lang'
+@digwanderlust It's way too soon for that. We need to get this to work separately first.
+@sam_et_max We're putting off all new syntax until fast-parser is the only parser. And yes on both.
+46 across: Programming language named for a comedy group. https://t.co/aXoOIM3iXZ
+.@parrotread Please stop tweeting me about decade-old book reviews.
+Today's explain XKCD is particularly bad -- seeing the jokes explained poorly makes them less funny. :-( https://t.co/kiTlBLVCD1
+@ArthurMoore85 I'm not complaining about the XCD strip, just about https://t.co/wvVnHvLQxR
+.@deathbullet My favorite Python error message:\n&gt;&gt;&gt; from __future__ import braces\n  File "&lt;stdin&gt;", line 1\nSyntaxError: not a chance\n&gt;&gt;&gt;
+.@laerusk https://t.co/4QOKzX1Bzn
+.@Pistolbarrel OMG I went to the T-shirt print shop myself to get those printed! Design by @justvanrossum
+In case you wondered who maintains PyPI... https://t.co/PoYS05UetK
+@crncosta Hmm, sounds like you missed the megathreads on needing support for older Python versions. Eventually we'll add a 'var' statement.
+@crncosta Maybe you can turn your annoyance into something more helpful.
+New blog post about AnyStr in PEP 484: https://t.co/YXCgCbD23r
+New blog post (part 2): Type annotations for fspath https://t.co/Vqy73gHLdn
+New blog post: Type annotations for fspath. https://t.co/Vqy73gHLdn
+PEP 484 is update with new feature: Type[C]: https://t.co/k4aE5I43x7
+We have a major update of PEP 483 (background for type hints) from new author Ivan Levkivskyi: https://t.co/j6WuCBHAoD
+Congrats @brettsky on receiving the Frank Willison Award. Well-deserved!
+Ik ben wereldberoemd in Nederland! :-) https://t.co/eUJI2Fbeod
+Soy famoso en Espaa! https://t.co/Z3uQLoDoKa
+@TaskDead47 Missing comma between 'll' and 'ff'.
+@TaskDead47 Indeed. It's called implicit string concatenation, and occasionally very handy.
+Randall should really switch to 4-space indents. :-) https://t.co/S0wfg7m2lw
+Django Girls event in Lahore, Pakistan! https://t.co/EMYJ3yPpke @qc_technologies @DjangoGirlsLHR @zahidirfan @olasitarska @asendecka
+The mypy team will be doing mypy clinics at the PyCon sprints next week: https://t.co/PnACZ4dr5G
+Poll: what to call such a type? https://t.co/2gBAPk6a4z
+Larry is going to perform a gilectomy. https://t.co/g3z8YGvfTw
+Slides from today's mypy talk (alas, not recorded): https://t.co/v7KyvJyc9x (with @JukkaLeh @gnprice @_ddfisher)
+@catintp @pgbovine If you find a library that isn't ported (and hasn't got a better replacement in PY3) please do recruit help!
+Pep8 is dead, long live pycodestyle! https://t.co/q9GmX5bub9
+@SpectralFilter @randal_olson neither. Read the slides.
+The style on https://t.co/WbE6RDQlyZ should look more like this: https://t.co/DOH7wVtT1Z
+@TAtanasoska @pyladies OK, start by mailing me (guido@python.org).
+.@JackieKazil Sadly that's up to Apple and they have not been very Python friendly lately. PSF downloads are at https://t.co/ETKl1Ji4Ca
+@twiteness @OssAnna16 @brettsky @raymondh Start by mailing me (guido@python.org) and reading https://t.co/ZhLlylGGhi
+Coding Python While Black https://t.co/yHFE56PeXC
+"Python will not experience any drastic decline in popularity any time soon." https://t.co/rtwNYwoyUY
+How can one declare LinkedIn bankruptcy (from link requests)? Asking for a friend. :-)
+.@aymericaugustin I just discovered a profile option and disabled those suggestions (except for 2nd order connections).
+OMG this is crazy cool! https://t.co/ycLYvTS7UY
+@pgbovine Boo. I have had the same experience as @dabeaz innumerable times.
+@sam_et_max @aaronchall @termux But does the Ford CEO answer questions on Twitter?
+Didn't believe my ears: Terry Gross broadcasts a debate about tabs vs. spaces.  https://t.co/8lLQy0Z9zN
+We've released mypy 0.4.2! reveal_type(), Type[C] and many fixed bugs. https://t.co/JcGQB3k0JM
+@sam_et_max @DinisCruz Honestly, I like pytest as a test runner, but I don't like its infrastructure for writing tests.
+.@EricIdle Pleased to meet my idol. Excuse my naming a programming language after your show, 26 years ago. Been a fun ride.
+@twiteness Hi Maria, I have some Python core-dev resources for you. Can you email me at guido@python.org?
+Long live affirmative action! https://t.co/VGXDkn3NtW
+Python 3.5.2 is out. Yeah! https://t.co/Jfex331KG3 (Also Python 3.4.5 nearby.)
+@ermff @i_am_erip @hsjawanda @MatthewInSEA I certainly didn't think I needed to be CC'ed on every tweet in the exchange.
+Also, Python 2.7.12, for those keeping count: https://t.co/svxZS0VIPQ
+Who thought compression was "solved"? https://t.co/MKuSJSz88J
+@gregzakharov Sorry, I don't think anyone cares. If you do, make it happen.
+These UI guidelines make ever UI better: https://t.co/k7RbYSoUWB
+Python by the bay! https://t.co/u6Nskmtr2U https://t.co/0mIAnCuFK5
+@i_am_erip Probably never.
+Yeah! I wrote a little code and @jessejiryudavis wrote a beautiful explanation. Recommended. https://t.co/KeyqncL210
+Listen to @Podcast__init__ about mypy with @_ddfisher and @gnprice: https://t.co/17NSIZfIil
+New mypy release (0.4.3) is out! https://t.co/OF0vCWJ09s Remember to use pip3 install -U *mypy-lang*
+The #TechnovationWP2016 award ceremony was incredibly inspiring. Great teams and mentors?
+.@laike9m Here are the slides from my 2014 talk on asyncio: https://t.co/xA3T54qemv
+.@Collinsjo12 These "protocols" don't require explicit inheritance or registration. See https://t.co/dcpWgTzrPr
+@MichaelSeney @deathbullet @jessicamckellar Really I don't recommend Emacs to new developers. It just exists for old brain compatibility.
+.@AnneMiller32 Also, I've heard good things about Sublime.
+Apparently these guys haven't heard of micropython yet... https://t.co/Oeh4zrLSYI
+Don't be like me, don't miss @py_bay ! https://t.co/q3USk7CR0s
+.@makoyan1331 Better ask someone who has learned Python using that book.
+@makoyan1331 Don't be sorry! :-) I just called on others to help you.
+.@sivabudh @DefinitelyTyped We've already got one! https://t.co/P70oz565x6 Oh yes, it's very nice!
+Congrats @hjwp PyDev of the week!
+Reminder: `python -m this`
+We've released mypy 0.4.4: https://t.co/beNquklP4b (adding e.g. async/await support and NewType()!)
+Why all the sudden interest in a two-year-old tweet?
+PEP 526: Proposal for variable/attribute annotations: https://t.co/vngXZFmhPT (A follow-up to PEP 484.)
+@crncosta See second bullet: https://t.co/HPrV354s19
+RT @ScribblingOn: I just published A Beginners Very Bumpy Journey Through The World of Open Source https://t.co/TUiO3KvTbu
+Accept ALL the PEPs!
+"How many cores do you have?" "Two. No, four. Aauuuuuuuugh!"
+My new home page is at https://t.co/K4OKBSXGtq.
+Email from IEEE: "Your membership(s) will be renewed automatically during the week of NaN October 016"
+Whee!! Python 3.6b1 is now RELEASED: https://t.co/Vply6Hu0yO Thanks everyone who worked on this!! @baybryj
+I keep getting spammed by something called "livecoding dot tv". How to make them stop?
+CheckIO is trending on Reddit: https://t.co/RUOM165AaV
+.@codeHobbyist Look at https://t.co/Fpkdewmxh4
+@codeHobbyist Read books with interviews with programmers.
+Great advice on how to find a project to start contributing. Project owners: read between the lines how to attract new contributors! https://t.co/hgSqCatfXZ
+Report from the Python core dev sprint a few weeks ago is live! https://t.co/649J5RhWHc
+.@KSRAMAN501 https://t.co/D8BiNcc9OG
+So basically Elon Musk taxes rich Tesla buyers to finance his space hobby. Right?
+Are there newer versions of https://t.co/WaQi8DIonH anywhere?
+mypy 0.4.5 is out! https://t.co/eVcQVecKFl
+Whee! Python 3.6b2 is out. https://t.co/gZLH6YIYqn Expect 3.6final in December.
+Good piece on the danger of contempt culture. Calls out Python. https://t.co/0RnFa9XWDw
+Great blog post about Zulip's use of mypy: https://t.co/3Zet8fAeXR
+RT @astrofrog: Now THIS is a hockey stick graph I'm happy about #python https://t.co/awRa8kuzFt
+Don't separate the sheep from the goats. https://t.co/mz2kpE3Du8
+.@rowlandm Thanks @ncoghlan_dev for linking to that article! (Sorry Nick I forgot to credit you on the initial post.)
+80x24 should be enough for anyone. :-)
+Sans-IO: The new way to implement protocol parsers. https://t.co/PzeV2fmKv9
+On the art of estimating software project completion times... https://t.co/gHeceDFvTx
+(Best quote: "Remember that when you push back against a bad schedule, you are not a Debbie Downer against a magical world [...].")
+@codeHobbyist @abyt23 FWIW Python's bytecode was inspired by https://t.co/p5YOuNE9hZ
+@TorbjrnWEngel You lost me. What's a neg diff? What's a diff?
+@sam_et_max @1st1 See also https://t.co/ZdqMxhvT53
+@TorbjrnWEngel I got that far, but is "Difference" a class? Or was your Tweet a joke? (I still don't get it.)
+@TorbjrnWEngel So what's wrong with abs(x - y)?
+@TorbjrnWEngel Well you should print this Twitter exchange, frame it, and hang it on your wall. :-)
+Whee! Python 3.6b3 is out! https://t.co/U0P9GdZOys \n https://t.co/023Pj4ecPB
+Windows Python users please read! https://t.co/0A2Ylg57XH
+We released mypy 0.4.6! `pip3 install mypy-lang`. https://t.co/NPkJNwhHqp
+Python 3.6b4 is out! https://t.co/gNo1Pv0uJk
+We have Python 3.6.0rc1 out! https://t.co/lz6KuItx8h Thanks @baybryj !!!
+.@tswaterman It's nuanced. I'm offering optional static types for those who want them.
+Yes! Python 3.6.0 (final) is released!!! https://t.co/DIWDxoUuXd Thanks @baybryj and all core devs, contributors and beta testers!
+I've released typing 3.5.3.0 -- the typing package as distributed with Python 3.6.0, for use in 2.7 and 3.2--3.4. https://t.co/ApehtXhd8e
+@duchowememy The runtime support may make it look that way, but the actual checking happens in mypy and is pretty tame.
+Thanks to @baypiggies and @LinkedIn for posting the video of our mypy talk! (Dec 15 2016) https://t.co/XYZQDIUk80 https://t.co/8l1McdQkNA
+mypy 0.470 released! https://t.co/r8zthRmJCo Finally "pip3 install mypy" works!!!
+Python 3.5.3 is released! https://t.co/TkbCF1Pvvn (Also 3.4.6 -- the last of 3.4.)
+.@Kentzo It links to the full change log: https://t.co/m1lWLf8C6x
+@Van_Guren Some Googleing? I found this: https://t.co/BKzIIp1EJA
+@erickjo61337836 @Kentzo Try asking on python-list
+@erickjo61337836 @Kentzo https://t.co/dqAw5iUw7y
+Micro mypy update: https://t.co/XU6N0O88g5 -- the only change is fixing the typed_ast version, to avoid a new typed_ast breaking old mypy.
+The CPython source code has officially moved to https://t.co/0ax0UGzgLZ. Congrats @brettsky !!!
+@swhobbit @github @brettsky IIUC every developer has a full clone in their .git -- it doesn't get much better than that.
+Mypy 0.501 was just released: https://t.co/0KW2LUnevR New parser and Python 3.6 are now default!
+Yay, Python 3.6.1 is released! Thanks @baybryj and release team.https://t.co/ETKl1Ji4Ca
+Terminology proposal: If `@foo` is a decorator, then `@bar(args)` should be called a second-order decorator.
+Great book of short stories I just finished, A Manual For Cleaning Women, by Lucia Berlin. https://t.co/Vzf8Vb1r6R
+See the sheer terror on the face of the actor updating their car navigation system: https://t.co/PZpp6IKsf0 (around 1:35)
+The new mypy release is ready! https://t.co/82F7i51Q6d
+Great example of beginner-friendly guide to submitting PRs: https://t.co/c97EW3pVVb (also check the previous sections)
+Great #PyCon2017 keynote by Lisa Guo about how Instagram migrated to Python 3! Hopefully will be on YouTube soon.
+So https://t.co/WbE6RDQlyZ has "Guido mode", but why is a different font, plus red text on black background, named after me?
+David and Jukka giving their mypy talk at #PyCon2017 https://t.co/p6ElPD2b8e
+Bye everyone at @pycon -- I am on the way home but I will not forget you. #PyCon2017
+PyBay 2017 is August 11-13. CFP closes *tomorrow*. https://t.co/Isiwda7VXi
+New location for the Python dev guide! https://t.co/Mzxi0DM6tx Thanks @brettsky and the PSF infrastructure team.
+Git usage tip: Triangular workflows done right: https://t.co/5HsAVSDEd7 (the basics seem to work with Git 2.4.3 too).
+mypy 0.520 released! https://t.co/nIF6riarDg
+RT @drewhouston: Proud to stand up for #netneutrality and an open internet today and every day. Our take: https://t.co/gAVDwTymJA
+Whee! Python 3.6.2 is out. https://t.co/ETKl1J0tdA Thanks to the release team! @baybryj
+Minor mypy release 0.521: https://t.co/aJxJeoP4eR
+PyCascades in Vancouver coming January. I plan to be there! https://t.co/dYaKvvn5q2
+Hm, Twitter's quality filter suddenly decided to block a whole bunch of stuff...??
+To celebrate my 100,000'th follower :-) a new list: Python security announcements. First post: PyPI typosquatting. https://t.co/fiDOCFdhGF
+RT @northbaypython: Help us bring more Python goodness to the SF Bay Area on Dec 2-3: propose a talk before the Sept 29 deadline. https://t
+Tell me how this piece of silliness borrows from Python? https://t.co/K2TZLmKulb Is it April 1st or what?
+PyCon 2018 CFP: https://t.co/r9zz3husuF -- deadlines:\nTutorial proposals: 24 Nov.\nTalk, Poster,  Education Summit: 3 Jan.
+Python 3.6.3, whee! https://t.co/RohkfqMgrS
+Mypy 0.530 is out! Protocols, support for TypedDict, and then some. Read the blog post. https://t.co/Iazl7jGkyJ
+RT @mypyproject: Mypy 0.530 is out! Now with structural subtyping (protocols), TypedDict, and more. https://t.co/QjoZSZHdVz
+PyCascades speaker lineup! https://t.co/83KnUah2RC
+Mypy 0.540 is now out, on the new (faster) release schedule. https://t.co/XxpU2OM1Pn
+RT @mypyproject: Mypy 0.540 is out! New features, bug fixes, typeshed updates, and a more rapid release process.  https://t.co/AoK7QFI1kZ
+From a recent DjangoGirls event in Istanbul! (Organized by a friend, I wasn't there, but these happy folks were.) https://t.co/dKnVO4WFqd
+Hmm. https://t.co/ZVXjjfwzQ1
+My brother's creativity is visual: https://t.co/oCUx8L647U
+A really cool talk about Drawbot by my brother (@justvanrossum): https://t.co/gkzCpPDRhJ
+Hmm... Is the bar in the PyCharm logo a progress bar? How appropriate! https://t.co/aHlL4fwLx9
+PyCon 2018 in Cleveland, May 9-17. I'll be there! https://t.co/ljY04tcZsU
+W00t! https://t.co/eKZbM3d8g2
+Dropbox releases PyAnnotate -- auto-generate type annotations for mypy\n https://t.co/yqwUD1j3bE
+Good insights about software engineering, focused on data science, by my friend @gvwilson: https://t.co/hSenc9q3hz
+Noth bay Python is in less than two weeks! https://t.co/YexmkbJ4nq
+"Organic" is the new "kosher". Just Google for "Organic high-fructose corn syrup."\n\nHappy thanksgiving, if you celebrate it!
+I will try to meet 25 new people daily at all Python conferences I attend. Here's why. https://t.co/lqs01HziSD
+Python 3.6.4rc1 and3.7.0a3 are now available!\nhttps://t.co/4fA3enKzYo
+A new release of mypy, just in time for christmas shopping! https://t.co/WLmhGb6i1V
+Can somebody submit me for an ACM award? It's been too long. https://t.co/E1WoUjawsP
+RT @llanga: The prize for the most fancy conference badges ever goes to @PyCascades! They are even nicer in real life because you can touch
+13 years after the PyWebOff (https://t.co/hbrslx15X2) noted 40 Python web framework, there are 4 left. Great talk by @nhuntwalker on Flask, Tornado, Pyramid, Django. https://t.co/NdzbGX228p #PyCascades
+RT @nhuntwalker: Ok it's definitely more real now  #pycascades https://t.co/IWERmMyNIz
+Same for me! https://t.co/ZXJGkbkd3R
+Great talk on Python AST, bytecode and optimization by @emilyemorehouse at #pycascades
+Code samples looking like an angry fruit salad... #pycascades https://t.co/sNnMd8U4NL
+"Python-as-a-second-language empathy" -- cool concept in talk by Tom Ballinger @ballingt https://t.co/QPVhU2j1yE #pycascades
+Great overview talk on web accessibility! https://t.co/Gs8DhuQWvk by @techevangelista #pycascades
+Congrats Yury! https://t.co/g8fJ2rU3dQ
+According to @brettsky in his talk (closing Monday at #pycascades) a PR can be like a puppy you didn't want.
+Great talk about unconscious bias and how to fight it / be an ally by @windupanna. #pycascades
+Talk by @llanga at #PyCascades about type annotations for Python not only introduces the topic but also gives workflow suggestions.
+Here is @llanga with the most important slide. #PyCascades https://t.co/trepTapV37
+Please use UTF-8. @rctatman Yes! #PyCascades https://t.co/PZPb0d3w5z
+Python 2, no thank you! @rctatman #PyCascades https://t.co/r7g7gl3jC0
+Hey! @VictorStinner spotted at #PyCascades on slide by @rctatman https://t.co/SxXyjAdDkd
+Barcodes and QR codes are cool! @kruzinov #PyCascades https://t.co/9fp5N1Nq4o
+Ditto for me! https://t.co/qzlfjWV67E
+Make sure your password isn't in this file of common passwords (or any of the adjacent files)! https://t.co/cRK9zOqtY2
+Welcome and congratz ukasz! And put a smile on that face. :-) https://t.co/UCXC3gMTgP
+Good advice for organizations owning open source projects -- when shutting down a project, do the right thing! https://t.co/U9NRSsn0RY
+Python 3.7b1 is out! So much goodness. Thanks all devs, contributors, and especially release manager @baybryj. https://t.co/QQCDJrEuWz
+Dropbox has released a tool to generate mypy stubs (.pyi) from protocol buffer specs (.proto). https://t.co/PxDl2AmE3p (Work by Nipunn Koorapati and David Zbarsky.)
+Internet freedom pioneer John Perry Barlow, one of the Electronic Frontier Foundation's three founders, has died. Watch his 2014 PyCon keynote again: https://t.co/aGyruZ0Moa
+I am history. https://t.co/rPcM3wrZZT
+Gotta love technical German. https://t.co/EdSTYuj05W
+Video from my brief talk at PyCascades (Python 3 retrospective) is up now! https://t.co/YFHsM8AbU8 -- thanks to the @pycascades organizers for putting this on YouTube.
+Sometimes I receive quite disreputable proposals via email. :-( https://t.co/UtG1tWy3nv
+I don't normally get involved in these debates, but this quote rung true: "Python gives you enough of an understanding of computing basics without needing you to be an expert in memory" -- https://t.co/zkr0IeDKuT
+The highlight of the new mypy 0.570 release is definitely attrs support! https://t.co/wgBVKs2ain
+Thanks @MacHomebrew for listening and making "brew install python" PEP 394 compliant: https://t.co/WilTT6zqV9 https://t.co/uj8xQH5NKJ
+We released mypy 0.580 today: https://t.co/DrQv5GbiAp
+Python 3.7b3 is out! Please test your code with this and help us make 3.7.0 a really solid release. Tons of new stuff to look forward to: https://t.co/DVQsuvq1XN
+Exciting: the new https://t.co/5XdCBMxoKn (replacement for https://t.co/nVSpo17Xoc) is now in beta! https://t.co/8lhStiktoc
+"I like to share the story of a critical security bug with you. Contrary to other issues in TLS/SSL, it's a story with happy ending. Nobody was harmed. The bug was fixed before it affected the general population." https://t.co/KOE0VR6EST Thanks @ChristianHeimes !
+RT @tvdstorm: ALGOL 68 would have been an improvement over most of its successors, had it had any. Lambert Meertens \nhttps://t.co/geLnRCb
+That link is worth reading for everyone who wants to become a programmer. https://t.co/shTxDiLAbW
+mypy 0.590 is out! https://t.co/QwucglPTeS @mypyproject With PEP 561 suport (https://t.co/XsU7bcZESY), thanks @__ethanhs__
+PYthon 2.7.15 release candidate 1 is ready -- please test if you still use Python 2! https://t.co/ytXu9Aa3r5
+The post-mortem of this morning's PyPI problems is a good read. All in all it was resolved in under 2 hours. https://t.co/zEx8sZrgRT Nobody's perfect! @dstufft (Who else deserves kudos for fire-fighting?)
+Please make the PSF fundraising drive a success! https://t.co/oO1Vqw8qR8
+Take the PyPI survey! https://t.co/vcUktmApAD
+Read about the new https://t.co/9gpY54NYBZ: https://t.co/wyPb7celR9
+A little close to home: https://t.co/B1lbamfI9z :-(
+Python 2.7.15 released -- the last 2.7 release! https://t.co/3VNiKJLAYr
+Sadly I tried to take the survey myself and didn't understand the questions.
+I misread the original post -- it's the *latest*, not the *last*. Maybe I was *hoping* it's the last, but the intention of the team is not to stop supporting it now. Apologies!
+Congrats to @ProjectJupyter for receiving the 2017 ACM Software System Award: https://t.co/Gm4PLMhFfX
+mypy 0.600 is released, with strict optional on by default, and a new experimental daemon mode that's much faster! https://t.co/7Qln3YvMQS
+Python 3.7 beta 4 is ready! https://t.co/9R7IxA74KU -- please test your apps and packages with this, and help us make 3.7.0 a solid, stable release. Thanks @baybryj and a crew of thousands.
+https://t.co/yNYTlKXvNj
+For those in Dave Beazley's talk about parser generators, here's a bit of history about pgen: https://t.co/BZb4BX2fSS  # PyCon2018
+OH: Python 3 is better than D&amp;D 4
+PR -&gt; Puppy Request. https://t.co/82kZNA6NfL
+Amazing. A bash implementation in Python, by my ex-coworker (at Google) Andy Chu. https://t.co/Va9la2SSeM @oilshell

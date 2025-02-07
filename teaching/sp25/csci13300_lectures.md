@@ -1,7 +1,7 @@
 ---
 title: CSCI 13300 SP 2025
 author: "[Go to homepage](https://benrosenberg.info/teaching/sp25/csci13300.html)"
-date: "Last updated: 2025-02-01"
+date: "Last updated: 2025-02-05"
 css: "../style.css"
 ---
 
@@ -112,3 +112,36 @@ Information:
 - I have posted the first assignment on the course site. You can access it from the course site homepage, or go directly here: [Assignment 2](unit_assessments/unit2_assessment.html)
 - If you don't have a netID, email the course coordinator to get it sorted out. Please try to have your netID ready by next lecture so we can all use the computers in the classroom.
 - If you don't have access to a device running Windows at home, you can use this link to figure out how to download Python and IDLE so that you can complete the homework assignments: [Python 3.10 downloads page](https://www.python.org/downloads/release/python-3100/). Scroll to the bottom of the page to see the downloads for your operating system.
+
+## Lecture 3
+
+### Agenda
+
+1. Agenda
+2. Attendance (checked at 30 minutes into lecture)
+3. Check status of netIDs
+4. Office hours poll
+5. Discuss assignment 1 (again)
+   - Reminder: due midnight tonight
+   - Submission method: copy code into text box, don't submit a file
+   - Don't need to submit output
+   - Answer any questions on assignment 1
+6. Discuss assignment 2
+   - Submission method: only text-box submissions allowed, please indent code!
+7. Discuss grading timeline
+   - Will wait to grade assignment until late deadline (1 week from assignment due date)
+8. Lecture process overview reminder:
+   - Learn something new (lecture)
+   - Apply what you learned (groupwork)
+   - Discuss next assignment
+9.  Begin unit #3
+
+### Resources
+
+Unit 3 resources:
+
+- [Learn something new](csci13300_units/3_Learn.pdf) [PDF]
+- [Apply what you learned](csci13300_units/3_Apply.pdf) [PDF]
+- [pap.txt](csci13300_units/pap.txt)
+- [Additional tasks for early finishers](csci13300_units/unit3_additional_tasks.html)
+- [Solutions](unit_solutions/unit3_solution.html)
