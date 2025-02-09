@@ -162,5 +162,5 @@ Information:
 - The Unit 2 assessment is due next week on February 15th at 11:59 PM.
 - The solutions for the "Apply what you learned" section of class, and the additional tasks, are on the [Unit 3 solutions page](unit_solutions/unit3_solution.html) (also linked above). The key for the Unit 3 solutions is `tortoise`.
 - I have posted the third assignment on the course site. You can access it from the course site homepage, or go directly here: [Assignment 3](unit_assessments/unit3_assessment.html)
-- Office hours are now on Sunday from 1 PM to 2 PM. See the BrightSpace page for the Zoom link.
+- Office hours are now on Sunday from 1 PM to 2 PM. See the Brightspace page for the Zoom link.
 
