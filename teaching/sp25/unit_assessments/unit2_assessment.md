@@ -1,7 +1,7 @@
 ---
 title: CSCI 13300 SP 2025
 author: "[Go to homepage](https://benrosenberg.info/teaching/sp25/csci13300.html)"
-date: "Last updated: 2025-01-30"
+date: "Last updated: 2025-02-09"
 css: ../../style.css
 ---
 
@@ -18,6 +18,8 @@ You can submit multiple times. I will only grade your last submission.
 ## Data
 
 This assignment uses the file [julius_caesar.txt](julius_caesar.txt). You can click on the filename to download the file. If it opens in your browser, can you use the shortcut `Ctrl + S` (or `Cmd + S` on macOS) to save the file to your computer.
+
+**Note: Before February 9th at around 2 PM, the above file had issues and was not possible to read without specifying the UTF-8 encoding. I have fixed the file so it should now be possible to read it without running into issues.** Let me know if you have any issues. If you downloaded the file before the fix, please re-download it.
 
 # Instructions
 
