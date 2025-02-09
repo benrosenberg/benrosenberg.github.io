@@ -1,7 +1,7 @@
 ---
 title: CSCI 13300 SP 2025
 author: "[Go to homepage](https://benrosenberg.info/teaching/sp25/csci13300.html)"
-date: "Last updated: 2025-02-05"
+date: "Last updated: 2025-02-09"
 css: "../style.css"
 ---
 
@@ -109,7 +109,7 @@ Information:
 - If you didn't finish the "Apply what you learned" questions in class, please take some time to finish them on your own. They won't be graded, but finishing these questions will make you more prepared for the assignments, which are graded.
 - The Unit 1 assessment is due next week on February 8th at 11:59 PM. Please try to work on it soon so that you aren't rushing to complete it.
 - The solutions for the "Apply what you learned" section of class, and the additional tasks, are on the [Unit 2 solutions page](unit_solutions/unit2_solution.html) (also linked above). The key for the Unit 2 solutions is `swordfish`.
-- I have posted the first assignment on the course site. You can access it from the course site homepage, or go directly here: [Assignment 2](unit_assessments/unit2_assessment.html)
+- I have posted the second assignment on the course site. You can access it from the course site homepage, or go directly here: [Assignment 2](unit_assessments/unit2_assessment.html)
 - If you don't have a netID, email the course coordinator to get it sorted out. Please try to have your netID ready by next lecture so we can all use the computers in the classroom.
 - If you don't have access to a device running Windows at home, you can use this link to figure out how to download Python and IDLE so that you can complete the homework assignments: [Python 3.10 downloads page](https://www.python.org/downloads/release/python-3100/). Scroll to the bottom of the page to see the downloads for your operating system.
 
@@ -145,3 +145,22 @@ Unit 3 resources:
 - [pap.txt](csci13300_units/pap.txt)
 - [Additional tasks for early finishers](csci13300_units/unit3_additional_tasks.html)
 - [Solutions](unit_solutions/unit3_solution.html)
+
+### Post-lecture notes
+
+Topics covered:
+
+- Dictionaries
+- Functions
+- The `isalpha` string method
+
+Information:
+
+- The Unit 1 assessment was due last night at 11:59 PM:
+  - If you need to submit late, email me your code.
+  - There is one week for late submissions. Submissions after February 15th at 11:59 PM will not be accepted.
+- The Unit 2 assessment is due next week on February 15th at 11:59 PM.
+- The solutions for the "Apply what you learned" section of class, and the additional tasks, are on the [Unit 3 solutions page](unit_solutions/unit3_solution.html) (also linked above). The key for the Unit 3 solutions is `tortoise`.
+- I have posted the third assignment on the course site. You can access it from the course site homepage, or go directly here: [Assignment 3](unit_assessments/unit3_assessment.html)
+- Office hours are now on Sunday from 1 PM to 2 PM. See the BrightSpace page for the Zoom link.
+
