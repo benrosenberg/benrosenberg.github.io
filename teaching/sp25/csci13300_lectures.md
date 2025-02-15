@@ -1,7 +1,7 @@
 ---
 title: CSCI 13300 SP 2025
 author: "[Go to homepage](https://benrosenberg.info/teaching/sp25/csci13300.html)"
-date: "Last updated: 2025-02-09"
+date: "Last updated: 2025-02-14"
 css: "../style.css"
 ---
 
@@ -164,3 +164,29 @@ Information:
 - I have posted the third assignment on the course site. You can access it from the course site homepage, or go directly here: [Assignment 3](unit_assessments/unit3_assessment.html)
 - Office hours are now on Sunday from 1 PM to 2 PM. See the Brightspace page for the Zoom link.
 
+## Lecture 4
+
+### Agenda
+
+1. Agenda
+2. Reminder: office hours Sunday 1-2PM
+3. Attendance (checked at 30 minutes into lecture)
+4. Discuss assignment 2
+   - Reminder: due midnight tonight
+   - Submission method: copy code into text box, please indent code!
+   - Don't need to submit output
+   - Answer any questions on assignment 2 and assignment 3
+5. Discuss assignment 4 - available today
+6. Discuss grading - assignment 1 to be graded Sunday
+7. No more additional tasks, work on HW instead
+8. Begin unit #3
+9. Note: ignore problem #1 in the Apply what you know section, we already did it
+
+### Resources
+
+Unit 4 resources:
+
+- [Learn something new](csci13300_units/4_Learn.pdf) [PDF]
+- [Apply what you learned](csci13300_units/4_Apply.pdf) [PDF]
+- [pap.txt](csci13300_units/pap.txt)
+- [Solutions](unit_solutions/unit4_solution.html)

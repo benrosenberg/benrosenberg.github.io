@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Go to homepage" />
+  <title>CSCI 13300 SP 2025</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <link rel="stylesheet" href="../../style.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">CSCI 13300 SP 2025</h1>
+<p class="author"><a href="https://benrosenberg.info/teaching/sp25/csci13300.html">Go to homepage</a></p>
+<p class="date">Last updated: 2025-02-14</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#unit-4-assessment">Unit 4 Assessment</a>
+<ul>
+<li><a href="#due-date-and-submission">Due date and submission</a></li>
+</ul></li>
+<li><a href="#instructions">Instructions</a></li>
+<li><a href="#notes">Notes</a></li>
+</ul>
+</nav>
+<h1 id="unit-4-assessment">Unit 4 Assessment</h1>
+<h2 id="due-date-and-submission">Due date and submission</h2>
+<p>This assignment is due <strong>March 1st</strong> at 11:59 PM. Submit your solution on BrightSpace, under the “Unit 4” assignment.</p>
+<p><strong>Please copy your code into the text box, making sure to indent it properly with whitespace so that it appears the same as in IDLE or wherever you wrote the code. This will make it easier for me to grade.</strong></p>
+<p>You can submit multiple times. I will only grade your last submission.</p>
+<h1 id="instructions">Instructions</h1>
+<p>Write a program in Python that plays a card game with the following rules:</p>
+<ol type="1">
+<li>The game starts with a certain <code>initial</code> amount of dollars.</li>
+<li>At each round of the game, instead of flipping a coin, the player shuffles a deck and draws <strong>6</strong> cards. If the drawn hand contains at least one <strong>ace</strong>, the player gains a dollar; otherwise, they lose a dollar.</li>
+<li>The game runs until the player either runs out of money or doubles their initial amount.</li>
+</ol>
+<p>To test the game, given the <code>initial</code> amount, run it 1000 times to determine how many rounds the game lasts on average, and the proportion of rounds that were won (that is, the proportion of rounds that ended due to doubling the initial amount, as opposed to losing everything).</p>
+<p>Provide the user with an interface to enter the intial bankroll. For each entered number, the program should respond with the average duration of the game for that initial bankroll and the percentage of rounds which were won.</p>
+<p>Expected output (the numeric results in your output may differ due to random chance):</p>
+<pre class="plaintext"><code>Enter initial amount: 100
+Average rounds: 428.61
+Percent won: 0.0 %
+Enter initial amount: 10
+Average rounds: 41.402
+Percent won: 0.7 %
+Enter initial amount: 5
+Average rounds: 17.294
+Percent won: 6.5 %
+Enter initial amount: 2
+Average rounds: 3.882
+Percent won: 28.3 %
+Enter initial amount: 1
+Average rounds: 1.0
+Percent won: 37.5 %
+Enter initial amount: 20
+Average rounds: 85.482
+Percent won: 0.0 %</code></pre>
+<h1 id="notes">Notes</h1>
+<p>You should be able to do all of the tasks with only the Python topics we covered in class so far.</p>
+<p>If you want to use more complex functionality than what we discussed in class, the Python documentation may be helpful: <a href="https://docs.python.org/3.10/">Python 3.10 documentation</a></p>
+</body>
+</html>
