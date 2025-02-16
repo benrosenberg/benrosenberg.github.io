@@ -1,7 +1,7 @@
 ---
 title: CSCI 13300 SP 2025
 author: "[Go to homepage](https://benrosenberg.info/teaching/sp25/csci13300.html)"
-date: "Last updated: 2025-02-14"
+date: "Last updated: 2025-02-15"
 css: "../style.css"
 ---
 
@@ -190,3 +190,29 @@ Unit 4 resources:
 - [Apply what you learned](csci13300_units/4_Apply.pdf) [PDF]
 - [pap.txt](csci13300_units/pap.txt)
 - [Solutions](unit_solutions/unit4_solution.html)
+
+### Post-lecture notes
+
+Topics covered:
+
+- list slicing
+- importing modules (other Python files), importing specific items from modules
+- the `random` module
+- the `join` string method
+- running a function multiple times with different inputs to simulate something, and getting the average or some other metric related to the function results
+- converting strings and ranges to lists
+- the `range` object
+- the `set` object
+- the `defaultdict` object
+
+Information:
+
+- The late deadline for the Unit 1 assessment is tonight at 11:59 PM:
+  - If Brightspace doesn't let you submit late, email me your code.
+  - Submissions after tonight (February 15th) at 11:59 PM will not be accepted.
+- The Unit 2 assessment is due tonight at 11:59 PM.
+  - If you need to submit late, email me your code.
+  - There is one week for late submissions. Submissions after February 22nd at 11:59 PM will not be accepted.
+- The solutions for the "Apply what you learned" section of class are on the [Unit 4 solutions page](unit_solutions/unit4_solution.html) (also linked above). The key for the Unit 3 solutions is `hummingbird`.
+- I have posted the fourth assignment on the course site. You can access it from the course site homepage, or go directly here: [Assignment 4](unit_assessments/unit4_assessment.html)
+- Office hours are tomorrow (Sunday) from 1 PM to 2 PM. See the Brightspace page for the Zoom link.
