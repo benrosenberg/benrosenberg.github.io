@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css"
+            integrity="sha384-zh0CIslj+VczCZtlzBcjt5ppRcsAmDnRem7ESsYwWwg3m/OaJ2l4x7YBZl9Kxxib"
+            crossorigin="anonymous"
+        />
+        <script src="https://benrosenberg.info/posts/CSCI-79524-notes/meta/math.js"></script>
+        <script
+            defer
+            src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.js"
+            integrity="sha384-Rma6DA2IPUwhNxmrB/7S3Tno0YY7sFu9WSYMCuulLhIqYSGZ2gKCJWIqhBWqMQfh"
+            crossorigin="anonymous"
+            onload="render_katex_math()"
+        ></script>
+        <link
+            rel="stylesheet"
+            disabled=""
+            title="hljs-light"
+            href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs.min.css"
+        />
+        <link
+            rel="stylesheet"
+            title="hljs-dark"
+            href="https://benrosenberg.info/posts/CSCI-79524-notes/meta/hljs-gruvbox-dark.css"
+        />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/cpp.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/python.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/mipsasm.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/latex.min.js"></script>
+        <title>lecture03</title>
+        <link rel="stylesheet" href="https://benrosenberg.info/posts/CSCI-79524-notes/meta/style.css" />
+        <link rel="icon" type="image/png" href="https://benrosenberg.info/posts/CSCI-79524-notes/images/favicon.png">
+    </head>
+    <body>
+        <span style="display: none" id="SITE_ROOT_TAG">https://benrosenberg.info/posts/CSCI-79524-notes</span>
+        <!-- Popout menu -->
+        <nav class="menu" id="menu">
+            <div class="menu-header">
+                <h2><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture01.html">CSCI 79524 Notes</a></h2>
+            </div>
+            <div class="menu-content">
+                <ul><li><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture01.html">lecture01</a><li><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture02.html">lecture02</a><li class="currentpage"><a class="currentpage" href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture03.html">lecture03</a><li><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture04.html">lecture04</a><li><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture05.html">lecture05</a><li><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture06.html">lecture06</a><li><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture07.html">lecture07</a><li><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture08.html">lecture08</a><li><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture09.html">lecture09</a></ul>
+            </div>
+            <div class="menu-footer">
+                <!-- <p>Menu Footer</p> -->
+                <p>
+                    <span class="theme-toggle"
+                        ><button
+                            class="theme-toggle-button"
+                            onclick="toggleColorMode();"
+                        >
+                            switch theme
+                        </button></span
+                    >
+                </p>
+            </div>
+        </nav>
+
+        <!-- Main content area -->
+        <div class="main-wrapper" id="main">
+            <!-- Hamburger menu button -->
+            <button class="hamburger" id="hamburger">☰</button>
+            <div class="main"><h1>Lecture 3</h1>
+<p>review - last time, discussed the following about processes:</p>
+<ul>
+<li>process is a program in execution - memory used, other resources, etc.</li>
+<li>pcb (process control block), record of process information (metadata) kept by OS - includes process ID (pid), etc.</li>
+<li>process life cycle - new, ready, running, waiting, terminated</li>
+<li>process sits in ready and i/o queues depending on whether it's waiting for cpu or for i/o device</li>
+</ul>
+<hr />
+<p>MPI: message passing interface</p>
+<p>example: process creation for efficiency</p>
+<ul>
+<li>have MPI cluster of computers, and are using MPI tools</li>
+<li>install MPI on 6 different computers, connected together on some kind of network</li>
+<li>then, take one program, and ask MPI to launch the program in 6 different processes<ul>
+<li>MPI will take the program code, and create 6 different processes - 6 different executions of the code</li>
+<li>ideally, each computer should run its own copy (for max utilization/efficiency)</li>
+</ul>
+</li>
+<li>may be more efficient to create more than 6 processes (even if we assume single-core CPU computers), because then when a process is waiting for disk access/hard disk, the other process could use the cpu, so that the different components of the computer are utilized - spinning their wheels for less time<ul>
+<li>something that is not taken into account by amdahl's law</li>
+</ul>
+</li>
+</ul>
+<p>note on MPI:</p>
+<ul>
+<li>not a tool, but rather a specification</li>
+<li>there are various implementations of this spec, including OpenMPI, which we will use</li>
+</ul>
+<hr />
+<h2>threads</h2>
+<p>processes are &quot;heavy&quot; - lots of information associated with program code - turn to threads</p>
+<p>threads:</p>
+<ul>
+<li>each process has a program counter, which tells the cpu the next instruction to execute</li>
+<li>if we introduce another cpu core, we can introduce another program counter for that core<ul>
+<li>we can have the program counter point to the same memory area (not necessarily the same address) as the first one</li>
+<li>points to the same program code</li>
+</ul>
+</li>
+<li>these independent executions of the same program code, in the same process, from different program counters, are called <strong>threads</strong></li>
+<li>each process starts with one single thread of execution</li>
+</ul>
+<p><em>side note</em>: context switching:</p>
+<ul>
+<li>switching from having cpu doing one thing to another thing is not free - has some overhead</li>
+<li>switching from one process to another process takes longer than switching from one thread to another of the same process</li>
+</ul>
+<p>difference between process and thread:</p>
+<ul>
+<li>each process:<ul>
+<li>has the same program code</li>
+<li>may have different data passed in</li>
+<li>different location in memory - exist independently</li>
+<li>advantage: don't need to run on the same computer, as in a computational cluster</li>
+<li>advantage: for concurrent computing (different tasks), need processes because they can use different program code</li>
+<li>advantage: fault-independent<ul>
+<li>if we deal with threads belonging to the same process, one thread could cause an issue that corrupts/crashes the entire process (all threads crash) - OS will kill process</li>
+<li>but for processes, if one crashes the rest can continue</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>each thread:<ul>
+<li>same program code</li>
+<li>same data passed in</li>
+<li>same location in memory</li>
+<li>advantage: more memory-efficient</li>
+<li>advantage: threads are &quot;faster&quot;<ul>
+<li>instructions are executed at the same speed, but context switching has less overhead between threads than between processes</li>
+</ul>
+</li>
+<li>advantage: threads are faster to create and delete<ul>
+<li>no need to allocate new chunk of memory and copy memory</li>
+<li>for processes, can fork - copy process - much faster than creating new process, but still expensive to use memory when compared to cpu</li>
+</ul>
+</li>
+<li>advantage: built-in, automatic shared memory - allows threads to talk to each other by default</li>
+</ul>
+</li>
+</ul>
+<p>to create a new thread on the same process:</p>
+<ul>
+<li>create small &quot;thread control block&quot; - record describing one additional thread</li>
+<li>not free, but very fast compared to process</li>
+</ul>
+<p>in general: threads are lighter, easier, and cheaper, but not always possible</p>
+<p>shared vs. not shared in threads in the same process:</p>
+<ul>
+<li>threads belonging to the same process share:<ul>
+<li>program code (text section)</li>
+<li>data section (where static &amp; global variables are stored)</li>
+<li>heap section (where dynamically allocated data is stored in memory)</li>
+</ul>
+</li>
+<li>threads belonging to the same process does not share:<ul>
+<li>stack (function call frames, function data/variables)</li>
+</ul>
+</li>
+</ul>
+<p>example:</p>
+<pre><code class="language-c++">int glob = 123;
+
+int foo(int var) {
+    float value;
+
+    // using global variable (shared)
+    // available to both t1 and t2
+    // all threads access the same var
+    // can cause race conditions
+    cout &lt;&lt; glob++;
+}
+
+int main() {
+    // need to do #include &lt;thread&gt;
+    // or something similar
+    std::thread t1(foo, 3);
+    std::thread t2(foo, 24);
+    // now, this process has 3 threads -
+    // original thread plus two newly created
+
+    // the original thread proceeds and prints &quot;Hi&quot;
+    cout &lt;&lt; &quot;Hi&quot;;
+
+    // then, threads t1 and t2 begin running foo
+    // with different parameters, indepedently
+    // the threads can have different parameters
+    // because they do not share the stack
+}
+</code></pre>
+</div>
+        </div>
+
+        <footer class="footer" id="mainfooter">
+            <p
+                xmlns:cc="http://creativecommons.org/ns#"
+                xmlns:dct="http://purl.org/dc/terms/"
+            >
+                <a
+                    property="dct:title"
+                    rel="cc:attributionURL"
+                    href="https://benrosenberg.info"
+                    class="link-problem"
+                    >benrosenberg.info</a
+                >
+                by <span property="cc:attributionName">Ben Rosenberg</span> is
+                licensed under
+                <a
+                    href="https://creativecommons.org/licenses/by/4.0/?ref=chooser-v1"
+                    target="_blank"
+                    rel="license noopener noreferrer"
+                    style="display: inline-block"
+                    class="link-problem"
+                    >CC BY 4.0<img
+                        class="cc-svg"
+                        style="
+                            height: 20px !important;
+                            margin-left: 3px;
+                            vertical-align: middle;
+                        "
+                        src="https://benrosenberg.info/posts/CSCI-79524-notes/images/cc_dark.svg"
+                        alt="" /><img
+                        class="by-svg"
+                        style="
+                            height: 20px !important;
+                            margin-left: 3px;
+                            vertical-align: middle;
+                        "
+                        src="https://benrosenberg.info/posts/CSCI-79524-notes/images/by_dark.svg"
+                        alt=""
+                /></a>
+            </p>
+        </footer>
+        <script src="https://benrosenberg.info/posts/CSCI-79524-notes/meta/menu.js"></script>
+        <script src="https://benrosenberg.info/posts/CSCI-79524-notes/meta/theme.js"></script>
+        <script>
+            window.onload = function () {
+                hljs.highlightAll();
+            };
+        </script>
+    </body>
+</html>

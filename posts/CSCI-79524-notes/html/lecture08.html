@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css"
+            integrity="sha384-zh0CIslj+VczCZtlzBcjt5ppRcsAmDnRem7ESsYwWwg3m/OaJ2l4x7YBZl9Kxxib"
+            crossorigin="anonymous"
+        />
+        <script src="https://benrosenberg.info/posts/CSCI-79524-notes/meta/math.js"></script>
+        <script
+            defer
+            src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.js"
+            integrity="sha384-Rma6DA2IPUwhNxmrB/7S3Tno0YY7sFu9WSYMCuulLhIqYSGZ2gKCJWIqhBWqMQfh"
+            crossorigin="anonymous"
+            onload="render_katex_math()"
+        ></script>
+        <link
+            rel="stylesheet"
+            disabled=""
+            title="hljs-light"
+            href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs.min.css"
+        />
+        <link
+            rel="stylesheet"
+            title="hljs-dark"
+            href="https://benrosenberg.info/posts/CSCI-79524-notes/meta/hljs-gruvbox-dark.css"
+        />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/cpp.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/python.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/mipsasm.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/latex.min.js"></script>
+        <title>lecture08</title>
+        <link rel="stylesheet" href="https://benrosenberg.info/posts/CSCI-79524-notes/meta/style.css" />
+        <link rel="icon" type="image/png" href="https://benrosenberg.info/posts/CSCI-79524-notes/images/favicon.png">
+    </head>
+    <body>
+        <span style="display: none" id="SITE_ROOT_TAG">https://benrosenberg.info/posts/CSCI-79524-notes</span>
+        <!-- Popout menu -->
+        <nav class="menu" id="menu">
+            <div class="menu-header">
+                <h2><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture01.html">CSCI 79524 Notes</a></h2>
+            </div>
+            <div class="menu-content">
+                <ul><li><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture01.html">lecture01</a><li><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture02.html">lecture02</a><li><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture03.html">lecture03</a><li><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture04.html">lecture04</a><li><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture05.html">lecture05</a><li><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture06.html">lecture06</a><li><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture07.html">lecture07</a><li class="currentpage"><a class="currentpage" href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture08.html">lecture08</a><li><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture09.html">lecture09</a></ul>
+            </div>
+            <div class="menu-footer">
+                <!-- <p>Menu Footer</p> -->
+                <p>
+                    <span class="theme-toggle"
+                        ><button
+                            class="theme-toggle-button"
+                            onclick="toggleColorMode();"
+                        >
+                            switch theme
+                        </button></span
+                    >
+                </p>
+            </div>
+        </nav>
+
+        <!-- Main content area -->
+        <div class="main-wrapper" id="main">
+            <!-- Hamburger menu button -->
+            <button class="hamburger" id="hamburger">☰</button>
+            <div class="main"><h1>Lecture 8</h1>
+<p>(continuing with multithreading program from last time - finding max of large array)</p>
+<pre><code class="language-cpp">#include &lt;thread&gt;
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;limits&gt;
+#include &lt;chrono&gt;
+#include &lt;algorithm&gt;
+
+constexpr int VECTOR_SIZE = 10'000'000;
+constexpr int NUM_THREADS = 4;
+
+void FindMax(const std::vector&lt;int&gt;&amp; nums, int from, int upto, int&amp; result) {
+    int best = std::numeric_limits&lt;int&gt;::min();
+    for (int i = from; i &lt; upto; i++) {
+        if (nums[i] &gt; best) {
+            best = nums[i];
+        }
+    }
+    result = best;
+}
+
+void main() {
+    std::vector&lt;int&gt; nums(VECTOR_SIZE);
+
+    // pretend this is unsorted
+    for (int i = 0; i &lt; VECTOR_SIZE; i++)
+        nums[i] = i + 1;
+
+    // linear scan
+    std::chrono::steady_clock::time_point start, finish;
+
+    int result = 0;
+    start = std::chrono::steady_clock::now();
+    FindMax(nums, 0, VECTOR_SIZE, result);
+    finish = std::chrono::steady_clock::now();
+    
+    std::cout &lt;&lt; result &lt;&lt; std::endl;
+
+    std::cout &lt;&lt; std::chrono::duration_cast&lt;std::chrono::milliseconds&gt;(
+        finish - start
+    ).count() &lt;&lt; std::endl;
+
+    std::vector&lt;std::thread&gt; threads;
+
+    int threadPortion = VECTOR_SIZE / NUM_THREADS;
+    std::vector&lt;int&gt; results(NUM_THREADS, 0);
+
+    start = std::chrono::steady_clock::now();
+    for (int i = 0; i &lt; NUM_THREADS; i++) {
+        // there is a problem here - fourth parameter
+        // is integer reference variable - results[i]
+        // thread library does not automatically convert
+        // variables to references, because it is bug-prone
+        // so, we need to explicitly treat the variable
+        // as a reference ourselves
+        threads.emplace_back(
+            FindMax, nums, threadPortion * i,
+            threadPortion * (i + 1), std::ref(results[i])
+        );
+    }
+
+    // need to wait for other threads to finish their work
+    for (int i = 0; i &lt; NUM_THREADS; i++) {
+        // block until threads[i] is finished
+        threads[i].join();
+    }
+
+    // if we just do this immediately, threads may not be done yet,
+    // so we had to wait above using join function
+    result = *std::max_element(results.begin(), results.end());
+    finish = std::chrono::steady_clock::now();
+
+    std::cout &lt;&lt; result &lt;&lt; std::endl;
+
+    std::cout &lt;&lt; std::chrono::duration_cast&lt;std::chrono::milliseconds&gt;(
+        finish - start
+    ).count() &lt;&lt; std::endl;
+
+    return 0;
+}
+</code></pre>
+<p>reminder - threads can be moved, but not copied.</p>
+<ul>
+<li>thread objects represent a single thread</li>
+<li>so, copying would mean creating a new thread - doesn't make sense, should just create thread explicitly</li>
+<li>moving means stealing the thread from the previous object</li>
+</ul>
+<p>notes on above program:</p>
+<ul>
+<li>using wall time, not cpu time, so may be inaccurate</li>
+<li>there are other tools for measuring performance/runtime - visual studio has some build in (not exam material) - but in general can be complicated</li>
+<li>takeaway: measuring time is hard. usually will just measure elapsed time (wall clock time), but keep in mind that it can't fully represent cpu time and performance of program - may use alternative tools instead</li>
+</ul>
+<p>on our computers, this program is actually slower with multithreading:</p>
+<ul>
+<li>reason is that thread creation is expensive</li>
+<li>note: should remember trick where we create breakpoint at thread creation and measure time to create a thread<ul>
+<li>will be useful when measuring difference between multithreaded and singlethreaded solution</li>
+<li>on project - may be asked to measure amount of time to create a thread on the computer</li>
+</ul>
+</li>
+<li>amdahl's law does not take this additional time to create threads into account</li>
+</ul>
+<p>other thing that may affect program performance: debug vs. release build</p>
+<ul>
+<li>debug builds are much slower because many checks are introduced to assist with debugging - larger program and much slower</li>
+<li>release build is for when development is finished - build for speed and efficiency - fast and small</li>
+<li>profiling should be done in release build, not debug build<ul>
+<li>no sense introducing multiple threads unless you ask your compiler to do things fast</li>
+</ul>
+</li>
+</ul>
+<p>note - for home project, don't just reproduce code from class 1:1 - but can use as a reference</p>
+<p>consideration: what if we replace the <code>best</code> variable definition with just directly modifying <code>result</code>?</p>
+<pre><code class="language-cpp">// create `best` var
+int best = std::numeric_limits&lt;int&gt;::min();
+// use `result` inplace
+result = std::numeric_limits&lt;int&gt;::min();
+</code></pre>
+<ul>
+<li>this ends up being slower</li>
+<li>reason: worse cache efficiency<ul>
+<li>ram slower than cpu registers due to reading &amp; writing - latency (e.g., memory stall)</li>
+<li>ram is also slow in the sense of throughput - memory bus can be filled<ul>
+<li>in a regular sequential program, this throughput issue is not typically encountered</li>
+<li>example - nvidia gpu - each streaming multiprocessor can do around 7k operations with 32-bit floating point numbers per clock cycle</li>
+<li>so, each can do around 39 trillion float point ops per second - 39 terabytes per second</li>
+<li>however, we only have way less bandwidth - around 2000gbs or 2 terabytes. channel bandwidth is not even remotely sufficient</li>
+<li>for most operations, are limited by memory throughput</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>caches make the latency problem less critical</li>
+</ul>
+</div>
+        </div>
+
+        <footer class="footer" id="mainfooter">
+            <p
+                xmlns:cc="http://creativecommons.org/ns#"
+                xmlns:dct="http://purl.org/dc/terms/"
+            >
+                <a
+                    property="dct:title"
+                    rel="cc:attributionURL"
+                    href="https://benrosenberg.info"
+                    class="link-problem"
+                    >benrosenberg.info</a
+                >
+                by <span property="cc:attributionName">Ben Rosenberg</span> is
+                licensed under
+                <a
+                    href="https://creativecommons.org/licenses/by/4.0/?ref=chooser-v1"
+                    target="_blank"
+                    rel="license noopener noreferrer"
+                    style="display: inline-block"
+                    class="link-problem"
+                    >CC BY 4.0<img
+                        class="cc-svg"
+                        style="
+                            height: 20px !important;
+                            margin-left: 3px;
+                            vertical-align: middle;
+                        "
+                        src="https://benrosenberg.info/posts/CSCI-79524-notes/images/cc_dark.svg"
+                        alt="" /><img
+                        class="by-svg"
+                        style="
+                            height: 20px !important;
+                            margin-left: 3px;
+                            vertical-align: middle;
+                        "
+                        src="https://benrosenberg.info/posts/CSCI-79524-notes/images/by_dark.svg"
+                        alt=""
+                /></a>
+            </p>
+        </footer>
+        <script src="https://benrosenberg.info/posts/CSCI-79524-notes/meta/menu.js"></script>
+        <script src="https://benrosenberg.info/posts/CSCI-79524-notes/meta/theme.js"></script>
+        <script>
+            window.onload = function () {
+                hljs.highlightAll();
+            };
+        </script>
+    </body>
+</html>

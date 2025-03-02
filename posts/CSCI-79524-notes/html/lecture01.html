@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css"
+            integrity="sha384-zh0CIslj+VczCZtlzBcjt5ppRcsAmDnRem7ESsYwWwg3m/OaJ2l4x7YBZl9Kxxib"
+            crossorigin="anonymous"
+        />
+        <script src="https://benrosenberg.info/posts/CSCI-79524-notes/meta/math.js"></script>
+        <script
+            defer
+            src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.js"
+            integrity="sha384-Rma6DA2IPUwhNxmrB/7S3Tno0YY7sFu9WSYMCuulLhIqYSGZ2gKCJWIqhBWqMQfh"
+            crossorigin="anonymous"
+            onload="render_katex_math()"
+        ></script>
+        <link
+            rel="stylesheet"
+            disabled=""
+            title="hljs-light"
+            href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs.min.css"
+        />
+        <link
+            rel="stylesheet"
+            title="hljs-dark"
+            href="https://benrosenberg.info/posts/CSCI-79524-notes/meta/hljs-gruvbox-dark.css"
+        />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/cpp.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/python.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/mipsasm.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/latex.min.js"></script>
+        <title>lecture01</title>
+        <link rel="stylesheet" href="https://benrosenberg.info/posts/CSCI-79524-notes/meta/style.css" />
+        <link rel="icon" type="image/png" href="https://benrosenberg.info/posts/CSCI-79524-notes/images/favicon.png">
+    </head>
+    <body>
+        <span style="display: none" id="SITE_ROOT_TAG">https://benrosenberg.info/posts/CSCI-79524-notes</span>
+        <!-- Popout menu -->
+        <nav class="menu" id="menu">
+            <div class="menu-header">
+                <h2><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture01.html">CSCI 79524 Notes</a></h2>
+            </div>
+            <div class="menu-content">
+                <ul><li class="currentpage"><a class="currentpage" href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture01.html">lecture01</a><li><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture02.html">lecture02</a><li><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture03.html">lecture03</a><li><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture04.html">lecture04</a><li><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture05.html">lecture05</a><li><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture06.html">lecture06</a><li><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture07.html">lecture07</a><li><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture08.html">lecture08</a><li><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture09.html">lecture09</a></ul>
+            </div>
+            <div class="menu-footer">
+                <!-- <p>Menu Footer</p> -->
+                <p>
+                    <span class="theme-toggle"
+                        ><button
+                            class="theme-toggle-button"
+                            onclick="toggleColorMode();"
+                        >
+                            switch theme
+                        </button></span
+                    >
+                </p>
+            </div>
+        </nav>
+
+        <!-- Main content area -->
+        <div class="main-wrapper" id="main">
+            <!-- Hamburger menu button -->
+            <button class="hamburger" id="hamburger">☰</button>
+            <div class="main"><h1>Lecture 1</h1>
+<p>prof's first time teaching course, will fill out syllabus later (topics, etc. - due to 260, 340 not being prereqs)</p>
+<p>because of this, some material from 340 and 260 will be discussed towards beginning of course</p>
+<p>prof may be late to class b/c previous class is far away</p>
+<p>course book - no official textbook. original idea was to take course from prev. prof but will be major differences. may provide links for addt'l material for the course</p>
+<p>will try to cover material in course but may assign self-study material</p>
+<p>will assign one extra assignment to masters students (official requirement)</p>
+<p>current grading idea - 3 assignments (4 for masters students), midterm and final exams</p>
+<p>will try to make 340 material part interactive b/c 50% of class has taken 340 already</p>
+<p>no attendance grade except same check as 260</p>
+<p>grading percentages will be decided on eventually</p>
+<p>similar rules to 260 w.r.t. homework requirements</p>
+<p>slack - contact via stack channel, link will be in syllabus, same as 260</p>
+<p>office hours are joint with 340 students, on days where there are classes (same as 260) - days &amp; times tbd</p>
+<p>language will be c++, but will be doing mpi stuff as well</p>
+<hr />
+<p>first, discuss parallel computing (high-level)</p>
+<p>then, discuss 340 material - processes, threads, synchronization</p>
+<p>then continue to actual parallel computing material</p>
+<p>parallel computing rationale:</p>
+<ul>
+<li>want fast computers<ul>
+<li>computation-intensive applications:<ul>
+<li>games, graphics, llms/ml, gene sequencing/medical research, simulations</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>methods:</p>
+<ul>
+<li>cpu speed limit reached a while ago - power wall</li>
+<li>memory limit is even worse</li>
+<li>modern approach: add more cores to cpus, etc.<ul>
+<li>instead of faster, do things simultaneously</li>
+<li>same approach in memory with dual channel memory, and in individual cpu cores with pipelining</li>
+<li>concept of &quot;SuperScalar&quot; cpu:<ul>
+<li>batch fetching: fetch multiple instructions, have multiple pipelines with multiple issue stations, multiple ALUs, analyze instructions and reorder for better performance (out-of-order execution), etc.</li>
+<li>(not covered in our course - not something actionable to us, just built-in to cpu)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>vector instructions, SIMD (won't deal with in this course)<ul>
+<li>special vector registers that can store multiple values in cpu, special vector instructions that can process these registers at the same time</li>
+</ul>
+</li>
+<li>next idea:<ul>
+<li>first, there were multiple CPUs in a computer (supercomputers)<ul>
+<li>however, expensive - individual caches, etc.</li>
+</ul>
+</li>
+<li>next, cpu cores - individual/(almost) independent execution unit within cpu<ul>
+<li>kind of like jamming multiple cpus into a single cpu</li>
+<li>but can do better</li>
+</ul>
+</li>
+<li>next, clusters - multiple computers working on same task simultaneously<ul>
+<li>e.g., beowulf - free software to create compute clusters</li>
+</ul>
+</li>
+<li>graphics - computationally intense, very parallelism-friendly<ul>
+<li>GPU - cpu optimized for graphical tasks</li>
+<li>cpu with many weak cores<ul>
+<li>modern cpu may have 64 cores, modern gpu may have 10s of 1000s of cores</li>
+</ul>
+</li>
+<li>gpus can be used for non-graphical tasks as well:<ul>
+<li>CUDA - library for nvidia gpus</li>
+<li>examples: crypto mining, llm training</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>however, can only take advantage of multiple cores if program is optimized for it/written with multiple cores in mind; by default just running on single core</p>
+<p>note - only can expect a speedup proportional to core amount for parts of program that are parallelism-friendly</p>
+<ul>
+<li>example: difference between bringing stack of bricks from one place to another (parallelism-friendly), and baking a cake (not parallelism-friendly)</li>
+</ul>
+<p>as a rule: if half of program can be parallelized, and other half cannot, will take at least half the unparallelized time regardless of the amount of compute thrown at it</p>
+<p>classic parallel computing course would have discussed e.g. scientific computations. these people will typically use libraries/packages that use these techniques</p>
+<p>but we will also discuss concurrency - have multiple cores doing different things simultaneously</p>
+<ul>
+<li>example: when asked to read file from hard disk, program is put to sleep - the call to read the file is &quot;blocking&quot;<ul>
+<li>usually program is more complicated, however - e.g. for a text editor, still need to run user interface</li>
+<li>can do these things simulataneously</li>
+</ul>
+</li>
+</ul>
+<p>concurrency is very related to parallel programming - do work on same task in parallel case; in concurrent case, different tasks/different work</p>
+</div>
+        </div>
+
+        <footer class="footer" id="mainfooter">
+            <p
+                xmlns:cc="http://creativecommons.org/ns#"
+                xmlns:dct="http://purl.org/dc/terms/"
+            >
+                <a
+                    property="dct:title"
+                    rel="cc:attributionURL"
+                    href="https://benrosenberg.info"
+                    class="link-problem"
+                    >benrosenberg.info</a
+                >
+                by <span property="cc:attributionName">Ben Rosenberg</span> is
+                licensed under
+                <a
+                    href="https://creativecommons.org/licenses/by/4.0/?ref=chooser-v1"
+                    target="_blank"
+                    rel="license noopener noreferrer"
+                    style="display: inline-block"
+                    class="link-problem"
+                    >CC BY 4.0<img
+                        class="cc-svg"
+                        style="
+                            height: 20px !important;
+                            margin-left: 3px;
+                            vertical-align: middle;
+                        "
+                        src="https://benrosenberg.info/posts/CSCI-79524-notes/images/cc_dark.svg"
+                        alt="" /><img
+                        class="by-svg"
+                        style="
+                            height: 20px !important;
+                            margin-left: 3px;
+                            vertical-align: middle;
+                        "
+                        src="https://benrosenberg.info/posts/CSCI-79524-notes/images/by_dark.svg"
+                        alt=""
+                /></a>
+            </p>
+        </footer>
+        <script src="https://benrosenberg.info/posts/CSCI-79524-notes/meta/menu.js"></script>
+        <script src="https://benrosenberg.info/posts/CSCI-79524-notes/meta/theme.js"></script>
+        <script>
+            window.onload = function () {
+                hljs.highlightAll();
+            };
+        </script>
+    </body>
+</html>

@@ -1,0 +1,3 @@
+SITENAME=CSCI 79524 Notes
+ROOT=https://benrosenberg.info/posts/CSCI-79524-notes
+#ROOT=http://localhost:3000

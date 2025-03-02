@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css"
+            integrity="sha384-zh0CIslj+VczCZtlzBcjt5ppRcsAmDnRem7ESsYwWwg3m/OaJ2l4x7YBZl9Kxxib"
+            crossorigin="anonymous"
+        />
+        <script src="https://benrosenberg.info/posts/CSCI-79524-notes/meta/math.js"></script>
+        <script
+            defer
+            src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.js"
+            integrity="sha384-Rma6DA2IPUwhNxmrB/7S3Tno0YY7sFu9WSYMCuulLhIqYSGZ2gKCJWIqhBWqMQfh"
+            crossorigin="anonymous"
+            onload="render_katex_math()"
+        ></script>
+        <link
+            rel="stylesheet"
+            disabled=""
+            title="hljs-light"
+            href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs.min.css"
+        />
+        <link
+            rel="stylesheet"
+            title="hljs-dark"
+            href="https://benrosenberg.info/posts/CSCI-79524-notes/meta/hljs-gruvbox-dark.css"
+        />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/cpp.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/python.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/mipsasm.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/latex.min.js"></script>
+        <title>lecture05</title>
+        <link rel="stylesheet" href="https://benrosenberg.info/posts/CSCI-79524-notes/meta/style.css" />
+        <link rel="icon" type="image/png" href="https://benrosenberg.info/posts/CSCI-79524-notes/images/favicon.png">
+    </head>
+    <body>
+        <span style="display: none" id="SITE_ROOT_TAG">https://benrosenberg.info/posts/CSCI-79524-notes</span>
+        <!-- Popout menu -->
+        <nav class="menu" id="menu">
+            <div class="menu-header">
+                <h2><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture01.html">CSCI 79524 Notes</a></h2>
+            </div>
+            <div class="menu-content">
+                <ul><li><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture01.html">lecture01</a><li><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture02.html">lecture02</a><li><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture03.html">lecture03</a><li><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture04.html">lecture04</a><li class="currentpage"><a class="currentpage" href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture05.html">lecture05</a><li><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture06.html">lecture06</a><li><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture07.html">lecture07</a><li><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture08.html">lecture08</a><li><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture09.html">lecture09</a></ul>
+            </div>
+            <div class="menu-footer">
+                <!-- <p>Menu Footer</p> -->
+                <p>
+                    <span class="theme-toggle"
+                        ><button
+                            class="theme-toggle-button"
+                            onclick="toggleColorMode();"
+                        >
+                            switch theme
+                        </button></span
+                    >
+                </p>
+            </div>
+        </nav>
+
+        <!-- Main content area -->
+        <div class="main-wrapper" id="main">
+            <!-- Hamburger menu button -->
+            <button class="hamburger" id="hamburger">☰</button>
+            <div class="main"><h1>Lecture 5</h1>
+<p>last time - showed example of how same code could produce different results when run different times. result is no longer deterministic</p>
+<pre><code class="language-c++">#include&lt;iostream&gt;
+#include&lt;thread&gt;
+
+void Greet(std::string name) {
+    std::cout &lt;&lt; &quot;Hello from &quot; &lt;&lt; name &lt;&lt; std::endl;
+}
+
+int main() {
+    std::thread t1{ Greet, &quot;t1&quot; };
+    std::thread t2{ Greet, &quot;t2&quot; };
+    std::cout &lt;&lt; &quot;Hello from original&quot; &lt;&lt; std::endl;
+}
+</code></pre>
+<p>this caused error when we ran:</p>
+<ul>
+<li>when original process finishes, whole program finishes</li>
+<li>OS complains that other threads were not terminated manually - t1 and t2 are still trying to run, so &quot;abnormal termination&quot;</li>
+</ul>
+<p>to make computer happy, do it in the correct way:</p>
+<ul>
+<li>create thread, and pause &amp; wait for thread to finish</li>
+</ul>
+<pre><code class="language-c++">#include&lt;iostream&gt;
+#include&lt;thread&gt;
+
+void Greet(std::string name) {
+    std::cout &lt;&lt; &quot;Hello from &quot; &lt;&lt; name &lt;&lt; std::endl;
+}
+
+int main() {
+    std::thread t1{ Greet, &quot;t1&quot; };
+    std::thread t2{ Greet, &quot;t2&quot; };
+    std::cout &lt;&lt; &quot;Hello from original&quot; &lt;&lt; std::endl;
+
+    // join: stop here, and wait for thread to terminate
+    // (if thread is done already, no pauses are introduced)
+    t1.join();
+    t2.join();
+}
+</code></pre>
+<p>the <code>join</code> method is the first example of synchronization: we are controlling the order of the thread termination</p>
+<p>the above code does not cause any error messages, because we are terminating the threads explicitly, so no chance that threads are still running when main thread finishes</p>
+<p>typical example of race condition:</p>
+<pre><code class="language-c++">#include&lt;iostream&gt;
+#include&lt;thread&gt;
+
+int glob{ 0 };
+
+void Foo(std::string name) {
+    for (int i{0}; i &lt; 100'000; i++)
+        glob++;
+}
+
+int main() {
+    std::thread t1{ Foo };
+    std::thread t2{ Foo };
+
+    t1.join();
+    t2.join();
+
+    // less than 200k due to race condition
+    std::cout &lt;&lt; glob &lt;&lt; std::endl;
+}
+</code></pre>
+<p>global variable is shared between multiple threads, because it is in the data section</p>
+<p>issue in above code: multiple threads accessing and modifying same variable</p>
+<p><strong>race condition</strong>: &quot;data race&quot; between two or more threads</p>
+<ul>
+<li>have <code>glob</code> variable, initialized to 0</li>
+<li>thread 1 and thread 2 both try to do <code>glob++</code><ul>
+<li>for the sake of discussion, these threads run in parallel on two different cores</li>
+</ul>
+</li>
+<li>since we don't know which core/which thread will do <code>glob++</code> first, we don't know what order instructions will be executed in</li>
+<li>in reality, <code>glob++</code> instruction is as follows (mips assembly):</li>
+</ul>
+<pre><code class="language-mips"># assume addr in t0
+lw $s0, 0($t0)
+addi $s0, $s0, 1
+sw $s0, 0($t0)
+</code></pre>
+<ul>
+<li>same thing will happen in both threads, so one thread could read a stale value, and then overwrite the saved value, effectively skipping an increment</li>
+<li>for example: registers for each thread receive 0 as the first value from the load word instruction, then add 1, and then each writes back - regardless of which is first, the value in <code>glob</code> is still 1 and not 2</li>
+<li>same/similar scenario when multitasking on same core - context switch could occur before last instruction runs on one of the threads, which would cause the same issue<ul>
+<li>in this case, context switch is likely because of memory access</li>
+</ul>
+</li>
+<li>could also not run into an issue - possible that tasks happen to run in series (execution does not overlap), in which case <code>glob</code> would have 2</li>
+<li>to avoid data corruption, want to access shared data only one process/thread at a time. shared resources should only be accessed by one entity at a time</li>
+<li>name for pieces/fragments of code that should not overlap in execution: <strong>critical sections</strong>. need to prevent execution of critical sections from overlapping</li>
+</ul>
+<p>so, definition of <strong>race condition</strong>: bad scenario where we corrupt shared resource/data because of simultaneous access by multiple threads or processes, when at least one tries to modify a shared resource</p>
+<p>(however, if only read-only access, then not an issue - only an issue when modification occurs)</p>
+<p>&quot;nastiest kind of errors&quot; because they are not reliably reproducible</p>
+<p>if only one thread modifying and other reading, can still cause issues:</p>
+<ul>
+<li>may need several operations to modify value (e.g., updating first and second halves of the integer separately)</li>
+<li>will cause data fetched by reading thread to be corrupted</li>
+<li>only an issue if multiple operations are needed to modify the value as needed</li>
+<li>but should avoid in general - e.g., different hardware could have different results</li>
+<li>compiler may actually help with this - c++ has &quot;atomic&quot; class that helps to avoid race conditions<ul>
+<li>compiler can tell whether hardware permits &quot;atomic&quot; modifications</li>
+</ul>
+</li>
+</ul>
+<p>simple way to avoid race condition: &quot;locks&quot;</p>
+<ul>
+<li>have global shared data/device/file</li>
+<li>associate one extra shared variable: &quot;lock&quot;</li>
+<li>&quot;mutex&quot; lock - mutual exclusion<ul>
+<li>simple integer, or boolean variable</li>
+</ul>
+</li>
+<li>two states: &quot;acquired&quot; or &quot;released&quot;, or in cpp, &quot;locked&quot; and &quot;unlocked&quot;</li>
+<li>all processes that deal with shared resource need to be aware that there is a shared lock associated with this resource</li>
+<li>all threads need to be acquire/lock the resource before using it</li>
+</ul>
+<p>example: mutex locking:</p>
+<pre><code class="language-c++">#include&lt;iostream&gt;
+#include&lt;thread&gt;
+#include&lt;mutex&gt;
+
+int glob{ 0 };
+std::mutex m;
+
+void Foo(std::string name) {
+    for (int i{0}; i &lt; 100'000; i++) {
+        // acquire the mutex m
+        // scenario 1: if lock is free, close it
+        //  and proceed further
+        // scenario 2: if lock is not free,
+        //  freeze and do not proceed further until
+        //  lock is released (and when it is released,
+        //  lock again)
+        m.lock();
+        // critical section of code
+        glob++;
+        // once finished, open the lock to allow others
+        // to use the variable
+        m.unlock();
+    }
+}
+
+int main() {
+    std::thread t1{ Foo };
+    std::thread t2{ Foo };
+
+    t1.join();
+    t2.join();
+
+    // should be 200k due to avoiding race condition
+    std::cout &lt;&lt; glob &lt;&lt; std::endl;
+}
+</code></pre>
+<p>above is not an efficient solution, but is a solution nonetheless</p>
+<p>the above negates the benefit of threads because all work is done in series and not parallel</p>
+</div>
+        </div>
+
+        <footer class="footer" id="mainfooter">
+            <p
+                xmlns:cc="http://creativecommons.org/ns#"
+                xmlns:dct="http://purl.org/dc/terms/"
+            >
+                <a
+                    property="dct:title"
+                    rel="cc:attributionURL"
+                    href="https://benrosenberg.info"
+                    class="link-problem"
+                    >benrosenberg.info</a
+                >
+                by <span property="cc:attributionName">Ben Rosenberg</span> is
+                licensed under
+                <a
+                    href="https://creativecommons.org/licenses/by/4.0/?ref=chooser-v1"
+                    target="_blank"
+                    rel="license noopener noreferrer"
+                    style="display: inline-block"
+                    class="link-problem"
+                    >CC BY 4.0<img
+                        class="cc-svg"
+                        style="
+                            height: 20px !important;
+                            margin-left: 3px;
+                            vertical-align: middle;
+                        "
+                        src="https://benrosenberg.info/posts/CSCI-79524-notes/images/cc_dark.svg"
+                        alt="" /><img
+                        class="by-svg"
+                        style="
+                            height: 20px !important;
+                            margin-left: 3px;
+                            vertical-align: middle;
+                        "
+                        src="https://benrosenberg.info/posts/CSCI-79524-notes/images/by_dark.svg"
+                        alt=""
+                /></a>
+            </p>
+        </footer>
+        <script src="https://benrosenberg.info/posts/CSCI-79524-notes/meta/menu.js"></script>
+        <script src="https://benrosenberg.info/posts/CSCI-79524-notes/meta/theme.js"></script>
+        <script>
+            window.onload = function () {
+                hljs.highlightAll();
+            };
+        </script>
+    </body>
+</html>

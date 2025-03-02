@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css"
+            integrity="sha384-zh0CIslj+VczCZtlzBcjt5ppRcsAmDnRem7ESsYwWwg3m/OaJ2l4x7YBZl9Kxxib"
+            crossorigin="anonymous"
+        />
+        <script src="https://benrosenberg.info/posts/CSCI-79524-notes/meta/math.js"></script>
+        <script
+            defer
+            src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.js"
+            integrity="sha384-Rma6DA2IPUwhNxmrB/7S3Tno0YY7sFu9WSYMCuulLhIqYSGZ2gKCJWIqhBWqMQfh"
+            crossorigin="anonymous"
+            onload="render_katex_math()"
+        ></script>
+        <link
+            rel="stylesheet"
+            disabled=""
+            title="hljs-light"
+            href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs.min.css"
+        />
+        <link
+            rel="stylesheet"
+            title="hljs-dark"
+            href="https://benrosenberg.info/posts/CSCI-79524-notes/meta/hljs-gruvbox-dark.css"
+        />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/cpp.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/python.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/mipsasm.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/latex.min.js"></script>
+        <title>lecture06</title>
+        <link rel="stylesheet" href="https://benrosenberg.info/posts/CSCI-79524-notes/meta/style.css" />
+        <link rel="icon" type="image/png" href="https://benrosenberg.info/posts/CSCI-79524-notes/images/favicon.png">
+    </head>
+    <body>
+        <span style="display: none" id="SITE_ROOT_TAG">https://benrosenberg.info/posts/CSCI-79524-notes</span>
+        <!-- Popout menu -->
+        <nav class="menu" id="menu">
+            <div class="menu-header">
+                <h2><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture01.html">CSCI 79524 Notes</a></h2>
+            </div>
+            <div class="menu-content">
+                <ul><li><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture01.html">lecture01</a><li><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture02.html">lecture02</a><li><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture03.html">lecture03</a><li><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture04.html">lecture04</a><li><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture05.html">lecture05</a><li class="currentpage"><a class="currentpage" href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture06.html">lecture06</a><li><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture07.html">lecture07</a><li><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture08.html">lecture08</a><li><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture09.html">lecture09</a></ul>
+            </div>
+            <div class="menu-footer">
+                <!-- <p>Menu Footer</p> -->
+                <p>
+                    <span class="theme-toggle"
+                        ><button
+                            class="theme-toggle-button"
+                            onclick="toggleColorMode();"
+                        >
+                            switch theme
+                        </button></span
+                    >
+                </p>
+            </div>
+        </nav>
+
+        <!-- Main content area -->
+        <div class="main-wrapper" id="main">
+            <!-- Hamburger menu button -->
+            <button class="hamburger" id="hamburger">☰</button>
+            <div class="main"><h1>Lecture 6</h1>
+<p>last time - discussed how threads accessing the same memory location can cause race conditions (&quot;data race&quot;)</p>
+<p>processes can have similar issues, with shared memory - block of memory allocated by OS for processes to share. incorrect use of this shared memory can cause race conditions</p>
+<p>processes and threads can also both have race conditions with shared resources like i/o devices</p>
+<p>last time, also discussed technique for mitigating race conditions - lock/mutex</p>
+<p>analogy for mutex lock: bathroom lock. enter bathroom and lock, perform task, unlock and next thread can access.</p>
+<p>how does the special object of the mutex class work?</p>
+<ul>
+<li>comparison: global bool variable <code>unlocked = true</code></li>
+</ul>
+<pre><code class="language-cpp">// example of bad code
+// busy loop until lock opens
+while (!unlocked) {}
+// &quot;acquire&quot; lock
+// however, won't work as desired because
+// two threads could read unlocked to be True
+// at the same time, and simultaneously modify
+// `glob`
+unlocked = false;
+glob++;
+unlocked = true;
+</code></pre>
+<ul>
+<li>issue: how can we prevent race conditions for the lock itself?</li>
+<li>answer: <code>lock</code> and <code>unlock</code> operation of <code>mutex</code> class are <strong>thread-safe</strong><ul>
+<li>in other words, it is &quot;secured from race conditions&quot;</li>
+<li>even if two threads are operating simultaneously and arrive at the <code>m.lock()</code> instruction at the same time, something lower-level will prevent race conditions for <code>m</code></li>
+</ul>
+</li>
+<li>how is it possible for <code>m</code> to be thread-safe?<ul>
+<li>hardware has this problem in mind: CPU knows special set of instructions called <strong>atomic instructions</strong></li>
+<li>atomic instructions are meant to few actions as if they were a single action<ul>
+<li>e.g., for above example, the <code>!unlocked</code> check takes several instructions - load, check, and return value.</li>
+<li>atomic instructions would do all these actions in a single instruction, to prevent race conditions</li>
+</ul>
+</li>
+<li>additional constraint on atomic instructions: only able to execute one time at once on the entire computer<ul>
+<li>implemented via a queue - if two threads try to simultaneously perform an atomic operation, only one will do it and the other will freeze and wait for the previous thread to end</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>example atomic function: <code>test_and_set(&amp;lock)</code>:</p>
+<ul>
+<li>takes pointer to lock var</li>
+<li>if value is true, sets it to false, and returns original value of lock</li>
+<li>few actions completed as one action</li>
+<li>in this course, we will not deal with atomic functions - use more convenient tools - but these convenient tools are enabled by the existence of atomic functions</li>
+</ul>
+<p>thread-safe terminology is not just for mutexes and synchronization tools, but also for regular functions</p>
+<ul>
+<li>example: instead of using <code>std::vec</code> vector, could use custom container that is thread-safe for e.g. the function <code>push_back()</code></li>
+<li>would mean that we can use <code>push_back()</code> without doing anything special - will work with multiple threads without issue</li>
+<li>(if <code>push_back</code> were not thread-safe, then could cause race condition - may overwrite last element of vector if two threads try to push_back on that vector at the same time)</li>
+</ul>
+<p>question: why not make everything thread-safe?</p>
+<ul>
+<li>answer: efficiency/performance</li>
+<li>locking/unlocking is not cheap - atomic operations are nontrivial<ul>
+<li>e.g. for atomic operations - lock entire address bus, etc.</li>
+<li>usually has significant performance overhead</li>
+<li>thread safety is nice, but comes at a price</li>
+</ul>
+</li>
+<li>another drawback: unpredictability<ul>
+<li>guaranteeing execution times becomes much harder when locking/unlocking things</li>
+</ul>
+</li>
+</ul>
+<p>(note: <code>unlock</code> doesn't need to be thread-safe, just <code>lock</code>)</p>
+<p>our previous example with <code>m.lock()</code> is not efficient:</p>
+<ul>
+<li>&quot;heavy contention&quot; for lock</li>
+<li>threads are fighting for control</li>
+<li>want to minimize number of times that we grab and receive locks</li>
+<li>in our example, would be better to lock before and after loop (see below)</li>
+</ul>
+<pre><code class="language-c++">...
+
+int glob{ 0 };
+std::mutex m;
+
+void Foo(std::string name) {
+    m.lock()
+    for (int i{0}; i &lt; 100'000; i++) {
+        glob++;
+    }
+    m.unlock()
+}
+
+...
+</code></pre>
+<p>reminder: always need to remember to unlock a shared resource</p>
+<p>RAII: &quot;resource allocation is initialization&quot;</p>
+<ul>
+<li>when you dynamically acquire a resource, make releasing it automatic</li>
+<li>in case of memory - dynamically allocating memory - do something like garbage collection (e.g., smart pointers)</li>
+<li>in case of mutexes - use something like <code>lock_guard</code> - very similar to smart pointer<ul>
+<li>no need to unlock manually</li>
+<li>once lock guard goes out of scope, releases lock automatically (similar to smart pointers which release memory automatically when they go out of scope)</li>
+</ul>
+</li>
+</ul>
+<p>example with <code>lock_guard</code>:</p>
+<pre><code class="language-c++">...
+
+int glob{ 0 };
+std::mutex m;
+
+void Foo(std::string name) {
+    std::lock_guard&lt;std::mutex&gt; m_guard{ m };
+    for (int i{0}; i &lt; 100'000; i++) {
+        glob++;
+    }
+    // no need to unlock - only locked in function scope
+}
+
+...
+</code></pre>
+<p>currently, <code>mutex</code> is our synchronization tool - allows us to avoid race conditions by making sure a shared resouce is used by only one entity/thread/process at a time</p>
+<p>however, there are other tools as well:</p>
+<ul>
+<li>conditional variables</li>
+<li>semaphores</li>
+<li>atomic classes</li>
+<li>etc.</li>
+</ul>
+<p>many different options because scenarios may require different approaches</p>
+<p>for the purposes of our course, we will just stick with mutexes, unless we need more tools</p>
+<h2>deadlock</h2>
+<p>sample piece of code:</p>
+<pre><code class="language-cpp">// each variable has mutex associated with it
+int g1, g2;
+std::mutex m1, m2;
+
+void t1_func() {
+    m1.lock();
+    m2.lock();
+    ...
+    m1.unlock();
+    m2.unlock();
+}
+
+void t2_func() {
+    m2.lock();
+    m1.lock();
+    ...
+    m2.unlock();
+    m1.lock();
+}
+</code></pre>
+<p>the above threads are individually well-written, will not cause race conditions, but have another hazard: deadlock:</p>
+<ul>
+<li>t1 and t2 may arrive at code in parallel</li>
+<li>t1 locks m1, and t2 locks m2</li>
+<li>neither thread can progress because the next required lock is already possessed by the other thread</li>
+<li>this cyclical dependency is known as <strong>deadlock</strong>, another synchronization problem</li>
+<li>deadlock: problematic situation where multiple threads or processes wait for each other, and none can progress</li>
+<li>not guaranteed to happen (like race condition) - detecting is expensive computationally, many OSes do not even try to detect them</li>
+</ul>
+</div>
+        </div>
+
+        <footer class="footer" id="mainfooter">
+            <p
+                xmlns:cc="http://creativecommons.org/ns#"
+                xmlns:dct="http://purl.org/dc/terms/"
+            >
+                <a
+                    property="dct:title"
+                    rel="cc:attributionURL"
+                    href="https://benrosenberg.info"
+                    class="link-problem"
+                    >benrosenberg.info</a
+                >
+                by <span property="cc:attributionName">Ben Rosenberg</span> is
+                licensed under
+                <a
+                    href="https://creativecommons.org/licenses/by/4.0/?ref=chooser-v1"
+                    target="_blank"
+                    rel="license noopener noreferrer"
+                    style="display: inline-block"
+                    class="link-problem"
+                    >CC BY 4.0<img
+                        class="cc-svg"
+                        style="
+                            height: 20px !important;
+                            margin-left: 3px;
+                            vertical-align: middle;
+                        "
+                        src="https://benrosenberg.info/posts/CSCI-79524-notes/images/cc_dark.svg"
+                        alt="" /><img
+                        class="by-svg"
+                        style="
+                            height: 20px !important;
+                            margin-left: 3px;
+                            vertical-align: middle;
+                        "
+                        src="https://benrosenberg.info/posts/CSCI-79524-notes/images/by_dark.svg"
+                        alt=""
+                /></a>
+            </p>
+        </footer>
+        <script src="https://benrosenberg.info/posts/CSCI-79524-notes/meta/menu.js"></script>
+        <script src="https://benrosenberg.info/posts/CSCI-79524-notes/meta/theme.js"></script>
+        <script>
+            window.onload = function () {
+                hljs.highlightAll();
+            };
+        </script>
+    </body>
+</html>

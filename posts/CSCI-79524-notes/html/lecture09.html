@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css"
+            integrity="sha384-zh0CIslj+VczCZtlzBcjt5ppRcsAmDnRem7ESsYwWwg3m/OaJ2l4x7YBZl9Kxxib"
+            crossorigin="anonymous"
+        />
+        <script src="https://benrosenberg.info/posts/CSCI-79524-notes/meta/math.js"></script>
+        <script
+            defer
+            src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.js"
+            integrity="sha384-Rma6DA2IPUwhNxmrB/7S3Tno0YY7sFu9WSYMCuulLhIqYSGZ2gKCJWIqhBWqMQfh"
+            crossorigin="anonymous"
+            onload="render_katex_math()"
+        ></script>
+        <link
+            rel="stylesheet"
+            disabled=""
+            title="hljs-light"
+            href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs.min.css"
+        />
+        <link
+            rel="stylesheet"
+            title="hljs-dark"
+            href="https://benrosenberg.info/posts/CSCI-79524-notes/meta/hljs-gruvbox-dark.css"
+        />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/cpp.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/python.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/mipsasm.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/latex.min.js"></script>
+        <title>lecture09</title>
+        <link rel="stylesheet" href="https://benrosenberg.info/posts/CSCI-79524-notes/meta/style.css" />
+        <link rel="icon" type="image/png" href="https://benrosenberg.info/posts/CSCI-79524-notes/images/favicon.png">
+    </head>
+    <body>
+        <span style="display: none" id="SITE_ROOT_TAG">https://benrosenberg.info/posts/CSCI-79524-notes</span>
+        <!-- Popout menu -->
+        <nav class="menu" id="menu">
+            <div class="menu-header">
+                <h2><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture01.html">CSCI 79524 Notes</a></h2>
+            </div>
+            <div class="menu-content">
+                <ul><li><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture01.html">lecture01</a><li><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture02.html">lecture02</a><li><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture03.html">lecture03</a><li><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture04.html">lecture04</a><li><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture05.html">lecture05</a><li><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture06.html">lecture06</a><li><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture07.html">lecture07</a><li><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture08.html">lecture08</a><li class="currentpage"><a class="currentpage" href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture09.html">lecture09</a></ul>
+            </div>
+            <div class="menu-footer">
+                <!-- <p>Menu Footer</p> -->
+                <p>
+                    <span class="theme-toggle"
+                        ><button
+                            class="theme-toggle-button"
+                            onclick="toggleColorMode();"
+                        >
+                            switch theme
+                        </button></span
+                    >
+                </p>
+            </div>
+        </nav>
+
+        <!-- Main content area -->
+        <div class="main-wrapper" id="main">
+            <!-- Hamburger menu button -->
+            <button class="hamburger" id="hamburger">☰</button>
+            <div class="main"><h1>Lecture 9</h1>
+<p>project will be published soon and due end of next week</p>
+<ul>
+<li>will be small and will be asked to do similar things to in class</li>
+<li>however, please try to type stuff ourselves - don't just copy, understand how class code works and create code from it<ul>
+<li>most techniques will be the same, but don't copy/paste</li>
+</ul>
+</li>
+<li>will be asked to write a function and do some measurements<ul>
+<li>will take an array of numbers</li>
+<li>function replaces every number with the next prime number greater than or equal to it</li>
+<li>example: <code>[4, 3, 8, 5, 20]</code> should go to <code>[5, 3, 11, 5, 23]</code></li>
+<li>may start thinking about smart approaches, but advice - don't be smart<ul>
+<li>e.g., don't try to memoize prime numbers - want to have a lot of computational work, compute them every time from the ground up</li>
+<li>may write function <code>isPrime</code> (don't use C++'s built-in function)</li>
+<li>the idea is to do parallelization similar to what we've done before, where different portions of the array are done by different threads<ul>
+<li>difference is to try to have workload be more intense, so we can see the difference that we weren't able to see in class because the example work was too simple</li>
+</ul>
+</li>
+<li>if benefits do not show performance benefit, not end of the world - not necessarily looking for specific performance benefit<ul>
+<li>main purpose is to practice tools and do some measurements</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>reminder: when doing parallel programming, try to avoid race conditions<ul>
+<li>the vector that we use is guaranteed to be shared between multiple threads</li>
+<li>may ask self: can we modify vector simultaneously from multiple threads?<ul>
+<li>vector is shared among multiple threads</li>
+<li>however, each piece of the vector is handled by different threads</li>
+<li>since different portions are being modified, it's ok</li>
+<li>kind of goes against intuition at surface level but we never deal simultaneously with the same piece of the shared vector</li>
+<li>may be asked to (inefficiently) synchronize access to vector across threads just to gain experience with it</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h1>cache</h1>
+<p>last time, discussed memory and memory speed</p>
+<ul>
+<li>slow in terms of both latency and throughput<ul>
+<li>latency: takes many more cycles to get data from memory than from registers</li>
+<li>throughput: memory bus may be limited in amount of data that can flow through at a time</li>
+</ul>
+</li>
+</ul>
+<p>to limit latency, can use <strong>cache</strong>:</p>
+<ul>
+<li>device that increases the average speed of cpu/ram interaction</li>
+<li>small and fast memory unit that stores recently used pieces of data</li>
+<li>idea:<ul>
+<li>cpu wants to get a piece of data, sends request to ram memory<ul>
+<li>(this is what CPU imagines)</li>
+</ul>
+</li>
+<li>in reality, cpu is connected, to cache, and cache is connected to ram</li>
+<li>when cpu asks for data from that address, cache checks whether it has it<ul>
+<li>if has it, it is a <strong>cache hit</strong> - no ram memory reading, immediately returns to cpu the data from the required address (fast)</li>
+<li>if it does not, it is a <strong>cache miss</strong> - has to read memory, finds piece of data at the address, and copies the piece of data into the cache, and delivers to the cpu (slow)</li>
+</ul>
+</li>
+<li>programs:<ul>
+<li>tend to deal with the same areas of ram memory and same values for some time</li>
+<li>often performs multiple actions with same piece of data</li>
+<li>often move to next location in memory</li>
+<li>if something like this happens, value is typically already in cache: &quot;cache locality&quot;/&quot;spatial locality&quot;</li>
+</ul>
+</li>
+<li>different types of cache misses<ul>
+<li>code miss, conflict miss, etc.</li>
+<li>however, meaning is the same - something we want is not in cache for one reason or another</li>
+</ul>
+</li>
+<li>when we read data from ram, typically we actually read a larger block at a time<ul>
+<li>something like 64 bytes, called a <strong>cache line</strong> or <strong>cache block</strong></li>
+<li>ask for memory at some address, but cache actually receives neighbors as well<ul>
+<li>oses/programs may try to align on cache line boundaries</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>sample numbers for cache hits vs. misses:<ul>
+<li>full cache miss: 200 cycles</li>
+<li>cache hit in L1 cache: 3 cycles</li>
+</ul>
+</li>
+<li>example: on computer, create 2d array, 1000x1000 elements, then sum all elements<ul>
+<li>will end up with nested loop</li>
+<li>can do things in a natural way, summing elements row by row</li>
+<li>or could do things in an unconventional way, column by column</li>
+<li>amount of operations will be the same, but unnatural way will be slower due to cache misses, e.g. 5x difference</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>caches can be multilevel:</p>
+<ul>
+<li>instead of one cache device, have multiple of them</li>
+<li>torn between two extremes:<ul>
+<li>want larger caches - larger cache means higher hit rate - will need to throw things out less frequently</li>
+<li>however, larger caches are slower - searching takes longer</li>
+</ul>
+</li>
+<li>so, have a large (slow) cache, make a smaller cache (that will be fast), and then have cpu<ul>
+<li>cpu interacts with smaller/faster cache. if it's a miss in the small cache, consult larger/slower cache</li>
+<li>sometimes, may even have 3-level cache, where the smallest level can be split into two caches - one for data and one for instructions<ul>
+<li>instruction cache is connected to instruction fetching unit, and data cache is connected to memory operations component of cpu that orders loads and stores</li>
+</ul>
+</li>
+<li>levels of cache: L3 (slowest), L2 (faster), L1 (fastest)</li>
+</ul>
+</li>
+</ul>
+<p>how does this differ for multi-core cpus?</p>
+<ul>
+<li>may have single L3, L2 caches for all cores, but each cpu core may have its own L1 cache</li>
+<li>cores may even each have their own L2 cache, depends on the cpu - but typically fastest cache is per-core, and slowest cache is shared among all cores</li>
+</ul>
+<p>where in cache is memory placed, when it is retrieved by cache from a specific address in ram?</p>
+<ul>
+<li>intuitive way: anywhere that we have empty space<ul>
+<li>name of approach: &quot;fully associative&quot;</li>
+<li>however, when this happens, cache should be ready to find address anywhere<ul>
+<li>this makes finding/searching more complicated, so circuitry becomes more complicated, so cache is slower</li>
+</ul>
+</li>
+<li>this approach may be acceptable if cache is larger, as long as average ram memory access is as fast as possible</li>
+<li>ideally, would be big and fast - but that's not the case<ul>
+<li>if we make bigger cache fully associative, becomes slower</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>solution: for every address for each cache line, will only be so many places that it can be found - <strong><equation>n</equation>-way associative cache</strong><ul>
+<li>for &quot;8-way associative&quot; cache, there are only 8 positions where specific line can be found (cache line starting from specific address)</li>
+<li>cache may be big, but only 8 places where specific line can be found</li>
+<li>as soon as we introduce such a limitation, our search circuitry is much smaller and faster</li>
+<li>however, can result in imperfect cache utilization<ul>
+<li>if reading data multiple times, typically not common that will fall into the same &quot;bank&quot; of (e.g.) 8 cache lines, but if this does happen then previously read items in the bank may be evicted despite much of the cache space not being used</li>
+<li>often does not happen naturally - only really seen in purposefully adversarial case</li>
+<li>bank of cache line is typically taken from some bits of the memory address</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>certain data structures are more cache-friendly:</p>
+<ul>
+<li>arrays are the most efficient, since they are literally contiguous blocks of memory</li>
+<li>linked lists are typically worse:<ul>
+<li><code>std::list</code>, the doubly-linked list in C++, is less efficient</li>
+<li><code>std::deque</code> is not as inefficient because at least some contiguous memory blocks, even if they are chained together in a linked-list manner</li>
+</ul>
+</li>
+</ul>
+<p>caches can also be divided into two different categories:</p>
+<ul>
+<li>two approaches to constructing caches<ul>
+<li>deal with cache behavior when we write to cache memory</li>
+<li>example: take something from ram memory into CPU, and increment it, and issue store instruction</li>
+<li>we know that cache receives instruction first</li>
+<li>cache has two options</li>
+</ul>
+</li>
+<li>first category: <strong>write-through</strong><ul>
+<li>as soon as cache receives write (store) instruction, cache immediately does it, sending instruction further to ram to modify this piece - good and simple</li>
+<li>however, if we are (e.g.) incrementing more elements sequentially, will need to write to ram continuously every time the write instruction is issued<ul>
+<li>program logic issues separate loading instructions for each consecutive element in the array, and separate storing instructions for each one of them</li>
+<li>this is not efficient in terms of ram memory interactions</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>second category: <strong>write-back</strong><ul>
+<li>recognize that it is more efficient to delay writes to ram, and transfer changes in bulk - amortize write operations over time</li>
+<li>accumulate changes to cache line, and do writing whenever it is convenient</li>
+<li>cache remembers which line was updated<ul>
+<li>if we look at hardware, will see that cache consists of entries - each entry has:<ul>
+<li>data</li>
+<li>address (maybe only portion of address that defines placement)</li>
+<li>utility information</li>
+<li>&quot;dirty&quot; bit - single bit that designates whether cache entry has been changed</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>note: for atomic operations, nobody will use cache or anything, because whole memory address bus is locked for everyone except the code that issued the atomic operation</p>
+<p>(to be continued next time)</p>
+</div>
+        </div>
+
+        <footer class="footer" id="mainfooter">
+            <p
+                xmlns:cc="http://creativecommons.org/ns#"
+                xmlns:dct="http://purl.org/dc/terms/"
+            >
+                <a
+                    property="dct:title"
+                    rel="cc:attributionURL"
+                    href="https://benrosenberg.info"
+                    class="link-problem"
+                    >benrosenberg.info</a
+                >
+                by <span property="cc:attributionName">Ben Rosenberg</span> is
+                licensed under
+                <a
+                    href="https://creativecommons.org/licenses/by/4.0/?ref=chooser-v1"
+                    target="_blank"
+                    rel="license noopener noreferrer"
+                    style="display: inline-block"
+                    class="link-problem"
+                    >CC BY 4.0<img
+                        class="cc-svg"
+                        style="
+                            height: 20px !important;
+                            margin-left: 3px;
+                            vertical-align: middle;
+                        "
+                        src="https://benrosenberg.info/posts/CSCI-79524-notes/images/cc_dark.svg"
+                        alt="" /><img
+                        class="by-svg"
+                        style="
+                            height: 20px !important;
+                            margin-left: 3px;
+                            vertical-align: middle;
+                        "
+                        src="https://benrosenberg.info/posts/CSCI-79524-notes/images/by_dark.svg"
+                        alt=""
+                /></a>
+            </p>
+        </footer>
+        <script src="https://benrosenberg.info/posts/CSCI-79524-notes/meta/menu.js"></script>
+        <script src="https://benrosenberg.info/posts/CSCI-79524-notes/meta/theme.js"></script>
+        <script>
+            window.onload = function () {
+                hljs.highlightAll();
+            };
+        </script>
+    </body>
+</html>

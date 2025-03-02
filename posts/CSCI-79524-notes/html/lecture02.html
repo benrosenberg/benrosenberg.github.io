@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css"
+            integrity="sha384-zh0CIslj+VczCZtlzBcjt5ppRcsAmDnRem7ESsYwWwg3m/OaJ2l4x7YBZl9Kxxib"
+            crossorigin="anonymous"
+        />
+        <script src="https://benrosenberg.info/posts/CSCI-79524-notes/meta/math.js"></script>
+        <script
+            defer
+            src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.js"
+            integrity="sha384-Rma6DA2IPUwhNxmrB/7S3Tno0YY7sFu9WSYMCuulLhIqYSGZ2gKCJWIqhBWqMQfh"
+            crossorigin="anonymous"
+            onload="render_katex_math()"
+        ></script>
+        <link
+            rel="stylesheet"
+            disabled=""
+            title="hljs-light"
+            href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs.min.css"
+        />
+        <link
+            rel="stylesheet"
+            title="hljs-dark"
+            href="https://benrosenberg.info/posts/CSCI-79524-notes/meta/hljs-gruvbox-dark.css"
+        />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/cpp.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/python.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/mipsasm.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/latex.min.js"></script>
+        <title>lecture02</title>
+        <link rel="stylesheet" href="https://benrosenberg.info/posts/CSCI-79524-notes/meta/style.css" />
+        <link rel="icon" type="image/png" href="https://benrosenberg.info/posts/CSCI-79524-notes/images/favicon.png">
+    </head>
+    <body>
+        <span style="display: none" id="SITE_ROOT_TAG">https://benrosenberg.info/posts/CSCI-79524-notes</span>
+        <!-- Popout menu -->
+        <nav class="menu" id="menu">
+            <div class="menu-header">
+                <h2><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture01.html">CSCI 79524 Notes</a></h2>
+            </div>
+            <div class="menu-content">
+                <ul><li><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture01.html">lecture01</a><li class="currentpage"><a class="currentpage" href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture02.html">lecture02</a><li><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture03.html">lecture03</a><li><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture04.html">lecture04</a><li><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture05.html">lecture05</a><li><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture06.html">lecture06</a><li><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture07.html">lecture07</a><li><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture08.html">lecture08</a><li><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture09.html">lecture09</a></ul>
+            </div>
+            <div class="menu-footer">
+                <!-- <p>Menu Footer</p> -->
+                <p>
+                    <span class="theme-toggle"
+                        ><button
+                            class="theme-toggle-button"
+                            onclick="toggleColorMode();"
+                        >
+                            switch theme
+                        </button></span
+                    >
+                </p>
+            </div>
+        </nav>
+
+        <!-- Main content area -->
+        <div class="main-wrapper" id="main">
+            <!-- Hamburger menu button -->
+            <button class="hamburger" id="hamburger">☰</button>
+            <div class="main"><h1>Lecture 2</h1>
+<p>office hours start next week - north building, 520F 3:15-5:15</p>
+<hr />
+<p>some devices have powerful and weak cores - weak cores used when device is idle to save power</p>
+<p>some tasks are parallelism-friendy, some are not</p>
+<p>example:</p>
+<ul>
+<li>filling array with powers of two<ul>
+<li>should fill in ascending order, but in theory can fill in any order, so could be parallelism-friendly</li>
+</ul>
+</li>
+<li>filling array with fibonacci numbers<ul>
+<li>typically need to use previous results for next results, so not as friendly (for now assume you don't use formula for n-th fibonacci number)</li>
+</ul>
+</li>
+</ul>
+<p>amdahl's law:</p>
+<ul>
+<li>tries to describe on a theoretical level the benefit we get from adding cores/workers</li>
+<li>suppose we have a task such that fraction <equation>x</equation> of the task can be done in parallel</li>
+<li>the whole task completes in <equation>N</equation> seconds on one core/cpu</li>
+<li>then, on <equation>\alpha</equation> cores, the execution time will be <equation>Nx+ N(1-x)/\alpha</equation></li>
+<li>speedup will then be <equation>N</equation> divided by the above, so <equation>\frac{1}{1-x+\frac{x}{\alpha}}</equation></li>
+</ul>
+<p>example: suppose <equation>N=100</equation> and <equation>x=0.8</equation>, then we have the following variation when we introduce new cores:</p>
+<table>
+<thead>
+<tr>
+<th>core count</th>
+<th>time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>100</td>
+</tr>
+<tr>
+<td>2</td>
+<td>60</td>
+</tr>
+<tr>
+<td>3</td>
+<td>46.667</td>
+</tr>
+<tr>
+<td>4</td>
+<td>40</td>
+</tr>
+<tr>
+<td>5</td>
+<td>36</td>
+</tr>
+</tbody>
+</table>
+<p>the time will never reach 20 seconds, regardless of how much compute we throw at it</p>
+<p>takeaway: adding cores has diminishing returns</p>
+<p><strong>data dependency graph</strong>:</p>
+<ul>
+<li>can create a DAG (directed acyclic graph) that represents the prerequisite relationships between data processing tasks<ul>
+<li>example: recipe for a classic soviet salad (!)<ul>
+<li>need to boil eggs, carrots, potatoes before they can each be cut, but the tasks of cutting the boiled items are not dependent on each other. then, need to mix ingredients only once all the ingredients have been cut</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>process</strong>:</p>
+<ul>
+<li>program <em>in execution</em></li>
+<li>involves more than just program code - memory allocated, i/o device access, open files, grabbed locks, etc.</li>
+<li>process is program code in conjunction with all resources allocated to the running program</li>
+<li>we could take the same program and run it twice at the same time, but there will be two independent processes</li>
+<li>if we have two different computers connected via network, we can split the problem in two parts, and send the parts to each of the computers</li>
+<li>having multiple processes doing the same thing enables parallel programming</li>
+<li>if we have multiple cores or threads, though, it may be possible to run in parallel with the same process</li>
+</ul>
+<p><strong>process lifetime</strong>:</p>
+<ul>
+<li>when we know what process expects from the computer, we know how to run it efficiently</li>
+<li>process state/life cycle:<ul>
+<li>first: &quot;i want to run a program&quot;<ul>
+<li>process must be created to run program/application</li>
+<li>while process is only created, we say it is in the &quot;new&quot; state</li>
+<li>OS will create a record of the process, called the &quot;process control block&quot; (PCB)<ul>
+<li>in OS's internal bookkeeping, the OS creates a record of the process creation</li>
+<li>includes process ID, list of files opened for it, memory usage information (e.g. page table), etc.</li>
+</ul>
+</li>
+<li>as soon as this PCB appears, the process appears</li>
+<li>but not yet ready to be executed - program code has not been copied over to memory yet</li>
+</ul>
+</li>
+<li>next: process creation is finished<ul>
+<li>first, process wants to use the CPU, in order to run program code</li>
+<li>however, there are other processes running on the computer at the same time - chance that cpu is idle is not 100%; may be many processes competing for the cpu/waiting to use the cpu<ul>
+<li>list of processes ready and waiting to use cpu right now: <strong>ready queue</strong></li>
+</ul>
+</li>
+<li>processes in ready queue are said to be in the &quot;ready state&quot;</li>
+</ul>
+</li>
+<li>next: process is in ready-queue, OS is deciding which process to have running on the CPU<ul>
+<li>could e.g. be using a priority-based queue scheduling algorithm; next chosen process may not be first one in queue</li>
+<li>when process is chosen by OS to begin running on CPU, and is running on the CPU, it is in the &quot;running state&quot;</li>
+</ul>
+</li>
+<li>now process is running on cpu<ul>
+<li>performing machine cycles - fetch, decode, execute, write back</li>
+<li>ok, until cpu runs into instruction to read or write data to/from file (hard disk) - very slow</li>
+<li>as soon as process requests any i/o operation (file reading, reading document from hard disk, etc.), the cpu <strong>yields</strong> the cpu to another process while expensive operation takes place</li>
+<li>assume the action is reading from hard disk - the hard disk has its own queue, so the process gets into another line - <strong>i/o queue</strong><ul>
+<li>every i/o device has its own queue</li>
+<li>(as with cpu's ready-queue, not really a true queue, could depend on priority or OS's scheduling algorithm)</li>
+</ul>
+</li>
+<li>while process is in i/o queue, or being served by hard disk - while it does not need to use the cpu - it is in the &quot;waiting&quot; state</li>
+</ul>
+</li>
+<li>then, data is received from hard disk and needs cpu again<ul>
+<li>process goes back into the waiting state</li>
+</ul>
+</li>
+<li>another possible path - OS removes process from CPU and puts back into ready-queue<ul>
+<li>called &quot;pre-emption&quot;</li>
+<li>can occur if process uses cpu for too long, etc.<ul>
+<li>another possible cause for OS removing proces from CPU - process obtaining a lock, or an interrupt - actions that take a lot of time and don't require CPU</li>
+</ul>
+</li>
+<li>depends on cpu scheduling algorithm</li>
+</ul>
+</li>
+<li>at some point, process reaches the end<ul>
+<li>process is &quot;deleted&quot; and goes into the terminated state</li>
+<li>for various reasons, the OS doesn't immediately truly delete the process</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>note: while these things are happening, the process is still in the same location in memory<ul>
+<li>doesn't actually move. state changes are effected by updates to PCB (process control block) record</li>
+</ul>
+</li>
+</ul>
+<p>process states:</p>
+<ol>
+<li>new - process exists, but is not yet ready to be truly executed</li>
+<li>ready - process is in ready queue, waiting for cpu access</li>
+<li>running - process is running on the CPU</li>
+<li>waiting - process is doing something else and does not need the CPU (e.g. using hard disk)</li>
+<li>terminated - process is done running</li>
+</ol>
+<ul>
+<li>note: questions to ask after lecture<ul>
+<li>how can OS interrupt currently running process on CPU?<ul>
+<li>ask this next lecture so he can go over it</li>
+<li>basic idea - in e.g. case where process is time-limited, OS tells cpu clock when to issue special &quot;interrupt&quot; instruction, which will return control to CPU</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+
+        <footer class="footer" id="mainfooter">
+            <p
+                xmlns:cc="http://creativecommons.org/ns#"
+                xmlns:dct="http://purl.org/dc/terms/"
+            >
+                <a
+                    property="dct:title"
+                    rel="cc:attributionURL"
+                    href="https://benrosenberg.info"
+                    class="link-problem"
+                    >benrosenberg.info</a
+                >
+                by <span property="cc:attributionName">Ben Rosenberg</span> is
+                licensed under
+                <a
+                    href="https://creativecommons.org/licenses/by/4.0/?ref=chooser-v1"
+                    target="_blank"
+                    rel="license noopener noreferrer"
+                    style="display: inline-block"
+                    class="link-problem"
+                    >CC BY 4.0<img
+                        class="cc-svg"
+                        style="
+                            height: 20px !important;
+                            margin-left: 3px;
+                            vertical-align: middle;
+                        "
+                        src="https://benrosenberg.info/posts/CSCI-79524-notes/images/cc_dark.svg"
+                        alt="" /><img
+                        class="by-svg"
+                        style="
+                            height: 20px !important;
+                            margin-left: 3px;
+                            vertical-align: middle;
+                        "
+                        src="https://benrosenberg.info/posts/CSCI-79524-notes/images/by_dark.svg"
+                        alt=""
+                /></a>
+            </p>
+        </footer>
+        <script src="https://benrosenberg.info/posts/CSCI-79524-notes/meta/menu.js"></script>
+        <script src="https://benrosenberg.info/posts/CSCI-79524-notes/meta/theme.js"></script>
+        <script>
+            window.onload = function () {
+                hljs.highlightAll();
+            };
+        </script>
+    </body>
+</html>

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css"
+            integrity="sha384-zh0CIslj+VczCZtlzBcjt5ppRcsAmDnRem7ESsYwWwg3m/OaJ2l4x7YBZl9Kxxib"
+            crossorigin="anonymous"
+        />
+        <script src="https://benrosenberg.info/posts/CSCI-79524-notes/meta/math.js"></script>
+        <script
+            defer
+            src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.js"
+            integrity="sha384-Rma6DA2IPUwhNxmrB/7S3Tno0YY7sFu9WSYMCuulLhIqYSGZ2gKCJWIqhBWqMQfh"
+            crossorigin="anonymous"
+            onload="render_katex_math()"
+        ></script>
+        <link
+            rel="stylesheet"
+            disabled=""
+            title="hljs-light"
+            href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs.min.css"
+        />
+        <link
+            rel="stylesheet"
+            title="hljs-dark"
+            href="https://benrosenberg.info/posts/CSCI-79524-notes/meta/hljs-gruvbox-dark.css"
+        />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/cpp.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/python.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/mipsasm.min.js"></script>
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.5.1/languages/latex.min.js"></script>
+        <title>lecture04</title>
+        <link rel="stylesheet" href="https://benrosenberg.info/posts/CSCI-79524-notes/meta/style.css" />
+        <link rel="icon" type="image/png" href="https://benrosenberg.info/posts/CSCI-79524-notes/images/favicon.png">
+    </head>
+    <body>
+        <span style="display: none" id="SITE_ROOT_TAG">https://benrosenberg.info/posts/CSCI-79524-notes</span>
+        <!-- Popout menu -->
+        <nav class="menu" id="menu">
+            <div class="menu-header">
+                <h2><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture01.html">CSCI 79524 Notes</a></h2>
+            </div>
+            <div class="menu-content">
+                <ul><li><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture01.html">lecture01</a><li><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture02.html">lecture02</a><li><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture03.html">lecture03</a><li class="currentpage"><a class="currentpage" href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture04.html">lecture04</a><li><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture05.html">lecture05</a><li><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture06.html">lecture06</a><li><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture07.html">lecture07</a><li><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture08.html">lecture08</a><li><a href="https://benrosenberg.info/posts/CSCI-79524-notes/html/lecture09.html">lecture09</a></ul>
+            </div>
+            <div class="menu-footer">
+                <!-- <p>Menu Footer</p> -->
+                <p>
+                    <span class="theme-toggle"
+                        ><button
+                            class="theme-toggle-button"
+                            onclick="toggleColorMode();"
+                        >
+                            switch theme
+                        </button></span
+                    >
+                </p>
+            </div>
+        </nav>
+
+        <!-- Main content area -->
+        <div class="main-wrapper" id="main">
+            <!-- Hamburger menu button -->
+            <button class="hamburger" id="hamburger">☰</button>
+            <div class="main"><h1>Lecture 4</h1>
+<p>clarification - interrupts:</p>
+<ul>
+<li>first thing happens on hardware level</li>
+<li>interrupt arrives via a wire - cpu is wired to stop all current activities, and jump to a specific location in memory where the OS keeps the interrupt handling functions</li>
+</ul>
+<p>clarification - context switching:</p>
+<ul>
+<li>only an issue if the same cpu core running two different processes vs. threads - if two different cores, context switching isn't an issue because the cores are independent execution units</li>
+</ul>
+<p>example of reason to create threads even if only one core: webserver</p>
+<ul>
+<li>main loop to listen and serve requests, constantly running</li>
+<li>multiple threads allow for serving users in parallel (&quot;simultaneously&quot;)</li>
+<li>every time request is created, create extra thread, and launch serving function in separate thread</li>
+<li>if we have more threads than cores, then some cores start multi-tasking between threads<ul>
+<li>some overhead for switching between threads, even on same core</li>
+<li>but still better than blocking until first user is done</li>
+</ul>
+</li>
+</ul>
+<p><strong>multitasking</strong>: quickly switching core from one task to another</p>
+<ul>
+<li>typically not possible to truly run two threads on one core, but can &quot;fake&quot; it by switching back and forth - creates illusion of simultaneous progress on all threads if done fast enough</li>
+<li>hardware may be built with multiple threads in mind - each core is capable of running multiple threads &quot;simultaneously&quot;<ul>
+<li>e.g., a computer with 4 cores may have more than 4 (e.g., 8) &quot;logical processors&quot; - multithreading technology built into cpu, so each core is ready to deal with 2 separate &quot;logical processors&quot;</li>
+<li>CPUs may be super scalar - ready to execute several instructions simultaneously, e.g. it is ok to run <code>add $s0, $s1, $s2</code> and <code>add $t0, $t1, $t2</code> at the same time</li>
+<li>CPUs may permit out-of-order execution - run instructions in order that allows for parallelization</li>
+<li>CPUs may have vector instruction and special vector registers - single instruction, multiple data</li>
+<li>for CPUs to run multiple threads, would need a separate program counter for each thread, and need second set of registers - multiple register files</li>
+<li>fancy features come at a price though - complexity means more complex control circuitry: more hardware, so takes up more space</li>
+</ul>
+</li>
+<li>other benefit to multitasking - avoid memory stalls (cpu waiting to load data from ram). cpu can execute instructions from the second thread while the first one is stalled</li>
+</ul>
+<p>different kinds of threads: kernel threads and user threads</p>
+<ul>
+<li>kernel thread: thread created with help from operating system, typically uses syscall</li>
+<li>user thread: thread created and managed in userspace without involving OS, typically does not require syscall<ul>
+<li>some minor performance benefits</li>
+<li>but have limitations - OS does not know about thread</li>
+<li>in userspace, threads can be combined together to multitask on cpu - faster because do not need to alert operating system<ul>
+<li>running is not faster because cpu speed is the same, but creating/switching etc. is faster because OS does not need to be alerted</li>
+</ul>
+</li>
+<li>limitation - OS does not know about thread, so if one thread does something blocking (e.g. file reading), OS will freeze both threads (not just the first one) because of how long file reading takes, if the OS does not know about it</li>
+<li>also not super convenient - kernel threads are typically used now for convenience rather than user threads</li>
+</ul>
+</li>
+</ul>
+<p>thread project example:</p>
+<pre><code class="language-c++">#include&lt;iostream&gt;
+#include&lt;thread&gt;
+
+void Greet(std::string name) {
+    std::cout &lt;&lt; &quot;Hello from &quot; &lt;&lt; name &lt;&lt; std::endl;
+}
+
+int main() {
+    std::thread t1{ Greet, &quot;t1&quot; };
+    std::thread t2{ Greet, &quot;t2&quot; };
+    std::cout &lt;&lt; &quot;Hello from original&quot; &lt;&lt; std::endl;
+}
+</code></pre>
+<p>sample output:</p>
+<pre><code class="language-plaintext">Hello from original
+Hello from t2
+Hello from t1
+</code></pre>
+<p>output does not necessarily come in same order:</p>
+<ul>
+<li>threads work simultaneously</li>
+<li>not possible to know or guarantee which thread prints first<ul>
+<li>even if on same core, cpu scheduling algorithm may be nondeterministic</li>
+</ul>
+</li>
+<li>can make bugs very hard to detect and fix</li>
+</ul>
+<p>another possible output:</p>
+<pre><code class="language-plaintext">Hello from original
+Hello from Hello from t1
+t2
+</code></pre>
+<p>above, <code>cout</code> is shared between threads - caused a <strong>race condition</strong></p>
+<p>next time - will discuss interprocess communication and synchronization</p>
+</div>
+        </div>
+
+        <footer class="footer" id="mainfooter">
+            <p
+                xmlns:cc="http://creativecommons.org/ns#"
+                xmlns:dct="http://purl.org/dc/terms/"
+            >
+                <a
+                    property="dct:title"
+                    rel="cc:attributionURL"
+                    href="https://benrosenberg.info"
+                    class="link-problem"
+                    >benrosenberg.info</a
+                >
+                by <span property="cc:attributionName">Ben Rosenberg</span> is
+                licensed under
+                <a
+                    href="https://creativecommons.org/licenses/by/4.0/?ref=chooser-v1"
+                    target="_blank"
+                    rel="license noopener noreferrer"
+                    style="display: inline-block"
+                    class="link-problem"
+                    >CC BY 4.0<img
+                        class="cc-svg"
+                        style="
+                            height: 20px !important;
+                            margin-left: 3px;
+                            vertical-align: middle;
+                        "
+                        src="https://benrosenberg.info/posts/CSCI-79524-notes/images/cc_dark.svg"
+                        alt="" /><img
+                        class="by-svg"
+                        style="
+                            height: 20px !important;
+                            margin-left: 3px;
+                            vertical-align: middle;
+                        "
+                        src="https://benrosenberg.info/posts/CSCI-79524-notes/images/by_dark.svg"
+                        alt=""
+                /></a>
+            </p>
+        </footer>
+        <script src="https://benrosenberg.info/posts/CSCI-79524-notes/meta/menu.js"></script>
+        <script src="https://benrosenberg.info/posts/CSCI-79524-notes/meta/theme.js"></script>
+        <script>
+            window.onload = function () {
+                hljs.highlightAll();
+            };
+        </script>
+    </body>
+</html>
