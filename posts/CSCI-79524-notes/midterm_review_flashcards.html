@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CS 79524 Midterm Review</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #282828;
+            color: #ebdbb2;
+        }
+
+        #category-select {
+            margin-bottom: 10px;
+            background-color: #282828;
+            color: #ebdbb2;
+        }
+
+        .card {
+            border: 1px solid #ebdbb2;
+            padding: 20px;
+            margin: 20px auto;
+            width: 300px;
+            cursor: pointer;
+            text-align: left;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        pre {
+            white-space: pre-wrap;
+            font-family: sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>CS 79524 Midterm Review</h1>
+    <select id="category-select"></select>
+    <div id="flashcard" class="card">Click to show definition</div>
+
+    <script>
+        const flashcards = {
+            "C++ specific things": [
+                {
+                    "Copying vs. Moving in C++": "In C++, \"copying\" creates a new, independent object with the same data as the original, while \"moving\" transfers ownership of the original object's resources to a new object, potentially leaving the original in a valid but unspecified state."
+                },
+                {
+                    "Differences in moving and copying, std::thread vs std::mutex": "A std::thread represents a unique resource (a running thread), and ownership can be transferred to another instance using std::move().\nA std::mutex represents a synchronization primitive that cannot be transferred between owners because it is tied to the underlying OS-level resource."
+                },
+                {
+                    "Differences in move-constructible/move-assignable, std::thread vs std::mutex": "std::thread is move-constructible and move-assignable, but std::mutex is neither:\n- A std::thread represents a unique resource (a running thread), and ownership can be transferred to another instance using std::move().\n- A std::mutex represents a synchronization primitive that cannot be transferred between owners because it is tied to the underlying OS-level resource.\n\nstd::thread's move operations transfer ownership, while std::mutex is strictly non-movable:\n- Moving a std::thread transfers the responsibility for managing the thread (joining or detaching).\n- A std::mutex must stay in the same place because moving it could cause synchronization issues\u2014existing threads waiting on the mutex would be left with a dangling reference."
+                },
+                {
+                    "Move-Constructable & Move-Assignable but Not Copy-Constructable or Copy-Assignable": "A class (e.g., std::thread) can be transferred from one instance to another but cannot be duplicated.\nMoving transfers ownership of resources, leaving the original object in a valid but unspecified state.\nCopying requires duplicating data, which may not be possible or efficient for certain resources."
+                },
+                {
+                    "constexpr (for Variables)": "A tool for efficiency in C++ that allows computations to be done at compile time.\nImproves speed and safety by eliminating runtime calculations when possible.\nIf all parameters to a constexpr function are known at compile time, the compiler may precompute the result and inline it."
+                },
+                {
+                    "Wall Time (Elapsed Time) vs. CPU Time": "Wall time: The actual elapsed real-world time.\nCPU time: The amount of time the CPU actively spends processing a task, excluding time spent waiting for I/O or other delays."
+                },
+                {
+                    "Debug Build vs. Release Build": "Debug build: Slower and larger but includes extra checks and debugging tools to help find mistakes.\nRelease build: Optimized for speed and efficiency, removing unnecessary checks and debugging overhead.\nDebugging in a release build can be difficult because optimizations may alter the structure of the program (e.g., inlining functions).\nGeneral practice: develop in debug mode, distribute in release mode."
+                }
+            ],
+            "Cache": [
+                {
+                    "Memory Latency & Memory Throughput": "- Memory latency: Time it takes to deliver a piece of data from memory.\n- Memory throughput: The rate at which data can be transferred when continuously moving data across a bus.\n- Caches help reduce memory latency by storing frequently accessed data closer to the CPU."
+                },
+                {
+                    "Multi-Channel Memory": "- A technique to increase memory throughput by adding multiple data channels (e.g., dual-channel memory).\n- Enables more data to be transferred simultaneously but does not necessarily make individual memory accesses faster."
+                },
+                {
+                    "Memory Stall": "- A situation where the CPU pauses execution, waiting for data to be retrieved from RAM (due to memory latency)."
+                },
+                {
+                    "Cache Memory & Purpose": "- Cache memory is used to reduce memory latency and minimize memory stalls.\n- It stores frequently accessed data closer to the CPU, decreasing the average time needed for CPU-RAM interactions."
+                },
+                {
+                    "Locality Principle": "- Cache and memory performance improve when programs access data in predictable patterns.\n- Good for performance: Reusing the same data repeatedly or iterating through an array (sequential access).\n- Bad for performance: Using linked lists or structures that jump around in memory."
+                },
+                {
+                    "Cache Line (Cache Block)": "- A small fixed-size block of memory that is transferred between main memory and cache.\n- CPU caches data in these blocks to improve access speed."
+                },
+                {
+                    "Cache Hit & Cache Miss": "- Cache hit: The CPU finds the requested data in cache, leading to fast access.\n- Cache miss: The data is not in cache, requiring a slow fetch from RAM."
+                },
+                {
+                    "Prefetching": "- The hardware predicts and fetches the next cache line before the program requests it.\n- Improves performance by reducing waiting time when accessing memory with good locality."
+                },
+                {
+                    "Multilevel Caches": "- Modern CPUs use multiple cache levels (L1, L2, L3).\n- L1 cache: Small, fast, and usually per-core (often separate caches for instructions and data).\n- L2 cache: Larger but slower, typically per-core.\n- L3 cache: Largest and slowest, shared across multiple cores."
+                },
+                {
+                    "Cache Coherency": "- Ensures that multiple cores see a consistent view of memory when caching shared data.\n- If one core modifies a cache line, other cores' copies are invalidated to prevent stale data usage."
+                },
+                {
+                    "False Sharing": "- Occurs when multiple threads modify separate data items that happen to be in the same cache line.\n- Leads to frequent invalidations of cache lines, causing unnecessary performance degradation."
+                }
+            ],
+            "Complexities of parallelization": [
+                {
+                    "Manual Multithreading Complexity": "- Efficiently implementing multithreading manually is difficult due to load balancing challenges.\n- Load balancing: Distributing work across multiple threads.\n- Easy if tasks are predictable and evenly split.\n- Hard if tasks are unpredictable, leading to inefficient thread usage and reduced performance."
+                },
+                {
+                    "Static Load Balancing": "- Load distribution is hardcoded at compile-time.\n- Threads are assigned fixed portions of work.\n- Works well if the workload is predictable and uniform."
+                },
+                {
+                    "Dynamic Load Balancing": "- Load distribution is decided at runtime based on available work.\n- Threads can dynamically take more work when they finish tasks.\n- Helps when workload is unpredictable or imbalanced."
+                },
+                {
+                    "Different Types of For-Loops": "- Classic for-loop with an index:\n\u00a0\u00a0 - Allows access to previous and next iterations, introducing dependencies.\n- Range-based for-loop / for-each:\n\u00a0\u00a0 - Typically guarantees iteration independence, meaning each iteration runs independently."
+                },
+                {
+                    "For-Loop Parallelization": "- If loop iterations are independent, the compiler can:\n\u00a0\u00a0 - Automatically parallelize the loop across multiple threads.\n\u00a0\u00a0 - Use vector instructions for optimization.\n- Dependent loops (e.g., those with index-based dependencies) cannot be easily parallelized."
+                }
+            ],
+            "Intro topics": [
+                {
+                    "Parallel Computing": "Speeding up program execution by splitting the program into pieces and running them simultaneously."
+                },
+                {
+                    "Concurrent Programming": "Utilizing multiple processing units (e.g., multi-core CPUs, GPUs) to handle multiple tasks at once."
+                },
+                {
+                    "Parallel vs. Concurrent Programming": "Parallel: Typically one task spread across multiple processing units.\nConcurrent: Different tasks handled by different processing units.\nIn practice, both solve similar problems."
+                },
+                {
+                    "Parallelism for Performance": "Modern computers can\u2019t significantly increase single-core performance easily, so adding more computational units (CPUs, cores, GPUs) is preferred."
+                },
+                {
+                    "Need for Parallelism in Programs": "If a program isn\u2019t designed to use parallelism, additional computational units provide no tangible benefit."
+                },
+                {
+                    "CPU Core": "An independent execution unit within a CPU."
+                },
+                {
+                    "GPU Core vs. CPU Core": "CPU Core: More powerful, complex, and capable of handling various tasks.\nGPU Core: Simpler, optimized for mathematical operations, and better suited for parallel tasks."
+                },
+                {
+                    "Multi-Core CPU": "A CPU with multiple execution units (cores).\nMay have \"performance\" and \"efficiency\" cores.\nTypically, cores share an L3 cache but have private L1 caches."
+                },
+                {
+                    "Computational Cluster": "A networked collection of computers working on the same task.\nEach CPU has its own RAM.\nCommunication between computers is expensive."
+                },
+                {
+                    "Supercomputer": "A computer with multiple CPUs, falling between a multi-core CPU and a computational cluster.\nRAM sharing may vary."
+                },
+                {
+                    "GPU (Graphics Processing Unit)": "Specialized hardware with many cores for parallel computing.\nHas its own dedicated memory (VRAM).\nTransferring data between RAM and VRAM can be expensive."
+                },
+                {
+                    "Parallelism Limitations": "Not all tasks benefit from parallelism\u2014only programs that are parallelizable can take advantage of it."
+                },
+                {
+                    "Parallel-Friendly Tasks": "Simulations, graphics, and AI workloads are typically highly parallelizable."
+                },
+                {
+                    "Amdahl\u2019s Law": "Determines the theoretical speedup of a program with parallel execution.\nIf x fraction of a task is parallelizable and takes N seconds on one core, execution time on \u03b1 cores is:\nNx + N(1-x)/\u03b1\nSpeedup formula: 1 / (1 - x + x/\u03b1)"
+                },
+                {
+                    "Amdahl\u2019s Law Example": "If 80% of a task is parallelizable and runs on 4 cores:\n- Theoretical speedup: 2.5\u00d7 faster"
+                },
+                {
+                    "Amdahl\u2019s Law Caveats": "Parallelism has overhead, such as synchronization costs."
+                },
+                {
+                    "Data Dependence Graph": "A directed acyclic graph (DAG) representing data dependencies in computations.\nUsed to analyze parallelizability.\nTopological sorting determines prerequisite relationships."
+                },
+                {
+                    "Wall Time": "The actual elapsed time (in real-world seconds) for a program to execute between two points.\nDiffers from CPU time, which measures only when the CPU was actively running the program.\nEasily measurable with libraries like chrono."
+                }
+            ],
+            "OpenMP": [
+                {
+                    "OpenMP": "- An API for parallel programming in C, C++, and Fortran.\n- Uses compiler directives (#pragma omp ...) \") to enable parallel execution.\n- Provides thread management tools without needing to manually create/join threads."
+                },
+                {
+                    "OpenMP Flags": "- Compiler flags used to enable OpenMP support (e.g., -fopenmp in GCC/Clang, /openmp in MSVC)."
+                },
+                {
+                    "Fork-Join Model": "- Execution model used in OpenMP.\n- Starts as a single-threaded program.\n- When parallelism is needed, spawns (forks) multiple threads to perform work in parallel.\n- Threads rejoin after parallel work is completed."
+                },
+                {
+                    "OpenMP Team": "- A collection of threads created when entering a parallel region.\n- The main thread is the master, and the rest are worker threads."
+                },
+                {
+                    "parallel Directive": "- Defines a parallel region, where multiple threads execute the code block.\n- Example:\n#pragma omp parallel\n{\n    printf(\"Hello from thread %d\\n\", omp_get_thread_num());\n}"
+                },
+                {
+                    "for Directive": "- Used to parallelize loops across multiple threads.\n- Example:\n#pragma omp parallel for \nfor (int i = 0; i < N; i++) {\n    a[i] += b[i];\n}"
+                },
+                {
+                    "Shared, Private, Firstprivate": "shared: Variable is shared across all threads.\nprivate: Each thread gets a separate copy of the variable\nfirstprivate: Like private, but initializes each thread's copy with the original value"
+                },
+                {
+                    "critical Directive": "- Defines a critical section where only one thread can execute at a time.\n- Prevents race conditions.\n- Example: \n#pragma omp critical\n{\n    counter++;  \n} "
+                },
+                {
+                    "omp_set_num_threads(n)": "- Sets the number of threads OpenMP should use."
+                },
+                {
+                    "omp_get_num_threads()": "- Returns number of threads in the current parallel region.\n- Returns 1 if called outside a parallel region."
+                },
+                {
+                    "omp_get_thread_num()": "- Returns the current thread's ID (from 0 to num_threads-1)."
+                },
+                {
+                    "omp_get_max_threads()": "- Returns the maximum number of threads OpenMP can create."
+                }
+            ],
+            "Processes": [
+                {
+                    "Process": "A program in execution."
+                },
+                {
+                    "Process vs. Program": "Program: The executable code stored in a file.\nProcess: The program in execution, including allocated resources like RAM, permissions, and file handles."
+                },
+                {
+                    "Process Lifecycle": "Created: Process is initialized.\nReady: Process competes for CPU time.\nRunning: Process is actively using the CPU.\nWaiting: Process is paused, waiting for an event (e.g., I/O operation).\nTerminated: Process completes execution."
+                },
+                {
+                    "Ready Queue": "A queue of processes in the ready state, waiting for CPU time."
+                },
+                {
+                    "Waiting State": "When a process is waiting for an event (e.g., I/O operation), it temporarily stops using the CPU."
+                },
+                {
+                    "Input/Output Operations": "I/O operations are typically very slow compared to CPU execution, often causing processes to enter the waiting state."
+                }
+            ],
+            "SIMD/Vector instructions": [
+                {
+                    "SIMD (Single Instruction, Multiple Data)": "- A low-level way to exploit parallelism by performing the same operation on multiple data points simultaneously.\n- Helps improve performance for certain computational tasks (e.g., image processing, matrix operations)."
+                },
+                {
+                    "Vector Instructions": "- CPU instructions designed to operate on vector registers, which can store multiple values at once.\n- Common instruction set extensions:\n\u00a0\u00a0 - Older Intel extensions: SSE, SSE2\n\u00a0\u00a0 - Newer Intel extensions: AVX2, AVX512\n- Allow operations on multiple values at once instead of processing them sequentially."
+                },
+                {
+                    "Instruction Set Extensions": "- Additional instructions provided by a CPU to enable new capabilities (e.g., vector operations, cryptographic functions).\n- Examples: SSE, AVX, AVX2, AVX512, NEON (for ARM)."
+                },
+                {
+                    "Intrinsics": "- Compiler- or platform-specific functions that map directly to CPU instructions.\n- Provide fine-grained control over CPU features without writing assembly code."
+                },
+                {
+                    "Gather & Scatter Operations": "- Gather: Loads multiple non-sequential values from memory into a vector register.\n- Scatter: Stores multiple values from a vector register into non-sequential memory locations.\n- Effectiveness:\n\u00a0\u00a0 - Works well if data is close together in memory.\n\u00a0\u00a0 - Inefficient if data is spread far apart, potentially degrading performance."
+                },
+                {
+                    "SIMD vs. Multithreading": "- SIMD does not replace multithreading.\n- Instead, it complements multithreading by better utilizing CPU cores for parallel operations."
+                },
+                {
+                    "Code Analysis (Vector Instructions)": "- You won't need to write SIMD code on the exam, but you may need to analyze code using:\n\u00a0\u00a0 - Load/store instructions (moving data between registers and memory).\n\u00a0\u00a0 - Setzero instructions (initializing vector registers).\n\u00a0\u00a0 - AVX2 datatypes for vector operations."
+                }
+            ],
+            "Thread synchronization": [
+                {
+                    "Shared Resource": "A resource (e.g., shared variable, memory, device, or file) used simultaneously by multiple threads or processes."
+                },
+                {
+                    "Race Condition (Data Race)": "Occurs when multiple threads try to modify a shared resource simultaneously, leading to unpredictable results.\n- Example: Two threads incrementing a variable at the same time may cause unexpected values.\n- \"Data tear\" refers to one thread modifying a variable while another reads it, possibly leading to corrupted or partial data."
+                },
+                {
+                    "Deadlock": "A situation where multiple threads or processes wait for each other indefinitely, preventing progress.\n- Caused by cyclic dependencies in resource allocation."
+                },
+                {
+                    "Race Condition with Only Reads": "If multiple entities only read a shared resource without modifying it, no race condition occurs, and no synchronization is needed."
+                },
+                {
+                    "Locking": "A mechanism to ensure only one thread or process accesses a shared resource at a time."
+                },
+                {
+                    "Critical Section": "A segment of code that should not be executed simultaneously by multiple threads or processes.\nOnly one execution of the critical section is allowed at a time."
+                },
+                {
+                    "Atomic Property & Atomic CPU Instructions": "Atomic operations are hardware-level instructions that execute without interruption.\nOnly one atomic operation can execute at a time, ensuring safe modification of shared resources.\nExample: A lock variable (0 = unlocked, 1 = locked) can be modified using an atomic swap operation."
+                },
+                {
+                    "Thread-Safe Function": "A function that can be used safely in multiple threads without additional synchronization, ensuring data integrity."
+                },
+                {
+                    "Locking Overhead": "Locks introduce performance overhead and can cause unpredictable slowdowns.\nSynchronization is not free; atomic operations can lock the memory bus, impacting CPU efficiency."
+                },
+                {
+                    "Busy Waiting & Spinlocks": "Busy waiting (spinlock): The waiting thread continuously checks a shared variable in an infinite loop, using CPU resources.\nNon-busy waiting: The OS puts the thread to sleep and wakes it when the wait is over, reducing CPU usage."
+                },
+                {
+                    "std::mutex": "Used for locking and unlocking shared resources in C++.\nThe thread that locks a mutex is responsible for unlocking it."
+                },
+                {
+                    "std::thread": "Used to create and manage threads in C++.\nRequires knowledge of \"join\" to ensure threads complete execution before program termination.\nThreads are not copyable, but can be managed using \"vector::emplace_back\""
+                }
+            ],
+            "Threads": [
+                {
+                    "Thread (Thread of Execution)": "A separate, independent execution path within a process.\nAllows multiple simultaneous executions of the same program code.\nEach thread has its own program counter.\nCan run on multiple cores or share a core using multitasking."
+                },
+                {
+                    "Process vs. Thread": "Process: Independent execution with its own memory space\nThread: A smaller execution unit within a Process, sharing memory with other threads in the same process."
+                },
+                {
+                    "Advantages of Threads": "More memory-efficient (threads share memory, no need for separate allocation).\nFaster to create and delete compared to processes.\nCan better utilize CPU resources (e.g., hardware multithreading).\nConvenient shared memory for communication."
+                },
+                {
+                    "Advantages of Processes": "Fault-independent: If one process crashes, others remain unaffected.\nNeeded when running different programs or distributing work across multiple machines."
+                },
+                {
+                    "When to Use Threads vs. Processes": "Use threads when tasks share memory and need fast communication.\nUse processes when tasks need isolation or run on separate machines."
+                },
+                {
+                    "What Threads Share": "Program code, heap, and data sections."
+                },
+                {
+                    "What Threads Don't Share": "Each thread has its own private stack for local variables and function parameters."
+                },
+                {
+                    "Thread Pool": "A technique for managing multiple threads efficiently.\nInstead of creating/deleting threads repeatedly, a fixed number of threads are created at startup.\nThreads go to sleep when idle and wake up when needed, improving efficiency."
+                }
+            ]
+        };
+
+        const categorySelect = document.getElementById('category-select');
+        const flashcardDiv = document.getElementById('flashcard');
+        let currentCategory = Object.keys(flashcards)[0];
+        let currentIndex = 0;
+        let showingDefinition = false;
+
+        function populateCategories() {
+            for (const category of Object.keys(flashcards)) {
+                const option = document.createElement('option');
+                option.value = category;
+                option.textContent = category;
+                categorySelect.appendChild(option);
+            }
+        }
+
+        function showTerm() {
+            const term = Object.keys(flashcards[currentCategory][currentIndex])[0];
+            flashcardDiv.innerHTML = `<strong>${term}</strong>`;
+            showingDefinition = false;
+        }
+
+        function showDefinition() {
+            const term = Object.keys(flashcards[currentCategory][currentIndex])[0];
+            const definition = flashcards[currentCategory][currentIndex][term];
+            flashcardDiv.innerHTML = `<pre>${definition}</pre>`;
+            showingDefinition = true;
+        }
+
+        flashcardDiv.addEventListener('click', () => {
+            if (showingDefinition) {
+                currentIndex = (currentIndex + 1) % flashcards[currentCategory].length;
+                showTerm();
+            } else {
+                showDefinition();
+            }
+        });
+
+        categorySelect.addEventListener('change', (event) => {
+            currentCategory = event.target.value;
+            currentIndex = 0;
+            showTerm();
+        });
+
+        populateCategories();
+        showTerm();
+    </script>
+</body>
+
+</html>
