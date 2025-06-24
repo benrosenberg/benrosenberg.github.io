@@ -59,14 +59,11 @@
         body.exam-mode .info-bar {
             display: flex;
             justify-content: space-between;
-            /* Changed width from 90% to 80% to bring it inward */
             width: 80%;
             position: absolute;
             bottom: 20px;
-            /* Adjust left/right for new width to center */
             left: 10%;
             right: 10%;
-            /* Increased font size for readability */
             font-size: 1.6em;
         }
 
@@ -162,12 +159,39 @@
         #time-input-overlay button.cancel {
             background-color: #f44336;
         }
+
+        /* Mobile warning styles */
+        #mobile-warning {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(255, 0, 0, 0.8);
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            font-size: 1.2em;
+            z-index: 3000;
+            /* Above everything else */
+            opacity: 1;
+            transition: opacity 0.5s ease-out;
+        }
+
+        #mobile-warning.hidden {
+            opacity: 0;
+            pointer-events: none;
+            /* Make it unclickable when hidden */
+        }
     </style>
 </head>
 
 <!-- Generated with help from Google Gemini: 2025-06-24 -->
 
 <body>
+    <div id="mobile-warning" style="display: none;">
+        This site is NOT optimized for mobile devices.
+    </div>
+
     <div class="time-display-wrapper">
         <p id="time" class="time-display main-time"></p>
         <p id="date-and-tz" class="date-and-tz-display"></p>
@@ -203,13 +227,16 @@
 
     <script>
         // State variables
-        let is12HourFormat = true;
+        // 0: 12-hour with AM/PM
+        // 1: 24-hour
+        // 2: 12-hour without AM/PM
+        let timeFormatMode = 0;
         let isMonospace = false;
         let isTimeBold = true;
         let isExamMode = false;
         let examEndTime = null;
-        let countdownInterval = null; // For the main countdown timer (if in exam mode)
-        let regularTimeInterval = null; // For the "current time" display (always runs)
+        let countdownInterval = null;
+        let regularTimeInterval = null;
 
         // Get elements
         const shortcutHint = document.getElementById('shortcutHint');
@@ -225,6 +252,7 @@
         const examMinutesSelect = document.getElementById('examMinutes');
         const startExamButton = document.getElementById('startExamButton');
         const cancelInputButton = document.getElementById('cancelInputButton');
+        const mobileWarning = document.getElementById('mobile-warning'); // New element
 
         // Initial setup for time display font weight
         root.style.setProperty('--time-font-weight', isTimeBold ? 'bold' : 'normal');
@@ -264,38 +292,35 @@
             return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
         }
 
-        function formatCurrentTime(dateObj) {
+        function formatTimeByMode(dateObj, includeSeconds = true) { // Removed includeAmPm as it's now handled by timeFormatMode
             let hours = dateObj.getHours();
             const minutes = `${dateObj.getMinutes()}`.padStart(2, '0');
             const seconds = `${dateObj.getSeconds()}`.padStart(2, '0');
+            let timeString;
 
-            if (is12HourFormat) {
-                const am_pm = hours >= 12 ? 'PM' : 'AM';
-                hours = hours % 12;
-                hours = hours ? hours : 12;
-                return `${hours}:${minutes}:${seconds} ${am_pm}`;
-            } else {
-                hours = `${hours}`.padStart(2, '0');
-                return `${hours}:${minutes}:${seconds}`;
+            switch (timeFormatMode) {
+                case 0: // 12-hour with AM/PM
+                    const am_pm_0 = hours >= 12 ? 'PM' : 'AM';
+                    hours = hours % 12;
+                    hours = hours ? hours : 12; // the hour '0' should be '12'
+                    timeString = `${hours}:${minutes}`;
+                    if (includeSeconds) timeString += `:${seconds}`;
+                    timeString += ` ${am_pm_0}`; // Always include AM/PM in this mode
+                    break;
+                case 1: // 24-hour
+                    hours = `${hours}`.padStart(2, '0');
+                    timeString = `${hours}:${minutes}`;
+                    if (includeSeconds) timeString += `:${seconds}`;
+                    break;
+                case 2: // 12-hour without AM/PM
+                    hours = hours % 12;
+                    hours = hours ? hours : 12; // the hour '0' should be '12'
+                    timeString = `${hours}:${minutes}`;
+                    if (includeSeconds) timeString += `:${seconds}`;
+                    // No AM/PM for this mode
+                    break;
             }
-        }
-
-        // Function to format exam end time based on is12HourFormat, now including seconds
-        function formatExamEndTime(timestamp) {
-            const dateObj = new Date(timestamp);
-            let hours = dateObj.getHours();
-            const minutes = `${dateObj.getMinutes()}`.padStart(2, '0');
-            const seconds = `${dateObj.getSeconds()}`.padStart(2, '0'); // Get seconds for exam end time
-
-            if (is12HourFormat) {
-                const am_pm = hours >= 12 ? 'PM' : 'AM';
-                hours = hours % 12;
-                hours = hours ? hours : 12;
-                return `Exam Ends: ${hours}:${minutes}:${seconds} ${am_pm}`; // Include seconds
-            } else {
-                hours = `${hours}`.padStart(2, '0');
-                return `Exam Ends: ${hours}:${minutes}:${seconds}`; // Include seconds
-            }
+            return timeString;
         }
 
         function updateDisplay() {
@@ -306,7 +331,7 @@
 
             if (!isExamMode) {
                 // Default mode: main display shows current time
-                mainTimeDisplay.innerText = formatCurrentTime(now);
+                mainTimeDisplay.innerText = formatTimeByMode(now);
             } else {
                 // Exam mode: main display shows countdown
                 const timeLeft = Math.floor((examEndTime - now.getTime()) / 1000);
@@ -318,11 +343,11 @@
                     countdownInterval = null; // Mark as cleared
                 }
                 // Always update the small current time display
-                currentTimeSmallDisplay.innerText = `Current Time: ${formatCurrentTime(now)}`;
+                currentTimeSmallDisplay.innerText = `Current Time: ${formatTimeByMode(now)}`;
 
                 // Update exam end time display to reflect format change and include seconds
                 if (examEndTime) { // Only update if examEndTime is set
-                    examEndTimeDisplay.innerText = formatExamEndTime(examEndTime);
+                    examEndTimeDisplay.innerText = `Exam Ends: ${formatTimeByMode(new Date(examEndTime))}`;
                 }
             }
         }
@@ -332,7 +357,7 @@
             examEndTime = now.getTime() + (durationSeconds * 1000);
 
             // Set up exam end time display
-            examEndTimeDisplay.innerText = formatExamEndTime(examEndTime);
+            examEndTimeDisplay.innerText = `Exam Ends: ${formatTimeByMode(new Date(examEndTime))}`;
 
             // Set up exam mode UI
             body.classList.add('exam-mode');
@@ -376,6 +401,19 @@
             timeInputOverlay.style.display = 'none';
         });
 
+        // Function to detect mobile device
+        function isMobileDevice() {
+            return /Mobi|Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
+        }
+
+        // Show mobile warning if on mobile
+        if (isMobileDevice()) {
+            mobileWarning.style.display = 'block';
+            setTimeout(() => {
+                mobileWarning.classList.add('hidden');
+            }, 5000); // Hide after 5 seconds
+        }
+
         // Keyboard shortcuts
         document.addEventListener('keydown', (event) => {
             const darkTheme = { bg: '#282828', text: '#ebdbb2', hintBg: 'rgba(0, 0, 0, 0.5)', hintText: '#ebdbb2' };
@@ -409,9 +447,9 @@
                         dateAndTzDisplay.classList.toggle('hidden');
                     }
                     break;
-                case 'p': // Toggle 12-hour vs 24-hour format
-                    is12HourFormat = !is12HourFormat;
-                    updateDisplay(); // updateDisplay will now handle reformatting exam end time
+                case 'p': // Cycle through 3 time display modes
+                    timeFormatMode = (timeFormatMode + 1) % 3; // Cycle 0 -> 1 -> 2 -> 0
+                    updateDisplay();
                     break;
                 case 'm': // Toggle monospace font
                     isMonospace = !isMonospace;
