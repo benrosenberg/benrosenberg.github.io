@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spaced Repetition Flashcards</title>
+    <style>
+        /* Custom styles for default sans-serif font and general layout */
+        body {
+            font-family: sans-serif;
+            background-color: #282828;
+            /* Gruvbox Dark background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* Align items to center vertically */
+            min-height: 100vh;
+            padding: 2rem;
+            box-sizing: border-box;
+        }
+
+        .container {
+            background-color: #32302f;
+            /* Gruvbox Dark surface */
+            padding: 2.5rem;
+            border-radius: 1.5rem;
+            /* More rounded corners */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            /* Softer shadow for dark theme */
+            width: 100%;
+            max-width: 960px;
+            /* Increased max-width for better content display */
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                grid-template-columns: 1fr 1fr;
+                /* Two columns on medium screens and up */
+            }
+        }
+
+        /* General element styling */
+        .section-panel {
+            padding: 1.5rem;
+            background-color: #32302f;
+            /* Gruvbox Dark surface */
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            /* Equivalent to space-y-6 */
+        }
+
+        h2 {
+            font-size: 2.25rem;
+            /* text-3xl */
+            /* font-weight: 800; font-extrabold */
+            color: #ebdbb2;
+            /* Gruvbox foreground */
+            margin-bottom: 1rem;
+            /* mb-4 */
+            text-align: center;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            /* text-2xl */
+            font-weight: 700;
+            /* font-bold */
+            color: #ebdbb2;
+            /* Gruvbox foreground */
+            margin-top: 2rem;
+            /* mt-8 */
+            margin-bottom: 1rem;
+            /* mb-4 */
+            text-align: center;
+        }
+
+        label {
+            color: #ebdbb2;
+            /* Gruvbox foreground */
+            font-weight: 500;
+            /* font-medium */
+        }
+
+        input[type="text"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 0.75rem;
+            /* p-3 */
+            border: 1px solid #504945;
+            /* Gruvbox gray border */
+            border-radius: 0.5rem;
+            /* rounded-lg */
+            font-size: 1rem;
+            background-color: #3c3836;
+            /* Darker input background */
+            color: #ebdbb2;
+            /* Input text color */
+            transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+
+        input[type="text"]:focus,
+        textarea:focus,
+        select:focus {
+            border-color: #83a598;
+            /* Gruvbox aqua focus border */
+            box-shadow: 0 0 0 3px rgba(131, 165, 152, 0.3);
+            /* Soft focus ring */
+            outline: none;
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: #a89984;
+            /* Placeholder text color */
+            opacity: 1;
+            /* Ensure placeholder is visible */
+        }
+
+        /* Button styles */
+        button {
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out, box-shadow 0.2s ease-in-out;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: none;
+            /* Ensure no default button border */
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        button:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-primary {
+            background-color: #b8bb26;
+            /* Gruvbox yellow-green */
+            color: #282828;
+            /* Dark text on light button */
+        }
+
+        .btn-primary:hover {
+            background-color: #98971a;
+            /* Darker yellow-green */
+        }
+
+        .btn-secondary {
+            background-color: #d79921;
+            /* Gruvbox orange-yellow */
+            color: #282828;
+            /* Dark text */
+        }
+
+        .btn-secondary:hover {
+            background-color: #fe8019;
+            /* Darker orange-yellow */
+        }
+
+        .btn-red {
+            background-color: #fb4934;
+            /* Gruvbox red */
+            color: #282828;
+            /* Dark text */
+        }
+
+        .btn-red:hover {
+            background-color: #cc241d;
+            /* Darker red */
+        }
+
+        /* Create Flashcard Section Specifics */
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            /* space-y-4 */
+        }
+
+        .add-card-button-container {
+            width: 100%;
+            padding-top: 1rem;
+            /* mt-4 */
+        }
+
+        .add-card-button {
+            width: 100%;
+            padding-top: 0.75rem;
+            /* py-3 */
+            padding-bottom: 0.75rem;
+            /* py-3 */
+            font-size: 1.125rem;
+            /* text-lg */
+        }
+
+        .card-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            /* space-y-4 */
+            max-height: 24rem;
+            /* max-h-96 */
+            overflow-y: auto;
+            padding-right: 0.5rem;
+            /* pr-2 */
+        }
+
+        .card-list-item {
+            background-color: #3c3836;
+            /* Gruvbox darker surface */
+            padding: 1rem;
+            /* p-4 */
+            border-radius: 0.5rem;
+            /* rounded-lg */
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+            /* shadow-sm */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #504945;
+            /* Gruvbox gray border */
+        }
+
+        .card-list-item p {
+            margin: 0;
+        }
+
+        .card-list-item .question-text {
+            font-weight: 600;
+            /* font-semibold */
+            color: #ebdbb2;
+            /* Gruvbox foreground */
+        }
+
+        .card-list-item .category-text {
+            font-size: 0.875rem;
+            /* text-sm */
+            color: #a89984;
+            /* Gruvbox gray text */
+        }
+
+        .card-list-item .due-date-text {
+            font-size: 0.75rem;
+            /* text-xs */
+            color: #a89984;
+            /* Gruvbox gray text */
+        }
+
+        .delete-card-button {
+            font-size: 0.875rem;
+            /* text-sm */
+            padding: 0.25rem 0.75rem;
+            /* px-3 py-1 */
+        }
+
+        /* Study Section Specifics */
+        .study-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            /* space-y-6 */
+        }
+
+        .no-cards-message {
+            color: #a89984;
+            /* Gruvbox gray text */
+            text-align: center;
+            font-size: 1.125rem;
+            /* text-lg */
+        }
+
+        .current-card-container {
+            width: 100%;
+        }
+
+        .flashcard {
+            min-height: 150px;
+            /* Ensure card has some height */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background-color: #3c3836;
+            /* Lighter background for card */
+            border: 1px solid #504945;
+            /* Light border */
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .flashcard-content {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ebdbb2;
+            /* Dark text */
+            margin-bottom: 1rem;
+        }
+
+        .flashcard-answer {
+            color: #a89984;
+            /* Gruvbox gray text */
+            font-size: 1rem;
+            /* text-base */
+            font-weight: 400;
+            /* font-normal */
+        }
+
+        .flashcard-category {
+            font-size: 0.9rem;
+            color: #a89984;
+            /* Gruvbox gray text */
+            margin-top: 0.5rem;
+        }
+
+        .study-buttons-row {
+            display: flex;
+            justify-content: center;
+            margin-top: 1.5rem;
+            /* mt-6 */
+            gap: 1rem;
+            /* space-x-4 */
+        }
+
+        .study-button {
+            padding: 0.75rem 1.5rem;
+            /* py-3 px-6 */
+            font-size: 1.125rem;
+            /* text-lg */
+        }
+
+        .feedback-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            /* Allow wrapping on smaller screens */
+            justify-content: center;
+            gap: 0.5rem;
+            /* Gap between buttons */
+            margin-top: 1.5rem;
+            /* mt-6 */
+            width: 100%;
+        }
+
+        .feedback-buttons button {
+            flex: 1;
+            /* Distribute space evenly */
+            margin: 0.25rem;
+            /* Small margin between buttons */
+            font-size: 0.9rem;
+            padding: 0.6rem 1rem;
+        }
+
+        .feedback-buttons .btn-again {
+            background-color: #fb4934;
+            color: #282828;
+        }
+
+        /* Gruvbox red */
+        .feedback-buttons .btn-again:hover {
+            background-color: #cc241d;
+        }
+
+        .feedback-buttons .btn-hard {
+            background-color: #fe8019;
+            color: #282828;
+        }
+
+        /* Gruvbox orange */
+        .feedback-buttons .btn-hard:hover {
+            background-color: #d65d0e;
+        }
+
+        .feedback-buttons .btn-good {
+            background-color: #b8bb26;
+            color: #282828;
+        }
+
+        /* Gruvbox green */
+        .feedback-buttons .btn-good:hover {
+            background-color: #98971a;
+        }
+
+        .feedback-buttons .btn-easy {
+            background-color: #83a598;
+            color: #282828;
+        }
+
+        /* Gruvbox aqua */
+        .feedback-buttons .btn-easy:hover {
+            background-color: #689d6a;
+        }
+
+        .start-study-button {
+            width: 100%;
+            padding-top: 0.75rem;
+            /* py-3 */
+            padding-bottom: 0.75rem;
+            /* py-3 */
+            margin-top: 1rem;
+            /* mt-4 */
+            font-size: 1.125rem;
+            /* text-lg */
+        }
+
+        /* Utility classes */
+        .hidden {
+            display: none;
+        }
+
+        .flex-col {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .space-y-2>*:not(:first-child) {
+            margin-top: 0.5rem;
+        }
+
+        .w-full {
+            width: 100%;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        /* Message Box */
+        .message-box {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #504945;
+            /* Gruvbox gray */
+            color: #ebdbb2;
+            /* Gruvbox foreground */
+            padding: 1rem 2rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+        }
+
+        .message-box.show {
+            opacity: 1;
+            visibility: visible;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 p-8">
+    <div class="container">
+        <!-- Message Box -->
+        <div id="messageBox" class="message-box"></div>
+
+        <!-- Create Flashcard Section -->
+        <div class="section-panel">
+            <h2>Create New Flashcard</h2>
+            <div class="input-group">
+                <label for="questionInput">Question:</label>
+                <textarea id="questionInput" rows="3" placeholder="Enter your question here..."></textarea>
+            </div>
+
+            <div class="input-group">
+                <label for="answerInput">Answer:</label>
+                <textarea id="answerInput" rows="3" placeholder="Enter the answer here..."></textarea>
+            </div>
+
+            <div class="input-group">
+                <label for="categoryInput">Category:</label>
+                <input type="text" id="categoryInput" placeholder="e.g., History, Math, Science">
+            </div>
+
+            <div class="add-card-button-container">
+                <button id="addCardBtn" class="btn-primary add-card-button">Add Flashcard</button>
+            </div>
+
+            <h3>Your Flashcards</h3>
+            <div id="cardList" class="card-list">
+                <!-- Flashcards will be listed here -->
+            </div>
+        </div>
+
+        <!-- Study Section -->
+        <div class="section-panel">
+            <h2>Study Session</h2>
+            <div id="studyArea" class="study-area">
+                <p id="noCardsMessage" class="no-cards-message">Add some flashcards to start studying!</p>
+
+                <div class="flex-col space-y-2 w-full">
+                    <label for="categorySelect">Study Category:</label>
+                    <select id="categorySelect">
+                        <option value="all">All Categories</option>
+                        <!-- Categories will be dynamically loaded here -->
+                    </select>
+                </div>
+
+                <div id="currentCardContainer" class="current-card-container hidden">
+                    <div class="flashcard">
+                        <p id="currentCardQuestion" class="flashcard-content"></p>
+                        <p id="currentCardAnswer" class="flashcard-content flashcard-answer hidden"></p>
+                        <p id="currentCardCategory" class="flashcard-category"></p>
+                    </div>
+
+                    <div class="study-buttons-row">
+                        <button id="showAnswerBtn" class="btn-secondary study-button">Show Answer</button>
+                    </div>
+
+                    <div id="feedbackButtons" class="feedback-buttons hidden">
+                        <button class="btn-again feedback-btn" data-quality="0">Again (0)</button>
+                        <button class="btn-hard feedback-btn" data-quality="1">Hard (1)</button>
+                        <button class="btn-good feedback-btn" data-quality="2">Good (2)</button>
+                        <button class="btn-easy feedback-btn" data-quality="3">Easy (3)</button>
+                    </div>
+                </div>
+
+                <button id="startStudyBtn" class="btn-primary start-study-button">Start Study Session</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Utility function to show a temporary message
+        function showMessage(message, duration = 3000) {
+            const messageBox = document.getElementById('messageBox');
+            messageBox.textContent = message;
+            messageBox.classList.add('show');
+            setTimeout(() => {
+                messageBox.classList.remove('show');
+            }, duration);
+        }
+
+        // Flashcard data structure and local storage management
+        let flashcards = [];
+        let currentCard = null; // The card object currently being studied
+        let currentStudyCategory = 'all'; // Default to all categories
+
+        const STORAGE_KEY = 'flashcardsApp';
+
+        // Load flashcards from local storage
+        function loadFlashcards() {
+            const storedData = localStorage.getItem(STORAGE_KEY);
+            if (storedData) {
+                flashcards = JSON.parse(storedData).map(card => {
+                    // Ensure dueDate is a Date object
+                    card.dueDate = new Date(card.dueDate);
+                    return card;
+                });
+                console.log('Flashcards loaded:', flashcards);
+            } else {
+                flashcards = [];
+                console.log('No flashcards found in local storage.');
+            }
+            renderFlashcardList();
+            populateCategorySelect();
+            updateStudyButtonVisibility();
+        }
+
+        // Save flashcards to local storage
+        function saveFlashcards() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(flashcards));
+            console.log('Flashcards saved:', flashcards);
+        }
+
+        // Generate a unique ID for new flashcards
+        function generateUniqueId() {
+            return '_' + Math.random().toString(36).substr(2, 9);
+        }
+
+        // Add a new flashcard
+        document.getElementById('addCardBtn').addEventListener('click', () => {
+            const question = document.getElementById('questionInput').value.trim();
+            const answer = document.getElementById('answerInput').value.trim();
+            const category = document.getElementById('categoryInput').value.trim();
+
+            if (question && answer) {
+                const newCard = {
+                    id: generateUniqueId(),
+                    question: question,
+                    answer: answer,
+                    category: category || 'General', // Default category
+                    dueDate: new Date(), // Immediately available for study
+                    interval: 0,
+                    repetitions: 0,
+                    easeFactor: 2.5 // Standard SM-2 initial ease factor
+                };
+                flashcards.push(newCard);
+                saveFlashcards();
+                renderFlashcardList();
+                populateCategorySelect(); // Update categories dropdown
+                showMessage('Flashcard added successfully!');
+                // Clear input fields
+                document.getElementById('questionInput').value = '';
+                document.getElementById('answerInput').value = '';
+                document.getElementById('categoryInput').value = '';
+                updateStudyButtonVisibility();
+            } else {
+                showMessage('Please enter both a question and an answer.', 2000);
+            }
+        });
+
+        // Render the list of flashcards in the creation section
+        function renderFlashcardList() {
+            const cardListDiv = document.getElementById('cardList');
+            cardListDiv.innerHTML = ''; // Clear existing list
+
+            if (flashcards.length === 0) {
+                cardListDiv.innerHTML = '<p class="no-cards-message text-center">No flashcards created yet.</p>';
+                return;
+            }
+
+            flashcards.forEach(card => {
+                const cardElement = document.createElement('div');
+                cardElement.className = 'card-list-item';
+                cardElement.innerHTML = `
+                    <div>
+                        <p class="question-text">${card.question}</p>
+                        <p class="category-text">Category: ${card.category}</p>
+                        <p class="due-date-text">Next Review: ${card.dueDate.toLocaleDateString()}</p>
+                    </div>
+                    <button class="btn-red delete-card-button" data-id="${card.id}">Delete</button>
+                `;
+                cardListDiv.appendChild(cardElement);
+            });
+
+            // Add event listeners for delete buttons
+            document.querySelectorAll('.delete-card-button').forEach(button => {
+                button.addEventListener('click', (event) => {
+                    const cardIdToDelete = event.target.dataset.id;
+                    flashcards = flashcards.filter(card => card.id !== cardIdToDelete);
+                    saveFlashcards();
+                    renderFlashcardList();
+                    populateCategorySelect(); // Update categories dropdown
+                    showMessage('Flashcard deleted.');
+                    updateStudyButtonVisibility();
+                    // If the deleted card was the current study card, reset study
+                    if (currentCard && currentCard.id === cardIdToDelete) {
+                        resetStudySession();
+                    }
+                });
+            });
+        }
+
+        // Populate category select dropdown
+        function populateCategorySelect() {
+            const categorySelect = document.getElementById('categorySelect');
+            categorySelect.innerHTML = '<option value="all">All Categories</option>'; // Always include 'All Categories'
+
+            const uniqueCategories = new Set(flashcards.map(card => card.category));
+            uniqueCategories.forEach(category => {
+                const option = document.createElement('option');
+                option.value = category;
+                option.textContent = category;
+                categorySelect.appendChild(option);
+            });
+        }
+
+        // Study session logic
+        const noCardsMessage = document.getElementById('noCardsMessage');
+        const currentCardContainer = document.getElementById('currentCardContainer');
+        const currentCardQuestion = document.getElementById('currentCardQuestion');
+        const currentCardAnswer = document.getElementById('currentCardAnswer');
+        const currentCardCategory = document.getElementById('currentCardCategory');
+        const showAnswerBtn = document.getElementById('showAnswerBtn');
+        const feedbackButtons = document.getElementById('feedbackButtons');
+        const startStudyBtn = document.getElementById('startStudyBtn');
+        const categorySelect = document.getElementById('categorySelect');
+
+        function updateStudyButtonVisibility() {
+            if (flashcards.length === 0) {
+                startStudyBtn.classList.add('hidden');
+                noCardsMessage.classList.remove('hidden');
+            } else {
+                startStudyBtn.classList.remove('hidden');
+                noCardsMessage.classList.add('hidden');
+            }
+        }
+
+        function resetStudySession() {
+            currentCard = null;
+            currentCardContainer.classList.add('hidden');
+            noCardsMessage.classList.remove('hidden');
+            startStudyBtn.classList.remove('hidden');
+            showAnswerBtn.classList.remove('hidden');
+            feedbackButtons.classList.add('hidden');
+            currentCardQuestion.textContent = '';
+            currentCardAnswer.textContent = '';
+            currentCardAnswer.classList.add('hidden');
+            currentCardCategory.textContent = '';
+            categorySelect.value = 'all'; // Reset category selection
+        }
+
+        // Start study session
+        startStudyBtn.addEventListener('click', () => {
+            if (flashcards.length === 0) {
+                showMessage('Please add some flashcards first!', 2000);
+                return;
+            }
+            currentStudyCategory = categorySelect.value;
+            startStudyBtn.classList.add('hidden');
+            noCardsMessage.classList.add('hidden');
+            currentCardContainer.classList.remove('hidden');
+            showNextCard();
+        });
+
+        // Show answer
+        showAnswerBtn.addEventListener('click', () => {
+            currentCardAnswer.classList.remove('hidden');
+            showAnswerBtn.classList.add('hidden');
+            feedbackButtons.classList.remove('hidden');
+        });
+
+        // Feedback buttons
+        document.querySelectorAll('.feedback-btn').forEach(button => {
+            button.addEventListener('click', (event) => {
+                const quality = parseInt(event.target.dataset.quality);
+                if (currentCard) {
+                    updateCardKnowledge(currentCard, quality);
+                    saveFlashcards();
+                    showNextCard();
+                }
+            });
+        });
+
+        // Select the next card to study based on due date and selected category
+        function showNextCard() {
+            const now = new Date();
+            let dueCards = flashcards.filter(card => card.dueDate <= now);
+
+            if (currentStudyCategory !== 'all') {
+                dueCards = dueCards.filter(card => card.category === currentStudyCategory);
+            }
+
+            if (dueCards.length === 0) {
+                currentCardQuestion.textContent = 'No cards due for review in this category!';
+                currentCardAnswer.textContent = 'Come back later, add new cards, or select "All Categories".';
+                currentCardAnswer.classList.remove('hidden');
+                currentCardCategory.textContent = '';
+                showAnswerBtn.classList.add('hidden');
+                feedbackButtons.classList.add('hidden');
+                showMessage('All cards reviewed for now in this category!', 3000);
+                // Optionally reset study session after all cards are done
+                setTimeout(resetStudySession, 3000);
+                return;
+            }
+
+            // Simple selection: pick a random due card
+            currentCard = dueCards[Math.floor(Math.random() * dueCards.length)];
+
+            currentCardQuestion.textContent = currentCard.question;
+            currentCardAnswer.textContent = currentCard.answer;
+            currentCardAnswer.classList.add('hidden'); // Hide answer initially
+            currentCardCategory.textContent = `Category: ${currentCard.category}`;
+
+            showAnswerBtn.classList.remove('hidden');
+            feedbackButtons.classList.add('hidden');
+        }
+
+        // Spaced Repetition Algorithm (SM-2 inspired)
+        function updateCardKnowledge(card, quality) {
+            // quality: 0 (Again), 1 (Hard), 2 (Good), 3 (Easy)
+            // Map to SM-2 quality: 0-2 (Again), 3 (Hard), 4 (Good), 5 (Easy)
+            let sm2Quality;
+            if (quality === 0) sm2Quality = 0; // Again
+            else if (quality === 1) sm2Quality = 3; // Hard
+            else if (quality === 2) sm2Quality = 4; // Good
+            else if (quality === 3) sm2Quality = 5; // Easy
+
+            if (sm2Quality < 3) { // Incorrect or difficult recall
+                card.repetitions = 0;
+                card.interval = 1; // Review next day
+                card.easeFactor = Math.max(1.3, card.easeFactor - 0.2);
+            } else { // Correct recall
+                card.repetitions++;
+                if (card.repetitions === 1) {
+                    card.interval = 1;
+                } else if (card.repetitions === 2) {
+                    card.interval = 6;
+                } else {
+                    card.interval = Math.round(card.interval * card.easeFactor);
+                }
+                // Update ease factor based on quality
+                card.easeFactor = card.easeFactor + (0.1 - (5 - sm2Quality) * (0.08 + (5 - sm2Quality) * 0.02));
+            }
+
+            // Ensure easeFactor doesn't drop below 1.3
+            card.easeFactor = Math.max(1.3, card.easeFactor);
+
+            // Calculate next due date
+            const nextDueDate = new Date();
+            nextDueDate.setDate(nextDueDate.getDate() + card.interval);
+            card.dueDate = nextDueDate;
+
+            console.log(`Card "${card.question}" updated:`, {
+                quality: sm2Quality,
+                repetitions: card.repetitions,
+                interval: card.interval,
+                easeFactor: card.easeFactor,
+                dueDate: card.dueDate.toLocaleDateString()
+            });
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', loadFlashcards);
+    </script>
+</body>
+
+</html>
