@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deflate URL Text Compressor</title>
+    <!-- Load Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Pako (zlib/Deflate implementation) for compression -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pako/2.1.0/pako.min.js"></script>
+    <style>
+        /* Set the Inter font as default */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Ensure the textarea fills the available space */
+        #contentArea {
+            min-height: calc(100vh - 8rem);
+            /* Full height minus header/footer space */
+            transition: all 0.2s ease-in-out;
+        }
+    </style>
+</head>
+<!-- Gruvbox Dark Color Scheme -->
+
+<body class="bg-[#282828] text-[#ebdbb2] p-4">
+
+    <!-- Main Container -->
+    <div class="max-w-7xl mx-auto">
+
+        <header class="flex justify-between items-center mb-4">
+            <h1 class="text-2xl font-bold tracking-tight">URL Text Compressor (made with Google Gemini 2.5 Flash)</h1>
+            <!-- Button Group -->
+            <div class="flex space-x-3">
+                <!-- Removed 'hidden' class to make the button always visible -->
+                <button id="copyUrlBtn"
+                    class="px-4 py-2 bg-[#83a598] hover:bg-[#6c877d] text-[#282828] font-semibold rounded-lg shadow-lg transition duration-150 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-[#83a598] focus:ring-opacity-50 disabled:opacity-50">
+                    Copy URL
+                </button>
+                <button id="redirectUrlBtn"
+                    class="px-4 py-2 bg-[#fabd2f] hover:bg-[#d49b2f] text-[#282828] font-semibold rounded-lg shadow-lg transition duration-150 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-[#fabd2f] focus:ring-opacity-50 disabled:opacity-50">
+                    Redirect to Compressed URL
+                </button>
+            </div>
+        </header>
+
+        <!-- Status/Information Message -->
+        <div id="statusMessage" class="hidden p-3 mb-4 text-sm font-medium rounded-lg" role="alert"></div>
+
+        <!-- Text Input Area -->
+        <textarea id="contentArea"
+            placeholder="Paste your code or text here. It will be compressed, Base64-encoded, and embedded in the URL when you hit 'Redirect to Compressed URL'."
+            class="w-full p-4 border border-[#3c3836] rounded-xl shadow-inner bg-[#3c3836] text-[#ebdbb2] text-sm focus:ring-2 focus:ring-[#fabd2f] focus:border-[#fabd2f]"></textarea>
+
+        <!-- URL Metrics (Optional) -->
+        <footer
+            class="mt-4 grid grid-cols-2 md:grid-cols-4 gap-4 text-xs md:text-sm text-[#a89984] p-3 bg-[#3c3836] rounded-lg shadow">
+            <div id="charCount" class="font-medium">Original Bytes: 0</div>
+            <div id="compressedBytes" class="font-medium">Compressed Bytes (Deflate): 0</div>
+            <div id="urlLength" class="font-medium">URL Length (Encoded Chars): 0</div>
+            <div id="compressionRatio" class="font-bold text-[#fabd2f]">Overall Ratio (Orig/URL): 0.00</div>
+        </footer>
+
+    </div>
+
+    <script>
+        const contentArea = document.getElementById('contentArea');
+        const redirectUrlBtn = document.getElementById('redirectUrlBtn');
+        const copyUrlBtn = document.getElementById('copyUrlBtn');
+        const statusMessage = document.getElementById('statusMessage');
+        const charCountEl = document.getElementById('charCount');
+        const compressedBytesEl = document.getElementById('compressedBytes');
+        const urlLengthEl = document.getElementById('urlLength');
+        const compressionRatioEl = document.getElementById('compressionRatio');
+
+        let generatedUrl = ''; // State variable to hold the generated URL
+
+        // --- Utility Functions ---
+
+        /**
+         * Converts a raw string to a Uint8Array using UTF-8 encoding.
+         * @param {string} str 
+         * @returns {Uint8Array}
+         */
+        function stringToUint8Array(str) {
+            // TextEncoder handles multi-byte UTF-8 characters correctly
+            return new TextEncoder().encode(str);
+        }
+
+        /**
+         * Converts a Uint8Array back to a string using UTF-8 decoding.
+         * @param {Uint8Array} arr 
+         * @returns {string}
+         */
+        function uint8ArrayToString(arr) {
+            return new TextDecoder().decode(arr);
+        }
+
+        /**
+         * Converts binary data (Uint8Array) to URL-safe Base64 string.
+         * 1. Standard Base64 encoding.
+         * 2. Replace '+' with '-', '/' with '_', and remove padding '='.
+         * @param {Uint8Array} u8 
+         * @returns {string} The URL-safe Base64 string.
+         */
+        function toUrlSafeBase64(u8) {
+            // Need a fast way to convert Uint8Array to binary string for btoa
+            const binaryString = String.fromCharCode.apply(null, u8);
+            const base64 = btoa(binaryString);
+            return base64
+                .replace(/\+/g, '-') // Replace + with -
+                .replace(/\//g, '_') // Replace / with _
+                .replace(/=+$/, ''); // Remove trailing padding =
+        }
+
+        /**
+         * Converts a URL-safe Base64 string back to binary data (Uint8Array).
+         * * @param {string} base64Url 
+         * @returns {Uint8Array} The original binary data.
+         */
+        function fromUrlSafeBase64(base64Url) {
+            let base64 = base64Url
+                .replace(/-/g, '+')
+                .replace(/_/g, '/');
+
+            // Restore padding (Base64 length must be a multiple of 4)
+            while (base64.length % 4) {
+                base64 += '=';
+            }
+
+            const binaryString = atob(base64);
+            const len = binaryString.length;
+            const bytes = new Uint8Array(len);
+            for (let i = 0; i < len; i++) {
+                bytes[i] = binaryString.charCodeAt(i);
+            }
+            return bytes;
+        }
+
+        // --- Core Logic ---
+
+        /**
+         * Compresses text, encodes it, updates metrics, and stores the resulting URL.
+         * @param {string} text 
+         * @returns {string} The fully constructed URL.
+         */
+        function generateCurrentUrl(text) {
+            const uncompressedU8 = stringToUint8Array(text);
+
+            // Use pako's deflate (zlib compression) at max level (9)
+            const compressedU8 = pako.deflate(uncompressedU8, { level: 9 });
+            const encodedData = toUrlSafeBase64(compressedU8);
+
+            // Update metrics
+            const originalLength = uncompressedU8.length;
+            const compressedByteLength = compressedU8.length;
+            const finalLength = encodedData.length;
+
+            // Calculate overall ratio: Original Bytes / Final Encoded Chars
+            const overallRatio = finalLength > 0 ? (originalLength / finalLength) : 0;
+
+            charCountEl.textContent = `Original Bytes: ${originalLength}`;
+            compressedBytesEl.textContent = `Compressed Bytes (Deflate): ${compressedByteLength}`;
+            urlLengthEl.textContent = `URL Length (Encoded Chars): ${finalLength}`;
+            compressionRatioEl.textContent = `Overall Ratio (Orig/URL): ${overallRatio.toFixed(2)}`;
+
+            // Store the fully constructed URL
+            const currentBaseUrl = window.location.origin + window.location.pathname;
+            generatedUrl = `${currentBaseUrl}?content=${encodedData}`;
+
+            return generatedUrl;
+        }
+
+
+        /**
+         * Decodes a URL-safe Base64 string and decompresses it back to text.
+         * @param {string} encodedString 
+         * @returns {string} The original text.
+         */
+        function decodeAndDecompress(encodedString) {
+            try {
+                const compressedU8 = fromUrlSafeBase64(encodedString);
+                // Use pako's inflate (zlib decompression)
+                const uncompressedU8 = pako.inflate(compressedU8);
+                return uint8ArrayToString(uncompressedU8);
+            } catch (error) {
+                console.error("Decoding or decompression failed:", error);
+                showStatus('Error: Could not decode or decompress URL content. Data may be corrupted.', 'bg-[#fb4934]');
+                return ''; // Return empty string on failure
+            }
+        }
+
+        /**
+         * Displays a status message to the user.
+         * @param {string} message 
+         * @param {string} colorClass 
+         */
+        function showStatus(message, colorClass) {
+            statusMessage.textContent = message;
+
+            // Determine text color based on background intention
+            let textColor = 'text-[#282828]'; // Default dark text for bright status backgrounds (success/error/warning)
+
+            // If the background is the dark neutral element color, use light text
+            if (colorClass === 'bg-[#3c3836]') {
+                textColor = 'text-[#ebdbb2]';
+            }
+
+            statusMessage.className = `p-3 mb-4 text-sm font-medium rounded-lg ${colorClass} ${textColor}`;
+            statusMessage.classList.remove('hidden');
+        }
+
+        // --- Event Handlers ---
+
+        function handleCopyUrl() {
+            const text = contentArea.value.trim();
+            if (!text) {
+                showStatus('Error: Please enter text to generate a URL first.', 'bg-[#fb4934]');
+                return;
+            }
+
+            // Generate the URL fresh if the text has changed or it's the first time
+            const urlToCopy = generateCurrentUrl(text);
+
+            // Temporary element for copying
+            const tempTextarea = document.createElement('textarea');
+            tempTextarea.value = urlToCopy;
+            tempTextarea.style.position = 'fixed'; // Hide off-screen
+            tempTextarea.style.left = '-9999px';
+            document.body.appendChild(tempTextarea);
+            tempTextarea.select();
+
+            try {
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    showStatus('URL copied to clipboard!', 'bg-[#b8bb26]'); // Gruvbox green for success
+                } else {
+                    throw new Error("Copy command failed.");
+                }
+            } catch (err) {
+                console.error('Copy to clipboard failed:', err);
+                showStatus('Error: Failed to copy URL. Browser may restrict clipboard access.', 'bg-[#fb4934]'); // Gruvbox red for error
+            } finally {
+                document.body.removeChild(tempTextarea);
+            }
+        }
+
+
+        function handleGenerateUrl() {
+            const text = contentArea.value.trim();
+            if (!text) {
+                showStatus('Please paste some content into the text area before generating a URL.', 'bg-[#fabd2f]'); // Gruvbox yellow for warning
+                return;
+            }
+
+            try {
+                // Generate the URL and update state
+                const newUrl = generateCurrentUrl(text);
+
+                showStatus('URL generated successfully! Redirecting now...', 'bg-[#83a598]'); // Gruvbox aqua for info
+
+                // Redirect the user to the new URL
+                setTimeout(() => {
+                    window.location.href = newUrl;
+                }, 500);
+
+            } catch (error) {
+                console.error("Failed to generate URL:", error);
+                showStatus('An unexpected error occurred during compression/encoding.', 'bg-[#fb4934]'); // Gruvbox red for error
+            }
+        }
+
+        /**
+         * Handles the visibility and state of buttons based on content.
+         */
+        function updateButtonState(text) {
+            const isEmpty = text.trim().length === 0;
+            redirectUrlBtn.disabled = isEmpty;
+            copyUrlBtn.disabled = isEmpty;
+        }
+
+        function handlePageLoad() {
+            const params = new URLSearchParams(window.location.search);
+            const encodedContent = params.get('content');
+            let initialText = '';
+
+            if (encodedContent) {
+                // We have content in the URL, attempt to decode and decompress
+                const originalText = decodeAndDecompress(encodedContent);
+
+                if (originalText) {
+                    initialText = originalText;
+                    contentArea.value = initialText;
+                    showStatus('Content loaded successfully from the URL.', 'bg-[#83a598]');
+
+                    // Recalculate metrics and save URL on load
+                    generateCurrentUrl(initialText);
+                }
+            } else {
+                // No content in URL, set default message and initial metrics
+                const defaultText = '/* Paste code or repetitive text here to see better compression results. For example, paste this comment block 5 times! */\n\nfunction generateFibonacci(count) {\n  let a = 0, b = 1;\n  let result = [0, 1];\n  for (let i = 2; i < count; i++) {\n    let temp = a + b;\n    a = b;\n    b = temp;\n    result.push(b);\n  }\n  return result;\n}\n\nconst series = generateFibonacci(10);';
+                initialText = defaultText;
+                contentArea.value = initialText;
+                // Status message uses dark background and now correctly uses light text
+                showStatus('Enter text and click "Redirect to Compressed URL" to create a compressed sharing link.', 'bg-[#3c3836]');
+
+                // Calculate initial metrics for the default text
+                generateCurrentUrl(initialText);
+            }
+
+            contentArea.focus();
+            updateButtonState(initialText);
+
+
+            // Update metrics and button state dynamically as the user types
+            contentArea.addEventListener('input', () => {
+                const text = contentArea.value; // Don't trim here, let compression handle whitespace
+                if (text.trim().length > 0) {
+                    generateCurrentUrl(text); // Update metrics and generatedUrl state
+                }
+                updateButtonState(text);
+            });
+        }
+
+        // Attach event listeners
+        copyUrlBtn.addEventListener('click', handleCopyUrl);
+        redirectUrlBtn.addEventListener('click', handleGenerateUrl);
+
+        // Initialize the page logic
+        handlePageLoad();
+
+    </script>
+</body>
+
+</html>
