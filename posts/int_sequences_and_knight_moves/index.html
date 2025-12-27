@@ -1,174 +1,297 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+
 <head>
-  <meta charset="utf-8" />
-  <meta name="generator" content="pandoc" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>experiments with integer sequences, mod, and knight moves</title>
-  <style>
-    code{white-space: pre-wrap;}
-    span.smallcaps{font-variant: small-caps;}
-    span.underline{text-decoration: underline;}
-    div.column{display: inline-block; vertical-align: top; width: 50%;}
-    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    ul.task-list{list-style: none;}
-    .center {
-      margin: 0;
-      top: 50%;
-      left: 50%;
-      right: 50%;
-      bottom: 50%;
-    }
-    .button {
-      background-color: #282828;
-      border: 1px solid #ebdbb2;
-      color: #ebdbb2;
-    }
-  </style>
-  <link rel="stylesheet" href="https://benrosenberg.info/style.css" />
-  <link rel="icon" type="image/png" href="https://benrosenberg.info/favicon.png">
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <title>experiments with integer sequences, mod, and knight moves</title>
+    <style>
+        code {
+            white-space: pre-wrap;
+        }
+
+        span.smallcaps {
+            font-variant: small-caps;
+        }
+
+        span.underline {
+            text-decoration: underline;
+        }
+
+        div.column {
+            display: inline-block;
+            vertical-align: top;
+            width: 50%;
+        }
+
+        div.hanging-indent {
+            margin-left: 1.5em;
+            text-indent: -1.5em;
+        }
+
+        ul.task-list {
+            list-style: none;
+        }
+
+        .center {
+            margin: 0;
+            top: 50%;
+            left: 50%;
+            right: 50%;
+            bottom: 50%;
+        }
+
+        .button {
+            background-color: #282828;
+            border: 1px solid #ebdbb2;
+            color: #ebdbb2;
+        }
+    </style>
+    <link rel="stylesheet" href="https://benrosenberg.info/style.css" />
+    <link rel="icon" type="image/png" href="https://benrosenberg.info/favicon.png">
 </head>
+
 <body>
-  <ul class="sidenav">
-    <li><a href="/">Home</a></li>
-    <li><a class="active" href="https://benrosenberg.info/posts">Posts</a></li>
-    <li><a href="https://github.com/benrosenberg">GitHub</a></li>
-    <li><a href="https://www.linkedin.com/in/ben-rosenberg-0b5359205/">LinkedIn</a></li>
-  </ul>
+    <ul class="sidenav">
+        <li><a href="/">Home</a></li>
+        <li><a class="active" href="https://benrosenberg.info/posts">Posts</a></li>
+        <li><a href="https://github.com/benrosenberg">GitHub</a></li>
+        <li><a href="https://benrosenberg.info/teaching/">Teaching</a></li>
+    </ul>
 
-  <div class="content">
-<header id="title-block-header">
+    <div class="content">
+        <header id="title-block-header">
 
 
-<h1 class="title", style="text-align: left;">experiments with integer sequences, mod, and knight moves</h1>
-</header>
+            <h1 class="title" , style="text-align: left;">experiments with integer sequences, mod, and knight moves</h1>
+        </header>
 
-<link rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css"
-  integrity="sha384-R4558gYOUz8mP9YWpZJjofhk+zx0AS11p36HnD2ZKj/6JR5z27gSSULCNHIRReVs"
-  crossorigin="anonymous" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css"
+            integrity="sha384-R4558gYOUz8mP9YWpZJjofhk+zx0AS11p36HnD2ZKj/6JR5z27gSSULCNHIRReVs"
+            crossorigin="anonymous" />
 
-<style type="text/css">
-    .katex img {
-      object-fit: fill;
-      padding: unset;
-      display: block;
-      position: absolute;
-      width: 100%;
-      height: inherit;
-    }
-</style>
+        <style type="text/css">
+            .katex img {
+                object-fit: fill;
+                padding: unset;
+                display: block;
+                position: absolute;
+                width: 100%;
+                height: inherit;
+            }
+        </style>
 
-<p>I recently watched a <a href="https://www.youtube.com/watch?v=o1eLKODSCqw">YouTube video by Jacob Yatsko</a> on using the Fibonacci numbers modulo various constants to create cool patterns. In the second half of the video, he talks about something he calls "Pisano left-right graphs", which basically take the Fibonacci numbers mod some constant and then based on parity either move left or right. These graphs tend to exhibit some interesting symmetry as a result of the underlying sequence's period when taken mod a given constant, which for Fibonacci numbers specifically is called the <a href="https://en.wikipedia.org/wiki/Pisano_period">Pisano period</a>.</p>
-<p>I thought this was really cool and knew that I could expand on the idea with some quick matplotlib work.</p>
-<p>This post contains some of the experiment results I thought were interesting.</p>
-<h2>The experiment</h2>
-<p>In the video, the left and right movements were purely along the gridlines: left meant a 90 degree rotation left, and right meant a 90 degree rotation to the right.</p>
-<p>For my experiment I decided to take it one step further, and use knight (as in chess) moves. The logic for left/right movement turned out to be a bit more difficult but after drawing it out it wasn't that bad.</p>
-<p>As in the video, I chose an arbitrary direction to start of <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mn>1</mn><mo separator="true">,</mo><mn>2</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(1,2)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">2</span><span class="mclose">)</span></span></span></span>. From there, I used a sequence to determine whether to go left or right, first taking the number mod some constant, and then going left if the result was even and right if it was odd.</p>
-<p>For example, for the Fibonacci numbers mod 3:</p>
-<ul>
-<li>1 is 1 mod 3, so the result is odd. Go right.</li>
-<li>2 is 2 mod 3, so the result is even. Go left.</li>
-<li>3 is 0 mod 3, so the result is even. Go left.</li>
-<li>5 is 2 mod 3, so the result is even. Go left.</li>
-<li>8 is 2 mod 3, so the result is even. Go left.</li>
-<li>13 is 1 mod 3, so the result is odd. Go right.</li>
-</ul>
-<p>...and so on.</p>
-<p>One thing to note about these results is that for certain mod constants, the results are pretty boring. Specifically, for any <em>even</em> mod constant, you get something like the following (this time, using the squares):</p>
-<ul>
-<li>1 is 1 mod 4, which is odd, so go left</li>
-<li>2 is 2 mod 4, which is even, so go right</li>
-<li>3 is 3 mod 4, which is odd, so go left</li>
-<li>4 is 0 mod 4, which is even, so go right</li>
-<li>5 is 1 mod 4, which is odd, so go left</li>
-<li>6 is 2 mod 4, which is even, so go right</li>
-<li>7 is 3 mod 4, which is odd, so go left</li>
-<li>8 is 0 mod 4, which is even, so go right</li>
-</ul>
-<p>...and so on. The effect of even mod constants will be clearly visible in some of the visualizations that follow.</p>
-<p>Because of this simplifying effect, for the most part I only included the results of odd mod constants in the visualizations.</p>
-<p>For the purpose of visualizing the progression of the walks, I used the 'cool' matplotlib color map, which made the color of each segment vary from cyan to magenta.</p>
-<p>Also, I set the number of steps to 10000, which was more than enough to accomodate most of the periods (as seen later).</p>
-<h3>Fibonacci numbers</h3>
-<p>I started with the Fibonacci numbers in the same way as the original video:</p>
-<p><img alt="" src="fib_1_to_100_COLOR_ALL.png" /></p>
-<p>Noticing the similarities of the even mod constants, I excluded them and went up to 200:</p>
-<p><img alt="" src="fib_200_COLOR.png" /></p>
-<p>There are some pretty cool patterns here. Most of them seem to be spirals, or otherwise have some sort of symmetry (I guess this would be related to the Pisano period somehow). Some, however, are more linear, going off into space in one direction or another.</p>
-<p>As mentioned above, the number of steps used was 10000, which was enough to cover most periods many times over. It's possible to see this because most of the symmetric (visually periodic) structures generated are all colored purple, meaning that they were traced over towards the end of the color spectrum.</p>
-<h3>Lucas numbers</h3>
-<p>The next numbers to try were of course the Lucas numbers, which are the cousins of the Fibonacci numbers (starting with <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mn>2</mn><mo separator="true">,</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(2, 1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">2</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">1</span><span class="mclose">)</span></span></span></span> rather than <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mn>1</mn><mo separator="true">,</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(1,1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">1</span><span class="mclose">)</span></span></span></span>):</p>
-<p><img alt="" src="lucas_200_COLOR.png" /></p>
-<p>There were some similarities here: lots of spirals. But for these numbers there seemed to be many more straight lines (visually aperiodic structures).</p>
-<h3>Squares, cubes, and other powers</h3>
-<p>Next I tried looking at the natural numbers raised to various powers:</p>
-<p>
-<figure><img src="squares_200_COLOR.png" /><figcaption>Squares</figcaption>
-</figure>
-</p>
-<p>
-<figure><img src="cubes_200_COLOR.png" /><figcaption>Cubes</figcaption>
-</figure>
-</p>
-<p>
-<figure><img src="fourth_200_COLOR.png" /><figcaption>Fourth powers</figcaption>
-</figure>
-</p>
-<p>
-<figure><img src="fifth_200_COLOR.png" /><figcaption>Fifth powers</figcaption>
-</figure>
-</p>
-<p>Definitely some interesting designs here. It looks like even powers exhibit radial symmetry, while odd powers only exhibit rotational symmetry.</p>
-<p>What about the power of 1? Well, it's not too interesting:</p>
-<p><img alt="" src="natural_200_COLOR.png" /></p>
-<p>Also, as discussed before here are the squares including evens:</p>
-<p><img alt="" src="squares_1_to_100_COLOR_ALL.png" /></p>
-<p>Yeah, the evens aren't super interesting here.</p>
-<h3>Primes</h3>
-<p>The prime numbers are another fun sequence of numbers:</p>
-<p><img alt="" src="primes_200_COLOR.png" /></p>
-<p>At first, it looks like they're just random walks. But upon further inspection, there are some patterns here.</p>
-<p>For the first 50 mod constants, you can't really see much:</p>
-<p><img alt="" src="primes_50_COLOR.png" /></p>
-<p>But as you get into higher mod constants, that changes:</p>
-<p>
-<figure><img src="primes_100_to_150_COLOR.png" /><figcaption>Primes taken mod odd numbers between 100 and 150</figcaption>
-</figure>
-</p>
-<p>
-<figure><img src="primes_150_to_200_COLOR.png" /><figcaption>Primes taken mod odd numbers between 150 and 200</figcaption>
-</figure>
-</p>
-<p>Pretty cool.</p>
-<p>And here are the primes from 1 to 100 including evens:</p>
-<p><img alt="" src="primes_1_to_100_COLOR_ALL.png" /></p>
-<p>This is also interesting.</p>
-<h3>Digits of pi</h3>
-<p>The next sequence I looked at were the digits of pi, which seemed really interesting until I remembered that they're stuck in the range <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mn>0</mn><mo separator="true">,</mo><mn>9</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">[0,9]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">9</span><span class="mclose">]</span></span></span></span>:</p>
-<p>
-<figure><img src="pi_50_COLOR.png" /><figcaption>Whoa, after mod 9 the pattern starts repeating!!</figcaption>
-</figure>
-</p>
-<p>Zooming in on the first 6 odd mod constants doesn't reveal anything earth-shattering:</p>
-<p><img alt="" src="pi_12_COLOR.png" /></p>
-<h3>Palindromes</h3>
-<p>I was running out of sequences that I knew how to check easily so I tried looking at palindromes. These actually produced some pretty interesting results:</p>
-<p><img alt="" src="palindromes_200_COLOR.png" /></p>
-<p>...although most of the interesting ones seemed to have mod constant less than 50:</p>
-<p><img alt="" src="palindromes_50_COLOR.png" /></p>
-<p>After this I looked at binary palindromes (numbers that had palindromic binary representations):</p>
-<p><img alt="" src="bin_palindromes_200_COLOR.png" /></p>
-<p>...and the ones with mod constant below 50:</p>
-<p><img alt="" src="bin_palindromes_50_COLOR.png" /></p>
-<p>I thought the mod constant of 3 looked the coolest for the binary palindromes:</p>
-<p><img alt="" src="bin_palindromes_mod_3_COLOR.png" /></p>
-<h2>Conclusion</h2>
-<p>And that's all the sequences I looked at. Definitely some cool stuff!</p>
-<p>You can find the code here: <a href="https://gist.github.com/benrosenberg/c53692699a1915c60291f9ab0803706c#file-integer_sequences_and_knight_walks-py-L9">GitHub gist</a>. It's kind of messy.</p>
+        <p>I recently watched a <a href="https://www.youtube.com/watch?v=o1eLKODSCqw">YouTube video by Jacob Yatsko</a>
+            on using the Fibonacci numbers modulo various constants to create cool patterns. In the second half of the
+            video, he talks about something he calls "Pisano left-right graphs", which basically take the Fibonacci
+            numbers mod some constant and then based on parity either move left or right. These graphs tend to exhibit
+            some interesting symmetry as a result of the underlying sequence's period when taken mod a given constant,
+            which for Fibonacci numbers specifically is called the <a
+                href="https://en.wikipedia.org/wiki/Pisano_period">Pisano period</a>.</p>
+        <p>I thought this was really cool and knew that I could expand on the idea with some quick matplotlib work.</p>
+        <p>This post contains some of the experiment results I thought were interesting.</p>
+        <h2>The experiment</h2>
+        <p>In the video, the left and right movements were purely along the gridlines: left meant a 90 degree rotation
+            left, and right meant a 90 degree rotation to the right.</p>
+        <p>For my experiment I decided to take it one step further, and use knight (as in chess) moves. The logic for
+            left/right movement turned out to be a bit more difficult but after drawing it out it wasn't that bad.</p>
+        <p>As in the video, I chose an arbitrary direction to start of <span class="katex"><span
+                    class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML">
+                        <semantics>
+                            <mrow>
+                                <mo stretchy="false">(</mo>
+                                <mn>1</mn>
+                                <mo separator="true">,</mo>
+                                <mn>2</mn>
+                                <mo stretchy="false">)</mo>
+                            </mrow>
+                            <annotation encoding="application/x-tex">(1,2)</annotation>
+                        </semantics>
+                    </math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut"
+                            style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span
+                            class="mord">1</span><span class="mpunct">,</span><span class="mspace"
+                            style="margin-right:0.1667em;"></span><span class="mord">2</span><span
+                            class="mclose">)</span></span></span></span>. From there, I used a sequence to determine
+            whether to go left or right, first taking the number mod some constant, and then going left if the result
+            was even and right if it was odd.</p>
+        <p>For example, for the Fibonacci numbers mod 3:</p>
+        <ul>
+            <li>1 is 1 mod 3, so the result is odd. Go right.</li>
+            <li>2 is 2 mod 3, so the result is even. Go left.</li>
+            <li>3 is 0 mod 3, so the result is even. Go left.</li>
+            <li>5 is 2 mod 3, so the result is even. Go left.</li>
+            <li>8 is 2 mod 3, so the result is even. Go left.</li>
+            <li>13 is 1 mod 3, so the result is odd. Go right.</li>
+        </ul>
+        <p>...and so on.</p>
+        <p>One thing to note about these results is that for certain mod constants, the results are pretty boring.
+            Specifically, for any <em>even</em> mod constant, you get something like the following (this time, using the
+            squares):</p>
+        <ul>
+            <li>1 is 1 mod 4, which is odd, so go left</li>
+            <li>2 is 2 mod 4, which is even, so go right</li>
+            <li>3 is 3 mod 4, which is odd, so go left</li>
+            <li>4 is 0 mod 4, which is even, so go right</li>
+            <li>5 is 1 mod 4, which is odd, so go left</li>
+            <li>6 is 2 mod 4, which is even, so go right</li>
+            <li>7 is 3 mod 4, which is odd, so go left</li>
+            <li>8 is 0 mod 4, which is even, so go right</li>
+        </ul>
+        <p>...and so on. The effect of even mod constants will be clearly visible in some of the visualizations that
+            follow.</p>
+        <p>Because of this simplifying effect, for the most part I only included the results of odd mod constants in the
+            visualizations.</p>
+        <p>For the purpose of visualizing the progression of the walks, I used the 'cool' matplotlib color map, which
+            made the color of each segment vary from cyan to magenta.</p>
+        <p>Also, I set the number of steps to 10000, which was more than enough to accomodate most of the periods (as
+            seen later).</p>
+        <h3>Fibonacci numbers</h3>
+        <p>I started with the Fibonacci numbers in the same way as the original video:</p>
+        <p><img alt="" src="fib_1_to_100_COLOR_ALL.png" /></p>
+        <p>Noticing the similarities of the even mod constants, I excluded them and went up to 200:</p>
+        <p><img alt="" src="fib_200_COLOR.png" /></p>
+        <p>There are some pretty cool patterns here. Most of them seem to be spirals, or otherwise have some sort of
+            symmetry (I guess this would be related to the Pisano period somehow). Some, however, are more linear, going
+            off into space in one direction or another.</p>
+        <p>As mentioned above, the number of steps used was 10000, which was enough to cover most periods many times
+            over. It's possible to see this because most of the symmetric (visually periodic) structures generated are
+            all colored purple, meaning that they were traced over towards the end of the color spectrum.</p>
+        <h3>Lucas numbers</h3>
+        <p>The next numbers to try were of course the Lucas numbers, which are the cousins of the Fibonacci numbers
+            (starting with <span class="katex"><span class="katex-mathml"><math
+                        xmlns="http://www.w3.org/1998/Math/MathML">
+                        <semantics>
+                            <mrow>
+                                <mo stretchy="false">(</mo>
+                                <mn>2</mn>
+                                <mo separator="true">,</mo>
+                                <mn>1</mn>
+                                <mo stretchy="false">)</mo>
+                            </mrow>
+                            <annotation encoding="application/x-tex">(2, 1)</annotation>
+                        </semantics>
+                    </math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut"
+                            style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span
+                            class="mord">2</span><span class="mpunct">,</span><span class="mspace"
+                            style="margin-right:0.1667em;"></span><span class="mord">1</span><span
+                            class="mclose">)</span></span></span></span> rather than <span class="katex"><span
+                    class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML">
+                        <semantics>
+                            <mrow>
+                                <mo stretchy="false">(</mo>
+                                <mn>1</mn>
+                                <mo separator="true">,</mo>
+                                <mn>1</mn>
+                                <mo stretchy="false">)</mo>
+                            </mrow>
+                            <annotation encoding="application/x-tex">(1,1)</annotation>
+                        </semantics>
+                    </math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut"
+                            style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span
+                            class="mord">1</span><span class="mpunct">,</span><span class="mspace"
+                            style="margin-right:0.1667em;"></span><span class="mord">1</span><span
+                            class="mclose">)</span></span></span></span>):</p>
+        <p><img alt="" src="lucas_200_COLOR.png" /></p>
+        <p>There were some similarities here: lots of spirals. But for these numbers there seemed to be many more
+            straight lines (visually aperiodic structures).</p>
+        <h3>Squares, cubes, and other powers</h3>
+        <p>Next I tried looking at the natural numbers raised to various powers:</p>
+        <p>
+        <figure><img src="squares_200_COLOR.png" />
+            <figcaption>Squares</figcaption>
+        </figure>
+        </p>
+        <p>
+        <figure><img src="cubes_200_COLOR.png" />
+            <figcaption>Cubes</figcaption>
+        </figure>
+        </p>
+        <p>
+        <figure><img src="fourth_200_COLOR.png" />
+            <figcaption>Fourth powers</figcaption>
+        </figure>
+        </p>
+        <p>
+        <figure><img src="fifth_200_COLOR.png" />
+            <figcaption>Fifth powers</figcaption>
+        </figure>
+        </p>
+        <p>Definitely some interesting designs here. It looks like even powers exhibit radial symmetry, while odd powers
+            only exhibit rotational symmetry.</p>
+        <p>What about the power of 1? Well, it's not too interesting:</p>
+        <p><img alt="" src="natural_200_COLOR.png" /></p>
+        <p>Also, as discussed before here are the squares including evens:</p>
+        <p><img alt="" src="squares_1_to_100_COLOR_ALL.png" /></p>
+        <p>Yeah, the evens aren't super interesting here.</p>
+        <h3>Primes</h3>
+        <p>The prime numbers are another fun sequence of numbers:</p>
+        <p><img alt="" src="primes_200_COLOR.png" /></p>
+        <p>At first, it looks like they're just random walks. But upon further inspection, there are some patterns here.
+        </p>
+        <p>For the first 50 mod constants, you can't really see much:</p>
+        <p><img alt="" src="primes_50_COLOR.png" /></p>
+        <p>But as you get into higher mod constants, that changes:</p>
+        <p>
+        <figure><img src="primes_100_to_150_COLOR.png" />
+            <figcaption>Primes taken mod odd numbers between 100 and 150</figcaption>
+        </figure>
+        </p>
+        <p>
+        <figure><img src="primes_150_to_200_COLOR.png" />
+            <figcaption>Primes taken mod odd numbers between 150 and 200</figcaption>
+        </figure>
+        </p>
+        <p>Pretty cool.</p>
+        <p>And here are the primes from 1 to 100 including evens:</p>
+        <p><img alt="" src="primes_1_to_100_COLOR_ALL.png" /></p>
+        <p>This is also interesting.</p>
+        <h3>Digits of pi</h3>
+        <p>The next sequence I looked at were the digits of pi, which seemed really interesting until I remembered that
+            they're stuck in the range <span class="katex"><span class="katex-mathml"><math
+                        xmlns="http://www.w3.org/1998/Math/MathML">
+                        <semantics>
+                            <mrow>
+                                <mo stretchy="false">[</mo>
+                                <mn>0</mn>
+                                <mo separator="true">,</mo>
+                                <mn>9</mn>
+                                <mo stretchy="false">]</mo>
+                            </mrow>
+                            <annotation encoding="application/x-tex">[0,9]</annotation>
+                        </semantics>
+                    </math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut"
+                            style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span
+                            class="mord">0</span><span class="mpunct">,</span><span class="mspace"
+                            style="margin-right:0.1667em;"></span><span class="mord">9</span><span
+                            class="mclose">]</span></span></span></span>:</p>
+        <p>
+        <figure><img src="pi_50_COLOR.png" />
+            <figcaption>Whoa, after mod 9 the pattern starts repeating!!</figcaption>
+        </figure>
+        </p>
+        <p>Zooming in on the first 6 odd mod constants doesn't reveal anything earth-shattering:</p>
+        <p><img alt="" src="pi_12_COLOR.png" /></p>
+        <h3>Palindromes</h3>
+        <p>I was running out of sequences that I knew how to check easily so I tried looking at palindromes. These
+            actually produced some pretty interesting results:</p>
+        <p><img alt="" src="palindromes_200_COLOR.png" /></p>
+        <p>...although most of the interesting ones seemed to have mod constant less than 50:</p>
+        <p><img alt="" src="palindromes_50_COLOR.png" /></p>
+        <p>After this I looked at binary palindromes (numbers that had palindromic binary representations):</p>
+        <p><img alt="" src="bin_palindromes_200_COLOR.png" /></p>
+        <p>...and the ones with mod constant below 50:</p>
+        <p><img alt="" src="bin_palindromes_50_COLOR.png" /></p>
+        <p>I thought the mod constant of 3 looked the coolest for the binary palindromes:</p>
+        <p><img alt="" src="bin_palindromes_mod_3_COLOR.png" /></p>
+        <h2>Conclusion</h2>
+        <p>And that's all the sequences I looked at. Definitely some cool stuff!</p>
+        <p>You can find the code here: <a
+                href="https://gist.github.com/benrosenberg/c53692699a1915c60291f9ab0803706c#file-integer_sequences_and_knight_walks-py-L9">GitHub
+                gist</a>. It's kind of messy.</p>
 
-</div>
+    </div>
 
 </body>
+
 </html>

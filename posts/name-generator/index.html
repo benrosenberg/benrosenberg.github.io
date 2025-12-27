@@ -1,83 +1,108 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+
 <head>
-  <meta charset="utf-8" />
-  <meta name="generator" content="pandoc" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>name generator</title>
-  <style>
-    code{white-space: pre-wrap;}
-    span.smallcaps{font-variant: small-caps;}
-    span.underline{text-decoration: underline;}
-    div.column{display: inline-block; vertical-align: top; width: 50%;}
-    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    ul.task-list{list-style: none;}
-    .center {
-      margin: 0;
-      top: 50%;
-      left: 50%;
-      right: 50%;
-      bottom: 50%;
-    }
-    .button {
-      background-color: #282828;
-      border: 1px solid #ebdbb2;
-      color: #ebdbb2;
-    }
-  </style>
-  <link rel="stylesheet" href="https://benrosenberg.info/style.css" />
-  <link rel="icon" type="image/png" href="https://benrosenberg.info/favicon.png">
-  <script>
-    // first and middle names from https://www.familyeducation.com/baby-names/browse-origin/first-name/old-english
-    // last names from https://en.wiktionary.org/wiki/Appendix:English_surnames_from_Old_English
-    let testList = [
-                    ["Mr.", "Dr.", "Sir", "Baron", "Reverend", "Professor"], 
-                    ["Ackley", "Acton", "Addison", "Adger", "Aiken", "Alcott", "Alder", "Aldrich", "Alfred", "Allard", "Allston", "Alton", "Alvertos", "Alvin", "Arledge", "Arley", "Arlo", "Armstrong", "Arundel", "Ashley", "Athelstan", "Averill", "Awarnach", "Ballard", "Bancroft", "Barclay", "Barnett", "Beacher", "Beardsley", "Bede", "Beldon", "Bentley", "Birch", "Blake", "Booker", "Booth", "Borden", "Bradley", "Brandon", "Brent", "Brewster", "Brigham", "Brinley", "Brock", "Bromley", "Brook", "Buckley", "Bud", "Burgess", "Burne", "Burt", "Buster", "Cade", "Calder", "Caldwell", "Calhoun", "Calvert", "Cameron", "Carden", "Carleton", "Carlyle", "Carter", "Carvell", "Catcher", "Cedric", "Chad", "Channing", "Charles", "Chevy", "Chilton", "Claiborne", "Clark", "Cleveland", "Clifford", "Colbert", "Colborn", "Colter", "Cooper", "Copper", "Courtland", "Crawford", "Creighton", "Cromwell", "Currier", "Dale", "Darren", "Darwin", "Dayton", "Dean", "Digby", "Donald", "Dorset", "Douglas", "Dover", "Doyle", "Dudley", "Duncan", "Durward", "Dustin", "Dwight", "Earl", "Edgar", "Edmund", "Edsel", "Edward", "Edwin", "Egerton", "Elder", "Eldon", "Eldridge", "Elmer", "Elton", "Emerson", "Erskine", "Esmond", "Fairfax", "Farley", "Farrell", "Fielding", "Ford", "Fuller", "Fulton", "Gilford", "Goldman", "Gordon", "Gower", "Gray", "Hadden", "Hadley", "Hagley", "Halbert", "Haley", "Hall", "Hallam", "Halsey", "Hamilton", "Hannibal", "Hardy", "Harlan", "Harmon", "Harry", "Hastings", "Hawk", "Hawthorne", "Hayden", "Hayes", "Haywood", "Hedley", "Hendrick", "Henley", "Herbert", "Hilton", "Holden", "Hollis", "Horton", "Hudson", "Hulk", "Humphrey", "Hunt", "Hutton", "Hyatt", "Irving", "Ives", "Kenelm", "Kenley", "Kent", "Kenton", "Keyon", "Kim", "Kimberley", "King", "Kinsey", "Kipp", "Knox", "Landon", "Lang", "Lawson", "Layton", "Lee", "Legolas", "Leland", "Lincoln", "Lind", "Litton", "Llewellyn", "Lyndon", "Lyre", "Mace", "Madison", "Maitland", "Makepeace", "Manley", "Manning", "Marden", "Marlow", "Marsden", "Mather", "Mead", "Millard", "Miller", "Milton", "Morven", "Nash", "Nedes", "Nelson", "Newell", "Newman", "North", "Nyle", "Oakley", "Ogden", "Olin", "Orman", "Osbert", "Osmond", "Oswald", "Oswin", "Oxford", "Packard", "Palmer", "Parker", "Parr", "Payton", "Pell", "Penley", "Penn", "Pierson", "Preston", "Putnam", "Rabbit", "Radcliff", "Rae", "Raleigh", "Ralph", "Ramsey", "Ransford", "Ransley", "Ransom", "Raven", "Ravinger", "Rawlins", "Rayburn", "Raymond", "Read", "Redford", "Reginald", "Remington", "Rider", "Ridley", "Rigby", "Ripley", "Rishley", "Robert", "Rochester", "Rodman", "Rodney", "Rowan", "Rudyard", "Rutherford", "Rylan", "Sandon", "Sanford", "Scott", "Seabert", "Seward", "Shaw", "Shelley", "Shepherd", "Sherlock", "Sherman", "Sherwood", "Shipley", "Siddel", "Slade", "Snowden", "Speck", "Spencer", "Spike", "Stanley", "Stokley", "Stroud", "Studs", "Tanner", "Tate", "Terrel", "Thane", "Thatcher", "Thorne", "Thorpe", "Thurlow", "Tomkin", "Tostig", "Townsend", "Tranter", "Trent", "Tripp", "Truman", "Tye", "Tyne", "Wakefield", "Wallace", "Walton", "Washington", "Watson", "Waverly", "Wayland", "Wayne", "Webster", "Wells", "Wesley", "West", "Wetherby", "Wheaton", "Wheeler", "Whit", "Whitfield", "Wilfred", "Winifred", "Winslow", "Winston", "Winter", "Winthrop", "Woodrow", "Wright", "Wyatt", "Wylie", "Wyndam", "York"], 
-                    ["Ackley", "Acton", "Addison", "Adger", "Aiken", "Alcott", "Alder", "Aldrich", "Alfred", "Allard", "Allston", "Alton", "Alvertos", "Alvin", "Arledge", "Arley", "Arlo", "Armstrong", "Arundel", "Ashley", "Athelstan", "Averill", "Awarnach", "Ballard", "Bancroft", "Barclay", "Barnett", "Beacher", "Beardsley", "Bede", "Beldon", "Bentley", "Birch", "Blake", "Booker", "Booth", "Borden", "Bradley", "Brandon", "Brent", "Brewster", "Brigham", "Brinley", "Brock", "Bromley", "Brook", "Buckley", "Bud", "Burgess", "Burne", "Burt", "Buster", "Cade", "Calder", "Caldwell", "Calhoun", "Calvert", "Cameron", "Carden", "Carleton", "Carlyle", "Carter", "Carvell", "Catcher", "Cedric", "Chad", "Channing", "Charles", "Chevy", "Chilton", "Claiborne", "Clark", "Cleveland", "Clifford", "Colbert", "Colborn", "Colter", "Cooper", "Copper", "Courtland", "Crawford", "Creighton", "Cromwell", "Currier", "Dale", "Darren", "Darwin", "Dayton", "Dean", "Digby", "Donald", "Dorset", "Douglas", "Dover", "Doyle", "Dudley", "Duncan", "Durward", "Dustin", "Dwight", "Earl", "Edgar", "Edmund", "Edsel", "Edward", "Edwin", "Egerton", "Elder", "Eldon", "Eldridge", "Elmer", "Elton", "Emerson", "Erskine", "Esmond", "Fairfax", "Farley", "Farrell", "Fielding", "Ford", "Fuller", "Fulton", "Gilford", "Goldman", "Gordon", "Gower", "Gray", "Hadden", "Hadley", "Hagley", "Halbert", "Haley", "Hall", "Hallam", "Halsey", "Hamilton", "Hannibal", "Hardy", "Harlan", "Harmon", "Harry", "Hastings", "Hawk", "Hawthorne", "Hayden", "Hayes", "Haywood", "Hedley", "Hendrick", "Henley", "Herbert", "Hilton", "Holden", "Hollis", "Horton", "Hudson", "Hulk", "Humphrey", "Hunt", "Hutton", "Hyatt", "Irving", "Ives", "Kenelm", "Kenley", "Kent", "Kenton", "Keyon", "Kim", "Kimberley", "King", "Kinsey", "Kipp", "Knox", "Landon", "Lang", "Lawson", "Layton", "Lee", "Legolas", "Leland", "Lincoln", "Lind", "Litton", "Llewellyn", "Lyndon", "Lyre", "Mace", "Madison", "Maitland", "Makepeace", "Manley", "Manning", "Marden", "Marlow", "Marsden", "Mather", "Mead", "Millard", "Miller", "Milton", "Morven", "Nash", "Nedes", "Nelson", "Newell", "Newman", "North", "Nyle", "Oakley", "Ogden", "Olin", "Orman", "Osbert", "Osmond", "Oswald", "Oswin", "Oxford", "Packard", "Palmer", "Parker", "Parr", "Payton", "Pell", "Penley", "Penn", "Pierson", "Preston", "Putnam", "Rabbit", "Radcliff", "Rae", "Raleigh", "Ralph", "Ramsey", "Ransford", "Ransley", "Ransom", "Raven", "Ravinger", "Rawlins", "Rayburn", "Raymond", "Read", "Redford", "Reginald", "Remington", "Rider", "Ridley", "Rigby", "Ripley", "Rishley", "Robert", "Rochester", "Rodman", "Rodney", "Rowan", "Rudyard", "Rutherford", "Rylan", "Sandon", "Sanford", "Scott", "Seabert", "Seward", "Shaw", "Shelley", "Shepherd", "Sherlock", "Sherman", "Sherwood", "Shipley", "Siddel", "Slade", "Snowden", "Speck", "Spencer", "Spike", "Stanley", "Stokley", "Stroud", "Studs", "Tanner", "Tate", "Terrel", "Thane", "Thatcher", "Thorne", "Thorpe", "Thurlow", "Tomkin", "Tostig", "Townsend", "Tranter", "Trent", "Tripp", "Truman", "Tye", "Tyne", "Wakefield", "Wallace", "Walton", "Washington", "Watson", "Waverly", "Wayland", "Wayne", "Webster", "Wells", "Wesley", "West", "Wetherby", "Wheaton", "Wheeler", "Whit", "Whitfield", "Wilfred", "Winifred", "Winslow", "Winston", "Winter", "Winthrop", "Woodrow", "Wright", "Wyatt", "Wylie", "Wyndam", "York"],
-                    ["Adam", "Adlam", "Ashley", "Alden", "Alvingham", "Atlee", "Beasant", "Billingsley", "Birkett", "Blakemore", "Bourne", "Brackenbury", "Brooks", "Brown", "Buckley", "Bushby", "Busby", "Bunce", "Burlingame", "Bush", "Burbridge", "Barrie", "Blackwell", "Beard", "Beeston", "Ball", "Cawthorne", "Cheek", "Cheatwood", "Churchill", "Clark", "Clemons", "Cook", "Cooper", "Cotton", "Crompton", "Cromwell", "Crutchley", "Currington", "Crowder", "Claridge", "Davis", "Dawson", "Drake", "Duke", "Dukes", "Earle", "Eaton", "Farley", "Farnham", "Fisc", "Fiske", "Foy", "Frink", "Fry", "Garside", "Garthside", "Gartside", "Godwin", "Goodwin", "Gale", "Hamet", "Hammett", "Hanningen", "Harding", "Hardin", "Harwood", "Harrison", "Hawkins", "Helton", "Hert", "Hildom", "Holt", "Hulse", "Harker", "Hunt", "Humber", "Holloway", "Hatt", "Holderman", "Halderman", "Hollingsworth", "Hollyngworth", "Hollingworth", "Ingleston", "Innes", "Johnson", "Jacobs", "Keats", "Lancaster", "Lea", "Lee", "Luxford", "Lineberry", "Mabbott", "Marsh", "Melling", "Melton", "Mendenhall", "Middleton", "Mildenhall", "Millward", "Milward", "Miller", "Merrell", "Newbury", "Newberry", "Newbery", "Nunnally", "Notley", "Nottley", "Knotley", "Knottley", "Notleigh", "Netley", "Nutlee", "Nutlea", "Oldham", "Osbourne", "Outerbridge", "Penney", "Penny", "Padley", "Paddley", "Paddle", "Peddle", "Pontius", "Pontious", "Punches", "Pontzius", "Poncy", "Pountious", "Quinton", "Reeve", "Reeves", "Rudge", "Rudges", "Rivers", "Read", "Rischer", "Rischer", "Roberts", "Sagar", "Sherman", "Sharman", "Shearman", "Shurman", "Slaughter", "Smith", "Smit", "Smithe", "Smither", "Smithers", "Smithies", "Smithy", "Smyth", "Smythe", "Spooner", "Sweet", "Sweete", "Swett", "Swet", "Sweat", "Swales", "Swale", "Swailes", "Swail", "Swift", "Stampes", "Stamper", "Stevens", "Stevenson", "Stonebridge", "Sampson", "Thorne", "Torp", "Thorp", "Thorpe", "Twynam", "Townsend", "Townend", "Ward", "Watt", "Webb", "Wesley", "Wheatley", "Whatley", "Whitley", "Whiteley", "Wheatleigh", "Whitney", "Withers", "Wyther", "Wither", "Witter", "Weeter", "Williams", "Wingo", "Witcomb", "Wright", "Wickham", "Wolland", "Yardley", "Yeardley", "Younston"],
-                    ["Jr.", "Sr.", "II", "III", "Esq."],
-    ];
-    
-    function getRandomInt(max) {
-      return Math.floor(Math.random() * max);
-    }
-    
-    function generateName() {
-      let outString = ''
-      for (let i = 0; i < testList.length; i++) {
-        let j = getRandomInt(testList[i].length);
-        if (i > 0) { outString += ' '; }
-        outString += testList[i][j];
-      }
-      return outString;
-    }
-    
-    function setName() {
-      document.getElementById("name").textContent = generateName();
-    }
-  </script>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <title>name generator</title>
+    <style>
+        code {
+            white-space: pre-wrap;
+        }
+
+        span.smallcaps {
+            font-variant: small-caps;
+        }
+
+        span.underline {
+            text-decoration: underline;
+        }
+
+        div.column {
+            display: inline-block;
+            vertical-align: top;
+            width: 50%;
+        }
+
+        div.hanging-indent {
+            margin-left: 1.5em;
+            text-indent: -1.5em;
+        }
+
+        ul.task-list {
+            list-style: none;
+        }
+
+        .center {
+            margin: 0;
+            top: 50%;
+            left: 50%;
+            right: 50%;
+            bottom: 50%;
+        }
+
+        .button {
+            background-color: #282828;
+            border: 1px solid #ebdbb2;
+            color: #ebdbb2;
+        }
+    </style>
+    <link rel="stylesheet" href="https://benrosenberg.info/style.css" />
+    <link rel="icon" type="image/png" href="https://benrosenberg.info/favicon.png">
+    <script>
+        // first and middle names from https://www.familyeducation.com/baby-names/browse-origin/first-name/old-english
+        // last names from https://en.wiktionary.org/wiki/Appendix:English_surnames_from_Old_English
+        let testList = [
+            ["Mr.", "Dr.", "Sir", "Baron", "Reverend", "Professor"],
+            ["Ackley", "Acton", "Addison", "Adger", "Aiken", "Alcott", "Alder", "Aldrich", "Alfred", "Allard", "Allston", "Alton", "Alvertos", "Alvin", "Arledge", "Arley", "Arlo", "Armstrong", "Arundel", "Ashley", "Athelstan", "Averill", "Awarnach", "Ballard", "Bancroft", "Barclay", "Barnett", "Beacher", "Beardsley", "Bede", "Beldon", "Bentley", "Birch", "Blake", "Booker", "Booth", "Borden", "Bradley", "Brandon", "Brent", "Brewster", "Brigham", "Brinley", "Brock", "Bromley", "Brook", "Buckley", "Bud", "Burgess", "Burne", "Burt", "Buster", "Cade", "Calder", "Caldwell", "Calhoun", "Calvert", "Cameron", "Carden", "Carleton", "Carlyle", "Carter", "Carvell", "Catcher", "Cedric", "Chad", "Channing", "Charles", "Chevy", "Chilton", "Claiborne", "Clark", "Cleveland", "Clifford", "Colbert", "Colborn", "Colter", "Cooper", "Copper", "Courtland", "Crawford", "Creighton", "Cromwell", "Currier", "Dale", "Darren", "Darwin", "Dayton", "Dean", "Digby", "Donald", "Dorset", "Douglas", "Dover", "Doyle", "Dudley", "Duncan", "Durward", "Dustin", "Dwight", "Earl", "Edgar", "Edmund", "Edsel", "Edward", "Edwin", "Egerton", "Elder", "Eldon", "Eldridge", "Elmer", "Elton", "Emerson", "Erskine", "Esmond", "Fairfax", "Farley", "Farrell", "Fielding", "Ford", "Fuller", "Fulton", "Gilford", "Goldman", "Gordon", "Gower", "Gray", "Hadden", "Hadley", "Hagley", "Halbert", "Haley", "Hall", "Hallam", "Halsey", "Hamilton", "Hannibal", "Hardy", "Harlan", "Harmon", "Harry", "Hastings", "Hawk", "Hawthorne", "Hayden", "Hayes", "Haywood", "Hedley", "Hendrick", "Henley", "Herbert", "Hilton", "Holden", "Hollis", "Horton", "Hudson", "Hulk", "Humphrey", "Hunt", "Hutton", "Hyatt", "Irving", "Ives", "Kenelm", "Kenley", "Kent", "Kenton", "Keyon", "Kim", "Kimberley", "King", "Kinsey", "Kipp", "Knox", "Landon", "Lang", "Lawson", "Layton", "Lee", "Legolas", "Leland", "Lincoln", "Lind", "Litton", "Llewellyn", "Lyndon", "Lyre", "Mace", "Madison", "Maitland", "Makepeace", "Manley", "Manning", "Marden", "Marlow", "Marsden", "Mather", "Mead", "Millard", "Miller", "Milton", "Morven", "Nash", "Nedes", "Nelson", "Newell", "Newman", "North", "Nyle", "Oakley", "Ogden", "Olin", "Orman", "Osbert", "Osmond", "Oswald", "Oswin", "Oxford", "Packard", "Palmer", "Parker", "Parr", "Payton", "Pell", "Penley", "Penn", "Pierson", "Preston", "Putnam", "Rabbit", "Radcliff", "Rae", "Raleigh", "Ralph", "Ramsey", "Ransford", "Ransley", "Ransom", "Raven", "Ravinger", "Rawlins", "Rayburn", "Raymond", "Read", "Redford", "Reginald", "Remington", "Rider", "Ridley", "Rigby", "Ripley", "Rishley", "Robert", "Rochester", "Rodman", "Rodney", "Rowan", "Rudyard", "Rutherford", "Rylan", "Sandon", "Sanford", "Scott", "Seabert", "Seward", "Shaw", "Shelley", "Shepherd", "Sherlock", "Sherman", "Sherwood", "Shipley", "Siddel", "Slade", "Snowden", "Speck", "Spencer", "Spike", "Stanley", "Stokley", "Stroud", "Studs", "Tanner", "Tate", "Terrel", "Thane", "Thatcher", "Thorne", "Thorpe", "Thurlow", "Tomkin", "Tostig", "Townsend", "Tranter", "Trent", "Tripp", "Truman", "Tye", "Tyne", "Wakefield", "Wallace", "Walton", "Washington", "Watson", "Waverly", "Wayland", "Wayne", "Webster", "Wells", "Wesley", "West", "Wetherby", "Wheaton", "Wheeler", "Whit", "Whitfield", "Wilfred", "Winifred", "Winslow", "Winston", "Winter", "Winthrop", "Woodrow", "Wright", "Wyatt", "Wylie", "Wyndam", "York"],
+            ["Ackley", "Acton", "Addison", "Adger", "Aiken", "Alcott", "Alder", "Aldrich", "Alfred", "Allard", "Allston", "Alton", "Alvertos", "Alvin", "Arledge", "Arley", "Arlo", "Armstrong", "Arundel", "Ashley", "Athelstan", "Averill", "Awarnach", "Ballard", "Bancroft", "Barclay", "Barnett", "Beacher", "Beardsley", "Bede", "Beldon", "Bentley", "Birch", "Blake", "Booker", "Booth", "Borden", "Bradley", "Brandon", "Brent", "Brewster", "Brigham", "Brinley", "Brock", "Bromley", "Brook", "Buckley", "Bud", "Burgess", "Burne", "Burt", "Buster", "Cade", "Calder", "Caldwell", "Calhoun", "Calvert", "Cameron", "Carden", "Carleton", "Carlyle", "Carter", "Carvell", "Catcher", "Cedric", "Chad", "Channing", "Charles", "Chevy", "Chilton", "Claiborne", "Clark", "Cleveland", "Clifford", "Colbert", "Colborn", "Colter", "Cooper", "Copper", "Courtland", "Crawford", "Creighton", "Cromwell", "Currier", "Dale", "Darren", "Darwin", "Dayton", "Dean", "Digby", "Donald", "Dorset", "Douglas", "Dover", "Doyle", "Dudley", "Duncan", "Durward", "Dustin", "Dwight", "Earl", "Edgar", "Edmund", "Edsel", "Edward", "Edwin", "Egerton", "Elder", "Eldon", "Eldridge", "Elmer", "Elton", "Emerson", "Erskine", "Esmond", "Fairfax", "Farley", "Farrell", "Fielding", "Ford", "Fuller", "Fulton", "Gilford", "Goldman", "Gordon", "Gower", "Gray", "Hadden", "Hadley", "Hagley", "Halbert", "Haley", "Hall", "Hallam", "Halsey", "Hamilton", "Hannibal", "Hardy", "Harlan", "Harmon", "Harry", "Hastings", "Hawk", "Hawthorne", "Hayden", "Hayes", "Haywood", "Hedley", "Hendrick", "Henley", "Herbert", "Hilton", "Holden", "Hollis", "Horton", "Hudson", "Hulk", "Humphrey", "Hunt", "Hutton", "Hyatt", "Irving", "Ives", "Kenelm", "Kenley", "Kent", "Kenton", "Keyon", "Kim", "Kimberley", "King", "Kinsey", "Kipp", "Knox", "Landon", "Lang", "Lawson", "Layton", "Lee", "Legolas", "Leland", "Lincoln", "Lind", "Litton", "Llewellyn", "Lyndon", "Lyre", "Mace", "Madison", "Maitland", "Makepeace", "Manley", "Manning", "Marden", "Marlow", "Marsden", "Mather", "Mead", "Millard", "Miller", "Milton", "Morven", "Nash", "Nedes", "Nelson", "Newell", "Newman", "North", "Nyle", "Oakley", "Ogden", "Olin", "Orman", "Osbert", "Osmond", "Oswald", "Oswin", "Oxford", "Packard", "Palmer", "Parker", "Parr", "Payton", "Pell", "Penley", "Penn", "Pierson", "Preston", "Putnam", "Rabbit", "Radcliff", "Rae", "Raleigh", "Ralph", "Ramsey", "Ransford", "Ransley", "Ransom", "Raven", "Ravinger", "Rawlins", "Rayburn", "Raymond", "Read", "Redford", "Reginald", "Remington", "Rider", "Ridley", "Rigby", "Ripley", "Rishley", "Robert", "Rochester", "Rodman", "Rodney", "Rowan", "Rudyard", "Rutherford", "Rylan", "Sandon", "Sanford", "Scott", "Seabert", "Seward", "Shaw", "Shelley", "Shepherd", "Sherlock", "Sherman", "Sherwood", "Shipley", "Siddel", "Slade", "Snowden", "Speck", "Spencer", "Spike", "Stanley", "Stokley", "Stroud", "Studs", "Tanner", "Tate", "Terrel", "Thane", "Thatcher", "Thorne", "Thorpe", "Thurlow", "Tomkin", "Tostig", "Townsend", "Tranter", "Trent", "Tripp", "Truman", "Tye", "Tyne", "Wakefield", "Wallace", "Walton", "Washington", "Watson", "Waverly", "Wayland", "Wayne", "Webster", "Wells", "Wesley", "West", "Wetherby", "Wheaton", "Wheeler", "Whit", "Whitfield", "Wilfred", "Winifred", "Winslow", "Winston", "Winter", "Winthrop", "Woodrow", "Wright", "Wyatt", "Wylie", "Wyndam", "York"],
+            ["Adam", "Adlam", "Ashley", "Alden", "Alvingham", "Atlee", "Beasant", "Billingsley", "Birkett", "Blakemore", "Bourne", "Brackenbury", "Brooks", "Brown", "Buckley", "Bushby", "Busby", "Bunce", "Burlingame", "Bush", "Burbridge", "Barrie", "Blackwell", "Beard", "Beeston", "Ball", "Cawthorne", "Cheek", "Cheatwood", "Churchill", "Clark", "Clemons", "Cook", "Cooper", "Cotton", "Crompton", "Cromwell", "Crutchley", "Currington", "Crowder", "Claridge", "Davis", "Dawson", "Drake", "Duke", "Dukes", "Earle", "Eaton", "Farley", "Farnham", "Fisc", "Fiske", "Foy", "Frink", "Fry", "Garside", "Garthside", "Gartside", "Godwin", "Goodwin", "Gale", "Hamet", "Hammett", "Hanningen", "Harding", "Hardin", "Harwood", "Harrison", "Hawkins", "Helton", "Hert", "Hildom", "Holt", "Hulse", "Harker", "Hunt", "Humber", "Holloway", "Hatt", "Holderman", "Halderman", "Hollingsworth", "Hollyngworth", "Hollingworth", "Ingleston", "Innes", "Johnson", "Jacobs", "Keats", "Lancaster", "Lea", "Lee", "Luxford", "Lineberry", "Mabbott", "Marsh", "Melling", "Melton", "Mendenhall", "Middleton", "Mildenhall", "Millward", "Milward", "Miller", "Merrell", "Newbury", "Newberry", "Newbery", "Nunnally", "Notley", "Nottley", "Knotley", "Knottley", "Notleigh", "Netley", "Nutlee", "Nutlea", "Oldham", "Osbourne", "Outerbridge", "Penney", "Penny", "Padley", "Paddley", "Paddle", "Peddle", "Pontius", "Pontious", "Punches", "Pontzius", "Poncy", "Pountious", "Quinton", "Reeve", "Reeves", "Rudge", "Rudges", "Rivers", "Read", "Rischer", "Rischer", "Roberts", "Sagar", "Sherman", "Sharman", "Shearman", "Shurman", "Slaughter", "Smith", "Smit", "Smithe", "Smither", "Smithers", "Smithies", "Smithy", "Smyth", "Smythe", "Spooner", "Sweet", "Sweete", "Swett", "Swet", "Sweat", "Swales", "Swale", "Swailes", "Swail", "Swift", "Stampes", "Stamper", "Stevens", "Stevenson", "Stonebridge", "Sampson", "Thorne", "Torp", "Thorp", "Thorpe", "Twynam", "Townsend", "Townend", "Ward", "Watt", "Webb", "Wesley", "Wheatley", "Whatley", "Whitley", "Whiteley", "Wheatleigh", "Whitney", "Withers", "Wyther", "Wither", "Witter", "Weeter", "Williams", "Wingo", "Witcomb", "Wright", "Wickham", "Wolland", "Yardley", "Yeardley", "Younston"],
+            ["Jr.", "Sr.", "II", "III", "Esq."],
+        ];
+
+        function getRandomInt(max) {
+            return Math.floor(Math.random() * max);
+        }
+
+        function generateName() {
+            let outString = ''
+            for (let i = 0; i < testList.length; i++) {
+                let j = getRandomInt(testList[i].length);
+                if (i > 0) { outString += ' '; }
+                outString += testList[i][j];
+            }
+            return outString;
+        }
+
+        function setName() {
+            document.getElementById("name").textContent = generateName();
+        }
+    </script>
 </head>
+
 <body>
-  <ul class="sidenav">
-    <li><a href="/">Home</a></li>
-    <li><a class="active" href="https://benrosenberg.info/posts">Posts</a></li>
-    <li><a href="https://github.com/benrosenberg">GitHub</a></li>
-    <li><a href="https://www.linkedin.com/in/ben-rosenberg-0b5359205/">LinkedIn</a></li>
-  </ul>
+    <ul class="sidenav">
+        <li><a href="/">Home</a></li>
+        <li><a class="active" href="https://benrosenberg.info/posts">Posts</a></li>
+        <li><a href="https://github.com/benrosenberg">GitHub</a></li>
+        <li><a href="https://benrosenberg.info/teaching/">Teaching</a></li>
+    </ul>
 
-  <div class="content">
-<header id="title-block-header">
+    <div class="content">
+        <header id="title-block-header">
 
 
-<h1 class="title", style="text-align: left;">pretentious name generator</h1>
-</header>
+            <h1 class="title" , style="text-align: left;">pretentious name generator</h1>
+        </header>
 
-<button class="button" onclick="setName()" style="font-size: 18pt;">generate new name</button>
-  
-<div id="name" class="center" style="text-align: center; font-size: 69pt; margin-top: 69px">
-  click the button...
-</div>
-</div>
+        <button class="button" onclick="setName()" style="font-size: 18pt;">generate new name</button>
+
+        <div id="name" class="center" style="text-align: center; font-size: 69pt; margin-top: 69px">
+            click the button...
+        </div>
+    </div>
 
 </body>
+
 </html>

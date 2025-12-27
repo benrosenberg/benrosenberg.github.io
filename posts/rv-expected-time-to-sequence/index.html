@@ -1,174 +1,594 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+
 <head>
-  <meta charset="utf-8" />
-  <meta name="generator" content="pandoc" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>RV Expected Time To Sequence</title>
-  <style>
-    code{white-space: pre-wrap;}
-    span.smallcaps{font-variant: small-caps;}
-    span.underline{text-decoration: underline;}
-    div.column{display: inline-block; vertical-align: top; width: 50%;}
-    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    ul.task-list{list-style: none;}
-    .center {
-      margin: 0;
-      top: 50%;
-      left: 50%;
-      right: 50%;
-      bottom: 50%;
-    }
-    .button {
-      background-color: #282828;
-      border: 1px solid #ebdbb2;
-      color: #ebdbb2;
-    }
-    /* color scheme source: https://github.com/daveyarwood/gruvbox-pygments/blob/master/gruvbox.css */
-    .highlight .hll { background-color: #ffffcc }
-    .highlight  { background: #282828; color: #ebdbb2; background-color: #282828 }
-    .highlight .c { color: #928374; font-style: italic; background-color: #282828 } /* Comment */
-    .highlight .err { color: #ebdbb2; background-color: #282828 } /* Error */
-    .highlight .esc { color: #ebdbb2; background-color: #282828 } /* Escape */
-    .highlight .g { color: #ebdbb2; background-color: #282828 } /* Generic */
-    .highlight .k { color: #fe8019; background-color: #282828 } /* Keyword */
-    .highlight .l { color: #ebdbb2; background-color: #282828 } /* Literal */
-    .highlight .n { color: #ebdbb2; background-color: #282828 } /* Name */
-    .highlight .o { color: #fe8019; background-color: #282828 } /* Operator */
-    .highlight .x { color: #ebdbb2; background-color: #282828 } /* Other */
-    .highlight .p { color: #ebdbb2; background-color: #282828 } /* Punctuation */
-    .highlight .ch { color: #928374; font-style: italic; background-color: #282828 } /* Comment.Hashbang */
-    .highlight .cm { color: #928374; font-style: italic; background-color: #282828 } /* Comment.Multiline */
-    .highlight .cp { color: #8ec07c; background-color: #282828 } /* Comment.Preproc */
-    .highlight .c1 { color: #928374; font-style: italic; background-color: #282828 } /* Comment.Single */
-    .highlight .cs { color: #928374; font-style: italic; background-color: #282828 } /* Comment.Special */
-    .highlight .gd { color: #282828; background-color: #fb4934 } /* Generic.Deleted */
-    .highlight .ge { color: #83a598; text-decoration: underline; background-color: #282828 } /* Generic.Emph */
-    .highlight .gr { color: #ebdbb2; font-weight: bold; background-color: #fb4934 } /* Generic.Error */
-    .highlight .gh { color: #b8bb26; font-weight: bold; background-color: #282828 } /* Generic.Heading */
-    .highlight .gi { color: #282828; background-color: #b8bb26 } /* Generic.Inserted */
-    .highlight .go { color: #504945; background-color: #282828 } /* Generic.Output */
-    .highlight .gp { color: #ebdbb2; background-color: #282828 } /* Generic.Prompt */
-    .highlight .gs { color: #ebdbb2; background-color: #282828 } /* Generic.Strong */
-    .highlight .gu { color: #b8bb26; font-weight: bold; background-color: #282828 } /* Generic.Subheading */
-    .highlight .gt { color: #ebdbb2; font-weight: bold; background-color: #fb4934 } /* Generic.Traceback */
-    .highlight .kc { color: #fe8019; background-color: #282828 } /* Keyword.Constant */
-    .highlight .kd { color: #fe8019; background-color: #282828 } /* Keyword.Declaration */
-    .highlight .kn { color: #fe8019; background-color: #282828 } /* Keyword.Namespace */
-    .highlight .kp { color: #fe8019; background-color: #282828 } /* Keyword.Pseudo */
-    .highlight .kr { color: #fe8019; background-color: #282828 } /* Keyword.Reserved */
-    .highlight .kt { color: #fabd2f; background-color: #282828 } /* Keyword.Type */
-    .highlight .ld { color: #ebdbb2; background-color: #282828 } /* Literal.Date */
-    .highlight .m { color: #d3869b; background-color: #282828 } /* Literal.Number */
-    .highlight .s { color: #b8bb26; background-color: #282828 } /* Literal.String */
-    .highlight .na { color: #b8bb26; font-weight: bold; background-color: #282828 } /* Name.Attribute */
-    .highlight .nb { color: #fabd2f; background-color: #282828 } /* Name.Builtin */
-    .highlight .nc { color: #ebdbb2; background-color: #282828 } /* Name.Class */
-    .highlight .no { color: #d3869b; background-color: #282828 } /* Name.Constant */
-    .highlight .nd { color: #ebdbb2; background-color: #282828 } /* Name.Decorator */
-    .highlight .ni { color: #fabd2f; background-color: #282828 } /* Name.Entity */
-    .highlight .ne { color: #fb4934; background-color: #282828 } /* Name.Exception */
-    .highlight .nf { color: #fabd2f; background-color: #282828 } /* Name.Function */
-    .highlight .nl { color: #fb4934; background-color: #282828 } /* Name.Label */
-    .highlight .nn { color: #ebdbb2; background-color: #282828 } /* Name.Namespace */
-    .highlight .nx { color: #ebdbb2; background-color: #282828 } /* Name.Other */
-    .highlight .py { color: #ebdbb2; background-color: #282828 } /* Name.Property */
-    .highlight .nt { color: #fb4934; background-color: #282828 } /* Name.Tag */
-    .highlight .nv { color: #ebdbb2; background-color: #282828 } /* Name.Variable */
-    .highlight .ow { color: #fe8019; background-color: #282828 } /* Operator.Word */
-    .highlight .w { color: #ebdbb2; background-color: #282828 } /* Text.Whitespace */
-    .highlight .mb { color: #d3869b; background-color: #282828 } /* Literal.Number.Bin */
-    .highlight .mf { color: #d3869b; background-color: #282828 } /* Literal.Number.Float */
-    .highlight .mh { color: #d3869b; background-color: #282828 } /* Literal.Number.Hex */
-    .highlight .mi { color: #d3869b; background-color: #282828 } /* Literal.Number.Integer */
-    .highlight .mo { color: #d3869b; background-color: #282828 } /* Literal.Number.Oct */
-    .highlight .sb { color: #b8bb26; background-color: #282828 } /* Literal.String.Backtick */
-    .highlight .sc { color: #b8bb26; background-color: #282828 } /* Literal.String.Char */
-    .highlight .sd { color: #b8bb26; background-color: #282828 } /* Literal.String.Doc */
-    .highlight .s2 { color: #b8bb26; background-color: #282828 } /* Literal.String.Double */
-    .highlight .se { color: #b8bb26; background-color: #282828 } /* Literal.String.Escape */
-    .highlight .sh { color: #b8bb26; background-color: #282828 } /* Literal.String.Heredoc */
-    .highlight .si { color: #b8bb26; background-color: #282828 } /* Literal.String.Interpol */
-    .highlight .sx { color: #b8bb26; background-color: #282828 } /* Literal.String.Other */
-    .highlight .sr { color: #b8bb26; background-color: #282828 } /* Literal.String.Regex */
-    .highlight .s1 { color: #b8bb26; background-color: #282828 } /* Literal.String.Single */
-    .highlight .ss { color: #83a598; background-color: #282828 } /* Literal.String.Symbol */
-    .highlight .bp { color: #fabd2f; background-color: #282828 } /* Name.Builtin.Pseudo */
-    .highlight .vc { color: #ebdbb2; background-color: #282828 } /* Name.Variable.Class */
-    .highlight .vg { color: #ebdbb2; background-color: #282828 } /* Name.Variable.Global */
-    .highlight .vi { color: #ebdbb2; background-color: #282828 } /* Name.Variable.Instance */
-    .highlight .il { color: #d3869b; background-color: #282828 } /* Literal.Number.Integer.Long */
-    img {
-        background-color: white;
-    }
-  </style>
-  <link rel="stylesheet" href="https://benrosenberg.info/style.css" />
-  <link rel="icon" type="image/png" href="https://benrosenberg.info/favicon.png">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
-  <script>document.addEventListener("DOMContentLoaded", function () {
-   var mathElements = document.getElementsByClassName("math");
-   var macros = [];
-   for (var i = 0; i < mathElements.length; i++) {
-    var texText = mathElements[i].firstChild;
-    if (mathElements[i].tagName == "SPAN") {
-     katex.render(texText.data, mathElements[i], {
-      displayMode: mathElements[i].classList.contains('display'),
-      throwOnError: false,
-      macros: macros,
-      fleqn: false
-     });
-  }}});
-  </script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <title>RV Expected Time To Sequence</title>
+    <style>
+        code {
+            white-space: pre-wrap;
+        }
+
+        span.smallcaps {
+            font-variant: small-caps;
+        }
+
+        span.underline {
+            text-decoration: underline;
+        }
+
+        div.column {
+            display: inline-block;
+            vertical-align: top;
+            width: 50%;
+        }
+
+        div.hanging-indent {
+            margin-left: 1.5em;
+            text-indent: -1.5em;
+        }
+
+        ul.task-list {
+            list-style: none;
+        }
+
+        .center {
+            margin: 0;
+            top: 50%;
+            left: 50%;
+            right: 50%;
+            bottom: 50%;
+        }
+
+        .button {
+            background-color: #282828;
+            border: 1px solid #ebdbb2;
+            color: #ebdbb2;
+        }
+
+        /* color scheme source: https://github.com/daveyarwood/gruvbox-pygments/blob/master/gruvbox.css */
+        .highlight .hll {
+            background-color: #ffffcc
+        }
+
+        .highlight {
+            background: #282828;
+            color: #ebdbb2;
+            background-color: #282828
+        }
+
+        .highlight .c {
+            color: #928374;
+            font-style: italic;
+            background-color: #282828
+        }
+
+        /* Comment */
+        .highlight .err {
+            color: #ebdbb2;
+            background-color: #282828
+        }
+
+        /* Error */
+        .highlight .esc {
+            color: #ebdbb2;
+            background-color: #282828
+        }
+
+        /* Escape */
+        .highlight .g {
+            color: #ebdbb2;
+            background-color: #282828
+        }
+
+        /* Generic */
+        .highlight .k {
+            color: #fe8019;
+            background-color: #282828
+        }
+
+        /* Keyword */
+        .highlight .l {
+            color: #ebdbb2;
+            background-color: #282828
+        }
+
+        /* Literal */
+        .highlight .n {
+            color: #ebdbb2;
+            background-color: #282828
+        }
+
+        /* Name */
+        .highlight .o {
+            color: #fe8019;
+            background-color: #282828
+        }
+
+        /* Operator */
+        .highlight .x {
+            color: #ebdbb2;
+            background-color: #282828
+        }
+
+        /* Other */
+        .highlight .p {
+            color: #ebdbb2;
+            background-color: #282828
+        }
+
+        /* Punctuation */
+        .highlight .ch {
+            color: #928374;
+            font-style: italic;
+            background-color: #282828
+        }
+
+        /* Comment.Hashbang */
+        .highlight .cm {
+            color: #928374;
+            font-style: italic;
+            background-color: #282828
+        }
+
+        /* Comment.Multiline */
+        .highlight .cp {
+            color: #8ec07c;
+            background-color: #282828
+        }
+
+        /* Comment.Preproc */
+        .highlight .c1 {
+            color: #928374;
+            font-style: italic;
+            background-color: #282828
+        }
+
+        /* Comment.Single */
+        .highlight .cs {
+            color: #928374;
+            font-style: italic;
+            background-color: #282828
+        }
+
+        /* Comment.Special */
+        .highlight .gd {
+            color: #282828;
+            background-color: #fb4934
+        }
+
+        /* Generic.Deleted */
+        .highlight .ge {
+            color: #83a598;
+            text-decoration: underline;
+            background-color: #282828
+        }
+
+        /* Generic.Emph */
+        .highlight .gr {
+            color: #ebdbb2;
+            font-weight: bold;
+            background-color: #fb4934
+        }
+
+        /* Generic.Error */
+        .highlight .gh {
+            color: #b8bb26;
+            font-weight: bold;
+            background-color: #282828
+        }
+
+        /* Generic.Heading */
+        .highlight .gi {
+            color: #282828;
+            background-color: #b8bb26
+        }
+
+        /* Generic.Inserted */
+        .highlight .go {
+            color: #504945;
+            background-color: #282828
+        }
+
+        /* Generic.Output */
+        .highlight .gp {
+            color: #ebdbb2;
+            background-color: #282828
+        }
+
+        /* Generic.Prompt */
+        .highlight .gs {
+            color: #ebdbb2;
+            background-color: #282828
+        }
+
+        /* Generic.Strong */
+        .highlight .gu {
+            color: #b8bb26;
+            font-weight: bold;
+            background-color: #282828
+        }
+
+        /* Generic.Subheading */
+        .highlight .gt {
+            color: #ebdbb2;
+            font-weight: bold;
+            background-color: #fb4934
+        }
+
+        /* Generic.Traceback */
+        .highlight .kc {
+            color: #fe8019;
+            background-color: #282828
+        }
+
+        /* Keyword.Constant */
+        .highlight .kd {
+            color: #fe8019;
+            background-color: #282828
+        }
+
+        /* Keyword.Declaration */
+        .highlight .kn {
+            color: #fe8019;
+            background-color: #282828
+        }
+
+        /* Keyword.Namespace */
+        .highlight .kp {
+            color: #fe8019;
+            background-color: #282828
+        }
+
+        /* Keyword.Pseudo */
+        .highlight .kr {
+            color: #fe8019;
+            background-color: #282828
+        }
+
+        /* Keyword.Reserved */
+        .highlight .kt {
+            color: #fabd2f;
+            background-color: #282828
+        }
+
+        /* Keyword.Type */
+        .highlight .ld {
+            color: #ebdbb2;
+            background-color: #282828
+        }
+
+        /* Literal.Date */
+        .highlight .m {
+            color: #d3869b;
+            background-color: #282828
+        }
+
+        /* Literal.Number */
+        .highlight .s {
+            color: #b8bb26;
+            background-color: #282828
+        }
+
+        /* Literal.String */
+        .highlight .na {
+            color: #b8bb26;
+            font-weight: bold;
+            background-color: #282828
+        }
+
+        /* Name.Attribute */
+        .highlight .nb {
+            color: #fabd2f;
+            background-color: #282828
+        }
+
+        /* Name.Builtin */
+        .highlight .nc {
+            color: #ebdbb2;
+            background-color: #282828
+        }
+
+        /* Name.Class */
+        .highlight .no {
+            color: #d3869b;
+            background-color: #282828
+        }
+
+        /* Name.Constant */
+        .highlight .nd {
+            color: #ebdbb2;
+            background-color: #282828
+        }
+
+        /* Name.Decorator */
+        .highlight .ni {
+            color: #fabd2f;
+            background-color: #282828
+        }
+
+        /* Name.Entity */
+        .highlight .ne {
+            color: #fb4934;
+            background-color: #282828
+        }
+
+        /* Name.Exception */
+        .highlight .nf {
+            color: #fabd2f;
+            background-color: #282828
+        }
+
+        /* Name.Function */
+        .highlight .nl {
+            color: #fb4934;
+            background-color: #282828
+        }
+
+        /* Name.Label */
+        .highlight .nn {
+            color: #ebdbb2;
+            background-color: #282828
+        }
+
+        /* Name.Namespace */
+        .highlight .nx {
+            color: #ebdbb2;
+            background-color: #282828
+        }
+
+        /* Name.Other */
+        .highlight .py {
+            color: #ebdbb2;
+            background-color: #282828
+        }
+
+        /* Name.Property */
+        .highlight .nt {
+            color: #fb4934;
+            background-color: #282828
+        }
+
+        /* Name.Tag */
+        .highlight .nv {
+            color: #ebdbb2;
+            background-color: #282828
+        }
+
+        /* Name.Variable */
+        .highlight .ow {
+            color: #fe8019;
+            background-color: #282828
+        }
+
+        /* Operator.Word */
+        .highlight .w {
+            color: #ebdbb2;
+            background-color: #282828
+        }
+
+        /* Text.Whitespace */
+        .highlight .mb {
+            color: #d3869b;
+            background-color: #282828
+        }
+
+        /* Literal.Number.Bin */
+        .highlight .mf {
+            color: #d3869b;
+            background-color: #282828
+        }
+
+        /* Literal.Number.Float */
+        .highlight .mh {
+            color: #d3869b;
+            background-color: #282828
+        }
+
+        /* Literal.Number.Hex */
+        .highlight .mi {
+            color: #d3869b;
+            background-color: #282828
+        }
+
+        /* Literal.Number.Integer */
+        .highlight .mo {
+            color: #d3869b;
+            background-color: #282828
+        }
+
+        /* Literal.Number.Oct */
+        .highlight .sb {
+            color: #b8bb26;
+            background-color: #282828
+        }
+
+        /* Literal.String.Backtick */
+        .highlight .sc {
+            color: #b8bb26;
+            background-color: #282828
+        }
+
+        /* Literal.String.Char */
+        .highlight .sd {
+            color: #b8bb26;
+            background-color: #282828
+        }
+
+        /* Literal.String.Doc */
+        .highlight .s2 {
+            color: #b8bb26;
+            background-color: #282828
+        }
+
+        /* Literal.String.Double */
+        .highlight .se {
+            color: #b8bb26;
+            background-color: #282828
+        }
+
+        /* Literal.String.Escape */
+        .highlight .sh {
+            color: #b8bb26;
+            background-color: #282828
+        }
+
+        /* Literal.String.Heredoc */
+        .highlight .si {
+            color: #b8bb26;
+            background-color: #282828
+        }
+
+        /* Literal.String.Interpol */
+        .highlight .sx {
+            color: #b8bb26;
+            background-color: #282828
+        }
+
+        /* Literal.String.Other */
+        .highlight .sr {
+            color: #b8bb26;
+            background-color: #282828
+        }
+
+        /* Literal.String.Regex */
+        .highlight .s1 {
+            color: #b8bb26;
+            background-color: #282828
+        }
+
+        /* Literal.String.Single */
+        .highlight .ss {
+            color: #83a598;
+            background-color: #282828
+        }
+
+        /* Literal.String.Symbol */
+        .highlight .bp {
+            color: #fabd2f;
+            background-color: #282828
+        }
+
+        /* Name.Builtin.Pseudo */
+        .highlight .vc {
+            color: #ebdbb2;
+            background-color: #282828
+        }
+
+        /* Name.Variable.Class */
+        .highlight .vg {
+            color: #ebdbb2;
+            background-color: #282828
+        }
+
+        /* Name.Variable.Global */
+        .highlight .vi {
+            color: #ebdbb2;
+            background-color: #282828
+        }
+
+        /* Name.Variable.Instance */
+        .highlight .il {
+            color: #d3869b;
+            background-color: #282828
+        }
+
+        /* Literal.Number.Integer.Long */
+        img {
+            background-color: white;
+        }
+    </style>
+    <link rel="stylesheet" href="https://benrosenberg.info/style.css" />
+    <link rel="icon" type="image/png" href="https://benrosenberg.info/favicon.png">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
+    <script>document.addEventListener("DOMContentLoaded", function () {
+            var mathElements = document.getElementsByClassName("math");
+            var macros = [];
+            for (var i = 0; i < mathElements.length; i++) {
+                var texText = mathElements[i].firstChild;
+                if (mathElements[i].tagName == "SPAN") {
+                    katex.render(texText.data, mathElements[i], {
+                        displayMode: mathElements[i].classList.contains('display'),
+                        throwOnError: false,
+                        macros: macros,
+                        fleqn: false
+                    });
+                }
+            }
+        });
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css" />
 </head>
+
 <body>
-  <ul class="sidenav">
-    <li><a href="/">Home</a></li>
-    <li><a class="active" href="https://benrosenberg.info/posts">Posts</a></li>
-    <li><a href="https://github.com/benrosenberg">GitHub</a></li>
-    <li><a href="https://www.linkedin.com/in/ben-rosenberg-0b5359205/">LinkedIn</a></li>
-  </ul>
+    <ul class="sidenav">
+        <li><a href="/">Home</a></li>
+        <li><a class="active" href="https://benrosenberg.info/posts">Posts</a></li>
+        <li><a href="https://github.com/benrosenberg">GitHub</a></li>
+        <li><a href="https://benrosenberg.info/teaching/">Teaching</a></li>
+    </ul>
 
-  <div class="content">
+    <div class="content">
 
-<div class="wrapped-ipynb"><div class="wrapped-markdown">
-<h1>Expected number of RV iterations until sequence seen</h1>
-</div><div class="wrapped-markdown">
-<p>To try the results of the below online, please use <a href="https://colab.research.google.com/drive/17Zx6w87pZNJpbrazjtadwiURHfUVjV_E?usp=sharing">this Google Colab notebook</a>.</p>
-<p><strong>Given</strong>: </p>
-<ul>
-<li>An RV <span class="math inline">X</span> with <span class="math inline">n</span> finite discrete outputs <span class="math inline">\mathcal A = [a_1, \dots, a_n]</span> and associated probabilities <span class="math inline">[\mathbb P(a_1), \dots, \mathbb P(a_n)]</span></li>
-<li>A sequence <span class="math inline">\mathcal I = [i_1, \dots, i_m]</span> where <span class="math inline">1\leq i \leq n \; \forall i\in \mathcal I</span> of indices of outputs of <span class="math inline">X</span></li>
-</ul>
-<p>Example: RV <span class="math inline">X</span>, a fair coin with <span class="math inline">\mathcal A = [H, T]</span> and associated probabilities <span class="math inline">[0.5, 0.5]</span>, and <span class="math inline">\mathcal I = [1, 2, 1]</span> which corresponds to a sequence of <span class="math inline">H, T, H</span>.</p>
-<p><strong>Desired</strong>: Expected number of simulations of <span class="math inline">X</span> before seeing the sequence mapped to by <span class="math inline">\mathcal I</span></p>
-<p>Example: Following from the above example, we would create a DTMC to model this scenario, get the corresponding matrix, and use a formula to determine the expected number of steps to the absorbing state from the start state.</p>
-<p>Here's the state machine:</p>
-<p><img alt="" src="2023-12-23-13-47-09.png" /></p>
-<p>And here's the DTMC:</p>
-<p><img alt="" src="2023-12-23-14-42-47.png" /></p>
-<p>The matrix which corresponds to this DTMC is as follows:</p>
-<p><img alt="" src="2023-12-23-17-33-25.png" /></p>
-<p>The numerical part of this matrix is of the form</p>
-<p><img alt="" src="2023-12-23-17-33-38.png" /></p>
-<p>which means that we can use the following formula to determine the expected number of steps from any state to the absorbing state:</p>
-<p><img alt="" src="2023-12-23-17-33-54.png" /></p>
-<p>Plugging into the formula gives:</p>
-<p><img alt="" src="2023-12-23-17-34-06.png" /></p>
-<p>We can use Octave to compute this easily:</p>
-<p><code>octave
+        <div class="wrapped-ipynb">
+            <div class="wrapped-markdown">
+                <h1>Expected number of RV iterations until sequence seen</h1>
+            </div>
+            <div class="wrapped-markdown">
+                <p>To try the results of the below online, please use <a
+                        href="https://colab.research.google.com/drive/17Zx6w87pZNJpbrazjtadwiURHfUVjV_E?usp=sharing">this
+                        Google Colab notebook</a>.</p>
+                <p><strong>Given</strong>: </p>
+                <ul>
+                    <li>An RV <span class="math inline">X</span> with <span class="math inline">n</span> finite discrete
+                        outputs <span class="math inline">\mathcal A = [a_1, \dots, a_n]</span> and associated
+                        probabilities <span class="math inline">[\mathbb P(a_1), \dots, \mathbb P(a_n)]</span></li>
+                    <li>A sequence <span class="math inline">\mathcal I = [i_1, \dots, i_m]</span> where <span
+                            class="math inline">1\leq i \leq n \; \forall i\in \mathcal I</span> of indices of outputs
+                        of <span class="math inline">X</span></li>
+                </ul>
+                <p>Example: RV <span class="math inline">X</span>, a fair coin with <span class="math inline">\mathcal A
+                        = [H, T]</span> and associated probabilities <span class="math inline">[0.5, 0.5]</span>, and
+                    <span class="math inline">\mathcal I = [1, 2, 1]</span> which corresponds to a sequence of <span
+                        class="math inline">H, T, H</span>.</p>
+                <p><strong>Desired</strong>: Expected number of simulations of <span class="math inline">X</span> before
+                    seeing the sequence mapped to by <span class="math inline">\mathcal I</span></p>
+                <p>Example: Following from the above example, we would create a DTMC to model this scenario, get the
+                    corresponding matrix, and use a formula to determine the expected number of steps to the absorbing
+                    state from the start state.</p>
+                <p>Here's the state machine:</p>
+                <p><img alt="" src="2023-12-23-13-47-09.png" /></p>
+                <p>And here's the DTMC:</p>
+                <p><img alt="" src="2023-12-23-14-42-47.png" /></p>
+                <p>The matrix which corresponds to this DTMC is as follows:</p>
+                <p><img alt="" src="2023-12-23-17-33-25.png" /></p>
+                <p>The numerical part of this matrix is of the form</p>
+                <p><img alt="" src="2023-12-23-17-33-38.png" /></p>
+                <p>which means that we can use the following formula to determine the expected number of steps from any
+                    state to the absorbing state:</p>
+                <p><img alt="" src="2023-12-23-17-33-54.png" /></p>
+                <p>Plugging into the formula gives:</p>
+                <p><img alt="" src="2023-12-23-17-34-06.png" /></p>
+                <p>We can use Octave to compute this easily:</p>
+                <p><code>octave
 ([1,0,0;0,1,0;0,0,1] - [0.5,0.5,0;0,0.5,0.5;0.5,0,0])^-1 * [1;1;1]</code></p>
-<p>which gives the following:</p>
-<p><code>ans =
+                <p>which gives the following:</p>
+                <p><code>ans =
    10
     8
     6</code></p>
-<p>So the expected number of steps until we see the sequence <span class="math inline">H,T,H</span>from the starting state is 10.</p>
-</div><div class="wrapped-markdown">
-<h2>Checking empirically</h2>
-<p>Let's verify empirically that the expected number of steps above is correct.</p>
-</div><div class="wrapped-code">
-<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">random</span>
+                <p>So the expected number of steps until we see the sequence <span class="math inline">H,T,H</span>from
+                    the starting state is 10.</p>
+            </div>
+            <div class="wrapped-markdown">
+                <h2>Checking empirically</h2>
+                <p>Let's verify empirically that the expected number of steps above is correct.</p>
+            </div>
+            <div class="wrapped-code">
+                <div class="highlight">
+                    <pre><span></span><span class="kn">import</span> <span class="nn">random</span>
 
 <span class="k">def</span> <span class="nf">coin_flip</span><span class="p">():</span>
     <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">:</span>
@@ -186,27 +606,51 @@
     <span class="k">return</span> <span class="n">total_steps</span><span class="o">/</span><span class="n">trials</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">expected_number_of_steps_until_seq</span><span class="p">(</span><span class="s1">&#39;HTH&#39;</span><span class="p">,</span> <span class="mi">1_000_000</span><span class="p">,</span> <span class="n">coin_flip</span><span class="p">))</span>
-</pre></div>
+</pre>
+                </div>
 
-</div><div class="wrapped-output"><pre>
+            </div>
+            <div class="wrapped-output">
+                <pre>
 9.993549
 
-</pre></div><div class="wrapped-markdown">
-<p>As expected, the average number of steps is 10.</p>
-</div><div class="wrapped-markdown">
-<h2>Automation/programming</h2>
-<p>The hardest part of automating this calculation is the generation of the state machine, from which the matrix and relevant calculation follow easily. The creation of the state machine is typically a manual process, but if we are trying to do this generally for any sequence (without resorting to empirical means), we should experiment with alternative methods.</p>
-<p>One method for generating state machines programmatically is by converting a regular expression into a DFA, or deterministic finite automaton. In our use case, we want to have a regular expression for a string that contains our desired sequence. It's fine if it has the sequence multiple times. This may be counterintuitive because in our experiment we'll stop as soon as the sequence is seen, and so we might think not to accept the string if it contains the sequence more than once - but in fact, the DFA will accept the string as soon as it's seen, and after that it's effectively stopped computing.</p>
-<p>Here's what the DFA looks like for our above example:</p>
-<p><img alt="" src="2023-12-23-14-41-11.png" /></p>
-<p>The only difference from the first image is that the last state is marked as an accepting, or final, state as indicated by the double circle. </p>
-<p>The regular expression to which this DFA corresponds is as follows:</p>
-<p><code>(H|T)*HTH(H|T)*</code></p>
-<p>This can be translated as "any number of H's and/or T's (the asterisk means "zero or more"), and somewhere in there is a sequence of HTH, and then any number of H's and/or T's again". This is a simple regular expression to generate, so the only work left to do should be to just convert the generated regex to a DFA, and then use the DFA as a DTMC by assigning probabilities to the RV outputs along the edges of the automaton.</p>
-</div><div class="wrapped-markdown">
-<p>Luckily, there are existing implementations of this logic. In this instance we're using <a href="https://ics.uci.edu/~eppstein/PADS/">PADS</a> from David Eppstein at U.C. Irvine.</p>
-</div><div class="wrapped-code">
-<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">Automata</span> <span class="kn">import</span> <span class="n">RegularLanguage</span>
+</pre>
+            </div>
+            <div class="wrapped-markdown">
+                <p>As expected, the average number of steps is 10.</p>
+            </div>
+            <div class="wrapped-markdown">
+                <h2>Automation/programming</h2>
+                <p>The hardest part of automating this calculation is the generation of the state machine, from which
+                    the matrix and relevant calculation follow easily. The creation of the state machine is typically a
+                    manual process, but if we are trying to do this generally for any sequence (without resorting to
+                    empirical means), we should experiment with alternative methods.</p>
+                <p>One method for generating state machines programmatically is by converting a regular expression into
+                    a DFA, or deterministic finite automaton. In our use case, we want to have a regular expression for
+                    a string that contains our desired sequence. It's fine if it has the sequence multiple times. This
+                    may be counterintuitive because in our experiment we'll stop as soon as the sequence is seen, and so
+                    we might think not to accept the string if it contains the sequence more than once - but in fact,
+                    the DFA will accept the string as soon as it's seen, and after that it's effectively stopped
+                    computing.</p>
+                <p>Here's what the DFA looks like for our above example:</p>
+                <p><img alt="" src="2023-12-23-14-41-11.png" /></p>
+                <p>The only difference from the first image is that the last state is marked as an accepting, or final,
+                    state as indicated by the double circle. </p>
+                <p>The regular expression to which this DFA corresponds is as follows:</p>
+                <p><code>(H|T)*HTH(H|T)*</code></p>
+                <p>This can be translated as "any number of H's and/or T's (the asterisk means "zero or more"), and
+                    somewhere in there is a sequence of HTH, and then any number of H's and/or T's again". This is a
+                    simple regular expression to generate, so the only work left to do should be to just convert the
+                    generated regex to a DFA, and then use the DFA as a DTMC by assigning probabilities to the RV
+                    outputs along the edges of the automaton.</p>
+            </div>
+            <div class="wrapped-markdown">
+                <p>Luckily, there are existing implementations of this logic. In this instance we're using <a
+                        href="https://ics.uci.edu/~eppstein/PADS/">PADS</a> from David Eppstein at U.C. Irvine.</p>
+            </div>
+            <div class="wrapped-code">
+                <div class="highlight">
+                    <pre><span></span><span class="kn">from</span> <span class="nn">Automata</span> <span class="kn">import</span> <span class="n">RegularLanguage</span>
 
 <span class="n">L</span> <span class="o">=</span> <span class="n">RegularLanguage</span><span class="p">(</span><span class="s1">&#39;(H+T)*HTH(H+T)*&#39;</span><span class="p">)</span>
 
@@ -223,9 +667,12 @@
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="s1">&#39; -&gt; &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="s1">&#39; | &#39;</span> <span class="o">+</span> <span class="n">t</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">transitions</span><span class="p">))</span>
 
 <span class="n">dfa_L</span><span class="o">.</span><span class="n">to_dot</span><span class="p">(</span><span class="s1">&#39;out&#39;</span><span class="p">)</span>
-</pre></div>
+</pre>
+                </div>
 
-</div><div class="wrapped-output"><pre>
+            </div>
+            <div class="wrapped-output">
+                <pre>
 States:
 0 1 2 3
 Transitions:
@@ -238,13 +685,18 @@ Transitions:
 3 -> 3 | H
 3 -> 3 | T
 
-</pre></div><div class="wrapped-markdown">
-<p>This correctly gives the following visualization:</p>
-<p><img alt="" src="2023-12-23-16-42-33.png" /></p>
-</div><div class="wrapped-markdown">
-<p>Now we need some way to turn the DFA into a DTMC.</p>
-</div><div class="wrapped-code">
-<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">dfa_to_dtmc</span><span class="p">(</span><span class="n">dfa_states</span><span class="p">,</span> <span class="n">dfa_transitions</span><span class="p">,</span> <span class="n">char_prob_map</span> <span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+</pre>
+            </div>
+            <div class="wrapped-markdown">
+                <p>This correctly gives the following visualization:</p>
+                <p><img alt="" src="2023-12-23-16-42-33.png" /></p>
+            </div>
+            <div class="wrapped-markdown">
+                <p>Now we need some way to turn the DFA into a DTMC.</p>
+            </div>
+            <div class="wrapped-code">
+                <div class="highlight">
+                    <pre><span></span><span class="k">def</span> <span class="nf">dfa_to_dtmc</span><span class="p">(</span><span class="n">dfa_states</span><span class="p">,</span> <span class="n">dfa_transitions</span><span class="p">,</span> <span class="n">char_prob_map</span> <span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
     <span class="n">matrix</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">dfa_states</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">dfa_states</span><span class="p">]</span>
     <span class="k">for</span> <span class="n">state</span> <span class="ow">in</span> <span class="n">dfa_states</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">_</span><span class="p">,</span><span class="n">to_state</span><span class="p">,</span><span class="n">c</span> <span class="ow">in</span> <span class="p">(</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">dfa_transitions</span> <span class="k">if</span> <span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">state</span><span class="p">):</span>
@@ -254,18 +706,26 @@ Transitions:
 <span class="n">matrix</span> <span class="o">=</span> <span class="n">dfa_to_dtmc</span><span class="p">(</span><span class="n">states</span><span class="p">,</span> <span class="n">transitions</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;H&#39;</span> <span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s1">&#39;T&#39;</span> <span class="p">:</span> <span class="mf">0.5</span><span class="p">})</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">matrix</span><span class="p">))</span>
-</pre></div>
+</pre>
+                </div>
 
-</div><div class="wrapped-output"><pre>
+            </div>
+            <div class="wrapped-output">
+                <pre>
 0.5	0.5	0	0
 0	0.5	0.5	0
 0.5	0	0	0.5
 0	0	0	1.0
 
-</pre></div><div class="wrapped-markdown">
-<p>This matrix looks accurate. Let's continue by using Python to compute the result of the formula we had for the expected number of steps.</p>
-</div><div class="wrapped-code">
-<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</pre>
+            </div>
+            <div class="wrapped-markdown">
+                <p>This matrix looks accurate. Let's continue by using Python to compute the result of the formula we
+                    had for the expected number of steps.</p>
+            </div>
+            <div class="wrapped-code">
+                <div class="highlight">
+                    <pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="n">np_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matrix</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span>
 
@@ -280,9 +740,12 @@ Transitions:
 
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Expected steps from start:&#39;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]))</span>
-</pre></div>
+</pre>
+                </div>
 
-</div><div class="wrapped-output"><pre>
+            </div>
+            <div class="wrapped-output">
+                <pre>
 Full results:
 [[10.]
  [ 8.]
@@ -290,12 +753,18 @@ Full results:
 Expected steps from start:
 10.0
 
-</pre></div><div class="wrapped-markdown">
-<p>As expected, we have the same result as from our Octave code above. Now we can turn all of this into one big function to just return the expected number of steps.</p>
-</div><div class="wrapped-markdown">
-<h2>One big function/code cell</h2>
-</div><div class="wrapped-code">
-<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">Automata</span> <span class="kn">import</span> <span class="n">RegularLanguage</span>
+</pre>
+            </div>
+            <div class="wrapped-markdown">
+                <p>As expected, we have the same result as from our Octave code above. Now we can turn all of this into
+                    one big function to just return the expected number of steps.</p>
+            </div>
+            <div class="wrapped-markdown">
+                <h2>One big function/code cell</h2>
+            </div>
+            <div class="wrapped-code">
+                <div class="highlight">
+                    <pre><span></span><span class="kn">from</span> <span class="nn">Automata</span> <span class="kn">import</span> <span class="n">RegularLanguage</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="k">def</span> <span class="nf">exact_expected_number_of_steps</span><span class="p">(</span><span class="n">sequence</span> <span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">probabilities</span> <span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
@@ -320,16 +789,23 @@ Expected steps from start:
 
 <span class="n">result</span> <span class="o">=</span> <span class="n">exact_expected_number_of_steps</span><span class="p">(</span><span class="s1">&#39;HTH&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;H&#39;</span> <span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s1">&#39;T&#39;</span> <span class="p">:</span> <span class="mf">0.5</span><span class="p">})</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
-</pre></div>
+</pre>
+                </div>
 
-</div><div class="wrapped-output"><pre>
+            </div>
+            <div class="wrapped-output">
+                <pre>
 10.0
 
-</pre></div><div class="wrapped-markdown">
-<p>And that's it!</p>
-</div></div>
+</pre>
+            </div>
+            <div class="wrapped-markdown">
+                <p>And that's it!</p>
+            </div>
+        </div>
 
-</div>
+    </div>
 
 </body>
+
 </html>

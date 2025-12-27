@@ -1,163 +1,579 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+
 <head>
-  <meta charset="utf-8" />
-  <meta name="generator" content="pandoc" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>FSA Algorithms: Regex to NFA</title>
-  <style>
-    code{white-space: pre-wrap;}
-    span.smallcaps{font-variant: small-caps;}
-    span.underline{text-decoration: underline;}
-    div.column{display: inline-block; vertical-align: top; width: 50%;}
-    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    ul.task-list{list-style: none;}
-    .center {
-      margin: 0;
-      top: 50%;
-      left: 50%;
-      right: 50%;
-      bottom: 50%;
-    }
-    .button {
-      background-color: #282828;
-      border: 1px solid #ebdbb2;
-      color: #ebdbb2;
-    }
-    /* color scheme source: https://github.com/daveyarwood/gruvbox-pygments/blob/master/gruvbox.css */
-    .highlight .hll { background-color: #ffffcc }
-    .highlight  { background: #282828; color: #ebdbb2; background-color: #282828 }
-    .highlight .c { color: #928374; font-style: italic; background-color: #282828 } /* Comment */
-    .highlight .err { color: #ebdbb2; background-color: #282828 } /* Error */
-    .highlight .esc { color: #ebdbb2; background-color: #282828 } /* Escape */
-    .highlight .g { color: #ebdbb2; background-color: #282828 } /* Generic */
-    .highlight .k { color: #fe8019; background-color: #282828 } /* Keyword */
-    .highlight .l { color: #ebdbb2; background-color: #282828 } /* Literal */
-    .highlight .n { color: #ebdbb2; background-color: #282828 } /* Name */
-    .highlight .o { color: #fe8019; background-color: #282828 } /* Operator */
-    .highlight .x { color: #ebdbb2; background-color: #282828 } /* Other */
-    .highlight .p { color: #ebdbb2; background-color: #282828 } /* Punctuation */
-    .highlight .ch { color: #928374; font-style: italic; background-color: #282828 } /* Comment.Hashbang */
-    .highlight .cm { color: #928374; font-style: italic; background-color: #282828 } /* Comment.Multiline */
-    .highlight .cp { color: #8ec07c; background-color: #282828 } /* Comment.Preproc */
-    .highlight .c1 { color: #928374; font-style: italic; background-color: #282828 } /* Comment.Single */
-    .highlight .cs { color: #928374; font-style: italic; background-color: #282828 } /* Comment.Special */
-    .highlight .gd { color: #282828; background-color: #fb4934 } /* Generic.Deleted */
-    .highlight .ge { color: #83a598; text-decoration: underline; background-color: #282828 } /* Generic.Emph */
-    .highlight .gr { color: #ebdbb2; font-weight: bold; background-color: #fb4934 } /* Generic.Error */
-    .highlight .gh { color: #b8bb26; font-weight: bold; background-color: #282828 } /* Generic.Heading */
-    .highlight .gi { color: #282828; background-color: #b8bb26 } /* Generic.Inserted */
-    .highlight .go { color: #504945; background-color: #282828 } /* Generic.Output */
-    .highlight .gp { color: #ebdbb2; background-color: #282828 } /* Generic.Prompt */
-    .highlight .gs { color: #ebdbb2; background-color: #282828 } /* Generic.Strong */
-    .highlight .gu { color: #b8bb26; font-weight: bold; background-color: #282828 } /* Generic.Subheading */
-    .highlight .gt { color: #ebdbb2; font-weight: bold; background-color: #fb4934 } /* Generic.Traceback */
-    .highlight .kc { color: #fe8019; background-color: #282828 } /* Keyword.Constant */
-    .highlight .kd { color: #fe8019; background-color: #282828 } /* Keyword.Declaration */
-    .highlight .kn { color: #fe8019; background-color: #282828 } /* Keyword.Namespace */
-    .highlight .kp { color: #fe8019; background-color: #282828 } /* Keyword.Pseudo */
-    .highlight .kr { color: #fe8019; background-color: #282828 } /* Keyword.Reserved */
-    .highlight .kt { color: #fabd2f; background-color: #282828 } /* Keyword.Type */
-    .highlight .ld { color: #ebdbb2; background-color: #282828 } /* Literal.Date */
-    .highlight .m { color: #d3869b; background-color: #282828 } /* Literal.Number */
-    .highlight .s { color: #b8bb26; background-color: #282828 } /* Literal.String */
-    .highlight .na { color: #b8bb26; font-weight: bold; background-color: #282828 } /* Name.Attribute */
-    .highlight .nb { color: #fabd2f; background-color: #282828 } /* Name.Builtin */
-    .highlight .nc { color: #ebdbb2; background-color: #282828 } /* Name.Class */
-    .highlight .no { color: #d3869b; background-color: #282828 } /* Name.Constant */
-    .highlight .nd { color: #ebdbb2; background-color: #282828 } /* Name.Decorator */
-    .highlight .ni { color: #fabd2f; background-color: #282828 } /* Name.Entity */
-    .highlight .ne { color: #fb4934; background-color: #282828 } /* Name.Exception */
-    .highlight .nf { color: #fabd2f; background-color: #282828 } /* Name.Function */
-    .highlight .nl { color: #fb4934; background-color: #282828 } /* Name.Label */
-    .highlight .nn { color: #ebdbb2; background-color: #282828 } /* Name.Namespace */
-    .highlight .nx { color: #ebdbb2; background-color: #282828 } /* Name.Other */
-    .highlight .py { color: #ebdbb2; background-color: #282828 } /* Name.Property */
-    .highlight .nt { color: #fb4934; background-color: #282828 } /* Name.Tag */
-    .highlight .nv { color: #ebdbb2; background-color: #282828 } /* Name.Variable */
-    .highlight .ow { color: #fe8019; background-color: #282828 } /* Operator.Word */
-    .highlight .w { color: #ebdbb2; background-color: #282828 } /* Text.Whitespace */
-    .highlight .mb { color: #d3869b; background-color: #282828 } /* Literal.Number.Bin */
-    .highlight .mf { color: #d3869b; background-color: #282828 } /* Literal.Number.Float */
-    .highlight .mh { color: #d3869b; background-color: #282828 } /* Literal.Number.Hex */
-    .highlight .mi { color: #d3869b; background-color: #282828 } /* Literal.Number.Integer */
-    .highlight .mo { color: #d3869b; background-color: #282828 } /* Literal.Number.Oct */
-    .highlight .sb { color: #b8bb26; background-color: #282828 } /* Literal.String.Backtick */
-    .highlight .sc { color: #b8bb26; background-color: #282828 } /* Literal.String.Char */
-    .highlight .sd { color: #b8bb26; background-color: #282828 } /* Literal.String.Doc */
-    .highlight .s2 { color: #b8bb26; background-color: #282828 } /* Literal.String.Double */
-    .highlight .se { color: #b8bb26; background-color: #282828 } /* Literal.String.Escape */
-    .highlight .sh { color: #b8bb26; background-color: #282828 } /* Literal.String.Heredoc */
-    .highlight .si { color: #b8bb26; background-color: #282828 } /* Literal.String.Interpol */
-    .highlight .sx { color: #b8bb26; background-color: #282828 } /* Literal.String.Other */
-    .highlight .sr { color: #b8bb26; background-color: #282828 } /* Literal.String.Regex */
-    .highlight .s1 { color: #b8bb26; background-color: #282828 } /* Literal.String.Single */
-    .highlight .ss { color: #83a598; background-color: #282828 } /* Literal.String.Symbol */
-    .highlight .bp { color: #fabd2f; background-color: #282828 } /* Name.Builtin.Pseudo */
-    .highlight .vc { color: #ebdbb2; background-color: #282828 } /* Name.Variable.Class */
-    .highlight .vg { color: #ebdbb2; background-color: #282828 } /* Name.Variable.Global */
-    .highlight .vi { color: #ebdbb2; background-color: #282828 } /* Name.Variable.Instance */
-    .highlight .il { color: #d3869b; background-color: #282828 } /* Literal.Number.Integer.Long */
-    img {
-        background-color: white;
-    }
-  </style>
-  <link rel="stylesheet" href="https://benrosenberg.info/style.css" />
-  <link rel="icon" type="image/png" href="https://benrosenberg.info/favicon.png">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
-  <script>document.addEventListener("DOMContentLoaded", function () {
-   var mathElements = document.getElementsByClassName("math");
-   var macros = [];
-   for (var i = 0; i < mathElements.length; i++) {
-    var texText = mathElements[i].firstChild;
-    if (mathElements[i].tagName == "SPAN") {
-     katex.render(texText.data, mathElements[i], {
-      displayMode: mathElements[i].classList.contains('display'),
-      throwOnError: false,
-      macros: macros,
-      fleqn: false
-     });
-  }}});
-  </script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <title>FSA Algorithms: Regex to NFA</title>
+    <style>
+        code {
+            white-space: pre-wrap;
+        }
+
+        span.smallcaps {
+            font-variant: small-caps;
+        }
+
+        span.underline {
+            text-decoration: underline;
+        }
+
+        div.column {
+            display: inline-block;
+            vertical-align: top;
+            width: 50%;
+        }
+
+        div.hanging-indent {
+            margin-left: 1.5em;
+            text-indent: -1.5em;
+        }
+
+        ul.task-list {
+            list-style: none;
+        }
+
+        .center {
+            margin: 0;
+            top: 50%;
+            left: 50%;
+            right: 50%;
+            bottom: 50%;
+        }
+
+        .button {
+            background-color: #282828;
+            border: 1px solid #ebdbb2;
+            color: #ebdbb2;
+        }
+
+        /* color scheme source: https://github.com/daveyarwood/gruvbox-pygments/blob/master/gruvbox.css */
+        .highlight .hll {
+            background-color: #ffffcc
+        }
+
+        .highlight {
+            background: #282828;
+            color: #ebdbb2;
+            background-color: #282828
+        }
+
+        .highlight .c {
+            color: #928374;
+            font-style: italic;
+            background-color: #282828
+        }
+
+        /* Comment */
+        .highlight .err {
+            color: #ebdbb2;
+            background-color: #282828
+        }
+
+        /* Error */
+        .highlight .esc {
+            color: #ebdbb2;
+            background-color: #282828
+        }
+
+        /* Escape */
+        .highlight .g {
+            color: #ebdbb2;
+            background-color: #282828
+        }
+
+        /* Generic */
+        .highlight .k {
+            color: #fe8019;
+            background-color: #282828
+        }
+
+        /* Keyword */
+        .highlight .l {
+            color: #ebdbb2;
+            background-color: #282828
+        }
+
+        /* Literal */
+        .highlight .n {
+            color: #ebdbb2;
+            background-color: #282828
+        }
+
+        /* Name */
+        .highlight .o {
+            color: #fe8019;
+            background-color: #282828
+        }
+
+        /* Operator */
+        .highlight .x {
+            color: #ebdbb2;
+            background-color: #282828
+        }
+
+        /* Other */
+        .highlight .p {
+            color: #ebdbb2;
+            background-color: #282828
+        }
+
+        /* Punctuation */
+        .highlight .ch {
+            color: #928374;
+            font-style: italic;
+            background-color: #282828
+        }
+
+        /* Comment.Hashbang */
+        .highlight .cm {
+            color: #928374;
+            font-style: italic;
+            background-color: #282828
+        }
+
+        /* Comment.Multiline */
+        .highlight .cp {
+            color: #8ec07c;
+            background-color: #282828
+        }
+
+        /* Comment.Preproc */
+        .highlight .c1 {
+            color: #928374;
+            font-style: italic;
+            background-color: #282828
+        }
+
+        /* Comment.Single */
+        .highlight .cs {
+            color: #928374;
+            font-style: italic;
+            background-color: #282828
+        }
+
+        /* Comment.Special */
+        .highlight .gd {
+            color: #282828;
+            background-color: #fb4934
+        }
+
+        /* Generic.Deleted */
+        .highlight .ge {
+            color: #83a598;
+            text-decoration: underline;
+            background-color: #282828
+        }
+
+        /* Generic.Emph */
+        .highlight .gr {
+            color: #ebdbb2;
+            font-weight: bold;
+            background-color: #fb4934
+        }
+
+        /* Generic.Error */
+        .highlight .gh {
+            color: #b8bb26;
+            font-weight: bold;
+            background-color: #282828
+        }
+
+        /* Generic.Heading */
+        .highlight .gi {
+            color: #282828;
+            background-color: #b8bb26
+        }
+
+        /* Generic.Inserted */
+        .highlight .go {
+            color: #504945;
+            background-color: #282828
+        }
+
+        /* Generic.Output */
+        .highlight .gp {
+            color: #ebdbb2;
+            background-color: #282828
+        }
+
+        /* Generic.Prompt */
+        .highlight .gs {
+            color: #ebdbb2;
+            background-color: #282828
+        }
+
+        /* Generic.Strong */
+        .highlight .gu {
+            color: #b8bb26;
+            font-weight: bold;
+            background-color: #282828
+        }
+
+        /* Generic.Subheading */
+        .highlight .gt {
+            color: #ebdbb2;
+            font-weight: bold;
+            background-color: #fb4934
+        }
+
+        /* Generic.Traceback */
+        .highlight .kc {
+            color: #fe8019;
+            background-color: #282828
+        }
+
+        /* Keyword.Constant */
+        .highlight .kd {
+            color: #fe8019;
+            background-color: #282828
+        }
+
+        /* Keyword.Declaration */
+        .highlight .kn {
+            color: #fe8019;
+            background-color: #282828
+        }
+
+        /* Keyword.Namespace */
+        .highlight .kp {
+            color: #fe8019;
+            background-color: #282828
+        }
+
+        /* Keyword.Pseudo */
+        .highlight .kr {
+            color: #fe8019;
+            background-color: #282828
+        }
+
+        /* Keyword.Reserved */
+        .highlight .kt {
+            color: #fabd2f;
+            background-color: #282828
+        }
+
+        /* Keyword.Type */
+        .highlight .ld {
+            color: #ebdbb2;
+            background-color: #282828
+        }
+
+        /* Literal.Date */
+        .highlight .m {
+            color: #d3869b;
+            background-color: #282828
+        }
+
+        /* Literal.Number */
+        .highlight .s {
+            color: #b8bb26;
+            background-color: #282828
+        }
+
+        /* Literal.String */
+        .highlight .na {
+            color: #b8bb26;
+            font-weight: bold;
+            background-color: #282828
+        }
+
+        /* Name.Attribute */
+        .highlight .nb {
+            color: #fabd2f;
+            background-color: #282828
+        }
+
+        /* Name.Builtin */
+        .highlight .nc {
+            color: #ebdbb2;
+            background-color: #282828
+        }
+
+        /* Name.Class */
+        .highlight .no {
+            color: #d3869b;
+            background-color: #282828
+        }
+
+        /* Name.Constant */
+        .highlight .nd {
+            color: #ebdbb2;
+            background-color: #282828
+        }
+
+        /* Name.Decorator */
+        .highlight .ni {
+            color: #fabd2f;
+            background-color: #282828
+        }
+
+        /* Name.Entity */
+        .highlight .ne {
+            color: #fb4934;
+            background-color: #282828
+        }
+
+        /* Name.Exception */
+        .highlight .nf {
+            color: #fabd2f;
+            background-color: #282828
+        }
+
+        /* Name.Function */
+        .highlight .nl {
+            color: #fb4934;
+            background-color: #282828
+        }
+
+        /* Name.Label */
+        .highlight .nn {
+            color: #ebdbb2;
+            background-color: #282828
+        }
+
+        /* Name.Namespace */
+        .highlight .nx {
+            color: #ebdbb2;
+            background-color: #282828
+        }
+
+        /* Name.Other */
+        .highlight .py {
+            color: #ebdbb2;
+            background-color: #282828
+        }
+
+        /* Name.Property */
+        .highlight .nt {
+            color: #fb4934;
+            background-color: #282828
+        }
+
+        /* Name.Tag */
+        .highlight .nv {
+            color: #ebdbb2;
+            background-color: #282828
+        }
+
+        /* Name.Variable */
+        .highlight .ow {
+            color: #fe8019;
+            background-color: #282828
+        }
+
+        /* Operator.Word */
+        .highlight .w {
+            color: #ebdbb2;
+            background-color: #282828
+        }
+
+        /* Text.Whitespace */
+        .highlight .mb {
+            color: #d3869b;
+            background-color: #282828
+        }
+
+        /* Literal.Number.Bin */
+        .highlight .mf {
+            color: #d3869b;
+            background-color: #282828
+        }
+
+        /* Literal.Number.Float */
+        .highlight .mh {
+            color: #d3869b;
+            background-color: #282828
+        }
+
+        /* Literal.Number.Hex */
+        .highlight .mi {
+            color: #d3869b;
+            background-color: #282828
+        }
+
+        /* Literal.Number.Integer */
+        .highlight .mo {
+            color: #d3869b;
+            background-color: #282828
+        }
+
+        /* Literal.Number.Oct */
+        .highlight .sb {
+            color: #b8bb26;
+            background-color: #282828
+        }
+
+        /* Literal.String.Backtick */
+        .highlight .sc {
+            color: #b8bb26;
+            background-color: #282828
+        }
+
+        /* Literal.String.Char */
+        .highlight .sd {
+            color: #b8bb26;
+            background-color: #282828
+        }
+
+        /* Literal.String.Doc */
+        .highlight .s2 {
+            color: #b8bb26;
+            background-color: #282828
+        }
+
+        /* Literal.String.Double */
+        .highlight .se {
+            color: #b8bb26;
+            background-color: #282828
+        }
+
+        /* Literal.String.Escape */
+        .highlight .sh {
+            color: #b8bb26;
+            background-color: #282828
+        }
+
+        /* Literal.String.Heredoc */
+        .highlight .si {
+            color: #b8bb26;
+            background-color: #282828
+        }
+
+        /* Literal.String.Interpol */
+        .highlight .sx {
+            color: #b8bb26;
+            background-color: #282828
+        }
+
+        /* Literal.String.Other */
+        .highlight .sr {
+            color: #b8bb26;
+            background-color: #282828
+        }
+
+        /* Literal.String.Regex */
+        .highlight .s1 {
+            color: #b8bb26;
+            background-color: #282828
+        }
+
+        /* Literal.String.Single */
+        .highlight .ss {
+            color: #83a598;
+            background-color: #282828
+        }
+
+        /* Literal.String.Symbol */
+        .highlight .bp {
+            color: #fabd2f;
+            background-color: #282828
+        }
+
+        /* Name.Builtin.Pseudo */
+        .highlight .vc {
+            color: #ebdbb2;
+            background-color: #282828
+        }
+
+        /* Name.Variable.Class */
+        .highlight .vg {
+            color: #ebdbb2;
+            background-color: #282828
+        }
+
+        /* Name.Variable.Global */
+        .highlight .vi {
+            color: #ebdbb2;
+            background-color: #282828
+        }
+
+        /* Name.Variable.Instance */
+        .highlight .il {
+            color: #d3869b;
+            background-color: #282828
+        }
+
+        /* Literal.Number.Integer.Long */
+        img {
+            background-color: white;
+        }
+    </style>
+    <link rel="stylesheet" href="https://benrosenberg.info/style.css" />
+    <link rel="icon" type="image/png" href="https://benrosenberg.info/favicon.png">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
+    <script>document.addEventListener("DOMContentLoaded", function () {
+            var mathElements = document.getElementsByClassName("math");
+            var macros = [];
+            for (var i = 0; i < mathElements.length; i++) {
+                var texText = mathElements[i].firstChild;
+                if (mathElements[i].tagName == "SPAN") {
+                    katex.render(texText.data, mathElements[i], {
+                        displayMode: mathElements[i].classList.contains('display'),
+                        throwOnError: false,
+                        macros: macros,
+                        fleqn: false
+                    });
+                }
+            }
+        });
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css" />
 </head>
+
 <body>
-  <ul class="sidenav">
-    <li><a href="/">Home</a></li>
-    <li><a class="active" href="https://benrosenberg.info/posts">Posts</a></li>
-    <li><a href="https://github.com/benrosenberg">GitHub</a></li>
-    <li><a href="https://www.linkedin.com/in/ben-rosenberg-0b5359205/">LinkedIn</a></li>
-  </ul>
+    <ul class="sidenav">
+        <li><a href="/">Home</a></li>
+        <li><a class="active" href="https://benrosenberg.info/posts">Posts</a></li>
+        <li><a href="https://github.com/benrosenberg">GitHub</a></li>
+        <li><a href="https://benrosenberg.info/teaching/">Teaching</a></li>
+    </ul>
 
-  <div class="content">
+    <div class="content">
 
-<div class="wrapped-ipynb"><div class="wrapped-markdown">
-<h1>FSA Algorithms, Part 2: Regex to NFA conversion</h1>
-<p>The next step in this series is the conversion from the regex AST we created in the previous part to an NFA, the representation for which we'll define here.</p>
-<p>The structure of this part will be as follows:</p>
-<ul>
-<li>NFA class</li>
-<li>Conversion methodology</li>
-<li>Implementation of conversion methodology</li>
-</ul>
-</div><div class="wrapped-markdown">
-<h2>NFA Class</h2>
-<p>An NFA is defined as a 5-tuple <span class="math inline">(S, \delta, \Sigma, s, F)</span>, where <span class="math inline">S</span> is the set of states, <span class="math inline">\Sigma</span> is the alphabet (set of characters or letters), <span class="math inline">\delta</span> is the transition function <span class="math inline">\delta : S \times \Sigma \to S</span>, <span class="math inline">s</span> is the start state, and <span class="math inline">F \subseteq S</span>is the set of final states. </p>
-<p>Here's a simple class for an NFA:</p>
-</div><div class="wrapped-code">
-<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">NFA</span><span class="p">:</span>
+        <div class="wrapped-ipynb">
+            <div class="wrapped-markdown">
+                <h1>FSA Algorithms, Part 2: Regex to NFA conversion</h1>
+                <p>The next step in this series is the conversion from the regex AST we created in the previous part to
+                    an NFA, the representation for which we'll define here.</p>
+                <p>The structure of this part will be as follows:</p>
+                <ul>
+                    <li>NFA class</li>
+                    <li>Conversion methodology</li>
+                    <li>Implementation of conversion methodology</li>
+                </ul>
+            </div>
+            <div class="wrapped-markdown">
+                <h2>NFA Class</h2>
+                <p>An NFA is defined as a 5-tuple <span class="math inline">(S, \delta, \Sigma, s, F)</span>, where
+                    <span class="math inline">S</span> is the set of states, <span class="math inline">\Sigma</span> is
+                    the alphabet (set of characters or letters), <span class="math inline">\delta</span> is the
+                    transition function <span class="math inline">\delta : S \times \Sigma \to S</span>, <span
+                        class="math inline">s</span> is the start state, and <span class="math inline">F \subseteq
+                        S</span>is the set of final states. </p>
+                <p>Here's a simple class for an NFA:</p>
+            </div>
+            <div class="wrapped-code">
+                <div class="highlight">
+                    <pre><span></span><span class="k">class</span> <span class="nc">NFA</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">states</span><span class="p">,</span> <span class="n">delta</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">finals</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">states</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">states</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">delta</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">delta</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">sigma</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">start</span> <span class="o">=</span> <span class="n">start</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">finals</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">finals</span><span class="p">)</span>
-</pre></div>
+</pre>
+                </div>
 
-</div><div class="wrapped-markdown">
-<p>And here are some nice quality of life additions to the class. We want to be able to print these out nicely, and to see what they look like (we use Graphviz here for that purpose):</p>
-</div><div class="wrapped-code">
-<div class="highlight"><pre><span></span>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            </div>
+            <div class="wrapped-markdown">
+                <p>And here are some nice quality of life additions to the class. We want to be able to print these out
+                    nicely, and to see what they look like (we use Graphviz here for that purpose):</p>
+            </div>
+            <div class="wrapped-code">
+                <div class="highlight">
+                    <pre><span></span>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">delta_string</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
         <span class="c1"># compress delta by from/to states</span>
         <span class="n">delta_compressed</span> <span class="o">=</span> <span class="p">{}</span>
@@ -213,37 +629,51 @@
             <span class="n">dot</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">filename</span> <span class="o">+</span> <span class="s1">&#39;.gv&#39;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">view</span><span class="p">:</span>
             <span class="n">dot</span><span class="o">.</span><span class="n">view</span><span class="p">()</span>
-</pre></div>
+</pre>
+                </div>
 
-</div><div class="wrapped-markdown">
-<h2>Conversion methodology</h2>
-<p>Okay, so we have the class for NFAs done. What now? How do we actually get an NFA from a regex (AST)?</p>
-<p>Basically, we divide the regex into building blocks based on type of expression and stick them together using <span class="math inline">\varepsilon</span>transitions where necessary. We'll go through each of the operator/expression types in the following order:</p>
-<ul>
-<li>Star</li>
-<li>Union</li>
-<li>Concatenation</li>
-</ul>
-</div><div class="wrapped-markdown">
-<h3>Star</h3>
-<p>Recall that <code>(exp)*</code> (or <code>Star(exp)</code> as our AST would represent it) means "zero or more of <code>exp</code>". We can represent this pretty well as an NFA (screenshots stolen from <a href="https://www.cs.cornell.edu/courses/cs4120/2023sp/notes.html?id=leximpl">Cornell's CS 4120 course notes</a>, which use <span class="math inline">R</span>to represent a given regular expression):</p>
-<p><img alt="Star" src="2023-11-26-18-02-40.png" /></p>
-<p>You can see here how the item can either be skipped or traversed as many times as necessary.</p>
-<h3>Union</h3>
-<p><img alt="Union" src="2023-11-26-18-03-11.png" /></p>
-<p>Again, it should be clearly visible here how there is a choice between the two expressions.</p>
-<h3>Concat</h3>
-<p><img alt="Concat" src="2023-11-26-18-03-31.png" /></p>
-<p>One expression is done, then the other.</p>
-<h3>Letter and empty string</h3>
-<p><img alt="Letter" src="2023-11-26-18-03-50.png" /></p>
-<p><img alt="Empty string" src="2023-11-26-18-04-01.png" /></p>
-<p>These are simple enough. Next, we'll implement each of these.</p>
-</div><div class="wrapped-markdown">
-<h2>Implementation</h2>
-<p>We'll start with a function to recursively go through the regex AST and call the relevant functions where necessary.</p>
-</div><div class="wrapped-code">
-<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">nfa_of_regex</span><span class="p">(</span><span class="n">regex</span> <span class="p">:</span> <span class="n">Regex</span><span class="p">,</span> <span class="n">sigma</span> <span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NFA</span><span class="p">:</span>
+            </div>
+            <div class="wrapped-markdown">
+                <h2>Conversion methodology</h2>
+                <p>Okay, so we have the class for NFAs done. What now? How do we actually get an NFA from a regex (AST)?
+                </p>
+                <p>Basically, we divide the regex into building blocks based on type of expression and stick them
+                    together using <span class="math inline">\varepsilon</span>transitions where necessary. We'll go
+                    through each of the operator/expression types in the following order:</p>
+                <ul>
+                    <li>Star</li>
+                    <li>Union</li>
+                    <li>Concatenation</li>
+                </ul>
+            </div>
+            <div class="wrapped-markdown">
+                <h3>Star</h3>
+                <p>Recall that <code>(exp)*</code> (or <code>Star(exp)</code> as our AST would represent it) means "zero
+                    or more of <code>exp</code>". We can represent this pretty well as an NFA (screenshots stolen from
+                    <a href="https://www.cs.cornell.edu/courses/cs4120/2023sp/notes.html?id=leximpl">Cornell's CS 4120
+                        course notes</a>, which use <span class="math inline">R</span>to represent a given regular
+                    expression):</p>
+                <p><img alt="Star" src="2023-11-26-18-02-40.png" /></p>
+                <p>You can see here how the item can either be skipped or traversed as many times as necessary.</p>
+                <h3>Union</h3>
+                <p><img alt="Union" src="2023-11-26-18-03-11.png" /></p>
+                <p>Again, it should be clearly visible here how there is a choice between the two expressions.</p>
+                <h3>Concat</h3>
+                <p><img alt="Concat" src="2023-11-26-18-03-31.png" /></p>
+                <p>One expression is done, then the other.</p>
+                <h3>Letter and empty string</h3>
+                <p><img alt="Letter" src="2023-11-26-18-03-50.png" /></p>
+                <p><img alt="Empty string" src="2023-11-26-18-04-01.png" /></p>
+                <p>These are simple enough. Next, we'll implement each of these.</p>
+            </div>
+            <div class="wrapped-markdown">
+                <h2>Implementation</h2>
+                <p>We'll start with a function to recursively go through the regex AST and call the relevant functions
+                    where necessary.</p>
+            </div>
+            <div class="wrapped-code">
+                <div class="highlight">
+                    <pre><span></span><span class="k">def</span> <span class="nf">nfa_of_regex</span><span class="p">(</span><span class="n">regex</span> <span class="p">:</span> <span class="n">Regex</span><span class="p">,</span> <span class="n">sigma</span> <span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NFA</span><span class="p">:</span>
     <span class="k">def</span> <span class="nf">convert</span><span class="p">(</span><span class="n">r</span> <span class="p">:</span> <span class="n">Regex</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NFA</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="o">==</span> <span class="n">Union</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">union</span><span class="p">(</span><span class="n">convert</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">left</span><span class="p">),</span> <span class="n">convert</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">right</span><span class="p">))</span>
@@ -256,12 +686,18 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Not sure what to do with this type: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">r</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">convert</span><span class="p">(</span><span class="n">regex</span><span class="p">)</span>
-</pre></div>
+</pre>
+                </div>
 
-</div><div class="wrapped-markdown">
-<p>Next, we need to implement each of the above types of expressions. In order to actually combine these together, though, we'll want to make sure we don't overlap in the names we use for states, otherwise we'll screw up completely.</p>
-</div><div class="wrapped-code">
-<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">generate_unused_name</span><span class="p">(</span><span class="n">forbidden</span> <span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">excluded</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+            </div>
+            <div class="wrapped-markdown">
+                <p>Next, we need to implement each of the above types of expressions. In order to actually combine these
+                    together, though, we'll want to make sure we don't overlap in the names we use for states, otherwise
+                    we'll screw up completely.</p>
+            </div>
+            <div class="wrapped-code">
+                <div class="highlight">
+                    <pre><span></span><span class="k">def</span> <span class="nf">generate_unused_name</span><span class="p">(</span><span class="n">forbidden</span> <span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">excluded</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
     <span class="k">if</span> <span class="n">excluded</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">excluded</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
     <span class="k">else</span><span class="p">:</span>
@@ -287,12 +723,16 @@
         <span class="n">new_state</span> <span class="o">=</span> <span class="n">generate_unused_name</span><span class="p">([],</span> <span class="n">excluded</span><span class="o">=</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y_modified</span><span class="p">])</span>
         <span class="n">y_modified</span> <span class="o">=</span> <span class="n">rename_state</span><span class="p">(</span><span class="n">y_modified</span><span class="p">,</span> <span class="n">old_state</span><span class="p">,</span> <span class="n">new_state</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">y_modified</span>
-</pre></div>
+</pre>
+                </div>
 
-</div><div class="wrapped-markdown">
-<p>Now we can merge two automata without worrying about state name conflicts:</p>
-</div><div class="wrapped-code">
-<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">merge_automata</span><span class="p">(</span><span class="n">x</span> <span class="p">:</span> <span class="n">NFA</span><span class="p">,</span> <span class="n">y</span> <span class="p">:</span> <span class="n">NFA</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NFA</span><span class="p">:</span>
+            </div>
+            <div class="wrapped-markdown">
+                <p>Now we can merge two automata without worrying about state name conflicts:</p>
+            </div>
+            <div class="wrapped-code">
+                <div class="highlight">
+                    <pre><span></span><span class="k">def</span> <span class="nf">merge_automata</span><span class="p">(</span><span class="n">x</span> <span class="p">:</span> <span class="n">NFA</span><span class="p">,</span> <span class="n">y</span> <span class="p">:</span> <span class="n">NFA</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NFA</span><span class="p">:</span>
     <span class="k">return</span> <span class="n">recreate</span><span class="p">(</span>
         <span class="n">x</span><span class="p">,</span> 
         <span class="n">states</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">states</span> <span class="o">|</span> <span class="n">y</span><span class="o">.</span><span class="n">states</span><span class="p">,</span>
@@ -301,12 +741,16 @@
         <span class="n">finals</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">finals</span> <span class="o">|</span> <span class="n">y</span><span class="o">.</span><span class="n">finals</span><span class="p">,</span>
         <span class="n">delta</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">delta</span> <span class="o">|</span> <span class="n">y</span><span class="o">.</span><span class="n">delta</span>
     <span class="p">)</span>
-</pre></div>
+</pre>
+                </div>
 
-</div><div class="wrapped-markdown">
-<h3>Star</h3>
-</div><div class="wrapped-code">
-<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">star</span><span class="p">(</span><span class="n">x</span> <span class="p">:</span> <span class="n">NFA</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NFA</span><span class="p">:</span>
+            </div>
+            <div class="wrapped-markdown">
+                <h3>Star</h3>
+            </div>
+            <div class="wrapped-code">
+                <div class="highlight">
+                    <pre><span></span><span class="k">def</span> <span class="nf">star</span><span class="p">(</span><span class="n">x</span> <span class="p">:</span> <span class="n">NFA</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NFA</span><span class="p">:</span>
     <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">start</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">x</span>
     <span class="k">else</span><span class="p">:</span>
@@ -323,12 +767,16 @@
             <span class="n">a_prime</span> <span class="o">=</span> <span class="n">add_transition</span><span class="p">(</span><span class="n">a_prime</span><span class="p">,</span> <span class="n">final</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="s1">&#39;ε&#39;</span><span class="p">)</span>
             <span class="n">a_prime</span> <span class="o">=</span> <span class="n">add_transition</span><span class="p">(</span><span class="n">a_prime</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">final</span><span class="p">,</span> <span class="s1">&#39;ε&#39;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">a_prime</span>
-</pre></div>
+</pre>
+                </div>
 
-</div><div class="wrapped-markdown">
-<h3>Union</h3>
-</div><div class="wrapped-code">
-<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">union</span><span class="p">(</span><span class="n">x</span> <span class="p">:</span> <span class="n">NFA</span><span class="p">,</span> <span class="n">y</span> <span class="p">:</span> <span class="n">NFA</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NFA</span><span class="p">:</span>
+            </div>
+            <div class="wrapped-markdown">
+                <h3>Union</h3>
+            </div>
+            <div class="wrapped-code">
+                <div class="highlight">
+                    <pre><span></span><span class="k">def</span> <span class="nf">union</span><span class="p">(</span><span class="n">x</span> <span class="p">:</span> <span class="n">NFA</span><span class="p">,</span> <span class="n">y</span> <span class="p">:</span> <span class="n">NFA</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NFA</span><span class="p">:</span>
     <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">start</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">y</span>
     <span class="k">elif</span> <span class="n">y</span><span class="o">.</span><span class="n">start</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -341,12 +789,16 @@
         <span class="n">out</span> <span class="o">=</span> <span class="n">add_transition</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">xy_start</span><span class="p">,</span> <span class="n">get_start_string</span><span class="p">(</span><span class="n">y_prime</span><span class="p">),</span> <span class="s1">&#39;ε&#39;</span><span class="p">)</span>
         <span class="n">out</span> <span class="o">=</span> <span class="n">add_transition</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">xy_start</span><span class="p">,</span> <span class="n">get_start_string</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="s1">&#39;ε&#39;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">out</span>
-</pre></div>
+</pre>
+                </div>
 
-</div><div class="wrapped-markdown">
-<h3>Concat</h3>
-</div><div class="wrapped-code">
-<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">concat</span><span class="p">(</span><span class="n">x</span> <span class="p">:</span> <span class="n">NFA</span><span class="p">,</span> <span class="n">y</span> <span class="p">:</span> <span class="n">NFA</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NFA</span><span class="p">:</span>
+            </div>
+            <div class="wrapped-markdown">
+                <h3>Concat</h3>
+            </div>
+            <div class="wrapped-code">
+                <div class="highlight">
+                    <pre><span></span><span class="k">def</span> <span class="nf">concat</span><span class="p">(</span><span class="n">x</span> <span class="p">:</span> <span class="n">NFA</span><span class="p">,</span> <span class="n">y</span> <span class="p">:</span> <span class="n">NFA</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NFA</span><span class="p">:</span>
     <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">start</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">y</span><span class="o">.</span><span class="n">start</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">recreate</span><span class="p">(</span>
             <span class="n">x</span><span class="p">,</span> <span class="n">states</span><span class="o">=</span><span class="nb">set</span><span class="p">(),</span> <span class="n">delta</span><span class="o">=</span><span class="nb">set</span><span class="p">(),</span>
@@ -364,12 +816,16 @@
         <span class="k">for</span> <span class="n">final</span> <span class="ow">in</span> <span class="n">x</span><span class="o">.</span><span class="n">finals</span><span class="p">:</span>
             <span class="n">out</span> <span class="o">=</span> <span class="n">fold_function</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">final</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">out</span>
-</pre></div>
+</pre>
+                </div>
 
-</div><div class="wrapped-markdown">
-<h3>Letters</h3>
-</div><div class="wrapped-code">
-<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">letter</span><span class="p">(</span><span class="n">c</span> <span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">sigma</span> <span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NFA</span><span class="p">:</span>
+            </div>
+            <div class="wrapped-markdown">
+                <h3>Letters</h3>
+            </div>
+            <div class="wrapped-code">
+                <div class="highlight">
+                    <pre><span></span><span class="k">def</span> <span class="nf">letter</span><span class="p">(</span><span class="n">c</span> <span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">sigma</span> <span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NFA</span><span class="p">:</span>
     <span class="k">return</span> <span class="n">NFA</span><span class="p">(</span>
         <span class="p">[</span><span class="s1">&#39;0&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">],</span>
         <span class="p">[(</span><span class="s1">&#39;0&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="n">c</span><span class="p">)],</span>
@@ -377,13 +833,17 @@
         <span class="s1">&#39;0&#39;</span><span class="p">,</span>
         <span class="p">[</span><span class="s1">&#39;1&#39;</span><span class="p">]</span>
     <span class="p">)</span>
-</pre></div>
+</pre>
+                </div>
 
-</div><div class="wrapped-markdown">
-<p>And with that, we're done with this section. See you soon(ish)!</p>
-</div></div>
+            </div>
+            <div class="wrapped-markdown">
+                <p>And with that, we're done with this section. See you soon(ish)!</p>
+            </div>
+        </div>
 
-</div>
+    </div>
 
 </body>
+
 </html>
