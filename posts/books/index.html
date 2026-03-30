@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <title>Books</title>
+    <style type="text/css">
+        code {
+            white-space: pre-wrap;
+        }
+
+        span.smallcaps {
+            font-variant: small-caps;
+        }
+
+        span.underline {
+            text-decoration: underline;
+        }
+
+        div.column {
+            display: inline-block;
+            vertical-align: top;
+            width: 50%;
+        }
+
+        table,
+        tbody,
+        tr,
+        thead,
+        th,
+        td {
+            border: 1px solid #ebdbb2;
+        }
+    </style>
+    <link rel="stylesheet" href="https://benrosenberg.info/style.css" />
+    <link rel="icon" type="image/png" href="https://benrosenberg.info/favicon.png">
+    <style>
+        /* --- GRUVBOX DARK THEME --- */
+        :root {
+            /* Palette based on Gruvbox Dark (Hard) */
+            --primary-bg: #1d2021;
+            /* dark0_hard */
+            --card-bg: #282828;
+            /* dark1 */
+            --text-main: #ebdbb2;
+            /* light1 */
+            --text-muted: #a89984;
+            /* gray */
+            --accent: #83a598;
+            /* blue */
+            --gold: #fabd2f;
+            /* yellow */
+            --border-color: #3c3836;
+            /* dark3 */
+
+            /* Tag specific colors */
+            --tag-blue-bg: #458588;
+            --tag-purple-bg: #b16286;
+            --tag-orange-bg: #d65d0e;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-main);
+            line-height: 1.6;
+            margin: 0;
+            /* padding: 40px 20px; */
+        }
+
+        header {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 60px auto;
+        }
+
+        /* Search Bar Styling */
+        .search-container {
+            margin-top: 20px;
+        }
+
+        #bookSearch {
+            width: 100%;
+            max-width: 400px;
+            padding: 12px 20px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            /* border-radius: 25px; */
+            font-size: 1rem;
+            color: var(--text-main);
+            outline: none;
+            transition: border 0.3s, box-shadow 0.3s;
+        }
+
+        #bookSearch:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 8px rgba(131, 165, 152, 0.3);
+        }
+
+        /* Layout */
+        .book-list {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .book-row {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            margin-bottom: 100px;
+            transition: opacity 0.3s ease;
+        }
+
+        /* Alternating Logic */
+        .book-row:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .book-cover {
+            flex: 0 0 220px;
+        }
+
+        .book-cover img {
+            width: 100%;
+            /* border-radius: 6px; */
+            /* Softer shadow for dark backgrounds */
+            box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.4);
+            display: block;
+        }
+
+        .book-content {
+            flex: 1;
+        }
+
+        /* Tags */
+        .tag-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .tag {
+            padding: 4px 12px;
+            /* border-radius: 4px; Slightly more "Gruvbox" blocky feel */
+            font-size: 0.7rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: #ebdbb2;
+            /* Light text for dark tags */
+        }
+
+        .tag.genre {
+            background: var(--tag-blue-bg);
+        }
+
+        .tag.bookclub {
+            background: var(--tag-purple-bg);
+        }
+
+        .tag.mood {
+            background: var(--tag-orange-bg);
+        }
+
+        /* Typography */
+        h2 {
+            margin: 5px 0;
+            font-size: 2.2rem;
+            line-height: 1.2;
+            color: #fe8019;
+            /* orange accent for titles */
+        }
+
+        .author {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+
+        .status {
+            font-size: 0.8rem;
+            color: #928374;
+            /* gray_245 */
+            letter-spacing: 1px;
+        }
+
+        .rating {
+            color: var(--gold);
+            font-size: 1.3rem;
+            margin-top: 15px;
+        }
+
+        /* Read More Toggle */
+        .read-more-check {
+            display: none;
+        }
+
+        .more-text {
+            display: none;
+        }
+
+        .read-more-label {
+            color: var(--accent);
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+
+        .read-more-label:before {
+            content: 'Read more...';
+        }
+
+        .read-more-check:checked~.review .more-text {
+            display: block;
+        }
+
+        .read-more-check:checked~.read-more-label:before {
+            content: 'Show less';
+        }
+
+        /* Responsive */
+        @media (max-width: 700px) {
+
+            .book-row,
+            .book-row:nth-child(even) {
+                flex-direction: column;
+                text-align: center;
+                gap: 25px;
+            }
+
+            .tag-container {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <ul class="sidenav">
+        <li><a href="/">Home</a></li>
+        <li><a class="active" href="https://benrosenberg.info/posts">Posts</a></li>
+        <li><a href="https://github.com/benrosenberg">GitHub</a></li>
+        <li><a href="https://benrosenberg.info/teaching/">Teaching</a></li>
+    </ul>
+
+    <div class="content">
+        <header>
+            <h1 class="title">Books</h1>
+            <div class="search-container">
+                <input type="text" id="bookSearch" placeholder="Search by title or author..." onkeyup="filterBooks()">
+            </div>
+        </header>
+        <main class="book-list" id="bookGrid">
+
+            <article class="book-row">
+                <div class="book-cover">
+                    <img src="thumbnails/draper_to_start_a_war.jpg" alt="Book Cover">
+                </div>
+                <div class="book-content">
+                    <div class="tag-container">
+                        <span class="tag genre">History</span>
+                        <span class="tag genre">Politics</span>
+                        <span class="tag bookclub">Book Club</span>
+                    </div>
+                    <span class="status">Finished: July 2025</span>
+                    <h2>To Start a War</h2>
+                    <p class="author">by Robert Draper</p>
+
+                    <div class="review-wrapper">
+                        <input type="checkbox" id="book1" class="read-more-check">
+                        <div class="review">
+                            <p>I didn't really know much about Iraq or the Bush administration before reading this, and
+                                now
+                                I do.</p>
+                            <span class="more-text">
+                                <p>I think the main takeaway from the book is that the administration's entrance into
+                                    Iraq was
+                                    more a result of bureaucratic incompetence than it was about oil.</p>
+                                <p>Draper does a good job of humanizing key figures in the administration, to the point
+                                    that you
+                                    can really appreciate (for example) Colin Powell's mindset before giving his UN
+                                    speech, and
+                                    even the mindset of George Tenet leading up to said speech.
+                                </p>
+                                <p>To grossly simplify, the war was largely due to Bush's inability to hear two sides of
+                                    a
+                                    conversation, and his insistence that his direct reports come to an agreement,
+                                    rather than
+                                    mediating such debates himself. The fact that Wolfowitz and Rumsfeld were unmoving
+                                    in their
+                                    convictions that Iraq posed a threat to the United States was, as a result of Bush's
+                                    inability to hear two sides of an argument, sufficient to force their opposition to
+                                    gradually side with them over a period of a few years.
+                                </p>
+                            </span>
+                        </div>
+                        <label for="book1" class="read-more-label"></label>
+                    </div>
+                </div>
+            </article>
+
+            <article class="book-row">
+                <div class="book-cover">
+                    <img src="thumbnails/moorehead_the_white_nile.jpg" alt="Book Cover">
+                </div>
+                <div class="book-content">
+                    <div class="tag-container">
+                        <span class="tag genre">History</span>
+                        <span class="tag bookclub">Book Club</span>
+                    </div>
+                    <span class="status">Finished: September 2025</span>
+                    <h2>The White Nile</h2>
+                    <p class="author">by Alan Moorehead</p>
+
+                    <div class="review-wrapper">
+                        <input type="checkbox" id="book2" class="read-more-check">
+                        <div class="review">
+                            Half engaging journey of exploration, half easy-to-see-coming exploitation and aftermath.
+                            <span class="more-text">
+                                <p>
+                                    From the outset this book seems to be kind of a summary of the explorations done by
+                                    Livingstone and his peers in the 1800s. The explorers are detailed very well; their
+                                    personal lives, habits, etc. are recorded pretty well in the books that they wrote
+                                    about their travels, although Moorehead provides some more modern criticsm of their
+                                    actions and behavior.</p>
+                                <p>
+                                    In the second half or so of the book, however, things take a sharp turn, and the
+                                    explorers we've come to know so much about give way to war and death. The character
+                                    of the Madhi is left somewhat to the reader's imagination as a larger-than-life
+                                    figure. The battles over Khartoum and the fate of the city and its inhabitants are a
+                                    little drawn out - the result is obvious to a reader paying attention, and Moorehead
+                                    hints at the end result many times throughout the book - but it's still devastating
+                                    nonetheless.
+                                </p>
+                            </span>
+                        </div>
+                        <label for="book2" class="read-more-label"></label>
+                    </div>
+                    <!-- <div class="rating">★★★★☆</div> -->
+                </div>
+            </article>
+
+            <article class="book-row">
+                <div class="book-cover">
+                    <img src="thumbnails/harp_fort_bragg_cartel.jpg" alt="Book Cover">
+                </div>
+                <div class="book-content">
+                    <div class="tag-container">
+                        <span class="tag genre">Politics</span>
+                        <span class="tag bookclub">Book Club</span>
+                    </div>
+                    <span class="status">Finished: October 2025</span>
+                    <h2>The Fort Bragg Cartel</h2>
+                    <p class="author">by Seth Harp</p>
+
+                    <div class="review-wrapper">
+                        <input type="checkbox" id="book3" class="read-more-check">
+                        <div class="review">
+                            Eye-opening case study and description of what went on at home and overseas during and as a
+                            result of the latter days of America's Afghanistan era in its forever-war.
+                            <span class="more-text">
+                                <p>This book made me happy that I'm not in a situation where I need to be part of the
+                                    military. It also somehow managed to paint the Taliban in a good light, at least in
+                                    comparison to the insane compromises made by US leadership in their alliance with
+                                    the Northern Alliance, including crimes against children (look up <i>bacha bazi</i>
+                                    if you are unconvinced) and the facilitation of the opioid epidemic.
+                                </p>
+                            </span>
+                        </div>
+                        <label for="book3" class="read-more-label"></label>
+                    </div>
+                    <!-- <div class="rating">★★★★☆</div> -->
+                </div>
+            </article>
+
+            <article class="book-row">
+                <div class="book-cover">
+                    <img src="thumbnails/huxley_brave_new_world.jpg" alt="Book Cover">
+                </div>
+                <div class="book-content">
+                    <div class="tag-container">
+                        <span class="tag genre">Sci-Fi</span>
+                        <span class="tag bookclub">Book Club</span>
+                    </div>
+                    <span class="status">Finished: March 2026</span>
+                    <h2>Brave New World</h2>
+                    <p class="author">by Aldous Huxley</p>
+
+                    <div class="review-wrapper">
+                        <input type="checkbox" id="book4" class="read-more-check">
+                        <div class="review">
+                            Kind of a mirror image of 1984, maybe combined with Gattaca.
+                            <span class="more-text">
+                                <p>
+                                    I liked this book, but towards the end the worldbuilding kind of fell apart and I
+                                    found myself nitpicking inconsistencies.
+                                </p>
+                                <p>
+                                    (Spoiler alert) Around the end of the book, one of the "World Controllers" is
+                                    describing to the main characters why the world needed to turn to genetic
+                                    engineering and a caste system. He describes the following scenarios that they tried
+                                    or considered: (1) the scenario where they automate everything, and they have no
+                                    more need for physical labor, and (2) the scenario where they stop genetically
+                                    sabotaging people so that they become mentally deficient (e.g., Epsilons and Deltas)
+                                    and instead only have people that they genetically modified to be intellectually
+                                    superior (i.e., Alphas).</p>
+                                <p> He states that the first scenario wouldn't work because they need to have something
+                                    for the Epsilons and Deltas to do, otherwise they would just be a net drain on
+                                    society and become disruptive. He also states that the second scenario wouldn't
+                                    work, because then the Alphas would get into arguments about who needs to do the
+                                    menial factory work that is beneath them.</p>
+                                <p>
+                                    This false dichotomy is destroyed when you consider the case where they both
+                                    automate everything and also only create Alphas. There is basically no downside, and
+                                    this situation prevents both issues from the above scenarios.
+                                </p>
+                                <p>
+                                    The other issue I had with the given scenario is that they felt they needed to go so far to prevent unhappiness that they needed to hypnotically condition people <i>against monogamy</i>. Obviously if people do not want to practice monogamy that is up to them; but monogamy is kind of a state of nature for most humans, and to deny that with social and hypnotic conditioning is not a great solution. In general, the prevention of unhappiness (as it's phrased in the book) is taken past the point of diminishing marginal utility. They already cured all known diseases, and are able to ensure that everyone can be an "Alpha", physically and intellectually fit. With that alone, a good deal of unhappiness is wiped out. But once you get to dictating people's love lives, you go past the point of diminishing marginal utility and start making things worse. In the book, for example, one of the main characters (Bernard Marx) is actually made unhappy by the anti-monogamy situation, so there is a clear counterexample available for the so-called World Controllers to see.
+                                </p>
+                                <p>So in general, the book was a quick and engaging read, but the sci-fi scenario left something to be desired.</p>
+                            </span>
+                        </div>
+                        <label for="book4" class="read-more-label"></label>
+                    </div>
+                    <!-- <div class="rating">★★★★☆</div> -->
+                </div>
+            </article>
+
+        </main>
+
+        <script>
+            /* --- JAVASCRIPT SEARCH FUNCTION --- */
+            function filterBooks() {
+                let input = document.getElementById('bookSearch').value.toLowerCase();
+                let books = document.getElementsByClassName('book-row');
+
+                for (let i = 0; i < books.length; i++) {
+                    let title = books[i].getElementsByTagName('h2')[0].innerText.toLowerCase();
+                    let author = books[i].getElementsByClassName('author')[0].innerText.toLowerCase();
+
+                    if (title.includes(input) || author.includes(input)) {
+                        books[i].style.display = "flex";
+                    } else {
+                        books[i].style.display = "none";
+                    }
+                }
+            }
+        </script>
+    </div>
+</body>
+
+</html>
