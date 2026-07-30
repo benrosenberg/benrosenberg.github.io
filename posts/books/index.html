@@ -251,7 +251,7 @@
         <header>
             <h1 class="title">Books</h1>
             <div class="search-container">
-                <input type="text" id="bookSearch" placeholder="Search by title or author..." onkeyup="filterBooks()">
+                <input type="text" id="bookSearch" placeholder="Search by title, author, or tag..." onkeyup="filterBooks()">
             </div>
         </header>
         <main class="book-list" id="bookGrid">
@@ -987,8 +987,12 @@
                 for (let i = 0; i < books.length; i++) {
                     let title = books[i].getElementsByTagName('h2')[0].innerText.toLowerCase();
                     let author = books[i].getElementsByClassName('author')[0].innerText.toLowerCase();
+                    
+                    // Extract text from all tags inside this book row
+                    let tagElements = books[i].getElementsByClassName('tag');
+                    let tags = Array.from(tagElements).map(tag => tag.innerText.toLowerCase()).join(' ');
 
-                    if (title.includes(input) || author.includes(input)) {
+                    if (title.includes(input) || author.includes(input) || tags.includes(input)) {
                         books[i].style.display = "flex";
                     } else {
                         books[i].style.display = "none";
