@@ -279,12 +279,14 @@
     <div class="content">
         <h1 id="making-jupyter-notebook-conversion-more-efficient">Making Jupyter notebook conversion more efficient
         </h1>
+        <h3 class="date">2023-09-11</h3>
         <p>Jupyter notebook conversion to HTML has always astounded me with how unwieldy its outputs are. The whole
             notebook is basically just a JSON, so how can the default HTML conversion result in such large files?</p>
         <p>Here’s an example of a blank notebook:</p>
         <p><img src="2023-09-11-20-43-45.png" /></p>
         <p>How large is the resulting HTML file? Let’s use <code>du</code> (<strong>d</strong>isk
-            <strong>u</strong>sage) to find out:</p>
+            <strong>u</strong>sage) to find out:
+        </p>
         <div class="sourceCode" id="cb1">
             <pre class="sourceCode bash neutral"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a>$ <span class="fu">du</span> -sch blank.html</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a><span class="ex">556K</span>    blank.html</span>

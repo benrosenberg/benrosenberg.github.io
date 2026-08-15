@@ -297,6 +297,7 @@
         <header id="title-block-header">
             <h1 class="title">Blind 75 Solutions and Methods</h1>
             <p class="author"><a href="https://benrosenberg.info">Ben Rosenberg</a></p>
+            <h3 class="date">2022-06-02</h3>
         </header>
         <nav id="TOC" role="doc-toc">
             <ul>
@@ -571,7 +572,8 @@
             cast takes <span class="math inline">O(n)</span> time, as it needs to remove the duplicates.) Then, we take
             the length of this newly created set, and compare it with the length of <code>nums</code> – if the lengths
             are the same, then no elements were removed in the casting. Otherwise, some element must have been removed,
-            so there must have been at least one duplicate element.</p>
+            so there must have been at least one duplicate element.
+        </p>
         <p>A more traditional (and less Pythonic) solution might be as follows:</p>
         <div class="sourceCode" id="cb5" data-startFrom="1">
             <pre
@@ -603,7 +605,8 @@
             worked out below.)</p>
         <p>This solution is a little more complicated than it needed to be, but it works. The stuff with
             <code>reduce</code> and the <code>prod</code> function just makes it easier for me to take a product of an
-            array.</p>
+            array.
+        </p>
         <p>The below code runs in <span class="math inline">O(n)</span> time and <span class="math inline">O(1)</span>
             space:</p>
         <div class="sourceCode" id="cb6" data-startFrom="1">
@@ -680,7 +683,8 @@
                     <li>Perform a similar check for <span class="math inline">\texttt{best\_sum}</span>:
                         <ul>
                             <li>If <span class="math inline">\texttt{best\_sum} &gt; \texttt{current\_sum}</span>, set
-                                <span class="math inline">\texttt{best\_sum} := \texttt{current\_sum}</span></li>
+                                <span class="math inline">\texttt{best\_sum} := \texttt{current\_sum}</span>
+                            </li>
                             <li>Otherwise, continue (leave <span class="math inline">\texttt{best\_sum}</span> as is)
                             </li>
                         </ul>
@@ -712,7 +716,8 @@
                 number of negatives (causing the product when they are included to remain negative)
                 <ul>
                     <li>Example of case that doesn’t work without backwards check: <code>[3, -1, 4]</code> (answer is
-                        <code>3</code> if only checked forwards)</li>
+                        <code>3</code> if only checked forwards)
+                    </li>
                 </ul>
             </li>
             <li>Zeroes delineate groups of elements, as multiplying by zero annihilates our running product</li>
@@ -746,16 +751,19 @@
                 between <span class="math inline">1</span> and <span class="math inline">n</span> times. For example,
                 the array <code>nums = [0,1,2,4,5,6,7]</code> might become <code>[4,5,6,7,0,1,2]</code> if it was
                 rotated <span class="math inline">4</span> times, or <code>[0,1,2,4,5,6,7]</code> if it was rotated
-                <span class="math inline">7</span> times.</p>
+                <span class="math inline">7</span> times.
+            </p>
             <p>Notice that rotating an array <code>[a[0], a[1], a[2], ..., a[n-1]]</code> <span
                     class="math inline">1</span> time results in the array
-                <code>[a[n-1], a[0], a[1], a[2], ..., a[n-2]]</code>.</p>
+                <code>[a[n-1], a[0], a[1], a[2], ..., a[n-2]]</code>.
+            </p>
             <p>Given the sorted rotated array nums of unique elements, return the minimum element of this array. You
                 must write an algorithm that runs in <span class="math inline">O(\log(n))</span> time.</p>
         </blockquote>
         <p>The fact that we are told we need to do this in “<span class="math inline">O(\log(n))</span> time”, combined
             with the fact that we are <em>searching</em> for something, should set off alarms that we need to use
-            <strong>binary search</strong>:</p>
+            <strong>binary search</strong>:
+        </p>
         <div class="sourceCode" id="cb9" data-startFrom="1">
             <pre
                 class="sourceCode numberSource python numberLines good"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw">class</span> Solution:</span>
@@ -800,7 +808,8 @@
                 such that the resulting array is
                 <code>[nums[k], nums[k+1], ..., nums[n-1], nums[0], nums[1], ..., nums[k-1]]</code> (<span
                     class="math inline">0</span>-indexed). For example, <code>[0,1,2,4,5,6,7]</code> might be rotated at
-                pivot index <span class="math inline">3</span> and become <code>[4,5,6,7,0,1,2]</code>.</p>
+                pivot index <span class="math inline">3</span> and become <code>[4,5,6,7,0,1,2]</code>.
+            </p>
             <p>Given the array <code>nums</code> after the possible rotation and an integer <code>target</code>, return
                 the index of <code>target</code> if it is in <code>nums</code>, or <span class="math inline">-1</span>
                 if it is not in <code>nums</code>.</p>
@@ -868,13 +877,15 @@
         <p>The main complication in this translation is that instead of returning just a value, we need to return the
             <em>index</em> of the target, so we need to pass the indices around everywhere as metadata. (The fact that
             we add metadata to every element kind of makes the algorithm <span class="math inline">O(n)</span>, but
-            Leetcode accepts it, so whatever.)</p>
+            Leetcode accepts it, so whatever.)
+        </p>
         <h2 id="sum">3 Sum</h2>
         <blockquote>
             <p>Given an integer array <code>nums</code>, return all the triplets
                 <code>[nums[i], nums[j], nums[k]]</code> such that <span class="math inline">i \neq j</span>, <span
                     class="math inline">i \neq k</span>, and <span class="math inline">j \neq k</span>, and
-                <code>nums[i] + nums[j] + nums[k] == 0</code>.</p>
+                <code>nums[i] + nums[j] + nums[k] == 0</code>.
+            </p>
             <p><strong>Note</strong>: The solution set must not contain duplicate triplets.</p>
         </blockquote>
         <p>This problem can be solved similarly to the next one (“Container With Most Water”); both use the idea of left
@@ -897,7 +908,8 @@
                 class="math inline">r</span> such that <span class="math inline">\texttt{nums}[l] + \texttt{nums}[r] =
                 -\texttt{nums}[i]</span>, where <span class="math inline">i</span> is the iteration variable for our
             outer loop. (You can rearrange this expression to get <span class="math inline">\texttt{nums}[l] +
-                \texttt{nums}[r] + \texttt{nums}[i] = 0</span>.)</p>
+                \texttt{nums}[r] + \texttt{nums}[i] = 0</span>.)
+        </p>
         <p>If our two-sum using <span class="math inline">l</span> and <span class="math inline">r</span> is too high,
             we can decrement the right pointer to decrease it; and if the two-sum is too low, we can increment the left
             pointer to increase it. That way, we find all relevant solutions.</p>
@@ -1072,7 +1084,8 @@
                     <li>Let’s unpack the value we get here. First, we’re taking the <em>bitwise and</em> of
                         <code>a</code> and <code>b</code>. This gives us only the locations where we have two
                         <code>1</code>’s. Then, we’re shifting them all to the left by one place, using the <em>bitwise
-                            left shift</em> operator.</li>
+                            left shift</em> operator.
+                    </li>
                     <li>This is the <strong>carry</strong> part of addition. When we have two <code>1</code>’s, we get
                         0, but we need to carry the <code>1</code> to the next place over.</li>
                 </ul>
@@ -1085,7 +1098,8 @@
                         <code>0 ^ 1 = 1 ^ 0 = 1</code>, and <code>0 + 1 = 1</code>; the only difference is regarding the
                         carrying done in the <code>1 + 1</code> case (which is <code>0</code> for <code>1 ^ 1</code> but
                         requires a carry in regular addition). We don’t worry about the carry part because it’s taken
-                        care of by the value calculated and assigned to <code>tmp</code>.</li>
+                        care of by the value calculated and assigned to <code>tmp</code>.
+                    </li>
                 </ul>
             </li>
             <li>We then assign <code>b</code> to <code>tmp</code> on <a href="#cb14-6">line 6</a>. (We needed to delay
@@ -1131,7 +1145,8 @@
         </div>
         <p>This solution comes out to <span class="math inline">O(n\log(n))</span> time, as each call of
             <code>ones(b)</code> takes <span class="math inline">\log(n)</span> time (as there are <span
-                class="math inline">\log(n)</span> digits in the binary representation of a number).</p>
+                class="math inline">\log(n)</span> digits in the binary representation of a number).
+        </p>
         <p>Here’s the efficient solution, using the dictionary <code>memo</code> to save the results from previous
             calculations.</p>
         <div class="sourceCode" id="cb17" data-startFrom="1">
@@ -1158,7 +1173,8 @@
         </div>
         <p>This solution takes <span class="math inline">O(n)</span> time, as we only need to calculate each value once
             and can use previous values in the calculation of future values. The dictionary <code>memo</code> provides
-            <span class="math inline">O(1)</span> lookup time.</p>
+            <span class="math inline">O(1)</span> lookup time.
+        </p>
         <p>Note that in order to get the “overlapping subproblems” idea necessary to take advantage of dynamic
             programming (of which this is indeed an example – memoization is a hallmark of certain DP problems), we need
             to use an “overlapping subproblems” method to calculate the number of <code>1</code>-bits in a number. For
@@ -1307,7 +1323,8 @@
                     <li>On each iteration:
                         <ul>
                             <li><a href="#cb26-5">Line 5</a>: Initialize <code>bit</code> to the value of the
-                                <code>i</code>th bit of <code>n</code></li>
+                                <code>i</code>th bit of <code>n</code>
+                            </li>
                             <li><a href="#cb26-6">Line 6</a>: Set the <code>31 - i</code>th bit of <code>res</code>
                                 equal to <code>bit</code> (the <code>31 - i</code> part means that the order is reversed
                                 when copying <code>n</code> into <code>res</code>). Since <code>res</code> is initially
@@ -1441,7 +1458,8 @@
         <p>The difficult part is in that <span class="math inline">O(n) \to O(n^2)</span> translation. The added time
             complexity comes because of the fact that we need to remember more than just one piece of state information
             from the entire rest of the array; instead, we need to remember two pieces of state information from
-            <em>each place in the array that we have seen so far</em>.</p>
+            <em>each place in the array that we have seen so far</em>.
+        </p>
         <p>Specifically, this is a combination of the length of the LIS (longest increasing subsequence) starting at
             that index, and the minimum element in that LIS. If the element we’re currently examining is of a value
             greater than or equal to the minimum of some LIS, then our current element <strong>cannot be added</strong>
@@ -1497,7 +1515,8 @@
                 subsequence. If there is no common subsequence, return <code>0</code>.</p>
             <p>A subsequence of a string is a new string generated from the original string with some characters (can be
                 none) deleted without changing the relative order of the remaining characters. For example,
-                <code>"ace"</code> is a subsequence of <code>"abcde"</code>.</p>
+                <code>"ace"</code> is a subsequence of <code>"abcde"</code>.
+            </p>
             <p><strong>Note</strong>: A common subsequence of two strings is a subsequence that is common to both
                 strings.</p>
         </blockquote>
@@ -1519,7 +1538,8 @@
         <p>The entries of this matrix will represent the size of the longest common subsequence of the substrings
             beginning at the characters which denote its position. For the position denoted by the red dot, for example,
             the contents of the entry at the position of the red dot would be the longest common subsequence of
-            <code>ce</code> and <code>de</code> (and would therefore be <code>1</code>).</p>
+            <code>ce</code> and <code>de</code> (and would therefore be <code>1</code>).
+        </p>
         <p>We can further say that the value of any entry just outside the matrix (on its bottom or right ends) will be
             <code>0</code>, as they correspond to the empty string, which only has common subsequences of length zero:
             <span class="math display">\begin{matrix}
@@ -1530,7 +1550,8 @@
                 \texttt{d} &amp; &amp; &amp; &amp; 0 \\
                 \texttt{e} &amp; &amp; &amp; &amp; 0 \\
                 &amp; 0 &amp; 0 &amp; 0 &amp; 0
-                \end{matrix}</span></p>
+                \end{matrix}</span>
+        </p>
         <p>Now we can start filling in the matrix. We will use the following recurrence relation, where <span
                 class="math inline">A_{i,j}</span> corresponds to the matrix entry at row <span
                 class="math inline">i</span> and column <span class="math inline">j</span>, and <span
@@ -1546,7 +1567,8 @@
                 class="math inline">i</span> and <span class="math inline">j</span>); otherwise, we take the maximum of
             the problems in which we increment <span class="math inline">i</span> and that in which we increment <span
                 class="math inline">j</span>, being analogues for shortening <span class="math inline">t_1</span> or
-            <span class="math inline">t_2</span> by one character.</p>
+            <span class="math inline">t_2</span> by one character.
+        </p>
         <p>Running the above relation on the matrix, starting from the bottom up, yields the following result: <span
                 class="math display">\begin{matrix}
                 &amp; \texttt{a} &amp; \texttt{c} &amp; \texttt{e} &amp; \\
@@ -1588,7 +1610,8 @@
         </blockquote>
         <p>This is another easy DP problem with simple memoization. Here, the subproblem is whether a substring of
             <code>s</code> beginning <code>len(w)</code> characters after the start of <code>s</code> can be segmented
-            for some word <code>w</code>:</p>
+            for some word <code>w</code>:
+        </p>
         <div class="sourceCode" id="cb33" data-startFrom="1">
             <pre class="sourceCode numberSource python numberLines good"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1"></a><span class="kw">class</span> Solution:</span>
 <span id="cb33-2"><a href="#cb33-2"></a>    <span class="kw">def</span> wordBreak(<span class="va">self</span>, s: <span class="bu">str</span>, wordDict: List[<span class="bu">str</span>]) <span class="op">-&gt;</span> <span class="bu">bool</span>:</span>
@@ -1669,7 +1692,8 @@
             choose, at each index <span class="math inline">i</span>, whether you want to take house <span
                 class="math inline">i</span> and everything that is possible to take along with that house (this is
             <span class="math inline">\texttt{nums}[i+2 \to]</span>), or the house <span class="math inline">i+1</span>
-            next to it and everything that entails (so, <span class="math inline">\texttt{nums}[i+3 \to]</span>).</p>
+            next to it and everything that entails (so, <span class="math inline">\texttt{nums}[i+3 \to]</span>).
+        </p>
         <p>The nitpicky part here is checking whether <code>nums</code> is long enough to take the rest if possible. For
             small data (<span class="math inline">n &lt; 3</span>) we can just be greedy, as the invariant here is that
             we never make it possible to take two adjacent houses.</p>
@@ -1776,7 +1800,8 @@
                 <li><code>"KJF"</code> with the grouping <code>(11 10 6)</code></li>
             </ul>
             <p>Note that the grouping <code>(1 11 06)</code> is invalid because <code>"06"</code> cannot be mapped into
-                <code>'F'</code> since <code>"6"</code> is different from <code>"06"</code>.</p>
+                <code>'F'</code> since <code>"6"</code> is different from <code>"06"</code>.
+            </p>
             <p>Given a string <code>s</code> containing only digits, return the number of ways to decode it.</p>
             <p>The test cases are generated so that the answer fits in a 32-bit integer.</p>
         </blockquote>
@@ -1786,7 +1811,8 @@
             handy <code>.startswith()</code>), removing them from the string and seeing how many ways there are to make
             them. (The modification from “Word Break” here is that in “Word Break”, we were only looking for
             <code>true</code> or <code>false</code> as to whether it was possible to create the string from words in the
-            list provided.)</p>
+            list provided.)
+        </p>
         <p>The solution is as follows:</p>
         <div class="sourceCode" id="cb38" data-startFrom="1">
             <pre class="sourceCode numberSource python numberLines good"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1"></a><span class="kw">class</span> Solution:</span>
@@ -1827,7 +1853,8 @@
                     \times 10^9</span>.</p>
         </blockquote>
         <p>This one is trivial if you’re familiar with combinatorics. Take the example <code>m = 1</code>,
-            <code>n = 2</code>. The possible paths here are:</p>
+            <code>n = 2</code>. The possible paths here are:
+        </p>
         <pre><code>DRR, RDR, RRD</code></pre>
         <p>If you have knowledge of combinatorics your eyes should be lighting up – these are the permutations of <span
                 class="math inline">D^m R^n</span>! (The exclamation point is added for emphasis, not as a factorial.)
@@ -1978,9 +2005,11 @@
                 <code>prerequisites[i] = [</code><span class="math inline">a_i</span><code>,</code><span
                     class="math inline">b_i</span><code>]</code> indicates that you must take course <span
                     class="math inline">b_i</span> first if you want to take course <span
-                    class="math inline">a_i</span>.</p>
+                    class="math inline">a_i</span>.
+            </p>
             <p>For example, the pair <code>[0, 1]</code>, indicates that to take course 0 you have to first take course
-                <code>1</code>.</p>
+                <code>1</code>.
+            </p>
             <p>Return <code>true</code> if you can finish all courses. Otherwise, return <code>false</code>.</p>
         </blockquote>
         <p>This problem asks us to look for a cycle in the graph. We can do this via topological sort, which is
@@ -2029,7 +2058,8 @@
         </div>
         <p>This solution runs in <span class="math inline">O(m+n)</span> time, where <span class="math inline">m</span>
             is the size of <code>numCourses</code> and <span class="math inline">n</span> is the size of
-            <code>prerequisites</code>.</p>
+            <code>prerequisites</code>.
+        </p>
         <h2 id="pacific-atlantic-water-flow">Pacific Atlantic Water Flow</h2>
         <h2 id="number-of-islands">Number of Islands</h2>
         <h2 id="longest-consecutive-sequence">Longest Consecutive Sequence</h2>
