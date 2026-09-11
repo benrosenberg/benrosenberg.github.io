@@ -134,6 +134,13 @@
             flex: 1;
         }
 
+        .book-count {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            letter-spacing: 0.5px;
+        }
+
         /* Tags */
         .tag-container {
             display: flex;
@@ -252,6 +259,7 @@
             <h1 class="title">Books</h1>
             <div class="search-container">
                 <input type="text" id="bookSearch" placeholder="Search by title, author, or tag..." onkeyup="filterBooks()">
+                <p id="bookCount" class="book-count"></p>
             </div>
         </header>
         <main class="book-list" id="bookGrid">
@@ -1015,6 +1023,44 @@
                     <!-- <div class="rating">★★★★☆</div> -->
                 </div>
             </article>
+
+            <article class="book-row">
+                <div class="book-cover">
+                    <img src="thumbnails/caesar_the_gallic_war.jpg" alt="Book Cover">
+                </div>
+                <div class="book-content">
+                    <div class="tag-container">
+                        <span class="tag genre">History</span>
+                        <span class="tag bookclub">Book Club</span>
+                    </div>
+                    <span class="status">Finished: September 2026</span>
+                    <h2>The Gallic War</h2>
+                    <p class="author">by Julius Caesar</p>
+
+                    <div class="review-wrapper">
+                        <input type="checkbox" id="book11" class="read-more-check">
+                        <div class="review">
+                            Interesting less for the content and more for the details and the way in which the content is presented.
+                            <span class="more-text">
+                                <p>
+                                    Reading the first few pages of the book I was disappointed, because the content seemed monotonous and the voice used was kind of distant and colorless. But the book grew on me, mostly because of the way that Caesar refers to things in passing that are just taken for granted in a way that's interesting from a modern perspective.
+                                </p>
+                                <p>
+                                    For instance, exchanging hostages is the only way that groups of people can agree on anything - there's no real global economy, so techniques like sanctions etc. don't exist.
+                                </p>
+                                <p>
+                                    Another thing is the acceptance of war crimes. Caesar remarks at one point that he needed to punish some tribe of Gauls for the way that they started a war, so he states in a single sentence, with no follow-up, that he executed their entire senate and sold the entire people into slavery.
+                                </p>
+                                <p>
+                                    The other interesting more "meta-detail" is the framing of the entire book. First of all, Caesar speaks in the third person, which is kind of strange, but may have been more common back then. But also: Caesar is always portrayed as being on the back foot, forced into these engagements with the Gauls against his will; all the wars that he fights are completely justified (based on his narration), and due exclusively to Gallic (and/or German or British) aggression. The veil is lifted somewhat once you realize that at the end, when he's facing off against Vercingetorix, he has managed over 7 or 8 years to almost completely unite Gaul - but rather than under his rule, they are all attempting to get him out. It reveals how terribly they must have treated the Gauls, for them to rebel in such a way.
+                                </p>
+                            </span>
+                        </div>
+                        <label for="book11" class="read-more-label"></label>
+                    </div>
+                    <!-- <div class="rating">★★★★☆</div> -->
+                </div>
+            </article>
         </main>
 
         <script>
@@ -1022,6 +1068,7 @@
             function filterBooks() {
                 let input = document.getElementById('bookSearch').value.toLowerCase();
                 let books = document.getElementsByClassName('book-row');
+                let visibleCount = 0;
 
                 for (let i = 0; i < books.length; i++) {
                     let title = books[i].getElementsByTagName('h2')[0].innerText.toLowerCase();
@@ -1033,11 +1080,18 @@
 
                     if (title.includes(input) || author.includes(input) || tags.includes(input)) {
                         books[i].style.display = "flex";
+                        visibleCount++;
                     } else {
                         books[i].style.display = "none";
                     }
                 }
+
+                // Update count display
+                document.getElementById('bookCount').innerText = `${visibleCount} book${visibleCount === 1 ? '' : 's'}`;
             }
+
+            // Initial count run on load
+            window.addEventListener('DOMContentLoaded', filterBooks);
         </script>
     </div>
 </body>
